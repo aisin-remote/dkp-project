@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
+<head>
+  <?php include "common/t_css.php"; ?>
+  <link href="vendors/ega/css/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <?php include "common/t_nav_top.php"; ?>
+  <div id="layoutSidenav">
+    <?php include "common/t_nav_left.php"; ?>
+    <div id="layoutSidenav_content">
+      <main>
+        <div class="container-fluid">
+          <ol class="breadcrumb mb-0 mt-2">
+            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
+            <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
+            <li class="breadcrumb-item active"><?php echo $template["submenu"]; ?></li>
+            <li class="breadcrumb-item active">New</li>
+          </ol>
+          <?php
+          if (isset($_GET["error"])) {
+            echo '<div class="alert alert-danger" role="alert">
+                      Error : ' . $_GET["error"] . '
+                    </div>';
+          }
+          ?>
+          <form method="post" id="my-form" action="<?php echo $action; ?>?line=<?php echo $line; ?>&date=<?php echo $date; ?>&shift=<?php echo $shift; ?>">
+
+            <div class="row mt-1">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body">
+                    <!-- Edit Here -->
+
+                    <input type="hidden" name="line_id" class="form-control" value="<?php echo $line; ?>">
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Shift</label>
+                      <div class="col-lg-2 col-md-5 col-sm-12">
+                        <select name="shift" class="form-control select2" readonly>
+                          <?php
+                          foreach ($shift_list as $row) {
+                          ?>
+                            <option value="<?php echo $row["seq"]; ?>" <?php if ($row["seq"] == $shift) {
+                                                                          echo "selected";
+                                                                        } else {
+                                                                          echo "disabled";
+                                                                        } ?>><?php echo $row["pval1"]; ?></option>
+                          <?php
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Date</label>
+                      <div class="col-lg-2 col-md-5 col-sm-12">
+                        <input type="text" name="prd_dt" class="form-control datepicker" maxlength="100" value="<?php echo $date; ?>" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Leader</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <select name="ldid" class="form-control select2">
+                          <?php
+                          foreach ($ld_list as $row) {
+                          ?>
+                            <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                          <?php
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">JP</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <select name="jpid" class="form-control select2">
+                          <?php
+                          foreach ($jp_list as $row) {
+                          ?>
+                            <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                          <?php
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Operator 1</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <select name="op1id" class="form-control select2">
+                          <option value="">None</option>
+                          <?php
+                          foreach ($op_list as $row) {
+                          ?>
+                            <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                          <?php
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Operator 2</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <select name="op2id" class="form-control select2">
+                          <option value="">None</option>
+                          <?php
+                          foreach ($op_list as $row) {
+                          ?>
+                            <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                          <?php
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Operator 3</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <select name="op3id" class="form-control select2">
+                          <option value="">None</option>
+                          <?php
+                          foreach ($op_list as $row) {
+                          ?>
+                            <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                          <?php
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Operator 4</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <select name="op4id" class="form-control select2">
+                          <option value="">None</option>
+                          <?php
+                          foreach ($op_list as $row) {
+                          ?>
+                            <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                          <?php
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Dies</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <select name="dies_id" id="dies_id" class="form-control select2">
+                          <?php
+                          foreach ($dies_list as $row) {
+                          ?>
+                            <option value="<?php echo $row["dies_id"]; ?>"><?php echo $row["group_id"] . " - " . $row["model_id"] . " - " . $row["name1"]; ?></option>
+                          <?php
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Cycle Time</label>
+                      <div class="col-lg-2 col-md-5 col-sm-12">
+                        <input type="number" name="cctime" id="cctime" step="1" min="0" class="form-control" required>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Total Target (Est)</label>
+                      <div class="col-lg-2 col-md-5 col-sm-12">
+                        <input type="number" name="total_target" id="total_target" step="1" min="0" class="form-control" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-lg-2 col-md-3 col-sm-12 d-sm-none d-md-block"></div>
+                      <div class="col-lg-5 col-md-5 col-sm-12">
+                        <input type="hidden" name="save" value="true">
+                        <button type="submit" name="btn_save" id="btn_save" value="save" class="btn btn-pale-green">Save & Generate Production Entry</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-2">
+
+            </div>
+          </form>
+        </div>
+      </main>
+      <?php include 'common/t_footer.php'; ?>
+    </div>
+  </div>
+  <input type="hidden" id="shift_count" value="<?php echo $shift_count; ?>">
+  <?php include 'common/t_js.php'; ?>
+  <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
+  <script>
+    $(document).ready(function() {
+      $(".datepicker").flatpickr({
+        altInput: true,
+        altFormat: 'd-m-Y',
+        dateFormat: 'Ymd',
+        disableMobile: "true"
+      });
+
+      getDefaultCycleTime();
+    });
+
+    $("#my-form").submit(function(event) {
+      $("#btn_save").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+      $("#btn_save").attr("disabled", "disabled");
+    });
+
+    $("#cctime").change(calculateTarget);
+
+    function calculateTarget() {
+      var cctime = parseInt($("#cctime").val());
+      var shift_count = parseInt($("#shift_count").val());
+      var total_target = Math.ceil((3600 / cctime) * shift_count);
+      $("#total_target").val(total_target);
+    }
+
+    $("#dies_id").change(getDefaultCycleTime);
+
+    function getDefaultCycleTime() {
+      $.ajax({
+        type: 'POST',
+        url: 'api_get_default_cctime',
+        data: {
+          dies_id: $("#dies_id").val()
+        },
+        success: function(response) {
+          // handle the response here
+          $("#cctime").val(response.cctime);
+          calculateTarget();
+        },
+        error: function(error) {
+          // handle the error here
+          alert(error);
+        },
+        dataType: 'json'
+      });
+    }
+  </script>
+</body>
+
+</html>

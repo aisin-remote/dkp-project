@@ -1,0 +1,44 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : Dec 5, 2022, 3:54:58 PM
+    Author     : Dheo
+*/
+html,
+body {
+  height: 100%;
+}
+
+body {
+  color: #E4E4E4;
+  padding-top: 70px;
+}
+
+.bg-main {
+  background: radial-gradient(50% 50% at 50% 50%, rgba(28, 46, 101, 0.85) 0%, #1C2E65 100%);
+}
+
+.tagline {
+  font-family: 'Exo';
+  font-style: normal;
+  margin-top: 20px;
+}
+
+.link {
+  font-family: 'Exo';
+  font-style: normal;
+  font-weight: 700;
+  margin-top: 20px;
+  color: #E4E4E4;
+  text-decoration: none;
+}
+
+.car-img {
+  background-image: url("../img/img02 1.png");
+  background-size: 75%;
+  background-repeat: no-repeat;
+  height: 50%;
+  margin-left: 35%;
+}

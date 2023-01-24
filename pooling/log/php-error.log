@@ -1,0 +1,17 @@
+[23-Nov-2022 11:42:52 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_operator_pkey"
+DETAIL:  Key (empid)=() already exists.
+[23-Nov-2022 11:49:08 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_operator_pkey"
+DETAIL:  Key (empid)=() already exists.
+[23-Nov-2022 11:50:46 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_operator_pkey"
+DETAIL:  Key (empid)=() already exists.
+[23-Nov-2022 12:51:43 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_operator_pkey"
+DETAIL:  Key (empid)=(1007) already exists.
+[23-Nov-2022 13:10:16 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_operator_pkey"
+DETAIL:  Key (empid)=() already exists.
+[23-Nov-2022 13:11:43 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_operator_pkey"
+DETAIL:  Key (empid)=() already exists.
+[24-Nov-2022 13:51:20 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Production::insert() in C:\xampp\htdocs\aisin_prd\classes\Production.php on line 26
+[24-Nov-2022 13:51:21 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Production::insert() in C:\xampp\htdocs\aisin_prd\classes\Production.php on line 26
+[24-Nov-2022 13:51:22 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Production::insert() in C:\xampp\htdocs\aisin_prd\classes\Production.php on line 26
+[24-Nov-2022 14:56:16 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '}' in C:\xampp\htdocs\1DEV\AISIN\aisin_prd\classes\Production.php on line 29
+[24-Nov-2022 14:56:17 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '}' in C:\xampp\htdocs\1DEV\AISIN\aisin_prd\classes\Production.php on line 29
