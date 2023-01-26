@@ -69,38 +69,47 @@ and open the template in the editor.
                 <div class="card-body">
                   <div class="table-responsive">
                     <!-- Edit Here -->
-                    <table class="table table-striped table-sm" id="data-table-x">
-                      <thead>
-                        <tr>
-                          <th class="text-center">Group</th>
-                          <th class="text-center">Model</th>
-                          <th class="text-center">Dies No</th>
-                          <th class="">Description</th>
-                          <th class="text-center">Total Stroke</th>
-                          <th class="text-center">Running Stroke</th>
-                          <th class="text-center">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                        if (!empty($data["list"])) {
-                          foreach ($data["list"] as $list) {
-                            echo "<tr>"
-                              . "<td class='text-center'>" . $list["group_id"] . "</td>"
-                              . "<td class='text-center'>" . $list["model_id"] . "</td>"
-                              . "<td class='text-center'>" . $list["dies_no"] . "</td>"
-                              . "<td class=''>" . $list["name1"] . "</td>"
-                              . "<td class='text-center'>" . $list["stktot"] . "</td>"
-                              . "<td class='text-center'>" . $list["stkrun"] . "</td>"
-                              . "<td class='text-center'>"
-                              . "<a href='$action?id=" . $list["dies_id"] . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"
-                              . "</td>"
-                              . "</tr>";
+                    <form action="<?php echo $action; ?>" method="POST">
+                      <table class="table table-striped table-sm" id="data-table-x">
+                        <thead>
+                          <tr>
+                            <th class="align-middle pl-2"><input id='checkAll' type='checkbox' style='height: 18px; width: 18px;' /></th>
+                            <th class="">Group</th>
+                            <th class="">Model</th>
+                            <th class="">Dies No</th>
+                            <th class="">Description</th>
+                            <th class="text-center">Total Stroke</th>
+                            <th class="text-center">Running Stroke</th>
+                            <th class="">Status</th>
+                            <th class="">Location</th>
+                            <th class="text-center">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php
+                          if (!empty($data["list"])) {
+                            foreach ($data["list"] as $list) {
+                              echo "<tr>"
+                                . "<td class='align-middle chkbox pl-2'><input name='chk_id[]' type='checkbox' value='" . $list["dies_id"] . "' style='height: 18px; width: 18px;' /></td>"
+                                . "<td class=''>" . $list["group_id"] . "</td>"
+                                . "<td class=''>" . $list["model_id"] . "</td>"
+                                . "<td class=''>" . $list["dies_no"] . "</td>"
+                                . "<td class=''>" . $list["name1"] . "</td>"
+                                . "<td class='text-center pr-3'>" . $formatted_number = number_format($list["stktot"], 0, '.', ',') . "</td>"
+                                . "<td class='text-center pr-3'>" . $formatted_number = number_format($list["stkrun"], 0, '.', ',') . "</td>"
+                                . "<td class=''>" . $list["stats"] . "</td>"
+                                . "<td class=''>" . $list["iostat"] . "</td>"
+                                . "<td class='text-center pr-3'>"
+                                . "<a href='$action?id=" . $list["dies_id"] . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"
+                                . "</td>"
+                                . "</tr>";
+                            }
                           }
-                        }
-                        ?>
-                      </tbody>
-                    </table>
+                          ?>
+                        </tbody>
+                      </table>
+                      <button name="chg_status" type="submit" class="btn btn-dark-blue btn-sm mb-3">Change Status of Selected Row(s)</button> <button name="io_main" type="submit" class="btn btn-dark-blue-outlined btn-sm mb-3">Repair to Vendor / Return to Factory</button>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -132,10 +141,30 @@ and open the template in the editor.
           className: 'btn btn-dark-blue btn-sm',
           text: '<i class="material-icons">download</i>Download Excel',
           exportOptions: {
-            columns: [0, 1, 2, 3, 4, 5]
+            columns: [1, 2, 3, 4, 5, 6, 7, 8]
           }
         }, ]
       });
+    });
+
+    $('td').each(function() {
+      if ($(this).html() == 'Active') {
+        $(this).css('color', 'green');
+      } else if ($(this).html() == 'Inactive') {
+        $(this).css('color', 'red');
+      }
+    });
+
+    $('td').each(function() {
+      if ($(this).html() == 'Factory') {
+        $(this).css('color', 'green');
+      } else if ($(this).html() == 'Vendor') {
+        $(this).css('color', 'red');
+      }
+    });
+
+    $("#checkAll").change(function() {
+      $("input[type='checkbox']").prop("checked", this.checked);
     });
   </script>
 </body>

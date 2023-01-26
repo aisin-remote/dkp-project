@@ -13,7 +13,7 @@ if ($action == "order_repair") {
       $param["ori_id"] = $id;
       $param["crt_by"] = $_SESSION[LOGIN_SESSION];
       $param["chg_by"] = $_SESSION[LOGIN_SESSION];
-      
+
       $photo = $_FILES["ori_doc"];
       $param["ori_doc"] = $_POST["ori_docx"];
       //var_dump($param); die();
@@ -62,7 +62,7 @@ if ($action == "order_repair") {
         }
       }
       $save = array();
-      
+
       if ($id == "0") {
         $save = $class->insert($param);
       } else {
@@ -77,18 +77,19 @@ if ($action == "order_repair") {
     } else {
       $type_list = $class->getType();
       $group_list = $dies->getDiesGroup();
-      
-      if($id == "0") {
+
+      if ($id == "0") {
         $template["submenu"] = "New";
         $model_list = $dies->getDiesModel(null, $group_list[0]["pval1"]);
-        $dies_list = $dies->getListDies(null,$model_list[0]["model_id"]);
-      } else {        
+        $dies_list = $dies->getListDies(null, $model_list[0]["model_id"]);
+      } else {
         $template["submenu"] = "Edit";
         $data["data"] = $class->getById($id);
+
         $model_list = $dies->getDiesModel(null, $data["data"]["group_id"]);
-        $dies_list = $dies->getListDies(null,$data["data"]["model_id"]);
+        $dies_list = $dies->getListDies(null, null, $data["data"]["group_id"], $data["data"]["model_id"]);
       }
-      
+
       require(TEMPLATE_PATH . "/t_m_order_repair_edit.php");
     }
   } else {

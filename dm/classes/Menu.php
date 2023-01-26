@@ -152,4 +152,3 @@ class Menu {
     return $return;
   }
 }
-?>

@@ -67,3 +67,77 @@ DETAIL:  Key (model_id, group_id)=(889F, OPN) already exists.
 DETAIL:  Key (model_id, group_id)=(D05E, CSH) already exists.
 [17-Jan-2023 22:57:47 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "model_pkey"
 DETAIL:  Key (model_id, group_id)=(889F, OPN) already exists.
+[24-Jan-2023 09:45:00 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection timed out (0x0000274C/10060)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[24-Jan-2023 10:47:50 Asia/Jakarta] SQLSTATE[08006] [7] FATAL:  password authentication failed for user "postgres"
+[24-Jan-2023 16:18:56 Asia/Jakarta] ERROR:  column "time_end" does not exist
+LINE 1: ...e) values ($1, $2, $3, $4, $5, DATE_PART('minute',time_end -...
+                                                             ^
+HINT:  There is a column named "time_end" in table "m_prd_content_stop", but it cannot be referenced from this part of the query.
+[24-Jan-2023 16:25:35 Asia/Jakarta] ERROR:  operator is not unique: unknown - unknown
+LINE 1: ...e) values ($1, $2, $3, $4, $5, DATE_PART('minute',$5 - $4)) 
+                                                                ^
+HINT:  Could not choose a best candidate operator. You might need to add explicit type casts.
+[24-Jan-2023 16:26:41 Asia/Jakarta] ERROR:  operator is not unique: unknown - unknown
+LINE 1: ... values ($1, $2, $3, $4, $5, DATE_PART('minute',($5 - $4))) 
+                                                               ^
+HINT:  Could not choose a best candidate operator. You might need to add explicit type casts.
+[24-Jan-2023 16:29:40 Asia/Jakarta] ERROR:  syntax error at or near "-"
+LINE 1: -14' ) 
+        ^
+[24-Jan-2023 16:31:41 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...ime ) values ($1, $2, $3, $4, $5, CAST($5 - $4 as NUMERIC ) 
+                                                                       ^
+[24-Jan-2023 16:33:04 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...ime ) values ($1, $2, $3, $4, $5, CAST($5 - $4 as NUMERIC ) 
+                                                                       ^
+[24-Jan-2023 16:34:08 Asia/Jakarta] ERROR:  operator is not unique: unknown - unknown
+LINE 1: ...end, stop_time ) values ($1, $2, $3, $4, $5,  ($5 - $4)::NUM...
+                                                             ^
+HINT:  Could not choose a best candidate operator. You might need to add explicit type casts.
+[24-Jan-2023 16:34:20 Asia/Jakarta] ERROR:  operator is not unique: unknown - unknown
+LINE 1: ...end, stop_time ) values ($1, $2, $3, $4, $5,  ($5 - $4)::NUM...
+                                                             ^
+HINT:  Could not choose a best candidate operator. You might need to add explicit type casts.
+[24-Jan-2023 16:41:54 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...tart, time_end, stop_time ) values ($1, $2, $3, $4, $5, '5' 
+                                                                       ^
+[24-Jan-2023 16:43:40 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...tart, time_end, stop_time ) values ($1, $2, $3, $4, $5, '5' 
+                                                                       ^
+[24-Jan-2023 16:44:53 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ..._start, time_end, stop_time ) values ($1, $2, $3, $4, $5, 5 
+                                                                       ^
+[24-Jan-2023 16:46:09 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...start, time_end, stop_time ) values ($1, $2, $3, $4, $5, $6 
+                                                                       ^
+[24-Jan-2023 16:46:51 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ..._start, time_end, stop_time ) values ($1, $2, $3, $4, $5, 5 
+                                                                       ^
+[24-Jan-2023 16:47:52 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...tart, time_end, stop_time ) values ($1, $2, $3, $4, $5, '5' 
+                                                                       ^
+[24-Jan-2023 16:48:14 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...tart, time_end, stop_time ) values ($1, $2, $3, $4, $5, '5' 
+                                                                       ^
+[24-Jan-2023 17:11:39 Asia/Jakarta] ERROR:  column "dies_id" does not exist
+LINE 1: ...start = $4, time_end = $5, stop_time = '10' WHERE dies_id = ...
+                                                             ^
+HINT:  Perhaps you meant to reference the column "m_prd_content_stop.time_id".
+[24-Jan-2023 17:12:41 Asia/Jakarta] ERROR:  bind message supplies 5 parameters, but prepared statement "pdo_stmt_00000001" requires 6
+[24-Jan-2023 17:13:55 Asia/Jakarta] ERROR:  bind message supplies 5 parameters, but prepared statement "pdo_stmt_00000001" requires 6
+[24-Jan-2023 17:14:56 Asia/Jakarta] ERROR:  bind message supplies 5 parameters, but prepared statement "pdo_stmt_00000001" requires 6
+[24-Jan-2023 20:41:12 Asia/Jakarta] ERROR:  column "time_start" of relation "m_prd_shift_stop" does not exist
+LINE 1: ...op SET shift_id = $1, srna_id = $2, time_id = $3, time_start...
+                                                             ^
+[24-Jan-2023 20:41:59 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_shift_stop_pkey"
+DETAIL:  Key (shift_id, time_id, srna_id)=(6, 1, 1001) already exists.
+[24-Jan-2023 20:42:04 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_shift_stop_pkey"
+DETAIL:  Key (shift_id, time_id, srna_id)=(4, 1, 1001) already exists.
+[24-Jan-2023 20:42:11 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_shift_stop_pkey"
+DETAIL:  Key (shift_id, time_id, srna_id)=(1, 1, 1001) already exists.
+[24-Jan-2023 20:42:14 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_shift_stop_pkey"
+DETAIL:  Key (shift_id, time_id, srna_id)=(3, 1, 1001) already exists.
+[24-Jan-2023 20:42:17 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_shift_stop_pkey"
+DETAIL:  Key (shift_id, time_id, srna_id)=(4, 1, 1001) already exists.

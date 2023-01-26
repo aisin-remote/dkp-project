@@ -48,14 +48,12 @@ and open the template in the editor.
                     <div class="row">
                       <div class="col-lg-6 col-sm-12">
                         <!-- filter placement -->
-                        <form method="get" target="<?=$action?>">
-                          
-                        </form>
+                        
                       </div>
                       <div class="col-lg-6 col-sm-12">
                         <div class="d-flex justify-content-end">
                           <!-- button placement -->
-                          <a class="btn btn-dark-blue btn-sm mx-2" href="<?=$action?>?id=0">New Subject</a>
+                          <button type="button" class="btn btn-dark-blue btn-sm mx-2" onclick="openModal01()">New Reply</button>
                         </div>
                       </div>
                     </div>
@@ -72,11 +70,10 @@ and open the template in the editor.
                       <table class="table table-striped table-sm" id="data-table">
                         <thead>
                           <tr>
-                            <th class="align-middle">Message No</th>
-                            <th class="align-middle">Date Time</th>
-                            <th class="align-middle">Message Subject</th>
+                            <th class="align-middle">No</th>
+                            <th class="align-middle">Message</th>
+                            <th class="align-middle">Date/Time</th>
                             <th class="align-middle">Created By</th>
-                            <th class="text-center align-middle">View Details</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -84,13 +81,10 @@ and open the template in the editor.
                           if(!empty($data["list"])) {
                             foreach($data["list"] as $list) {
                               echo "<tr>"
-                              . "<td class='align-middle'>".$list["msg_id"]."</td>"
+                              . "<td class='align-middle'>".$list["msg_itm"]."</td>"
+                              . "<td class='align-middle'>".$list["msg_txt"]."</td>"
                               . "<td class='align-middle'>".$list["fdate"]."</td>"
-                              . "<td class='align-middle'>".$list["subject"]."</td>"
-                              . "<td class='align-middle'>".$list["crt_by"]."</td>"
-                              . "<td class='text-center'>"
-                                . "<a href='$action?id=".$list["msg_id"]."' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>visibility</i> detail</a>"        
-                              . "</td>"                                    
+                              . "<td class='align-middle'>".$list["crt_by"]."</td>"                                                               
                               . "</tr>";
                             }
                           }
@@ -110,11 +104,45 @@ and open the template in the editor.
         <?php include 'common/t_footer.php'; ?>
       </div>
     </div>
+    <!-- Modal -->
+    <form method="post" action="<?=$action?>?id=<?=$id?>&" class="modal fade" id="mymodal01" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="mymodal01Label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="mymodal01Label">Messages</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="msg_txt" >Add Reply</label>
+              <textarea class="form-control" id="msg_txt" name="msg_txt" required maxlength="1000" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" name="save" value="detail" class="btn btn-primary" >Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
     <?php include 'common/t_js.php'; ?>
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
       $(document).ready(function () {
+        
       });
+      
+      function openModal01() {
+        $('#mymodal01').modal({
+          keyboard: false
+        });
+      }
+      
+      function saveDetail() {
+        
+      }
     </script>
   </body>
 </html>

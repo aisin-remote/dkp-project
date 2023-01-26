@@ -46,11 +46,13 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Dies Group</label>
                       <div class="col-lg-1 col-md-5 col-sm-12">
-                        <select name="group_id" id="group_id" class="form-control select2" >
+                        <select name="group_id" id="group_id" class="form-control select2">
                           <?php
                           foreach ($group_list as $group) {
                           ?>
-                            <option value="<?php echo $group["pval1"]; ?>" <?php if($group["pval1"]==$group_id){echo "selected";} ?>><?php echo $group["pval1"]; ?></option>
+                            <option value="<?php echo $group["pval1"]; ?>" <?php if ($group["pval1"] == $group_id) {
+                                                                              echo "selected";
+                                                                            } ?>><?php echo $group["pval1"]; ?></option>
                           <?php
                           }
                           ?>
@@ -61,11 +63,13 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Model</label>
                       <div class="col-lg-2 col-md-5 col-sm-12">
-                        <select name="model_id" id="model_id" class="form-control select2" >
+                        <select name="model_id" id="model_id" class="form-control select2">
                           <?php
                           foreach ($model_list as $model) {
                           ?>
-                            <option value="<?php echo $model["model_id"]; ?>" <?php if($model["model_id"]==$model_id){echo "selected";} ?>><?php echo $model["model_id"]; ?></option>
+                            <option value="<?php echo $model["model_id"]; ?>" <?php if ($model["model_id"] == $model_id) {
+                                                                                echo "selected";
+                                                                              } ?>><?php echo $model["model_id"]; ?></option>
                           <?php
                           }
                           ?>
@@ -76,11 +80,13 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Dies No.</label>
                       <div class="col-lg-2 col-md-5 col-sm-12">
-                        <select name="dies_id" id="dies_id" class="form-control select2" >
+                        <select name="dies_id" id="dies_id" class="form-control select2">
                           <?php
                           foreach ($diesid_list as $dies) {
                           ?>
-                            <option value="<?php echo $dies["dies_id"]; ?>" <?php if($dies["dies_id"]==$dies_id){echo "selected";} ?>><?php echo $dies["dies_no"]." - ".$dies["name1"]; ?></option>
+                            <option value="<?php echo $dies["dies_id"]; ?>" <?php if ($dies["dies_id"] == $dies_id) {
+                                                                              echo "selected";
+                                                                            } ?>><?php echo $dies["dies_no"] . " - " . $dies["name1"]; ?></option>
                           <?php
                           }
                           ?>
@@ -91,7 +97,7 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Maintenance Date</label>
                       <div class="col-lg-2 col-md-5 col-sm-12">
-                        <input type="text" name="pmtdt" class="form-control datepicker" value="<?php echo date("Y-m-d"); ?>" required >
+                        <input type="text" name="pmtdt" class="form-control datepicker" value="<?php echo date("Y-m-d"); ?>" required>
                       </div>
                     </div>
 
@@ -120,38 +126,40 @@ and open the template in the editor.
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
     $(document).ready(function() {
-      
+
     });
 
     $("#my-form").submit(function(event) {
       // event.preventDefault();
       $("#group_id, #model_id").removeAttr("disabled");
       $("#btn_save").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
-      $("#btn_save").attr("disabled","disabled");
+      $("#btn_save").attr("disabled", "disabled");
     });
-      
+
     $(".datepicker").flatpickr({
       altInput: true,
       altFormat: "d-m-Y",
       dateFormat: "Y-m-d",
       allowInput: true
     });
-    
-    $("#group_id").change( function(){
-      getDiesModel($("#group_id").val());      
-    }); 
+
+    $("#group_id").change(function() {
+      getDiesModel($("#group_id").val());
+    });
 
     function getDiesModel(group_id) {
       $("#model_id").empty();
       var first_model = "";
-      $.getJSON( "api_get_dies_model",{ group:group_id }, function( data ) {
+      $.getJSON("api_get_dies_model", {
+        group: group_id
+      }, function(data) {
         var items = "";
         //$("#model_id").empty();
         var $i = 0
-        $.each( data, function( key, val ) {
-          if($i == 0) {
+        $.each(data, function(key, val) {
+          if ($i == 0) {
             first_model = val.model_id;
-            if(first_model.length > 0) {
+            if (first_model.length > 0) {
               getDiesList(first_model);
             }
           }
@@ -163,18 +171,20 @@ and open the template in the editor.
         $("#model_id").html(items);
       });
     }
-    
-    $("#model_id").change( function(){
+
+    $("#model_id").change(function() {
       getDiesList($("#model_id").val());
-    }); 
-    
+    });
+
     function getDiesList(model_id) {
       $("#dies_id").empty();
-      $.getJSON( "api_get_dies_list",{ model:model_id }, function( data ) {
+      $.getJSON("api_get_dies_list", {
+        model: model_id
+      }, function(data) {
         var items = "";
         //$("#model_id").empty();
 
-        $.each( data, function( key, val ) {
+        $.each(data, function(key, val) {
           console.log(val.model_id);
           items += "<option value='" + val.dies_id + "'>" + val.dies_no + " - " + val.name1 + "</option>";
         });

@@ -4,6 +4,39 @@ if ($action == "dies") {
   $template["menu"] = "Dies";
   $data["list"];
   $class = new Dies();
+
+  if (isset($_POST["chg_status"])) {
+    $all_id = $_POST["chk_id"];
+    $extract_id = implode("','", $all_id);
+
+    $update = $class->updateStatus($extract_id);
+
+    if ($update["status"] == true) {
+      header("Location: " . $action . "?success=Status%20Updated");
+    } else {
+      header("Location: " . $action . "?error=" . $update["message"]);
+    }
+  }
+
+  if (isset($_POST["io_main"])) {
+    $param = $_POST;
+    $all_id = $_POST["chk_id"];
+    $extract_id = implode("','", $all_id);
+
+    $update = $class->updateIO($extract_id);
+    $i = 0;
+    foreach ($all_id as $ext) {
+      $save = $class->insertIO($all_id[$i]);
+      $i++;
+    }
+
+    if ($update["status"] == true) {
+      header("Location: " . $action . "?success=Location%20Updated");
+    } else {
+      header("Location: " . $action . "?error=" . $update["message"]);
+    }
+  }
+
   if (isset($_GET["id"])) {
     $id = $_GET["id"];
     if (isset($_POST["save"])) {

@@ -32,4 +32,3 @@ if($action == "logout") {
   unset($_SESSION["USERNAME"]);
   header("Location: login");
 }
-?>

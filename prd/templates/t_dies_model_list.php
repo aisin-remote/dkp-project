@@ -84,7 +84,7 @@ and open the template in the editor.
                         if (!empty($data["list"])) {
                           foreach ($data["list"] as $list) {
                             echo "<tr>"
-                              . "<td class='align-middle'>" . $list["lines"] . "</td>"
+                              . "<td class='align-middle'>" . $list["line_names"] . "</td>"
                               . "<td class='align-middle'>" . $list["group_id"] . "</td>"
                               . "<td class='align-middle'>" . $list["model_id"] . "</td>"
                               . "<td class='align-middle'>" . $list["name1"] . "</td>"

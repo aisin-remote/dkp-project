@@ -217,7 +217,7 @@ class Dies
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.dies_id, a.dies_no, a.model_id, a.group_id, a.name1, a.stktot, a.stkrun, a.stats, a.stk6k, a.ewstk, a.gstat, a.iostat FROM m_dm_dies_asset a "
+    $sql = "SELECT a.dies_id, a.dies_no, a.model_id, a.group_id, a.name1, a.stktot, a.stkrun, a.stats FROM m_dm_dies_asset a "
       . "INNER JOIN m_dm_dies_model b ON b.model_id = a.model_id AND b.group_id = a.group_id "
       . "WHERE 1=1 ";
     if (!empty($line)) {
@@ -227,8 +227,8 @@ class Dies
     if (!empty($stats)) {
       $sql .= " AND a.stats = '$stats' ";
     }
-
-    if (!empty($group_id) && !empty($model_id)) {
+    
+    if(!empty($group_id) && !empty($model_id)) {
       $sql .= " AND a.group_id = '$group_id' AND a.model_id = '$model_id' ";
     }
     $sql .= " ORDER by group_id ASC, model_id ASC, dies_no ASC ";
@@ -239,12 +239,6 @@ class Dies
           $row["stats"] = "Active";
         } elseif ($row["stats"] == "I") {
           $row["stats"] = "Inactive";
-        }
-
-        if ($row["iostat"] == "I") {
-          $row["iostat"] = "Factory";
-        } elseif ($row["iostat"] == "O") {
-          $row["iostat"] = "Vendor";
         }
         $return[] = $row;
       }
@@ -279,8 +273,8 @@ class Dies
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO m_dm_dies_asset (dies_no, model_id, group_id, name1, ctsec, ewstk, img01, stktot, stkrun, stk2k, stk2k_stat, stk6k, stk6k_stat, stats) "
-        . "values (:dies_no, :model_id, :group_id, :name1, :ctsec, :ewstk, :img01, '0', '0', '0','N','0','N', 'A') ";
+      $sql = "INSERT INTO m_dm_dies_asset (dies_no, model_id, group_id, name1, ctsec, ewstk, img01, stktot, stkrun, stk2k, stk2k_stat, stk6k, stk6k_stat) "
+        . "values (:dies_no, :model_id, :group_id, :name1, :ctsec, :ewstk, :img01, '0', '0', '0','N','0','N') ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":dies_no", $param["dies_no"], PDO::PARAM_STR);
       $stmt->bindValue(":model_id", $param["model_id"], PDO::PARAM_STR);
@@ -348,83 +342,6 @@ class Dies
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":dies_id", $dies_id, PDO::PARAM_STR);
     $stmt->bindValue(":gstat", $gstat, PDO::PARAM_STR);
-    if ($stmt->execute()) {
-      $return["status"] = true;
-    } else {
-      $error = $stmt->errorInfo();
-      $return["status"] = false;
-      $return["message"] = trim(str_replace("\n", " ", $error[2]));
-      error_log($error[2]);
-    }
-    $stmt = null;
-    $conn = null;
-    return $return;
-  }
-
-  public function updateStatus($extract_id)
-  {
-    $return = array();
-    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "UPDATE m_dm_dies_asset SET stats = "
-      . "(CASE "
-      . "WHEN stats = 'A' THEN 'I' "
-      . "WHEN stats = 'I' THEN 'A' "
-      . "ELSE stats "
-      . "END) "
-      . "WHERE dies_id IN('$extract_id')";
-
-    $stmt = $conn->prepare($sql);
-    if ($stmt->execute()) {
-      $return["status"] = true;
-    } else {
-      $error = $stmt->errorInfo();
-      $return["status"] = false;
-      $return["message"] = trim(str_replace("\n", " ", $error[2]));
-      error_log($error[2]);
-    }
-    $stmt = null;
-    $conn = null;
-    return $return;
-  }
-
-  public function insertIO($extract_id)
-  {
-    $return = array();
-    if (empty($extract_id)) {
-      $return["status"] = false;
-      $return["message"] = "Data Empty";
-    } else {
-      $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO t_dm_dies_iohist (dies_id, iostat) "
-        . "values ((SELECT dies_id FROM m_dm_dies_asset WHERE dies_id = '$extract_id'), (SELECT iostat FROM m_dm_dies_asset WHERE dies_id = '$extract_id')) ";
-      $stmt = $conn->prepare($sql);
-      if ($stmt->execute()) {
-        $return["status"] = true;
-      } else {
-        $error = $stmt->errorInfo();
-        $return["status"] = false;
-        $return["message"] = trim(str_replace("\n", " ", $error[2]));
-        error_log($error[2]);
-      }
-      $stmt = null;
-      $conn = null;
-    }
-    return $return;
-  }
-
-  public function updateIO($extract_id)
-  {
-    $return = array();
-    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "UPDATE m_dm_dies_asset SET iostat = "
-      . "(CASE "
-      . "WHEN iostat = 'I' THEN 'O' "
-      . "WHEN iostat = 'O' THEN 'I' "
-      . "ELSE iostat "
-      . "END) "
-      . "WHERE dies_id IN('$extract_id')";
-
-    $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       $return["status"] = true;
     } else {

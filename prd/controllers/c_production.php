@@ -7,6 +7,7 @@ if ($action == "daily_production_entry") {
   $member = new Member();
   $dies = new Dies();
   $stop = new Stop();
+  $user = new User();
   if (isset($_GET["line"])) {
     $line = $_GET["line"];
     $date = $_GET["date"];
@@ -47,9 +48,10 @@ if ($action == "daily_production_entry") {
           header("Location: " . $action . "?line=" . $line . "&date=" . $date . "&shift=" . $shift . "&prd_seq=" . $seq . "&error=" . $error);
         }
       }
-      $list_stop = $stop->getList('S', "U");
+      $list_stop = $stop->getList('S', null);
       $list_action = $stop->getList('A');
-      $list_person = $class->getPersonById($line, $date, $shift);
+      //$list_person = $class->getPersonById($line, $date, $shift);
+      $list_person = $member->getList("OP", "A");
       $data_item_dtl = $class->getItemById($line, $date, $shift, $seq);
       $data_stop = $class->getStopList($line, $date, $shift, $seq);
 
@@ -68,6 +70,18 @@ if ($action == "daily_production_entry") {
         $data_header = $class->getHeaderById($line, $date, $shift);
         $data_item = $class->getListItemById($line, $date, $shift);
         $template["submenu"] = $data_header["line_name"];
+        //cek apakah user ada role leader
+        $op_role = "OPERATOR";
+        $cek_user = $user->getUserRole($_SESSION[LOGIN_SESSION]);
+        if (!empty($cek_user)) {
+          foreach ($cek_user as $usr) {
+            if ($usr == "LEADER") {
+              $op_role = "LEADER";
+              break;
+            }
+          }
+        }
+        //end of cek apakah user ada role leader
         require(TEMPLATE_PATH . "/t_production_entry_step2.php");
       } else {
         //step 1 bila belum ada data

@@ -73,12 +73,13 @@ and open the template in the editor.
                     <table class="table table-striped table-sm" id="data-table">
                       <thead>
                         <tr>
+                          <th class="">PM. Doc. No.</th>
                           <th class="">Group</th>
                           <th class="">Model</th>
                           <th class="">Dies No.</th>
                           <th class="">Dies Description</th>
-                          <th class="">Maintenance Date</th>
-                          <th class="">Status</th>
+                          <th class="text-center">Maintenance Date</th>
+                          <th class="text-center">Status</th>
                           <th class="text-center">Action</th>
                         </tr>
                       </thead>
@@ -87,12 +88,13 @@ and open the template in the editor.
                         if (!empty($data["list"])) {
                           foreach ($data["list"] as $list) {
                             echo "<tr>"
+                              . "<td class=''>" . $list["pmtid"] . "</td>"
                               . "<td class=''>" . $list["group_id"] . "</td>"
                               . "<td class=''>" . $list["model_id"] . "</td>"
                               . "<td class=''>" . $list["dies_no"] . "</td>"
                               . "<td class=''>" . $list["name1"] . "</td>"
                               . "<td class='text-center'>" . $list["pmt_date"] . "</td>"
-                              . "<td class='text-center'>" . $list["status"] . "</td>"
+                              . "<td class='text-center ".$list["text_color"]."'>" . $list["pmstat_tx"] . "</td>"
                               . "<td class='text-center'>"
                               . "<a href='$action?id=".$list["pmtid"]."&step=2' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"
                               . "</td>"

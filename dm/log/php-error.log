@@ -366,27 +366,39 @@ LINE 1: ...', '1', $6, '1', '0', '1', '0', '1', '0', '1', '0', '1', $7
 [19-Dec-2022 15:31:06 Asia/Jakarta] ERROR:  value too long for type character varying(1)
 [19-Dec-2022 15:39:40 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "t_dm_pergantian_part_key"
 DETAIL:  Key (dies_id)=(003) already exists.
-[04-Jan-2023 11:58:02 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_checksheet_preventive.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_checksheet.php on line 8
-[04-Jan-2023 11:59:52 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_checksheet_preventive.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_checksheet.php on line 8
-[04-Jan-2023 14:38:13 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_order_repair_improvement.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_order_repair.php on line 8
-[04-Jan-2023 14:39:46 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_order_repair_improvement.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_order_repair.php on line 8
-[04-Jan-2023 15:14:29 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[04-Jan-2023 15:15:56 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[04-Jan-2023 15:17:25 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[04-Jan-2023 15:18:07 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[04-Jan-2023 15:18:20 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[04-Jan-2023 15:18:26 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[04-Jan-2023 15:21:42 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[04-Jan-2023 15:22:08 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[04-Jan-2023 15:24:06 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[04-Jan-2023 15:25:51 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[04-Jan-2023 15:53:02 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[04-Jan-2023 15:53:55 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[04-Jan-2023 16:21:11 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[04-Jan-2023 17:00:08 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_r_message.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_messages.php on line 8
-[05-Jan-2023 15:18:40 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_traceability_report2.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aisin\dm\controllers\c_rep_checksheet.php on line 38
-[17-Jan-2023 10:08:35 Asia/Jakarta] syntax error, unexpected '?>'
-[17-Jan-2023 11:26:08 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "model_pkey"
-DETAIL:  Key (model_id, group_id)=(OPN D98T, OPN) already exists.
-[17-Jan-2023 11:27:54 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "model_pkey"
-DETAIL:  Key (model_id, group_id)=(TCC D98T, TCC) already exists.
+[25-Jan-2023 11:21:34 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection timed out (0x0000274C/10060)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[25-Jan-2023 11:21:55 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection timed out (0x0000274C/10060)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[25-Jan-2023 11:22:31 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection timed out (0x0000274C/10060)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[25-Jan-2023 11:22:52 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection timed out (0x0000274C/10060)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[25-Jan-2023 11:23:13 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection timed out (0x0000274C/10060)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[25-Jan-2023 12:20:32 Asia/Jakarta] syntax error, unexpected ')'
+[25-Jan-2023 14:45:16 Asia/Jakarta] syntax error, unexpected '}'
+[25-Jan-2023 14:45:23 Asia/Jakarta] syntax error, unexpected ';'
+[25-Jan-2023 14:57:51 Asia/Jakarta] syntax error, unexpected end of file
+[25-Jan-2023 20:50:07 Asia/Jakarta] ERROR:  invalid input syntax for integer: "19|IN"
+LINE 1: ... = 'O' THEN 'I' ELSE iostat END) WHERE dies_id IN('19|IN','9...
+                                                             ^
+[25-Jan-2023 20:50:52 Asia/Jakarta] ERROR:  invalid input syntax for integer: "19|IN"
+LINE 1: ... = 'O' THEN 'I' ELSE iostat END) WHERE dies_id IN('19|IN','9...
+                                                             ^
+[25-Jan-2023 20:51:29 Asia/Jakarta] ERROR:  invalid input syntax for integer: "19|IN"
+LINE 1: ... = 'O' THEN 'I' ELSE iostat END) WHERE dies_id IN('19|IN','9...
+                                                             ^
+[25-Jan-2023 20:54:17 Asia/Jakarta] PHP Fatal error:  Cannot use [] for reading in C:\xampp\htdocs\aisin\dm\controllers\c_dies.php on line 27
+[25-Jan-2023 20:59:42 Asia/Jakarta] ERROR:  invalid input syntax for integer: "19|IN"
+LINE 1: ... = 'O' THEN 'I' ELSE iostat END) WHERE dies_id IN('19|IN','9...
+                                                             ^
+[26-Jan-2023 09:46:58 Asia/Jakarta] ERROR:  cannot insert into column "iohid"
+DETAIL:  Column "iohid" is an identity column defined as GENERATED ALWAYS.
+HINT:  Use OVERRIDING SYSTEM VALUE to override.
+[26-Jan-2023 09:54:44 Asia/Jakarta] ERROR:  more than one row returned by a subquery used as an expression

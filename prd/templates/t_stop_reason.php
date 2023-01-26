@@ -76,6 +76,7 @@ and open the template in the editor.
                           <th class="align-middle">Type</th>
                           <th class="align-middle">Planned/Unplanned</th>
                           <th class="align-middle">Description</th>
+                          <th class="align-middle">Shift</th>
                           <th class="text-center align-middle">Action</th>
                         </tr>
                       </thead>
@@ -88,6 +89,7 @@ and open the template in the editor.
                               . "<td class='align-middle'>" . $list["type1_text"] . "</td>"
                               . "<td class='align-middle'>" . $list["type2_text"] . "</td>"
                               . "<td class='align-middle'>" . $list["name1"] . "</td>"
+                              . "<td class='align-middle'>" . $list["shift"] . "</td>"
                               . "<td class='text-center'>"
                               . "<a href='$action?id=" . $list["srna_id"] . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"
                               . "</td>"
@@ -128,7 +130,7 @@ and open the template in the editor.
           className: 'btn btn-pale-green btn-sm',
           text: '<i class="material-icons">download</i>Download Excel',
           exportOptions: {
-            columns: [0, 1, 2, 3]
+            columns: [0, 1, 2, 3, 4]
           }
         }, ]
       });

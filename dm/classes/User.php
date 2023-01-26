@@ -317,5 +317,3 @@ class User {
     return $return;
   }*/
 }
-
-?>

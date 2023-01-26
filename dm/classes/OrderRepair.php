@@ -119,5 +119,3 @@ class OrderRepair {
     return $return;
   }
 }
-
-?>

@@ -55,4 +55,3 @@ if($action == "user") {
     require( TEMPLATE_PATH . "/t_user_list.php" );
   }
 }
-?>

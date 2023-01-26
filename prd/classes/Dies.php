@@ -19,11 +19,14 @@ class Dies
     return $return;
   }
 
-  public function getDiesLine($id)
+  public function getDiesLine($id, $group_id)
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT * FROM m_prd_dies_model_line WHERE UPPER(model_id) = :id";
+    $sql = "SELECT * FROM m_dm_dies_model_line WHERE UPPER(model_id) = '$id' AND group_id = '$group_id' ";
+
+    // echo $sql;
+    // die();
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":id", strtoupper($id), PDO::PARAM_STR);
     if ($stmt->execute()) {
@@ -36,11 +39,11 @@ class Dies
     return $return;
   }
 
-  public function getModelById($id)
+  public function getModelById($id, $group_id)
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT * FROM m_dm_dies_model WHERE model_id = :id";
+    $sql = "SELECT * FROM m_dm_dies_model WHERE model_id = '$id' AND group_id = '$group_id' ";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":id", strtoupper($id), PDO::PARAM_STR);
     if ($stmt->execute()) {
@@ -57,12 +60,36 @@ class Dies
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.*, b.name1 as line_name, (select string_agg(line_id, ', ') from m_dm_dies_model_line where model_id = a.model_id and group_id = a.group_id) as lines, (select name1 from m_prd_line where line_id = lines) FROM m_dm_dies_model a "
-      . "LEFT JOIN m_prd_line b ON b.line_id = a.line_id "
+    $sql = "SELECT a.*, string_agg(c.name1,', ') as line_names "
+      . "FROM m_dm_dies_model a "
+      . "INNER JOIN m_dm_dies_model_line b ON b.group_id = a.group_id and b.model_id = a.model_id "
+      . "INNER JOIN m_prd_line c ON c.line_id = b.line_id "
       . "WHERE 1=1 ";
+    $sql .= "GROUP BY 1,2,3,4 ";
 
-    echo $sql;
-    die();
+    // echo $sql;
+    // die();
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function getLineName()
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT a.name1 "
+      . "FROM m_prd_line a, m_dm_dies_model_line b"
+      . "WHERE line_id IN((select string_agg(line_id, ', ') from m_dm_dies_model_line where model_id = a.model_id and group_id = a.group_id)) ";
+
+    // echo $sql;
+    // die();
     $sql .= " ORDER by model_id ASC ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
@@ -101,7 +128,7 @@ class Dies
     $sql = "SELECT * FROM m_dm_dies_model "
       . "WHERE 1=1 ";
     if (!empty($line_id)) {
-      $sql .= " AND line_id = '$line_id' ";
+      $sql .= " AND model_id IN (select model_id FROM m_dm_dies_model_line WHERE line_id = '$line_id' ) AND group_id in (select group_id FROM m_dm_dies_model_line WHERE line_id = '$line_id') ";
     }
 
     if (!empty($group)) {
@@ -133,7 +160,7 @@ class Dies
       $stmt->bindValue(":model_id", strtoupper(trim($param["model_id"])), PDO::PARAM_STR);
       $stmt->bindValue(":name1", $param["name1"], PDO::PARAM_STR);
       $stmt->bindValue(":group_id", $param["group_id"], PDO::PARAM_STR);
-      $stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
+      //$stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
 
       if ($stmt->execute()) {
         $return["status"] = true;
@@ -160,13 +187,13 @@ class Dies
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "UPDATE m_dm_dies_model SET model_id = :model_id, name1 = :name1, group_id = :group_id, line_id = :line_id "
+      $sql = "UPDATE m_dm_dies_model SET model_id = :model_id, name1 = :name1, group_id = :group_id " //, line_id = :line_id "
         . "WHERE model_id = :model_id AND group_id = :group_id";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":model_id", strtoupper($param["model_id"]), PDO::PARAM_STR);
       $stmt->bindValue(":name1", $param["name1"], PDO::PARAM_STR);
       $stmt->bindValue(":group_id", $param["group_id"], PDO::PARAM_STR);
-      $stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
+      //$stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
 
       if ($stmt->execute()) {
         $return["status"] = true;
@@ -239,21 +266,29 @@ class Dies
     return $return;
   }
 
-  public function getListDies($line = null)
+  public function getListDies($line = null, $stats = null)
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.dies_id, a.dies_no, a.model_id, a.group_id, a.name1, b.line_id, c.name1 as line_name, a.stktot, a.stkrun FROM m_dm_dies_asset a "
+    $sql = "SELECT a.dies_id, a.dies_no, a.model_id, a.group_id, a.name1, a.stktot, a.stkrun, a.stats FROM m_dm_dies_asset a "
       . "INNER JOIN m_dm_dies_model b ON b.model_id = a.model_id AND b.group_id = a.group_id "
-      . "LEFT JOIN m_prd_line c ON c.line_id = b.line_id "
       . "WHERE 1=1 ";
     if (!empty($line)) {
-      $sql .= " AND b.line_id = '$line' ";
+      $sql .= " AND b.model_id IN (select model_id FROM m_dm_dies_model_line WHERE line_id = '$line' ) AND b.group_id in (select group_id FROM m_dm_dies_model_line WHERE line_id = '$line') ";
     }
-    $sql .= " ORDER by dies_id ASC ";
+
+    if (!empty($stats)) {
+      $sql .= " AND a.stats = '$stats' ";
+    }
+    $sql .= " ORDER by group_id ASC, model_id ASC, dies_no ASC ";
     $stmt = $conn->prepare($sql);
-    if ($stmt->execute()) {
+    if ($stmt->execute() or die($sql)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        if ($row["stats"] == "A") {
+          $row["stats"] = "Active";
+        } elseif ($row["stats"] == "I") {
+          $row["stats"] = "Inactive";
+        }
         $return[] = $row;
       }
     }
@@ -278,6 +313,8 @@ class Dies
     $conn = null;
     return $return;
   }
+
+
 
   public function insertDies($param = array())
   {
@@ -379,6 +416,53 @@ class Dies
       $return["message"] = trim(str_replace("\n", " ", $error[2]));
       error_log($error[2] . " SQL Trace :" . $sql);
     }
+    return $return;
+  }
+
+  public function updateStatus($extract_id)
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "UPDATE m_dm_dies_asset SET stats = "
+      . "(CASE "
+      . "WHEN stats = 'A' THEN 'I' "
+      . "WHEN stats = 'I' THEN 'A' "
+      . "ELSE stats "
+      . "END) "
+      . "WHERE dies_id IN('$extract_id')";
+
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function delete($id)
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "DELETE FROM m_dm_dies_asset WHERE dies_id = '$id'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(":dies_id", strtoupper($id), PDO::PARAM_STR);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
+    }
+
+    $stmt = null;
+    $conn = null;
     return $return;
   }
 }

@@ -26,7 +26,9 @@ if ($action == "dies_model") {
       if ($id == "0") {
         $data["data"] = array();
       } else {
-        $data["data"] = $class->getModelById($id);
+
+        $group_id = $_GET["id2"];
+        $data["data"] = $class->getModelById($id, $group_id);
       }
       // $device_types = $class->getDeviceType();
       $model_id = $_GET["id"];
@@ -34,7 +36,11 @@ if ($action == "dies_model") {
       $group_list = $class->getDiesGroup();
       $line_list = $production->getListLine();
       $data["line"] = $class->getListLine();
-      $data["dies_line"] = $class->getDiesLine($id);
+      $data["dies_line"] = $class->getDiesLine($model_id, $group_id);
+      $data["line_name"] = $class->getLineName();
+
+      // var_dump($data["line_name"]);
+      // die();
       require(TEMPLATE_PATH . "/t_dies_model_edit.php");
     }
   } else {

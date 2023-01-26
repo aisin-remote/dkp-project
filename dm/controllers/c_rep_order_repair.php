@@ -20,6 +20,7 @@ if ($action == "r_order_repair_and_improvement") {
     $dies_no = $_GET["dies_no"];
     $ori_type = $_GET["ori_type"];
 
+
     $data["list"] = $class->getListOri($date_from, $date_to, $group_id, $model_id, $dies_no, $ori_type);
     require(TEMPLATE_PATH . "/t_rep_ori.php");
 }
