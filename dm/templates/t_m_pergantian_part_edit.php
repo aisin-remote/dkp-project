@@ -165,13 +165,19 @@ and open the template in the editor.
                         <?php
                             if($row["part_id"] == "1.3.1.1") {
                               echo "<tr><td></td><td colspan='3' id='core_pin_dtl_f'>";
+                              echo "<div class='input-group input-group-sm mb-1' >
+                                      <input readonly type='text' class='form-control' value='Core Pin No.'>
+                                      <input readonly type='text' class='form-control' value='Posisi'>
+                                      <input readonly type='text' class='form-control' value='Alasan Ganti'>
+                                      <div class='input-group-append'><button disabled type='button' class='btn btn-outline-secondary'><i class='material-icons'>delete</i></button></div>
+                                    </div>";
                               if(!empty($data_core_pin)) {
                                 foreach($data_core_pin as $xrow) {
                                   if($xrow["part_id"] == $row["part_id"]) {
                                     echo "<div class='input-group input-group-sm mb-1' id='core_pin_dtl_f_".$xrow["seqno"]."'>
-                                          <input readonly type='text' class='form-control' name='text_f[".$xrow["seqno"]."][1]' value='".$xrow["text1"]."'>
-                                          <input readonly type='text' class='form-control' name='text_f[".$xrow["seqno"]."][2]' value='".$xrow["text2"]."'>
-                                          <input readonly type='text' class='form-control' name='text_f[".$xrow["seqno"]."][3]' value='".$xrow["text3"]."'>
+                                          <input readonly type='text' class='form-control bg-light' name='text_f[".$xrow["seqno"]."][1]' value='".$xrow["text1"]."'>
+                                          <input readonly type='text' class='form-control bg-light' name='text_f[".$xrow["seqno"]."][2]' value='".$xrow["text2"]."'>
+                                          <input readonly type='text' class='form-control bg-light' name='text_f[".$xrow["seqno"]."][3]' value='".$xrow["text3"]."'>
                                           <div class='input-group-append'>
                                            <button type='button' class='btn btn-outline-danger' onclick=\"delDetailCorePin('f','".$xrow["seqno"]."')\"><i class='material-icons'>delete</i></button>
                                           </div>
@@ -204,13 +210,19 @@ and open the template in the editor.
                         <?php
                             if($row["part_id"] == "1.3.2.1") {
                               echo "<tr><td></td><td colspan='3' id='core_pin_dtl_m'>";
+                              echo "<div class='input-group input-group-sm mb-1' >
+                                      <input readonly type='text' class='form-control' value='Core Pin No.'>
+                                      <input readonly type='text' class='form-control' value='Posisi'>
+                                      <input readonly type='text' class='form-control' value='Alasan Ganti'>
+                                      <div class='input-group-append'><button disabled type='button' class='btn btn-outline-secondary'><i class='material-icons'>delete</i></button></div>
+                                    </div>";
                               if(!empty($data_core_pin)) {
                                 foreach($data_core_pin as $xrow) {
                                   if($xrow["part_id"] == $row["part_id"]) {
                                     echo "<div class='input-group input-group-sm mb-1' id='core_pin_dtl_m_".$xrow["seqno"]."'>
-                                          <input readonly type='text' class='form-control' name='text_m[".$xrow["seqno"]."][1]' value='".$xrow["text1"]."'>
-                                          <input readonly type='text' class='form-control' name='text_m[".$xrow["seqno"]."][2]' value='".$xrow["text2"]."'>
-                                          <input readonly type='text' class='form-control' name='text_m[".$xrow["seqno"]."][3]' value='".$xrow["text3"]."'>
+                                          <input readonly type='text' class='form-control bg-light' name='text_m[".$xrow["seqno"]."][1]' value='".$xrow["text1"]."'>
+                                          <input readonly type='text' class='form-control bg-light' name='text_m[".$xrow["seqno"]."][2]' value='".$xrow["text2"]."'>
+                                          <input readonly type='text' class='form-control bg-light' name='text_m[".$xrow["seqno"]."][3]' value='".$xrow["text3"]."'>
                                           <div class='input-group-append'>
                                            <button type='button' class='btn btn-outline-danger' onclick=\"delDetailCorePin('m','".$xrow["seqno"]."')\"><i class='material-icons'>delete</i></button>
                                           </div>
@@ -250,15 +262,15 @@ and open the template in the editor.
         <div class="modal-body">
           <input type="hidden" id="x_part_id">
           <div class="row my-2">
-            <div class="col-4"><label class="col-form-label">Serial No</label></div>
+            <div class="col-4"><label class="col-form-label">Core Pin No.</label></div>
             <div class="col"><input type="text" id="text1" class="form-control" value=""></div>
           </div>
           <div class="row my-2">
-            <div class="col-4"><label class="col-form-label">Remarks 1</label></div>
+            <div class="col-4"><label class="col-form-label">Posisi</label></div>
             <div class="col"><input type="text" id="text2" class="form-control" value=""></div>
           </div>
           <div class="row my-2">
-            <div class="col-4"><label class="col-form-label">Remarks 2</label></div>
+            <div class="col-4"><label class="col-form-label">Alasan Ganti</label></div>
             <div class="col"><input type="text" id="text3" class="form-control" value=""></div>
           </div>
         </div>
@@ -366,9 +378,9 @@ and open the template in the editor.
       var text2 = $("#text2").val();
       var text3 = $("#text3").val();
       var append_data = "<div class='input-group input-group-sm mb-1' id='core_pin_dtl_"+type+"_"+counter+"'>\n\
-                          <input readonly type='text' class='form-control' name='text_"+type+"["+counter+"][1]' value='"+text1+"'>\n\
-                          <input readonly type='text' class='form-control' name='text_"+type+"["+counter+"][2]' value='"+text2+"'>\n\
-                          <input readonly type='text' class='form-control' name='text_"+type+"["+counter+"][3]' value='"+text3+"'>\n\
+                          <input readonly type='text' class='form-control bg-light' name='text_"+type+"["+counter+"][1]' value='"+text1+"'>\n\
+                          <input readonly type='text' class='form-control bg-light' name='text_"+type+"["+counter+"][2]' value='"+text2+"'>\n\
+                          <input readonly type='text' class='form-control bg-light' name='text_"+type+"["+counter+"][3]' value='"+text3+"'>\n\
                           <div class='input-group-append'>\n\
                            <button type='button' class='btn btn-outline-danger' onclick=\"delDetailCorePin('"+type+"','"+counter+"')\"><i class='material-icons'>delete</i></button>\n\
                           </div>\n\
