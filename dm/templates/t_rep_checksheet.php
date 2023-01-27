@@ -207,6 +207,17 @@ and open the template in the editor.
                     $(this).css('color', 'red');
                 }
             });
+
+            var table = $('#data-table-x').DataTable();
+            table.on('draw.dt', function() {
+                $('td').each(function() {
+                    if ($(this).html() == 'Completed') {
+                        $(this).css('color', 'green');
+                    } else if ($(this).html() == 'On Progress') {
+                        $(this).css('color', 'red');
+                    }
+                });
+            });
         });
     </script>
 </body>
