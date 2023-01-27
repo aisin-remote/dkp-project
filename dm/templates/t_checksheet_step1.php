@@ -183,13 +183,14 @@ and open the template in the editor.
     }
 
     $("#model_id").change(function() {
-      getDiesList($("#model_id").val());
+      getDiesList($("#group_id").val(),$("#model_id").val());
     });
 
-    function getDiesList(model_id) {
+    function getDiesList(group_id, model_id) {
       $("#dies_id").empty();
       $.getJSON("api_get_dies_list", {
-        model: model_id
+        model: model_id,
+        group_id: group_id
       }, function(data) {
         var items = "";
         //$("#model_id").empty();

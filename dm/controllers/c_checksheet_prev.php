@@ -318,7 +318,7 @@ if ($action == "checksheet_preventive") {
       } else {
         $template["submenu"] = $id;
         $data["data"] = $class->getChecksheetById($id);
-
+        
         require(TEMPLATE_PATH . "/t_checksheet_step2.php");
       }
     }
