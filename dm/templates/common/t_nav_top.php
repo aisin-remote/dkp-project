@@ -11,6 +11,9 @@
 
     <ul class="navbar-nav ml-auto ml-md-0">
       <li class="nav-item">
+        <button class="btn btn-link my-sm-0 " id="fs-btn"><i class="material-icons">fullscreen</i></button>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="profile" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="material-icons text-24px">account_circle</i></a>
       </li>
       <li class="nav-item">

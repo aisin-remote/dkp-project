@@ -17,15 +17,10 @@ and open the template in the editor.
     <?php include "common/t_nav_left.php"; ?>
     <div id="layoutSidenav_content">
       <main>
-        <div class="container-fluid mt-2">
-          <ol class="breadcrumb mb-2">
-            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
-          </ol>
+        <div class="container-fluid mt-2" id="fs">
           <div class="card mb-3">
             <div class="card-body">
-              <h3 class="text-uli-blue">Dies Status</h3>
-              <div class="row">
+              <div class="row" id="dashboard">
                 <?php
                 if (!empty($data_group)) {
                   foreach ($data_group as $grp) {
@@ -50,7 +45,7 @@ and open the template in the editor.
 
                               echo "<div class='col-lg-3 p-0'>"
                                 . "<div class='card'>"
-                                . "<a href='CHECKSHEET_PREVENTIVE?id=0&step=1&group_id=" . $dies["group_id"] . "&model_id=" . $dies["model_id"] . "&dies_id=" . $dies["dies_id"] . "' class='card-body border border-secondary rounded p-1  " . $dies["bg_color"] . "'>"
+                                . "<a id='dies_data' href='CHECKSHEET_PREVENTIVE?id=0&step=1&group_id=" . $dies["group_id"] . "&model_id=" . $dies["model_id"] . "&dies_id=" . $dies["dies_id"] . "' class='card-body border border-secondary rounded p-1  " . $dies["bg_color"] . "'>"
                                 . "<h4 class='card-title text-center mb-0 text-dark font-weight-bold'>" . $dies["dies_no"] . "</h4>"
                                 . "<p class='m-0 text-center text-dark small text-nowrap font-weight-bold' >Stroke</p>"
                                 . "<p class='m-0 text-dark small text-nowrap font-weight-bold '>" . str_pad("Prev", 6, " ", STR_PAD_RIGHT) . "<span>:" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span></p>"
@@ -117,35 +112,103 @@ and open the template in the editor.
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    setInterval(updateDashboard, 1000);
+    setInterval(updateDashboard, 5000);
 
     $(document).ready(function() {
 
     });
 
     function updateDashboard() {
-      /*$.ajax({
-        type: "POST",
-        url: "get_pos",
-        crossDomain: true,
-        cache: false,
-        data : {},
-        success: function (data) {
-          var obj = $.parseJSON(data);
-          
-          if (obj.length > 0) {
-            //error
-            var dashboard1 = "";
-            $.each(obj,function(index, value){                
-              dashboard1 += "<tr><td class='text-center'>"+value.id_rfid+"</td><td class='text-center'>"+value.id_pos+"</td></tr>";
+      $.getJSON(
+        "api_dashboard_dm", {},
+        function(data) {
+          var data_dies = data.data_dies;
+          var data_group = data.data_group;
+          var data_model = data.data_model
+
+          var append_data = "";
+          if (data_group.length !== 0) {
+            var i = 0;
+            $.each(data_group, function(row, grp) {
+              append_data += "<div class='col-lg-4 col-md-6 col-sm-12 px-1'><div class='card'>";
+              append_data += "<div class='card-header text-center'><h4 class='card-title mb-0 text-uli-blue font-weight-bold'>" + data_group[i].pval1 + "</h4></div>";
+              append_data += "<div class='card-body p-1 rounded'><div class='container-fluid'>";
+              if (data_model.length !== 0) {
+                var j = 0;
+                $.each(data_model, function(row, mdl) {
+                  if (data_model[j].group_id == data_group[i].pval1) {
+                    append_data += "<div class='row mb-1'>";
+                    append_data += "<div class='col-lg-3 p-1'>";
+                    append_data += "<div class='card'>";
+                    append_data += "<div class='px-2 py-2 card-body rounded border border-secondary rounded' style=' background-color: " + data_model[j].colour + "; '>";
+                    append_data += "<h4 class='card-title text-center mb-0 font-weight-bold " + data_model[j].font_colour + "'>" + data_model[j].model_id + "</h4>";
+                    append_data += "</div>";
+                    append_data += "</div>";
+                    append_data += "</div>";
+                    append_data += "<div class='col-lg-9 p-1'><div class='container-fluid'>";
+                    append_data += "<div class='row'>";
+                    var x = 0;
+                    $.each(data_dies, function(row, dies) {
+                      if (data_dies[x].group_id == data_model[j].group_id && data_dies[x].model_id == data_model[j].model_id) {
+                        console.log(data_group[i].pval1);
+                        append_data += "<div class='col-lg-3 p-0'>";
+                        append_data += "<div class='card'>";
+                        append_data += "<a id='dies_data' href='CHECKSHEET_PREVENTIVE?id=0&step=1&group_id=" + data_dies[x].group_id + "&model_id=" + data_dies[x].model_id + "&dies_id=" + data_dies[x].dies_id + "' class='card-body border border-secondary rounded p-1  " + data_dies[x].bg_color + "'>";
+                        append_data += "<h4 class='card-title text-center mb-0 text-dark font-weight-bold'>" + data_dies[x].dies_no + "</h4>"
+                        append_data += "<p class='m-0 text-center text-dark small text-nowrap font-weight-bold' >Stroke</p>"
+                        append_data += "<p class='m-0 text-dark small text-nowrap font-weight-bold '>" + "Prev " + "<span>: " + data_dies[x].stkrun + "</span></p>";
+                        append_data += "<p class='m-0 text-dark small text-nowrap font-weight-bold '>" + "Act " + "<span>: " + data_dies[x].stk6k + "</span></p>";
+                        append_data += "</a>";
+                        append_data += "</div>";
+                        append_data += "</div>";
+                      }
+                      x++;
+                    });
+                    append_data += "</div></div></div></div>";
+                  }
+                  j++;
+                });
+              }
+              append_data += "</div></div></div></div>";
+              i++;
             });
-            $("#dashboard1").html(dashboard1);
-          } else {
-            $("#dashboard1").html("");
+            $("#dashboard").html(append_data);
           }
+          // console.log(append_data);
         }
-      });*/
+      );
     }
+
+    var elem = document.getElementById("fs");
+
+    function fullscreen() {
+      document.body.style.zoom = '75%';
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if (elem.mozRequestFullScreen) {
+        /* Firefox */
+        elem.mozRequestFullScreen();
+      } else if (elem.webkitRequestFullscreen) {
+        /* Chrome, Safari and Opera */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        /* IE/Edge */
+        elem.msRequestFullscreen();
+      }
+    }
+
+    $("#fs-btn").click(fullscreen);
+
+    $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function(e) {
+      var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
+      var event = state ? 'FullscreenOn' : 'FullscreenOff';
+
+      // Now do something interesting
+      if (event == "FullscreenOff") {
+        document.body.style.zoom = '100%';
+      }
+
+    });
   </script>
 </body>
 

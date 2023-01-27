@@ -59,7 +59,7 @@ if ($action == "daily_production_entry") {
       $data_ng = $class->getNGList($line, $date, $shift, $seq);
       $template["submenu"] = $data_item_dtl["line_name"];
 
-      $dies_list = $dies->getListDies($line);
+      $dies_list = $dies->getListDies($line, "A");
 
       require(TEMPLATE_PATH . "/t_production_entry_step3.php");
     } else {
@@ -164,7 +164,7 @@ if ($action == "daily_production_entry") {
           $template["submenu"] = $line_data["name1"];
           $shift_list = $class->getListShift();
           $shift_count = $class->getShiftCount($shift);
-          $dies_list = $dies->getListDies($line);
+          $dies_list = $dies->getListDies($line,"A");
           require(TEMPLATE_PATH . "/t_production_entry_step1.php");
         }
       }

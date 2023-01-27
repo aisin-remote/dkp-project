@@ -84,7 +84,7 @@ class Dies
     $sql = "SELECT * FROM m_param "
       . "WHERE pid = 'DIES_GROUP' ";
 
-    $sql .= " ORDER by pid ASC ";
+    $sql .= " ORDER by seq ASC ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
