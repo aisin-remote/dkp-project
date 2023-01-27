@@ -69,10 +69,10 @@ and open the template in the editor.
                                                             . "<td class=''>" . $list["group_id"] . "</td>"
                                                             . "<td class=''>" . $list["model_id"] . "</td>"
                                                             . "<td class=''>" . $list["dies_no"] . "</td>"
-                                                            . "<td class=''>" . $list["stktot"] . "</td>"
-                                                            . "<td class=''>" . $list["stkok"] . "</td>"
-                                                            . "<td class=''>" . $list["stkng"] . "</td>"
-                                                            . "<td class=''>" . $list["stkrun"] . "</td>"
+                                                            . "<td class=''>" . $formatted_number = number_format($list["stktot"], 0, '.', ',') . "</td>"
+                                                            . "<td class=''>" . $formatted_number = number_format($list["stkok"], 0, '.', ',') . "</td>"
+                                                            . "<td class=''>" . $formatted_number = number_format($list["stkng"], 0, '.', ',') . "</td>"
+                                                            . "<td class=''>" . $formatted_number = number_format($list["stkrun"], 0, '.', ',') . "</td>"
                                                             . "</tr>";
                                                     }
                                                 }

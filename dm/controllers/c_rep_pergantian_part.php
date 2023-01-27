@@ -6,7 +6,7 @@ if ($action == "r_pergantian_part") {
     $data["list"];
     $class = new Reporting();
 
-    $date_from = date('Ymd');
+    $date_from = date('Ymd', strtotime(date('Y-m-d') . '-30 day'));
     if (!empty($_GET["date_from"])) {
         $date_from = $_GET["date_from"];
     }

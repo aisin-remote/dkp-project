@@ -110,7 +110,10 @@ and open the template in the editor.
                           <th class="text-right">Stop Konten</th>
                           <th class="text-right">Production Time</th>
                           <th class="text-right">Efficiency</th>
-                          <th class="text-center ">Action</th>
+                          <th class="text-center">Action</th>
+                          <?php if($op_role == "LEADER") {
+                            echo '<th class="text-center">Approve</th>';
+                          } ?>
                         </tr>
                       </thead>
                       <tbody>
@@ -118,6 +121,10 @@ and open the template in the editor.
                         if (!empty($data_item)) {
                           foreach ($data_item as $list) {
                             $efficiency = round(($list["prd_qty"] / $list["pln_qty"]) * 100, 2);
+                            $btn_approve = "";
+                            if($list["stats"] == "N"){
+                              $btn_approve = "<button type='button' class='btn btn-sm btn-success' onclick='approveDailyI(\"".$list["line_id"]."\",\"".$list["shift"]."\",\"".$list["prd_dt"]."\",\"".$list["prd_seq"]."\")'><i class='material-icons'>done_outline</i></button>";
+                            }                            
                             echo "<tr>"
                               . "<td class=''>" . $list["dies_name"] . "</td>"
                               . "<td class='text-center'>" . $list["time_start"] . " - " . $list["time_end"] . "</td>"
@@ -132,8 +139,11 @@ and open the template in the editor.
                               . "<td class='text-right'>" . $efficiency . "</td>"
                               . "<td class='text-center'>"
                               . "<a href='$action?line=" . $list["line_id"] . "&date=" . $list["xdate"] . "&shift=" . $list["shift"] . "&prd_seq=" . $list["prd_seq"] . "' class='btn btn-link btn-sm text-center text-dark'><i class='material-icons'>edit_square</i></a>"
-                              . "</td>"
-                              . "</tr>";
+                              . "</td>";
+                            if($op_role == "LEADER") {
+                              echo "<td class='text-center'>$btn_approve</td>";
+                            }
+                            echo "</tr>";
                           }
                         }
                         ?>
@@ -156,6 +166,32 @@ and open the template in the editor.
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
     $(document).ready(function() {});
+    
+    function approveDailyI(line_id,shift,prd_dt,prd_seq) {
+      $.ajax({
+        type: 'POST',
+        url: 'api_approve_daily_i',
+        data: {
+          line_id: line_id,
+          shift: shift,
+          prd_dt:prd_dt,
+          prd_seq:prd_seq
+        },
+        success: function(response) {
+          // handle the response here
+          if (response.status == true) {
+            location.reload();
+          } else {
+            alert(response.message);
+          }
+        },
+        error: function(error) {
+          // handle the error here
+          alert(error);
+        },
+        dataType: 'json'
+      });
+    }
   </script>
 </body>
 

@@ -42,7 +42,17 @@ and open the template in the editor.
                     <!-- Edit Here -->
 
                     <input type="hidden" name="model_id" class="form-control" maxlength="100" value="<?php echo $data["data"]["model_id"]; ?>">
-
+                    
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Preventive</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <select name="pmtype" id="pmtype" class="form-control select2">
+                          <option value="2K">Preventive Stroke 2000</option>
+                          <option value="6K">Preventive Stroke 6000</option>
+                        </select>
+                      </div>
+                    </div>
+                    
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Dies Group</label>
                       <div class="col-lg-1 col-md-5 col-sm-12">

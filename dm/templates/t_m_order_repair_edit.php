@@ -49,7 +49,7 @@ and open the template in the editor.
                     </div>';
           }
           ?>
-          <form method="post" action="<?php echo $action; ?>?id=<?php echo $id; ?>" enctype="multipart/form-data">
+          <form method="post" id="my-form" action="<?php echo $action; ?>?id=<?php echo $id; ?>" enctype="multipart/form-data">
 
             <div class="row">
               <div class="col-12">
@@ -82,7 +82,9 @@ and open the template in the editor.
                         <div class="form-group row">
                           <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Dies Group</label>
                           <div class="col-lg-3 col-md-5 col-sm-12">
-                            <select name="group_id" id="group_id" class="form-control select2">
+                            <select name="group_id" id="group_id" class="form-control select2" <?php echo $data["data"]["group_id"]; ?> <?php if (!empty($data["data"]["group_id"])) {
+                                                                                                                                          echo "disabled";
+                                                                                                                                        } ?>>
                               <?php
                               foreach ($group_list as $group) {
                               ?>
@@ -98,7 +100,9 @@ and open the template in the editor.
                         <div class="form-group row">
                           <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Model</label>
                           <div class="col-lg-3 col-md-5 col-sm-12">
-                            <select name="model_id" id="model_id" class="form-control select2">
+                            <select name="model_id" id="model_id" class="form-control select2" <?php echo $data["data"]["model_id"]; ?> <?php if (!empty($data["data"]["model_id"])) {
+                                                                                                                                          echo "disabled";
+                                                                                                                                        } ?>>
                               <?php
                               foreach ($model_list as $model) {
                               ?>
@@ -114,7 +118,9 @@ and open the template in the editor.
                         <div class="form-group row">
                           <label class="col-form-label col-lg-3 col-md-3 col-sm-12">Dies No. #</label>
                           <div class="col-lg-3 col-md-5 col-sm-12">
-                            <select name="dies_id" id="dies_id" class="form-control select2" required>
+                            <select name="dies_id" id="dies_id" class="form-control select2" required <?php echo $data["data"]["dies_id"]; ?> <?php if (!empty($data["data"]["dies_id"])) {
+                                                                                                                                                echo "disabled";
+                                                                                                                                              } ?>>
                               <?php
                               foreach ($dies_list as $diesid) {
                               ?>
@@ -253,6 +259,10 @@ and open the template in the editor.
         $("#dies_id").html(items);
       });
     }
+
+    $("#my-form").submit(function(event) {
+      $("#group_id, #model_id, #dies_id").removeAttr("disabled");
+    });
   </script>
 </body>
 

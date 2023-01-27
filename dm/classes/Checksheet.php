@@ -187,8 +187,11 @@ class Checksheet {
               . "c11922 = :c11922, "
               . "c11923 = :c11923, "
               . "c11924 = :c11924,"
-              . "pmstat = :pmstat "
-              . "WHERE pmtid = :pmtid ";
+              . "pmstat = :pmstat ";
+      if($param["pmstat"] == "C") {
+        $sql .= ",cdate = CURRENT_TIMESTAMP ";
+      }
+      $sql .= "WHERE pmtid = :pmtid ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":pmtid", strtoupper(trim($param["pmtid"])), PDO::PARAM_STR);
       $stmt->bindValue(":c11100", $param["c11100"], PDO::PARAM_STR); //gambar

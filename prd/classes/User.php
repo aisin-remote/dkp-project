@@ -288,7 +288,7 @@ class User {
   public function getUserRole($id) {
     $return = array();
     $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-    $sql = "SELECT * FROM m_user_role WHERE UPPER(usrid) = :id and app_id = '".APP."";
+    $sql = "SELECT * FROM m_user_role WHERE UPPER(usrid) = :id and app_id = '".APP."'";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":id", strtoupper($id), PDO::PARAM_STR);
     if($stmt->execute()) {

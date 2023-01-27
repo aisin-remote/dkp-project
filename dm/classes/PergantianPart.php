@@ -94,6 +94,7 @@ class PergantianPart {
         $pchid = $conn->lastInsertId();
         $this->insertItem($pchid, $param["item"]);
         $return["status"] = true;
+        $return["last_id"] = $pchid;
       } else {
         $error = $stmt->errorInfo();
         $return["status"] = false;
@@ -143,9 +144,9 @@ class PergantianPart {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $conn->exec("DELETE FROM t_dm_pc_i WHERE pchid = '$pchid'");
     
-    $sql = "INSERT INTO t_dm_pc_i (pchid, part_id, part_text) VALUES ";
-    foreach($item as $row=>$val) {
-      $arr_insert[] = "('$pchid','$row','$val')";
+    $sql = "INSERT INTO t_dm_pc_i (pchid, part_id, part_text, remarks) VALUES ";
+    foreach($item as $row) {
+      $arr_insert[] = "('$pchid','".$row["part_id"]."','".$row["part_text"]."','".$row["remarks"]."')";
     }
     $sql .= implode(",",$arr_insert);
     $stmt = $conn->prepare($sql);
@@ -160,5 +161,65 @@ class PergantianPart {
     $conn = null;
     return $return;
   }
-
+  
+  public function countCorePin($pchid,$part_id) {
+    $return = 0;
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT count(*) as cnt FROM t_dm_pc_core WHERE pchid = '$pchid' AND part_id = '$part_id'";
+    $stmt = $conn->prepare($sql);
+    if($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return = $row["cnt"];
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+  
+  public function insertCorePin($pch_id, $part_id, $data = array()) {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $conn->exec("DELETE FROM t_dm_pc_core WHERE pchid = '$pch_id' and part_id = '$part_id'");
+    if(!empty($data)) {
+      $sql = "INSERT INTO t_dm_pc_core (pchid, part_id, seqno, text1, text2, text3) VALUES ";
+      $i = 1;
+      $arr_insert = [];
+      foreach($data as $row) {
+        $arr_insert[] = "('$pch_id','$part_id','$i','$row[1]','$row[2]','$row[3]')";
+        $i++;
+      }
+      
+      $sql .= implode(",",$arr_insert);      
+      $stmt = $conn->prepare($sql);
+      if($stmt->execute() or die($sql)) {
+        $return["status"] = true;
+      } else {
+        $return["status"] = false;
+        $error = $stmt->errorInfo();
+        $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      }
+    } else {
+      $return["status"] = false;
+      $return["message"] = "Data Empty";
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+  
+  public function getCorePin($pch_id) {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT * FROM t_dm_pc_core WHERE pchid = '$pch_id' ORDER by part_id asc, seqno asc";
+    $stmt = $conn->prepare($sql);
+    if($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
 }

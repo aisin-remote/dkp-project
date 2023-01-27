@@ -74,7 +74,7 @@ class ContentStopShift
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, (select name1 from m_prd_stop_reason_action where srna_id = a.srna_id) as srna_name, (select start_time from m_prd_shift where shift_id = a.shift_id and time_id = a.time_id) as start1, (select end_time from m_prd_shift where shift_id = a.shift_id and time_id = a.time_id) as end1 "
+        $sql = "SELECT a.*, (select name1 from m_prd_stop_reason_action where srna_id = a.srna_id) as srna_name, (select time_start from m_prd_shift where shift_id = a.shift_id and time_id = a.time_id) as start1, (select time_end from m_prd_shift where shift_id = a.shift_id and time_id = a.time_id) as end1 "
             . "FROM m_prd_shift_stop a "
             . "ORDER BY a.shift_id ASC, a.srna_id ASC, a.time_id ASC ";
 

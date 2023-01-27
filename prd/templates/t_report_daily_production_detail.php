@@ -22,6 +22,8 @@ and open the template in the editor.
                         <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
                         <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
                         <li class="breadcrumb-item active"><?php echo $template["submenu"]; ?></li>
+                        <li class="breadcrumb-item active">Edit</li>
+                        <li class="breadcrumb-item active">Detail</li>
                     </ol>
                     <?php
                     if (isset($_GET["error"])) {
@@ -88,7 +90,7 @@ and open the template in the editor.
                                 </div>
                             </div>
                         </div>
-                        <form method="post" action="<?php echo $action; ?>?line=<?php echo $data_item_dtl["line_id"]; ?>&date=<?php echo $data_item_dtl["xdate"]; ?>&shift=<?php echo $data_item_dtl["shift"]; ?>&prd_seq=<?php echo $data_item_dtl["prd_seq"]; ?>">
+                        <form id="myForm" class="w-100" method="post" action="<?php echo $action; ?>?line=<?php echo $data_item_dtl["line_id"]; ?>&date=<?php echo $data_item_dtl["xdate"]; ?>&shift=<?php echo $data_item_dtl["shift"]; ?>&prd_seq=<?php echo $data_item_dtl["prd_seq"]; ?>">
                             <div class="col-12 mt-1">
                                 <div class="card">
                                     <div class="card-header" style="background-color: #E4E4E4;">
@@ -105,13 +107,13 @@ and open the template in the editor.
                                         <div class="row">
                                             <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Dies</div>
                                             <div class="col-xl-4 col-lg-4 col-md-5 col-sm-6">
-                                                <select name="dies_id" class="form-control select2">
+                                                <select name="dies_id" class="form-control select2" data-live-search="true" disabled>
                                                     <?php
                                                     foreach ($dies_list as $row) {
                                                     ?>
                                                         <option value="<?php echo $row["dies_id"]; ?>" <?php if ($row["dies_id"] == $data_item_dtl["dies_id"]) {
                                                                                                             echo "selected";
-                                                                                                        } ?>><?php echo $row["group_id"] . " - " . $row["model_id"] . " - " . $row["name1"]; ?></option>
+                                                                                                        } ?>><?php echo $row["group_id"] . " - " . $row["model_id"] . " - " . $row["dies_no"]; ?></option>
                                                     <?php
                                                     }
                                                     ?>
@@ -145,7 +147,7 @@ and open the template in the editor.
                                         <div class="row mt-1">
                                             <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Production Qty</div>
                                             <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
-                                                <input class="form-control form-control-sm" type="number" name="prd_qty" value="<?php echo $data_item_dtl["prd_qty"]; ?>" />
+                                                <input class="form-control form-control-sm" type="number" name="prd_qty" value="<?php echo $data_item_dtl["prd_qty"]; ?>" readonly />
                                             </div>
                                         </div>
                                         <div class="row mt-1">
@@ -155,7 +157,7 @@ and open the template in the editor.
                                             </div>
                                             <div class="col-xl-2 col-lg-3 col-md-9 col-sm-12">
                                                 <input type="hidden" name="save" value="true">
-                                                <button type="submit" name="btn_save" id="btn_save" value="save" class="btn btn-pale-green btn-block mt-sm-2 mt-xs-2 mt-md-0"><i class="material-icons">save</i> Save</button>
+                                                <button type="submit" name="btn_save" id="btn_save" value="save" class="btn btn-pale-green btn-block mt-sm-2 mt-xs-2 mt-md-0" disabled><i class="material-icons">save</i> Save</button>
                                             </div>
                                         </div>
 
@@ -176,13 +178,13 @@ and open the template in the editor.
                                                 <label class="col-form-label">DC Quality Check Part</label>
                                             </div>
                                             <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12">
-                                                <input type="number" name="dcqcp" class="form-control" value="<?php echo $data_item_dtl["dcqcp"]; ?>">
+                                                <input type="number" name="dcqcp" class="form-control" value="<?php echo $data_item_dtl["dcqcp"]; ?>" readonly>
                                             </div>
                                             <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12">
                                                 <label class="col-form-label">QA Quality Check Part</label>
                                             </div>
                                             <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12">
-                                                <input type="number" name="qaqcp" class="form-control" value="<?php echo $data_item_dtl["qaqcp"]; ?>">
+                                                <input type="number" name="qaqcp" class="form-control" value="<?php echo $data_item_dtl["qaqcp"]; ?>" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -190,7 +192,7 @@ and open the template in the editor.
                             </div>
                         </form>
                         <div class="col-12 mt-1">
-                            <button type="button" id="add_content_stop_btn" class="btn btn-magenta" onclick="openModal01()">Add Content Stop</button>
+                            <button type="button" id="add_content_stop_btn" class="btn btn-magenta" onclick="openModal01()" disabled>Add Content Stop</button>
                         </div>
                         <div class="col-12 mt-1">
                             <div class="table-responsive">
@@ -212,9 +214,9 @@ and open the template in the editor.
                                         if (!empty($data_stop)) {
                                             foreach ($data_stop as $row) {
                                                 $button_del = "";
-                                                if ($row["stop_type"] == "U") {
-                                                    $button_del = "<button type='button' class='btn btn-xs btn-outline-dark' onclick='delStop(\"" . $row["line_id"] . "\",\"" . $row["prd_dt"] . "\",\"" . $row["shift"] . "\",\"" . $row["prd_seq"] . "\",\"" . $row["stop_seq"] . "\")'><i class='material-icons'>delete</i></button>";
-                                                }
+                                                //if ($row["stop_type"] == "U") {
+                                                $button_del = "<button type='button' class='btn btn-xs btn-outline-dark' onclick='delStop(\"" . $row["line_id"] . "\",\"" . $row["prd_dt"] . "\",\"" . $row["shift"] . "\",\"" . $row["prd_seq"] . "\",\"" . $row["stop_seq"] . "\")'><i class='material-icons'>delete</i></button>";
+                                                //}
                                                 echo "<tr>"
                                                     . "<td>" . $row["start_time"] . "</td>"
                                                     . "<td>" . $row["end_time"] . "</td>"
@@ -233,7 +235,7 @@ and open the template in the editor.
                             </div>
                         </div>
                         <div class="col-12 mt-1">
-                            <button type="button" id="add_ng" class="btn btn-magenta" onclick="openModal02()">Add NG & Visualization</button>
+                            <button type="button" id="add_ng" class="btn btn-magenta" onclick="openModal02()" disabled>Add NG & Visualization</button>
                         </div>
                         <div class="col-12 mt-1">
                             <div class="table-responsive">
@@ -287,11 +289,11 @@ and open the template in the editor.
                             <div class="form-group row">
                                 <label for="start_time" class="col-sm-3 col-form-label">Time From</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control jam_picker" id="start_time">
+                                    <input type="text" class="form-control jam_picker_start" id="start_time">
                                 </div>
                                 <label for="end_time" class="col-sm-3 col-form-label">Time To</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control jam_picker" id="end_time">
+                                    <input type="text" class="form-control jam_picker_end" id="end_time">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -309,13 +311,13 @@ and open the template in the editor.
                             <div class="form-group row">
                                 <label for="stop_id" class="col-sm-3 col-form-label">Konten Stop</label>
                                 <div class="col-sm-9">
-                                    <select id="stop_id" class="select2" data-live-search="true">
+                                    <select id="stop_id" class="form-control modalSelect01" data-live-search="true" onChange="getStopTime()">
                                         <option value="">Select Stop</option>
                                         <?php
                                         if (!empty($list_stop)) {
                                             foreach ($list_stop as $row) {
                                         ?>
-                                                <option value="<?php echo $row["srna_id"]; ?>"><?php echo $row["name1"]; ?></option>
+                                                <option value="<?php echo $row["srna_id"]; ?>"><?php echo $row["type2_text"] . " - " . $row["name1"]; ?></option>
                                         <?php
                                             }
                                         }
@@ -326,7 +328,7 @@ and open the template in the editor.
                             <div class="form-group row">
                                 <label for="action_id" class="col-sm-3 col-form-label">Action</label>
                                 <div class="col-sm-9">
-                                    <select id="action_id" class="select2" data-live-search="true">
+                                    <select id="action_id" class="form-control modalSelect01" data-live-search="true">
                                         <option value="">Select Action</option>
                                         <?php
                                         if (!empty($list_action)) {
@@ -343,7 +345,7 @@ and open the template in the editor.
                             <div class="form-group row">
                                 <label for="action_id" class="col-sm-3 col-form-label">Eksekutor</label>
                                 <div class="col-sm-9">
-                                    <select id="exe_empid" class="select2" data-live-search="true">
+                                    <select id="exe_empid" class="form-control modalSelect01" data-live-search="true">
                                         <option value="">Select Eksekutor</option>
                                         <?php
                                         if (!empty($list_person)) {
@@ -379,7 +381,7 @@ and open the template in the editor.
                             <div class="form-group row">
                                 <label for="ng_type" class="col-sm-3 col-form-label">NG Type</label>
                                 <div class="col-sm-9">
-                                    <select id="ng_type" class="select2" data-live-search="true">
+                                    <select id="ng_type" class="form-control modalSelect02" data-live-search="true">
                                         <option value="">Select NG Type</option>
                                         <?php
                                         if (!empty($list_ng_type)) {
@@ -425,15 +427,46 @@ and open the template in the editor.
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
         $(document).ready(function() {
-            $(".jam_picker").flatpickr({
+            $(".jam_picker_start").flatpickr({
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
                 time_24hr: true,
                 minTime: "<?php echo $data_item_dtl["time_start"] ?>",
                 maxTime: "<?php echo $data_item_dtl["time_end"] ?>",
+                defaultHour: "<?php echo explode(":", $data_item_dtl["time_start"])[0] ?>",
+                defaultMinute: "<?php echo explode(":", $data_item_dtl["time_start"])[1] ?>",
                 disableMobile: "true"
             });
+
+            $(".jam_picker_end").flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                time_24hr: true,
+                minTime: "<?php echo $data_item_dtl["time_start"] ?>",
+                maxTime: "<?php echo $data_item_dtl["time_end"] ?>",
+                defaultHour: "<?php echo explode(":", $data_item_dtl["time_end"])[0] ?>",
+                defaultMinute: "<?php echo explode(":", $data_item_dtl["time_end"])[1] ?>",
+                disableMobile: "true"
+            });
+        });
+
+        $("#myForm").submit(function(event) {
+            $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+            $(".btn").attr("disabled", "disabled");
+        });
+
+        $('.modalSelect01').select2({
+            dropdownParent: $('#mymodal01'),
+            theme: 'bootstrap4',
+            width: '100%'
+        });
+
+        $('.modalSelect02').select2({
+            dropdownParent: $('#mymodal02'),
+            theme: 'bootstrap4',
+            width: '100%'
         });
 
         function openModal01() {
@@ -466,36 +499,41 @@ and open the template in the editor.
         }
 
         function saveDataStop() {
-            $.ajax({
-                type: 'POST',
-                url: 'api_insert_daily_stop',
-                data: {
-                    line_id: $("#line_id").val(),
-                    prd_dt: $("#prd_dt").val(),
-                    shift: $("#shift").val(),
-                    prd_seq: $("#prd_seq").val(),
-                    start_time: $("#start_time").val(),
-                    end_time: $("#end_time").val(),
-                    stop_time: $("#stop_time").val(),
-                    qty_stc: $("#qty_stc").val(),
-                    stop_id: $("#stop_id").val(),
-                    action_id: $("#action_id").val(),
-                    exe_empid: $("#exe_empid").val()
-                },
-                success: function(response) {
-                    // handle the response here
-                    if (response.status == true) {
-                        location.reload();
-                    } else {
-                        alert(response.message);
-                    }
-                },
-                error: function(error) {
-                    // handle the error here
-                    alert(error);
-                },
-                dataType: 'json'
-            });
+            if ($("#stop_id").val().length > 0 && parseFloat($("#stop_time").val()) > 0) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'api_insert_daily_stop',
+                    data: {
+                        line_id: $("#line_id").val(),
+                        prd_dt: $("#prd_dt").val(),
+                        shift: $("#shift").val(),
+                        prd_seq: $("#prd_seq").val(),
+                        start_time: $("#start_time").val(),
+                        end_time: $("#end_time").val(),
+                        stop_time: $("#stop_time").val(),
+                        qty_stc: $("#qty_stc").val(),
+                        stop_id: $("#stop_id").val(),
+                        action_id: $("#action_id").val(),
+                        exe_empid: $("#exe_empid").val()
+                    },
+                    success: function(response) {
+                        // handle the response here
+                        if (response.status == true) {
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(error) {
+                        // handle the error here
+                        alert(error);
+                    },
+                    dataType: 'json'
+                });
+            } else {
+                alert("Jam dan Stop Reason Harus Diisi!");
+            }
+
         }
 
         function saveDataNG() {
@@ -574,6 +612,40 @@ and open the template in the editor.
                         location.reload();
                     } else {
                         alert(response.message);
+                    }
+                },
+                error: function(error) {
+                    // handle the error here
+                    alert(error);
+                },
+                dataType: 'json'
+            });
+        }
+
+        function getStopTime() {
+            var shift = $("#shift").val();
+            var srna_id = $("#stop_id").val();
+            var time_id = $("#prd_seq").val();
+            $.ajax({
+                type: 'POST',
+                url: 'api_get_time_stop',
+                data: {
+                    srna_id: srna_id,
+                    shift: shift,
+                    time_id: time_id
+                },
+                success: function(response) {
+                    // handle the response here
+                    if (response.status == true) {
+                        data_stop = response.data;
+                        $("#start_time").val(data_stop.start_time);
+                        $("#end_time").val(data_stop.end_time);
+                        calculateDate();
+                    } else {
+                        //alert(response.message);
+                        $("#start_time").val("");
+                        $("#end_time").val("");
+                        $("#stop_time").val("");
                     }
                 },
                 error: function(error) {

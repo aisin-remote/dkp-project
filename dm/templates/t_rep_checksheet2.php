@@ -401,11 +401,18 @@ and open the template in the editor.
                                                 </tr>
                                             </thead>
 
+                                            <?php
+
+                                            $display = "";
+                                            if ($data["data"]["group_id"] == "CSH") {
+                                                $display = "hidden";
+                                            }
+                                            ?>
                                             <tbody>
                                                 <tr>
                                                     <td class="align-middle px-4 table-item">1.1.3.1.1</td>
                                                     <td class="align-middle px-3 table-item">Cleaning Block Vacuum</td>
-                                                    <td class="align-middle px-3 table-item">
+                                                    <td class="align-middle px-3 table-item <?= $display ?>">
                                                         <input class="" name="c11311" <?= (($data["data"]["c11311"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -414,7 +421,7 @@ and open the template in the editor.
                                                 <tr>
                                                     <td class="align-middle px-4 table-item">1.1.3.1.2</td>
                                                     <td class="align-middle px-3 table-item">Cleaning Piston Vacuum</td>
-                                                    <td class="align-middle px-3 table-item">
+                                                    <td class="align-middle px-3 table-item <?= $display ?>">
                                                         <input class="" name="c11312" <?= (($data["data"]["c11312"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -423,7 +430,7 @@ and open the template in the editor.
                                                 <tr>
                                                     <td class="align-middle px-4 table-item">1.1.3.1.3</td>
                                                     <td class="align-middle px-3 table-item">Cleaning Pipa Vacuum</td>
-                                                    <td class="align-middle px-3 table-item">
+                                                    <td class="align-middle px-3 table-item <?= $display ?>">
                                                         <input class="" name="c11313" <?= (($data["data"]["c11313"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -432,7 +439,7 @@ and open the template in the editor.
                                                 <tr>
                                                     <td class="align-middle px-4 table-item">1.1.3.1.4</td>
                                                     <td class="align-middle px-3 table-item">Fitting Check Piston Vacuum</td>
-                                                    <td class="align-middle px-3 table-item">
+                                                    <td class="align-middle px-3 table-item <?= $display ?>">
                                                         <input class="" name="c11314" <?= (($data["data"]["c11314"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -441,7 +448,7 @@ and open the template in the editor.
                                                 <tr>
                                                     <td class="align-middle px-4 table-item">1.1.3.1.5</td>
                                                     <td class="align-middle px-3 table-item">Ganti O-Ring Piston Vacuum</td>
-                                                    <td class="align-middle px-3 table-item">
+                                                    <td class="align-middle px-3 table-item <?= $display ?>">
                                                         <input class="" name="c11315" <?= (($data["data"]["c11315"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -450,7 +457,7 @@ and open the template in the editor.
                                                 <tr>
                                                     <td class="align-middle px-4 table-item">1.1.3.1.6</td>
                                                     <td class="align-middle px-3 table-item">Ganti Hose Vacuum</td>
-                                                    <td class="align-middle px-3 table-item">
+                                                    <td class="align-middle px-3 table-item <?= $display ?>">
                                                         <input class="" name="c11316" <?= (($data["data"]["c11316"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -482,7 +489,7 @@ and open the template in the editor.
                                                 <tr>
                                                     <td class="align-middle px-5 table-item">1.1.3.2.1.1</td>
                                                     <td class="align-middle px-3 table-item">Valve Open</td>
-                                                    <td class="align-middle px-3 table-item">
+                                                    <td class="align-middle px-3 table-item <?= $display ?>">
                                                         <input class="" name="c113211" <?= (($data["data"]["c113211"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -491,7 +498,7 @@ and open the template in the editor.
                                                 <tr>
                                                     <td class="align-middle px-5 table-item">1.1.3.2.1.2</td>
                                                     <td class="align-middle px-3 table-item">Valve Close</td>
-                                                    <td class="align-middle px-3 table-item">
+                                                    <td class="align-middle px-3 table-item <?= $display ?>">
                                                         <input class="" name="c113212" <?= (($data["data"]["c113212"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -500,7 +507,7 @@ and open the template in the editor.
                                                 <tr>
                                                     <td class="align-middle px-4 table-item">1.1.3.2.2</td>
                                                     <td class="align-middle px-3 table-item">Valve Operation Time</td>
-                                                    <td class="align-middle px-3 table-item">
+                                                    <td class="align-middle px-3 table-item <?= $display ?>">
                                                         <input class="" name="c11322" <?= (($data["data"]["c11322"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -509,7 +516,7 @@ and open the template in the editor.
                                                 <tr>
                                                     <td class="align-middle px-4 table-item">1.1.3.2.3</td>
                                                     <td class="align-middle px-3 table-item">Valve Stroke</td>
-                                                    <td class="align-middle px-3 table-item">
+                                                    <td class="align-middle px-3 table-item <?= $display ?>">
                                                         <input class="" name="c11323" <?= (($data["data"]["c11323"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>

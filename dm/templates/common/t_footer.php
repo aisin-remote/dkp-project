@@ -7,8 +7,8 @@
         if($cek_license == true) {
           
         } else {
-          echo "<h6 class='my-0 opacity-50'>Activate Software</h6>"
-          . "<p class='mb-0'>Go to <a href='LICENSE'>Setting</a> to Activate Software</p>";
+          /*echo "<h6 class='my-0 opacity-50'>Activate Software</h6>"
+          . "<p class='mb-0'>Go to <a href='LICENSE'>Setting</a> to Activate Software</p>";*/
         }
         ?>
       </div>

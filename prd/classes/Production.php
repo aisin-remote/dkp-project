@@ -230,10 +230,10 @@ class Production
       . "INNER JOIN m_param c ON c.pid = 'SHIFT' and c.seq = a.shift "
       . "INNER JOIN m_prd_operator ld ON ld.empid = a.ldid "
       . "INNER JOIN m_prd_operator jp ON jp.empid = a.jpid "
-      . "INNER JOIN m_prd_operator op1 ON op1.empid = a.op1id "
-      . "INNER JOIN m_prd_operator op2 ON op2.empid = a.op2id "
-      . "INNER JOIN m_prd_operator op3 ON op3.empid = a.op3id "
-      . "INNER JOIN m_prd_operator op4 ON op4.empid = a.op4id "
+      . "LEFT JOIN m_prd_operator op1 ON op1.empid = a.op1id "
+      . "LEFT JOIN m_prd_operator op2 ON op2.empid = a.op2id "
+      . "LEFT JOIN m_prd_operator op3 ON op3.empid = a.op3id "
+      . "LEFT JOIN m_prd_operator op4 ON op4.empid = a.op4id "
       . "WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$date' AND a.shift = '$shift'";
     $stmt = $conn->prepare($sql);
     $count = 0;
@@ -283,10 +283,10 @@ class Production
       . "INNER JOIN t_prd_daily_h h ON h.line_id = a.line_id AND h.prd_dt = a.prd_dt AND h.shift = a.shift "
       . "INNER JOIN m_prd_operator ld ON ld.empid = h.ldid "
       . "INNER JOIN m_prd_operator jp ON jp.empid = h.jpid "
-      . "INNER JOIN m_prd_operator op1 ON op1.empid = h.op1id "
-      . "INNER JOIN m_prd_operator op2 ON op2.empid = h.op2id "
-      . "INNER JOIN m_prd_operator op3 ON op3.empid = h.op3id "
-      . "INNER JOIN m_prd_operator op4 ON op4.empid = h.op4id "
+      . "LEFT JOIN m_prd_operator op1 ON op1.empid = h.op1id "
+      . "LEFT JOIN m_prd_operator op2 ON op2.empid = h.op2id "
+      . "LEFT JOIN m_prd_operator op3 ON op3.empid = h.op3id "
+      . "LEFT JOIN m_prd_operator op4 ON op4.empid = h.op4id "
       . "WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$date' AND a.shift = '$shift' AND a.prd_seq = '$seq' "
       . "";
     $stmt = $conn->prepare($sql);
@@ -426,6 +426,23 @@ class Production
       $return["status"] = false;
       $return["message"] = trim(str_replace("\n", " ", $error[2]));
       error_log($error[2]);
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+  
+  public function getPrdStop($line, $date, $shift, $prd_seq, $stop_seq) {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT a.*, b.type1, b.type2 FROM t_prd_daily_stop a "
+            . "INNER JOIN m_prd_stop_reason_action b ON b.srna_id = a.stop_id "
+            . "WHERE a.line_id = '$line' AND a.prd_dt = '$date' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq' AND a.stop_seq = '$stop_seq' ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return = $row;
+      }
     }
     $stmt = null;
     $conn = null;
@@ -582,6 +599,26 @@ class Production
         $row["efficiency"] = round(($row["prd_qty"] / $row["pln_qty"]) * 100, 2);
         $return[] = $row;
       }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+  
+  public function updateTargetDailyI($line, $date, $shift, $seq, $prd_time, $pln_qty) {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "UPDATE t_prd_daily_i SET pln_qty = '$pln_qty', prd_time = '$prd_time' "
+            . "WHERE line_id = '$line' AND prd_dt = '$date' AND shift = '$shift' AND prd_seq = '$seq'";
+
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
     }
     $stmt = null;
     $conn = null;

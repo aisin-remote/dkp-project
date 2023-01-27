@@ -53,7 +53,7 @@ and open the template in the editor.
                                             <thead>
                                                 <tr>
                                                     <th class="">Order No.</th>
-                                                    <th class="">Stard Date</th>
+                                                    <th class="">Start Date</th>
                                                     <th class="">Time</th>
                                                     <th class="">Model</th>
                                                     <th class="">Dies</th>

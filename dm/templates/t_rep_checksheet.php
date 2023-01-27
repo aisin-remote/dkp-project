@@ -54,6 +54,7 @@ and open the template in the editor.
                                                 <tr>
                                                     <th class="">Preventive No.</th>
                                                     <th class="">Preventive Date</th>
+                                                    <th class="">Completed Date</th>
                                                     <th class="">Model</th>
                                                     <th class="">Dies</th>
                                                     <th class="">Dies No.</th>
@@ -67,15 +68,21 @@ and open the template in the editor.
                                                 <?php
                                                 if (!empty($data["list"])) {
                                                     foreach ($data["list"] as $list) {
+                                                        if (!empty($list["cdate"])) {
+                                                            $new_date = date("Y-m-d", strtotime($list["cdate"]));
+                                                        } else {
+                                                            $new_date = null;
+                                                        }
                                                         echo "<tr>"
                                                             . "<td class=''>" . $list["pmtid"] . "</td>"
                                                             . "<td class=''>" . $list["pmtdt"] . "</td>"
+                                                            . "<td class=''>" . $new_date . "</td>"
                                                             . "<td class=''>" . $list["group_id"] . "</td>"
                                                             . "<td class=''>" . $list["model_id"] . "</td>"
                                                             . "<td class=''>" . $list["dies_no"] . "</td>"
                                                             . "<td class=''>" . $list["pmtype"] . "</td>"
                                                             . "<td class=''>" . $list["pmstat"] . "</td>"
-                                                            . "<td class=''>" . $list["pmtstk"] . "</td>"
+                                                            . "<td class=''>" . $formatted_number = number_format($list["pmtstk"], 0, '.', ',') . "</td>"
                                                             . "<td class='text-center pr-3'>"
                                                             . "<a href='$action?id=" . $list["pmtid"] . "&step=2' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>visibility</i></a>"
                                                             . "</td>"
@@ -173,7 +180,7 @@ and open the template in the editor.
                         className: 'btn btn-dark-blue btn-sm',
                         text: '<i class="material-icons">download</i>Download Excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
                         }
                     },
                     {

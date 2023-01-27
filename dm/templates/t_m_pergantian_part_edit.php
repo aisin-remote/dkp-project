@@ -44,8 +44,8 @@ and open the template in the editor.
                     </div>';
           }
           ?>
-          <form method="post" action="<?php echo $action; ?>?id=<?php echo $id; ?>">
-
+          <form id="my_form" method="post" action="<?php echo $action; ?>?id=<?php echo $id; ?>">
+            <input type="hidden" name="save" value="save">
             <div class="row">
               <div class="col-12">
                 <div class="card" style="background-color: #F0F0F0;">
@@ -57,8 +57,8 @@ and open the template in the editor.
                       </div>
                       <div class="col-lg-6 col-sm-12">
                         <div class="d-flex justify-content-end">
-                          <!-- button placement -->
-                          <button type="submit" type="button" name="save" class="btn btn-dark-blue btn-sm px-5 mx-2" id="btn-save">Save</button>
+                          <!-- button placement -->                          
+                          <button type="submit" type="button" name="btn_save" class="btn btn-dark-blue btn-sm px-5 mx-2" id="btn_save">Save</button>
                         </div>
                       </div>
                     </div>
@@ -140,50 +140,92 @@ and open the template in the editor.
               <div class="col-12">
                 <div class="card mt-2">                  
                   <div class="card-body">
-                    <table class="table">
-                      <tr class="table-secondary">
-                        <td>1.3</td>
-                        <td colspan="2">Penggantian Part</td>
-                      </tr>
-                      <tr class="table-secondary">
-                        <td>1.3.1</td>
-                        <td colspan="2">Fix</td>
-                      </tr>
-                    <?php 
-                    if(!empty($part_list)) {
-                      foreach($part_list as $row) {
-                        if($row["part_grp"] == "F") {
-                      ?>
-                      <tr>
-                        <td><?php echo $row["part_id"]; ?></td>
-                        <td><?php echo $row["name1"]; ?></td>
-                        <td><input type="<?php echo $row["input_type"]; ?>" name="item[<?php echo $row["part_id"]; ?>]"  <?php if($row["input_type"]=="checkbox") { if(!empty($data["item"])) {foreach($data["item"] as $itm){if($itm["part_id"]==$row["part_id"]){echo "checked";break;}}} } else {if(!empty($data["item"])){foreach($data["item"] as $itm){if($itm["part_id"]==$row["part_id"]){echo "value='".$itm["part_text"]."'";break;}}}} ?>></td>
-                      </tr>
-                      <?php
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tr class="table-secondary">
+                          <td>1.3</td>
+                          <td colspan="3">Penggantian Part</td>
+                        </tr>
+                        <tr class="table-secondary">
+                          <td>1.3.1</td>
+                          <td colspan="2">Fix</td>
+                          <td>Remarks</td>
+                        </tr>
+                      <?php 
+                      if(!empty($part_list)) {
+                        foreach($part_list as $row) {
+                          if($row["part_grp"] == "F") {
+                        ?>
+                        <tr>
+                          <td class="align-middle"><?php echo $row["part_id"]; ?></td>
+                          <td class="align-middle"><?php echo $row["name1"]; ?></td>
+                          <td class="align-middle"><input type="<?php echo $row["input_type"]; ?>" class="<?php if($row["input_type"] == "checkbox"){echo "";}else{echo "form-control";} ?>" name="item[<?php echo $row["part_id"]; ?>]"  <?php if($row["input_type"]=="checkbox") { if(!empty($data["item"])) {foreach($data["item"] as $itm){if($itm["part_id"]==$row["part_id"]){echo "checked";break;}}} } else {if(!empty($data["item"])){foreach($data["item"] as $itm){if($itm["part_id"]==$row["part_id"]){echo "value='".$itm["part_text"]."'";break;}}}} ?>></td>
+                          <td class="align-middle"><?php if($row["part_id"] == "1.3.1.1") {?> <button type="button" class="btn btn-sm btn-info" onclick="addCorePinDetail('1.3.1.1')">Add Detail</button> <?php } else {?><input type="text" name="remarks[<?=$row["part_id"]?>]" class="form-control" value="<?php if(!empty($data["item"])){foreach($data["item"] as $itm){if($itm["part_id"]==$row["part_id"]){echo $itm["remarks"];break;}}} ?>"><?php } ?></td>
+                        </tr>
+                        <?php
+                            if($row["part_id"] == "1.3.1.1") {
+                              echo "<tr><td></td><td colspan='3' id='core_pin_dtl_f'>";
+                              if(!empty($data_core_pin)) {
+                                foreach($data_core_pin as $xrow) {
+                                  if($xrow["part_id"] == $row["part_id"]) {
+                                    echo "<div class='input-group input-group-sm mb-1' id='core_pin_dtl_f_".$xrow["seqno"]."'>
+                                          <input readonly type='text' class='form-control' name='text_f[".$xrow["seqno"]."][1]' value='".$xrow["text1"]."'>
+                                          <input readonly type='text' class='form-control' name='text_f[".$xrow["seqno"]."][2]' value='".$xrow["text2"]."'>
+                                          <input readonly type='text' class='form-control' name='text_f[".$xrow["seqno"]."][3]' value='".$xrow["text3"]."'>
+                                          <div class='input-group-append'>
+                                           <button type='button' class='btn btn-outline-danger' onclick=\"delDetailCorePin('f','".$xrow["seqno"]."')\"><i class='material-icons'>delete</i></button>
+                                          </div>
+                                         </div>";
+                                  }
+                                }
+                              }
+                              echo "</td></tr>";
+                            }
+                          }
                         }
                       }
-                    }
-                    ?>
-                      <tr class="table-secondary">
-                        <td>1.3.2</td>
-                        <td colspan="2">Move</td>
-                      </tr>
-                    <?php 
-                    if(!empty($part_list)) {
-                      foreach($part_list as $row) {
-                        if($row["part_grp"] == "M") {
                       ?>
-                      <tr>
-                        <td><?php echo $row["part_id"]; ?></td>
-                        <td><?php echo $row["name1"]; ?></td>
-                        <td><input type="<?php echo $row["input_type"]; ?>" name="item[<?php echo $row["part_id"]; ?>]" <?php if($row["input_type"]=="checkbox") { if(!empty($data["item"])) {foreach($data["item"] as $itm){if($itm["part_id"]==$row["part_id"]){echo "checked";break;}}} } else {if(!empty($data["item"])){foreach($data["item"] as $itm){if($itm["part_id"]==$row["part_id"]){echo "value='".$itm["part_text"]."'";break;}}}} ?>></td>
-                      </tr>
-                      <?php
+                        <tr class="table-secondary">
+                          <td>1.3.2</td>
+                          <td colspan="2">Move</td>
+                          <td>Remarks</td>
+                        </tr>
+                      <?php 
+                      if(!empty($part_list)) {
+                        foreach($part_list as $row) {
+                          if($row["part_grp"] == "M") {
+                        ?>
+                        <tr>
+                          <td class="align-middle"><?php echo $row["part_id"]; ?></td>
+                          <td class="align-middle"><?php echo $row["name1"]; ?></td>
+                          <td class="align-middle"><input type="<?php echo $row["input_type"]; ?>" class="<?php if($row["input_type"] == "checkbox"){echo "";}else{echo "form-control";} ?>" name="item[<?php echo $row["part_id"]; ?>]" <?php if($row["input_type"]=="checkbox") { if(!empty($data["item"])) {foreach($data["item"] as $itm){if($itm["part_id"]==$row["part_id"]){echo "checked";break;}}} } else {if(!empty($data["item"])){foreach($data["item"] as $itm){if($itm["part_id"]==$row["part_id"]){echo "value='".$itm["part_text"]."'";break;}}}} ?>></td>
+                          <td class="align-middle"><?php if($row["part_id"] == "1.3.2.1") {?> <button type="button" class="btn btn-sm btn-info" onclick="addCorePinDetail('1.3.2.1')">Add Detail</button> <?php } else {?><input type="text" name="remarks[<?=$row["part_id"]?>]" class="form-control" value="<?php if(!empty($data["item"])){foreach($data["item"] as $itm){if($itm["part_id"]==$row["part_id"]){echo $itm["remarks"];break;}}} ?>"><?php } ?></td>
+                        </tr>
+                        <?php
+                            if($row["part_id"] == "1.3.2.1") {
+                              echo "<tr><td></td><td colspan='3' id='core_pin_dtl_m'>";
+                              if(!empty($data_core_pin)) {
+                                foreach($data_core_pin as $xrow) {
+                                  if($xrow["part_id"] == $row["part_id"]) {
+                                    echo "<div class='input-group input-group-sm mb-1' id='core_pin_dtl_m_".$xrow["seqno"]."'>
+                                          <input readonly type='text' class='form-control' name='text_m[".$xrow["seqno"]."][1]' value='".$xrow["text1"]."'>
+                                          <input readonly type='text' class='form-control' name='text_m[".$xrow["seqno"]."][2]' value='".$xrow["text2"]."'>
+                                          <input readonly type='text' class='form-control' name='text_m[".$xrow["seqno"]."][3]' value='".$xrow["text3"]."'>
+                                          <div class='input-group-append'>
+                                           <button type='button' class='btn btn-outline-danger' onclick=\"delDetailCorePin('m','".$xrow["seqno"]."')\"><i class='material-icons'>delete</i></button>
+                                          </div>
+                                         </div>";
+                                  }
+                                }
+                              }
+                              echo "</td></tr>";
+                            }
+                          }
                         }
                       }
-                    }
-                    ?>  
-                    </table>
+                      ?>  
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -195,6 +237,41 @@ and open the template in the editor.
       <?php include 'common/t_footer.php'; ?>
     </div>
   </div>
+  <!-- Modal Section -->
+  <div class="modal fade" id="myModal1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myModal1_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">      
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="myModal1_label"><span class="material-icons">hub</span> Detail Core Pin</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="x_part_id">
+          <div class="row my-2">
+            <div class="col-4"><label class="col-form-label">Serial No</label></div>
+            <div class="col"><input type="text" id="text1" class="form-control" value=""></div>
+          </div>
+          <div class="row my-2">
+            <div class="col-4"><label class="col-form-label">Remarks 1</label></div>
+            <div class="col"><input type="text" id="text2" class="form-control" value=""></div>
+          </div>
+          <div class="row my-2">
+            <div class="col-4"><label class="col-form-label">Remarks 2</label></div>
+            <div class="col"><input type="text" id="text3" class="form-control" value=""></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-dark-blue-outlined" name="filter" value="filter" onclick="appendCorePinDetail()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" id="counter_f" value="<?=$count_f?>">
+  <input type="hidden" id="counter_m" value="<?=$count_m?>">
+  <input type="hidden" id="trans_type" value="<?=$template["submenu"]?>">
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
@@ -205,12 +282,27 @@ and open the template in the editor.
         altFormat: "d-m-Y",
         dateFormat: "Y-m-d"
       });
+      
+      if($("#trans_type").val() == "Edit") {
+        $("#group_id").attr("disabled","disabled");
+        $("#model_id").attr("disabled","disabled");
+        $("#dies_id").attr("disabled","disabled");
+      }
+    });
+    
+    $("#my_form").submit(function(event) {
+      // event.preventDefault();
+      $("#group_id").removeAttr("disabled");
+      $("#model_id").removeAttr("disabled");
+      $("#dies_id").removeAttr("disabled");
+      $("#btn_save").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+      $("#btn_save").attr("disabled","disabled");
     });
     
     $("#group_id").change( function(){
       getDiesModel($("#group_id").val());      
     }); 
-
+    
     function getDiesModel(group_id) {
       $("#model_id").empty();
       var first_model = "";
@@ -235,12 +327,12 @@ and open the template in the editor.
     }
     
     $("#model_id").change( function(){
-      getDiesList($("#model_id").val());
+      getDiesList($("#group_id").val(),$("#model_id").val());
     }); 
     
-    function getDiesList(model_id) {
+    function getDiesList(group_id, model_id) {
       $("#dies_id").empty();
-      $.getJSON( "api_get_dies_list",{ model:model_id }, function( data ) {
+      $.getJSON( "api_get_dies_list",{ group_id:group_id,model:model_id }, function( data ) {
         var items = "";
         //$("#model_id").empty();
 
@@ -251,6 +343,46 @@ and open the template in the editor.
 
         $("#dies_id").html(items);
       });
+    }
+    
+    function addCorePinDetail(part_id) {
+      $("#x_part_id").val(part_id);
+      $('#myModal1').modal("show");
+    }
+    
+    function appendCorePinDetail() {
+      var counter = 0;
+      var part_id = $("#x_part_id").val();
+      var type = "f";
+      if(part_id == "1.3.1.1") {
+        type = "f";
+        counter = parseInt($("#counter_f").val()) + 1;
+      } else {
+        type = 'm';
+        counter = parseInt($("#counter_m").val()) + 1;
+      }
+      
+      var text1 = $("#text1").val();
+      var text2 = $("#text2").val();
+      var text3 = $("#text3").val();
+      var append_data = "<div class='input-group input-group-sm mb-1' id='core_pin_dtl_"+type+"_"+counter+"'>\n\
+                          <input readonly type='text' class='form-control' name='text_"+type+"["+counter+"][1]' value='"+text1+"'>\n\
+                          <input readonly type='text' class='form-control' name='text_"+type+"["+counter+"][2]' value='"+text2+"'>\n\
+                          <input readonly type='text' class='form-control' name='text_"+type+"["+counter+"][3]' value='"+text3+"'>\n\
+                          <div class='input-group-append'>\n\
+                           <button type='button' class='btn btn-outline-danger' onclick=\"delDetailCorePin('"+type+"','"+counter+"')\"><i class='material-icons'>delete</i></button>\n\
+                          </div>\n\
+                         </div>";
+      $("#core_pin_dtl_"+type).append(append_data);
+      $("#counter_"+type).val(counter);
+      $("#text1").val("");
+      $("#text2").val("");
+      $("#text3").val("");
+      $('#myModal1').modal("hide");
+    }
+    
+    function delDetailCorePin(type, counter) {
+      $("#core_pin_dtl_"+type+"_"+counter).remove();
     }
   </script>
 </body>
