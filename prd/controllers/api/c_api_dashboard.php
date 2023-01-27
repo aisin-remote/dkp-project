@@ -157,4 +157,3 @@ if($action == "dashboard_line") {
   
   require( TEMPLATE_PATH . "/t_dashboard_line.php" );
 }
-?>

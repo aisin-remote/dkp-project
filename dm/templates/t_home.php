@@ -81,29 +81,24 @@ and open the template in the editor.
                       <table class="table table-borderless table-sm mb-0">
                         <tbody>
                           <tr>
-                            <td class="col-2 bg-ivory">White</td>
-                            <td class="bg-ivory" style="width: 50px;">:</td>
-                            <td class="bg-ivory">Dies stroke < 1,600</td>
+                            <td style="width: 100px;" class="bg-ivory">White</td>
+                            <td>Dies stroke < 1,600</td>
                           </tr>
                           <tr>
-                            <td class="col-2 bg-yellow">Yellow</td>
-                            <td class="bg-yellow" style="width: 50px;">:</td>
-                            <td class="bg-yellow">Dies stroke >= 1,600</td>
+                            <td style="width: 100px;" class="bg-yellow">Yellow</td>
+                            <td>Dies stroke >= 1,600</td>
                           </tr>
                           <tr>
-                            <td class="col-2 bg-danger">Red</td>
-                            <td class="bg-danger" style="width: 50px;">:</td>
-                            <td class="bg-danger">Dies stroke > 2,000</td>
+                            <td style="width: 100px;" class="bg-danger">Red</td>
+                            <td>Dies stroke > 2,000</td>
                           </tr>
                           <tr>
-                            <td class="col-2 bg-blink">Blue (Blinking)</td>
-                            <td class="bg-blink" style="width: 50px;">:</td>
-                            <td class="bg-blink">Dies under preventive maintenance</td>
+                            <td style="width: 100px;" class="bg-blink">Blue (Blinking)</td>
+                            <td>Dies under preventive maintenance</td>
                           </tr>
                           <tr>
-                            <td class="col-2 bg-amber">Amber</td>
-                            <td class="bg-amber" style="width: 50px;">:</td>
-                            <td class="bg-amber">Dies under repair to vendor</td>
+                            <td style="width: 100px;" class="bg-amber">Amber</td>
+                            <td>Dies under repair to vendor</td>
                           </tr>
                         </tbody>
                       </table>

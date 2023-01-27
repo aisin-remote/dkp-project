@@ -9,7 +9,7 @@ and open the template in the editor.
 <head>
   <?php include "common/t_css.php"; ?>
   <link href="vendors/ega/css/styles.css" rel="stylesheet" type="text/css" />
-  <link href="vendors/apexchart/apexcharts.css" rel="stylesheet" type="text/css"/>
+  <link href="vendors/apexchart/apexcharts.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -28,32 +28,32 @@ and open the template in the editor.
               <div class="container-fluid border-bottom">
                 <h4>Efficiency</h4>
                 <div class="row">
-                <?php
-                if(!empty($data_line_name)) {
-                  $i = 0;
-                  foreach($data_line_name as $row) {
-                    echo "<div class='col-lg-3 col-md-6 col-sm-12 text-center border rounded pt-4'>"
-                    . "<h5>$row</h5>"
-                    . "<div id='line_$i'></div>"
-                    . "</div>";
-                    $i++;
+                  <?php
+                  if (!empty($data_line_name)) {
+                    $i = 0;
+                    foreach ($data_line_name as $row) {
+                      echo "<div class='col-lg-3 col-md-6 col-sm-12 text-center border rounded pt-4'>"
+                        . "<h5>$row</h5>"
+                        . "<div id='line_$i'></div>"
+                        . "</div>";
+                      $i++;
+                    }
                   }
-                }
-                ?>
+                  ?>
                 </div>
               </div>
               <div class="container-fluid border-bottom">
                 <div id="chart2"></div>
-              </div>              
+              </div>
               <div class="container-fluid">
                 <div class="table-responsive">
                   <table class="table table-striped table-bordered">
                     <thead>
                       <tr>
                         <th>Actual (%)</th>
-                        <?php 
-                        if(!empty($data_line_name)) {
-                          foreach($data_line_name as $row) {
+                        <?php
+                        if (!empty($data_line_name)) {
+                          foreach ($data_line_name as $row) {
                             echo "<th>$row</th>";
                           }
                         }
@@ -63,9 +63,9 @@ and open the template in the editor.
                     <tbody>
                       <tr id="row_eff">
                         <td></td>
-                        <?php 
-                        if(!empty($data_eff)) {
-                          foreach($data_eff as $row) {
+                        <?php
+                        if (!empty($data_eff)) {
+                          foreach ($data_eff as $row) {
                             echo "<th>$row %</th>";
                           }
                         }
@@ -81,9 +81,9 @@ and open the template in the editor.
                     <thead>
                       <tr>
                         <th></th>
-                        <?php 
-                        if(!empty($data_line_name)) {
-                          foreach($data_line_name as $row) {
+                        <?php
+                        if (!empty($data_line_name)) {
+                          foreach ($data_line_name as $row) {
                             echo "<th>$row</th>";
                           }
                         }
@@ -93,9 +93,9 @@ and open the template in the editor.
                     <tbody>
                       <tr id="row_ril">
                         <td>RIL</td>
-                        <?php 
-                        if(!empty($data_ril)) {
-                          foreach($data_ril as $row) {
+                        <?php
+                        if (!empty($data_ril)) {
+                          foreach ($data_ril as $row) {
                             echo "<td>$row %</td>";
                           }
                         }
@@ -103,9 +103,9 @@ and open the template in the editor.
                       </tr>
                       <tr id="row_rol">
                         <td>ROL</td>
-                        <?php 
-                        if(!empty($data_rol)) {
-                          foreach($data_rol as $row) {
+                        <?php
+                        if (!empty($data_rol)) {
+                          foreach ($data_rol as $row) {
                             echo "<td>$row %</td>";
                           }
                         }
@@ -128,13 +128,13 @@ and open the template in the editor.
   <script src="vendors/apexchart/apexcharts.min.js" type="text/javascript"></script>
   <script>
     setInterval(updateDashboard, 5000);
-    
-    <?php 
-    if(!empty($data_eff)) {
+
+    <?php
+    if (!empty($data_eff)) {
       $i = 0;
-      foreach($data_eff as $row) {
-        echo "var options_".$i." = {
-          series: [".$row."],
+      foreach ($data_eff as $row) {
+        echo "var options_" . $i . " = {
+          series: [" . $row . "],
           chart: {
           type: 'radialBar',
           offsetY: -20,
@@ -188,9 +188,9 @@ and open the template in the editor.
         },
         labels: ['Production Efficiency'],
         };";
-        
-        echo "var chart_line_".$i." = new ApexCharts(document.querySelector('#line_".$i."'), options_".$i.");
-              chart_line_".$i.".render();";
+
+        echo "var chart_line_" . $i . " = new ApexCharts(document.querySelector('#line_" . $i . "'), options_" . $i . ");
+              chart_line_" . $i . ".render();";
         $i++;
       }
     }
@@ -199,17 +199,17 @@ and open the template in the editor.
       series: [{
         name: 'Efficiency',
         type: 'line',
-        data: [<?php echo implode(", ",$data_eff); ?>]
-      },{
+        data: [<?php echo implode(", ", $data_eff); ?>]
+      }, {
         name: 'RIL',
         type: 'bar',
-        data: [<?php echo implode(", ",$data_ril); ?>]
+        data: [<?php echo implode(", ", $data_ril); ?>]
       }, {
         name: 'ROL',
         type: 'bar',
-        data: [<?php echo implode(", ",$data_rol); ?>]
+        data: [<?php echo implode(", ", $data_rol); ?>]
       }],
-        chart: {
+      chart: {
         type: 'line',
         height: 500,
         stacked: true,
@@ -222,7 +222,11 @@ and open the template in the editor.
       },
       dataLabels: {
         enabled: true,
-        formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+        formatter: function(value, {
+          seriesIndex,
+          dataPointIndex,
+          w
+        }) {
           return value + " %";
         }
       },
@@ -254,7 +258,7 @@ and open the template in the editor.
       },
       xaxis: {
         type: 'text',
-        categories: ["<?php echo implode("\",\"",$data_line_name); ?>"],
+        categories: ["<?php echo implode("\",\"", $data_line_name); ?>"],
       },
       legend: {
         position: 'right',
@@ -267,52 +271,51 @@ and open the template in the editor.
 
     var chart = new ApexCharts(document.querySelector("#chart2"), options);
     chart.render();
-    
+
     $(document).ready(function() {
-      
+
     });
 
     function updateDashboard() {
       $.getJSON(
-        "api_dashboard_prd", 
-        {}, 
+        "api_dashboard_prd", {},
         function(data) {
           //var data_per_jam = data.data_per_jam;
           var data_ril = data.data_ril;
           var data_rol = data.data_rol;
           //var data_line_name = data.data_line_name;
           var data_eff = data.data_eff;
-          
+
           chart.updateSeries([{
             name: 'Efficiency',
             data: data_eff
-          },{
+          }, {
             name: 'RIL',
             data: data_ril
-          },{
+          }, {
             name: 'ROL',
             data: data_ril
           }]);
-        
+
           var append_data = "<td></td>";
-          $.each(data_eff,function(row, value){
-            append_data += "<td>"+value+" %</td>";
+          $.each(data_eff, function(row, value) {
+            append_data += "<td>" + value + " %</td>";
           });
           $("#row_eff").html(append_data);
-          
+
           var append_data = "<td>RIL</td>";
-          $.each(data_ril,function(row, value){
-            append_data += "<td>"+value+" %</td>";
+          $.each(data_ril, function(row, value) {
+            append_data += "<td>" + value + " %</td>";
           });
           $("#row_ril").html(append_data);
-          
+
           var append_data = "<td>ROL</td>";
-          $.each(data_rol,function(row, value){
-            append_data += "<td>"+value+" %</td>";
+          $.each(data_rol, function(row, value) {
+            append_data += "<td>" + value + " %</td>";
           });
           $("#row_rol").html(append_data);
-          
-          /*update series per line*/          
+
+          /*update series per line*/
           chart_line_0.updateSeries([data_eff[0]]);
           chart_line_1.updateSeries([data_eff[1]]);
           chart_line_2.updateSeries([data_eff[2]]);
