@@ -92,7 +92,7 @@ and open the template in the editor.
                             <td>Dies under preventive maintenance</td>
                           </tr>
                           <tr>
-                            <td style="width: 100px;" class="bg-amber">Amber</td>
+                            <td style="width: 100px;" class="bg-amber">Orange</td>
                             <td>Dies under repair to vendor</td>
                           </tr>
                         </tbody>

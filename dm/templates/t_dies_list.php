@@ -148,17 +148,17 @@ and open the template in the editor.
     });
 
     $('td').each(function() {
-      if ($(this).html() == 'Active') {
+      if ($(this).html() == 'Run') {
         $(this).css('color', 'green');
-      } else if ($(this).html() == 'Inactive') {
+      } else if ($(this).html() == 'Runout') {
         $(this).css('color', 'red');
       }
     });
 
     $('td').each(function() {
-      if ($(this).html() == 'Factory') {
+      if ($(this).html() == 'Aisin') {
         $(this).css('color', 'green');
-      } else if ($(this).html() == 'Vendor') {
+      } else if ($(this).html() == 'Maker') {
         $(this).css('color', 'red');
       }
     });

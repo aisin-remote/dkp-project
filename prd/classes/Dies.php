@@ -285,9 +285,9 @@ class Dies
     if ($stmt->execute() or die($sql)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         if ($row["stats"] == "A") {
-          $row["stats"] = "Active";
+          $row["stats"] = "Run";
         } elseif ($row["stats"] == "I") {
-          $row["stats"] = "Inactive";
+          $row["stats"] = "Runout";
         }
         $return[] = $row;
       }

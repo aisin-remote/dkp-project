@@ -213,9 +213,9 @@ and open the template in the editor.
     }
 
     $('td').each(function() {
-      if ($(this).html() == 'Active') {
+      if ($(this).html() == 'Run') {
         $(this).css('color', 'green');
-      } else if ($(this).html() == 'Inactive') {
+      } else if ($(this).html() == 'Runout') {
         $(this).css('color', 'red');
       }
     });
