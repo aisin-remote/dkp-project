@@ -25,14 +25,13 @@ and open the template in the editor.
           </ol>
           <div class="card mb-3" id="fs">
             <div class="card-body">
-              <div class="container-fluid border-bottom">
-                <h4>Efficiency</h4>
+              <div class="container-fluid border-bottom mb-2">
                 <div class="row">
                 <?php
                 if(!empty($data_line_name)) {
                   $i = 0;
                   foreach($data_line_name as $row) {
-                    echo "<div class='col-lg-3 col-md-6 col-sm-12 text-center border rounded pt-4'>"
+                    echo "<div class='col-lg-3 col-md-6 col-sm-12 text-center border rounded pt-2'>"
                     . "<h5>$row</h5>"
                     . "<div id='line_$i'></div>"
                     . "</div>";
@@ -42,10 +41,10 @@ and open the template in the editor.
                 ?>
                 </div>
               </div>
-              <div class="container-fluid border-bottom">
+              <div class="container-fluid border-bottom mb-2">
                 <div id="chart2"></div>
               </div>              
-              <div class="container-fluid">
+              <div class="container-fluid mb-2">
                 <div class="table-responsive">
                   <table class="table table-striped table-bordered">
                     <thead>
@@ -199,19 +198,19 @@ and open the template in the editor.
       series: [{
         name: 'Efficiency',
         type: 'line',
-        data: [<?php echo implode(", ",$data_eff); ?>]
+        data: [<?php echo implode(", ",$data_eff_sum); ?>]
       },{
         name: 'RIL',
         type: 'bar',
-        data: [<?php echo implode(", ",$data_ril); ?>]
+        data: [<?php echo implode(", ",$data_ril_sum); ?>]
       }, {
         name: 'ROL',
         type: 'bar',
-        data: [<?php echo implode(", ",$data_rol); ?>]
+        data: [<?php echo implode(", ",$data_rol_sum); ?>]
       }],
         chart: {
         type: 'line',
-        height: 500,
+        height: 200,
         stacked: true,
         toolbar: {
           show: true
@@ -283,7 +282,12 @@ and open the template in the editor.
           //var data_line_name = data.data_line_name;
           var data_eff = data.data_eff;
           
-          if(data_eff.length > 0 && data_ril.length > 0 && data_rol.length > 0) {
+          var data_ril_sum = data.data_ril_sum;
+          var data_rol_sum = data.data_rol_sum;
+          //var data_line_name = data.data_line_name;
+          var data_eff_sum = data.data_eff_sum;
+          
+          if(data_eff_sum.length > 0 && data_ril_sum.length > 0 && data_rol_sum.length > 0) {
             chart.updateSeries([{
               name: 'Efficiency',
               data: data_eff

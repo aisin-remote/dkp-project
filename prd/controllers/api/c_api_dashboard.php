@@ -37,11 +37,42 @@ if($action == "api_dashboard_prd") {
       $data_eff[] = $row["eff"];
     }
   }
+  $query_sum = "select line_id, line_name, sum(cctime) as cctime, sum(pln_qty) as pln_qty, sum(prd_time) as prd_time, sum(prd_qty) as prd_qty, sum(ril_qty) as ril_qty, sum(rol_qty) as rol_qty, sum(per_jam) as per_jam from ( 
+    select a.line_id, b.name1 as line_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
+    (select coalesce(sum(ng_qty),0) from t_prd_daily_ng 
+    WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift 
+     and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'RIL') as ril_qty, 
+    (select coalesce(sum(ng_qty),0) from t_prd_daily_ng 
+    WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift 
+     and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') as rol_qty, 
+    60 as per_jam 
+    from t_prd_daily_i a 
+    inner join m_prd_line b ON b.line_id = a.line_id 
+    where a.prd_dt = '$today' and a.shift = '$shift' and a.prd_qty > 0 ) t 
+    group by 1,2 order by 1 asc";
+  
+  $stmt = $conn->prepare($query_sum);
+  $data_eff_sum = [];
+  $data_ril_sum = [];
+  $data_rol_sum = [];
+  if($stmt->execute()) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {      
+      $eff_sum = round((($row["prd_qty"] * $row["cctime"] / $row["per_jam"] ) / $row["prd_time"]) * 100,2);
+      $data_eff_sum[] = $eff_sum;
+      $data_ril_sum[] = round((($row["ril_qty"] * $row["cctime"] / $row["per_jam"]) / $row["prd_time"] ) * 100,2);
+      $data_rol_sum[] = round((($row["rol_qty"] * $row["cctime"] / $row["per_jam"]) / $row["prd_time"] ) * 100,2);
+    }
+  }
   //$return["data_per_jam"] = $data_per_jam;
   $return["data_ril"] = $data_ril;
   $return["data_rol"] = $data_rol;
   //$return["data_line_name"] = $data_line_name;
   $return["data_eff"] = $data_eff;
+  
+  $return["data_ril_sum"] = $data_ril_sum;
+  $return["data_rol_sum"] = $data_rol_sum;
+  //$return["data_line_name"] = $data_line_name;
+  $return["data_eff_sum"] = $data_eff_sum;
   
   echo json_encode($return);
 }
