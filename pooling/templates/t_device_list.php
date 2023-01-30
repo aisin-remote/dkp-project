@@ -60,7 +60,7 @@ and open the template in the editor.
                             echo "<tr>"
                             . "<td>".$list["device_id"]."</td>"
                             . "<td>".$list["name1"]."</td>"
-                            . "<td class='text-center'><a href='$action?id=".$list["device_id"]."' class='btn btn-outline-primary btn-sm'>edit</a></td>"
+                            . "<td class='text-center'><a href='?action=$action&id=".$list["device_id"]."' class='btn btn-outline-primary btn-sm'>edit</a></td>"
                             . "</tr>";
                           }
                         }

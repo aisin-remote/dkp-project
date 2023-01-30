@@ -73,7 +73,7 @@ class Material {
     } else {
       $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
       $sql = "UPDATE m_io_mara SET name1 = :name1, matn1 = :matn1, chg_by = :chg_by, chg_dt = CURRENT_TIMESTAMP "
-              . "WHERE device_id = :device_id";
+              . "WHERE matnr = :matnr";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":matnr", strtoupper($param["matnr"]), PDO::PARAM_STR);
       $stmt->bindValue(":matn1", strtoupper(trim($param["matn1"])), PDO::PARAM_STR);

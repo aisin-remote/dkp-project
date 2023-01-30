@@ -18,9 +18,9 @@ if($action == "login") {
       $_SESSION[LOGIN_SESSION] = strtoupper($userid);
       $_SESSION["USERNAME"] = $login["data"]["name1"];
       
-      header("Location: home");
+      header("Location: ?action=home");
     } else {
-      header("Location: $action?error=".$login["message"]);
+      header("Location: ?action=$action&error=".$login["message"]);
     }
   } else {
     require( TEMPLATE_PATH . "/t_login.php" );
@@ -30,6 +30,6 @@ if($action == "login") {
 if($action == "logout") {
   unset($_SESSION[LOGIN_SESSION]);
   unset($_SESSION["USERNAME"]);
-  header("Location: login");
+  header("Location: ?action=login");
 }
 ?>

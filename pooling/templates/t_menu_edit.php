@@ -27,7 +27,7 @@ and open the template in the editor.
                     </div>';
             }
             ?>
-            <form method="post" action="<?php echo $action; ?>?id=<?php echo $id; ?>">
+            <form method="post" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>">
             <div class="row">
               <div class="col-12">
                 <div class="card">

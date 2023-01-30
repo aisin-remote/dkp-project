@@ -64,7 +64,7 @@ and open the template in the editor.
                             . "<td>".$list["name1"]."</td>"
                             . "<td class='text-center'>".$list["mat_start"]."</td>"
                             . "<td class='text-center'>".$list["mat_end"]."</td>"
-                            . "<td class='text-center'><a href='$action?id=".$list["lifnr"]."' class='btn btn-outline-primary btn-xs'><i class='material-icons'>edit</i> edit</a></td>"
+                            . "<td class='text-center'><a href='?action=$action?id=".$list["lifnr"]."' class='btn btn-outline-primary btn-xs'><i class='material-icons'>edit</i> edit</a></td>"
                             . "</tr>";
                           }
                         }

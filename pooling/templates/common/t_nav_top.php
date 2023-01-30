@@ -1,5 +1,5 @@
 <nav class="sb-topnav navbar navbar-expand navbar-light bg-light shadow-sm">
-  <a class="navbar-brand" href="home"><img src="media/images/logo.svg" height="30" alt=""/></a>
+  <a class="navbar-brand" href="../"><img src="media/images/logo.svg" height="30" alt=""/></a>
   
   <?php if(isset($_SESSION[LOGIN_SESSION])) { ?>
   <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="material-icons text-24px text-dark-blue">menu</i></button>
@@ -11,10 +11,10 @@
   
   <ul class="navbar-nav ml-auto ml-md-0">
     <li class="nav-item">
-      <a class="nav-link text-dark-blue" href="profile" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="material-icons text-24px">account_circle</i></a> 
+      <a class="nav-link text-dark-blue" href="?action=profile" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="material-icons text-24px">account_circle</i></a> 
     </li>
     <li class="nav-item">      
-      <a class="nav-link text-dark-blue" href="logout" data-toggle="tooltip" data-placement="bottom" title="Log Out"><i class="material-icons text-24px">logout</i></a>      
+      <a class="nav-link text-dark-blue" href="?action=logout" data-toggle="tooltip" data-placement="bottom" title="Log Out"><i class="material-icons text-24px">logout</i></a>      
     </li>
   </ul>
   <?php } ?>

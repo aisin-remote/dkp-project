@@ -42,7 +42,7 @@ and open the template in the editor.
                       <div class="col-lg-6 col-sm-12">
                         <div class="d-flex justify-content-end">
                           <!-- button placement -->
-                          <a class="btn btn-template" href="<?php echo $action ?>?id=0"><span class="material-icons">add</span>New</a>
+                          <a class="btn btn-template" href="?action=<?php echo $action ?>&id=0"><span class="material-icons">add</span>New</a>
                         </div>
                       </div>
                     </div>
@@ -72,7 +72,7 @@ and open the template in the editor.
                             . "<td>".$list["menuid"]."</td>"
                             . "<td>".$list["name1"]."</td>"
                             . "<td class='text-right'>".$list["sort1"]."</td>"
-                            . "<td class='text-center'><a href='$action?id=".$list["menuid"]."' class='btn btn-outline-secondary btn-xs'><i class='material-icons'>edit</i></a></td>"
+                            . "<td class='text-center'><a href='?action=$action&id=".$list["menuid"]."' class='btn btn-outline-secondary btn-xs'><i class='material-icons'>edit</i></a></td>"
                             . "</tr>";
                           }
                         }

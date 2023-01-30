@@ -17,9 +17,9 @@ if($action == "mara") {
         $save = $class->update($param);
       }
       if($save["status"] == true) {
-        header("Location: ".$action);
+        header("Location: ?action=".$action);
       } else {
-        header("Location: ".$action."?id=".$id."&error=".$save["message"]);
+        header("Location: ?action=".$action."&id=".$id."&error=".$save["message"]);
       }
     } else {
       if($id == "0") {

@@ -34,7 +34,7 @@ and open the template in the editor.
               <div class="col-12">
                 <div class="card">
                   <div class="card-body">
-                    <form method="post" action="<?php echo $action; ?>">
+                    <form method="post" action="?action=<?php echo $action; ?>">
                       <div class="row">                      
                         <div class="col-lg-6 col-sm-12">
                           <!-- filter placement -->
