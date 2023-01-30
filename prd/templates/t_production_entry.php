@@ -22,8 +22,8 @@ and open the template in the editor.
               <li class="breadcrumb-item active"><?php echo $template["submenu"]; ?></li>
             </ol>
 
-            <form method="get" action="<?php echo $action; ?>">
-
+            <form method="get" action="?action=<?php echo $action; ?>">
+              <input type="hidden" name="action" value="<?=$action?>">
               <div class="row">
                 <div class="col-12">
                   <div class="card mt-2">

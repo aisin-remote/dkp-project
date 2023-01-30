@@ -87,6 +87,36 @@ class User {
     return $return;
   }
   
+  public function loginMobile($userid) {
+    $return = array();
+    if(empty($userid)) {
+      $return["status"] = false;
+      $return["message"] = "Parameter empty";
+    } else {
+      $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
+      $sql = "SELECT * FROM m_user a WHERE UPPER(a.usrid) = :usrid";
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue(":usrid", strtoupper($userid), PDO::PARAM_STR);
+      if($stmt->execute()) {
+        if($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+          $return["status"] = true;
+          $return["data"] = $row;
+        } else {
+          $return["status"] = false;
+          $return["message"] = "User Not Found!";
+        }
+      } else {
+        $return["status"] = false;
+        $error = $stmt->errorInfo();
+        $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      }
+      $stmt = null;
+      $conn = null;
+    }
+    
+    return $return;
+  }
+  
   public function insert($data = array()) {
     $return = array();
     if(empty($data)) {
@@ -251,7 +281,7 @@ class User {
             from m_role_menu a 
             inner join m_menu b on b.menuid = a.menuid AND b.app_id = '".APP."' 
             inner join m_user_role c on c.roleid = a.roleid AND c.app_id = '".APP."' 
-            where UPPER(c.usrid) = '".strtoupper($usrid)."'
+            where UPPER(c.usrid) = '".strtoupper($usrid)."' AND a.app_id = '".APP."' 
             ORDER by sort1 ASC";
     $stmt = $conn->prepare($sql);
     if($stmt->execute()) {

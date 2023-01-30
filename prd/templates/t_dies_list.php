@@ -59,7 +59,7 @@ and open the template in the editor.
                     <div class="col-lg-6 col-sm-12">
                       <div class="d-flex justify-content-end">
                         <!-- button placement -->
-                        <a class="btn btn-dark-blue" href="<?php echo $action ?>?id=0"><span class="material-icons">add</span>New</a>
+                        <a class="btn btn-dark-blue" href="?action=<?php echo $action ?>&id=0"><span class="material-icons">add</span>New</a>
                       </div>
                     </div>
                   </div>
@@ -73,7 +73,7 @@ and open the template in the editor.
                 <div class="card-body">
                   <div class="table-responsive">
                     <!-- Edit Here -->
-                    <form action="<?php echo $action; ?>" method="POST">
+                    <form action="?action=<?php echo $action; ?>" method="POST">
                       <table class="table table-striped table-sm" id="data-table-x">
                         <thead>
                           <tr>
@@ -103,7 +103,7 @@ and open the template in the editor.
                                 . "<td class=''>" . $formatted_number = number_format($list["stkrun"], 0, '.', ',') . "</td>"
                                 . "<td class=''>" . $list["stats"] . "</td>"
                                 . "<td class='text-center pr-3'>"
-                                . "<a href='$action?id=" . $list["dies_id"] . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"
+                                . "<a href='?action=$action&id=" . $list["dies_id"] . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"
                                 . "</td>"
                                 . "<td class='text-center'>"
                                 . "<a onclick='openModal(\"" . $list["dies_id"] . "\");' class='btn btn-outline-danger btn-xs text-center mb-1 mr-2'><i class='material-icons'>delete</i></a>"
@@ -183,7 +183,7 @@ and open the template in the editor.
       $('#checkDelete').on('click', function() {
         $.ajax({
           type: "GET",
-          url: "api_delete_asset",
+          url: "?action=api_delete_asset",
           data: {
             dies_id: $('#dies_id').val()
           },
@@ -200,7 +200,7 @@ and open the template in the editor.
               $('#alert-container').append(alertDiv);
               $('.alert').fadeOut(4000);
             } else {
-              window.location.href = '<?php echo $action; ?>?id=' + dies_id2 + '&delete=delete';
+              window.location.href = '?action=<?php echo $action; ?>&id=' + dies_id2 + '&delete=delete';
             }
           }
         });

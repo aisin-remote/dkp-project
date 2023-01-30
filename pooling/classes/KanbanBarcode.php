@@ -73,7 +73,7 @@ class KanbanBarcode {
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-      $sql = "UPDATE m_device SET mat_start = :mat_start, mat_end = :mat_end, chg_by = :chg_by, chg_dt = CURRENT_TIMESTAMP "
+      $sql = "UPDATE m_io_kanban_barcode SET mat_start = :mat_start, mat_end = :mat_end, chg_by = :chg_by, chg_dt = CURRENT_TIMESTAMP "
               . "WHERE lifnr = :lifnr";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":lifnr", trim($param["lifnr"]), PDO::PARAM_STR);

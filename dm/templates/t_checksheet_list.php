@@ -56,7 +56,7 @@ and open the template in the editor.
                     <div class="col-lg-6 col-sm-12">
                       <div class="d-flex justify-content-end">
                         <!-- button placement -->
-                        <a class="btn btn-dark-blue btn-sm mx-2" href="<?php echo $action ?>?id=0&step=1">New Preventive Maintenance</a>
+                        <a class="btn btn-dark-blue btn-sm mx-2" href="?action=<?php echo $action ?>&id=0&step=1">New Preventive Maintenance</a>
                       </div>
                     </div>
                   </div>
@@ -94,9 +94,9 @@ and open the template in the editor.
                               . "<td class=''>" . $list["dies_no"] . "</td>"
                               . "<td class=''>" . $list["name1"] . "</td>"
                               . "<td class='text-center'>" . $list["pmt_date"] . "</td>"
-                              . "<td class='text-center ".$list["text_color"]."'>" . $list["pmstat_tx"] . "</td>"
+                              . "<td class='text-center " . $list["text_color"] . "'>" . $list["pmstat_tx"] . "</td>"
                               . "<td class='text-center'>"
-                              . "<a href='$action?id=".$list["pmtid"]."&step=2' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"
+                              . "<a href='?action=$action&id=" . $list["pmtid"] . "&step=2' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"
                               . "</td>"
                               . "</tr>";
                           }

@@ -50,7 +50,7 @@ and open the template in the editor.
                           <th>Kanban Tag</th>
                           <th>Customer</th>
                           <th>Material</th>
-                          <th>Registered Date</th>
+                          <th class='text-center'>Registered Date</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -61,7 +61,7 @@ and open the template in the editor.
                             . "<td>".$list["rfid_tag"]."</td>"
                             . "<td>".$list["cust_name"]."</td>"
                             . "<td>".$list["mat_name"]."</td>"
-                            . "<td>".$list["reg_dt"]."</td>"
+                            . "<td class='text-center'>".$list["reg_dt"]."</td>"
                             . "</tr>";
                           }
                         }

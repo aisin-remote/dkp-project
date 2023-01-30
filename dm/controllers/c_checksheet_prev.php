@@ -31,7 +31,7 @@ if ($action == "checksheet_preventive") {
 
         //cek apakah dies masih di preventive
         if ($cek_dies["gstat"] == "P") {
-          header("Location: " . $action . "?id=" . $id . "&step=1" . "&error=Dies Masih Dalam Preventive Maintenance!");
+          header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&error=Dies Masih Dalam Preventive Maintenance!");
           die();
         } else {
           //update status dies menjadi P
@@ -43,10 +43,10 @@ if ($action == "checksheet_preventive") {
         $save = $class->insert($param);
 
         if ($save["status"] == true) {
-          header("Location: " . $action . "?id=" . $param["pmtid"] . "&step=2" . "&success=Data%20Saved");
+          header("Location: ?action=" . $action . "&id=" . $param["pmtid"] . "&step=2" . "&success=Data%20Saved");
           die();
         } else {
-          header("Location: " . $action . "?id=" . $id . "&step=1" . "&error=" . $save["message"]);
+          header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&error=" . $save["message"]);
           die();
         }
       } else {
@@ -98,7 +98,7 @@ if ($action == "checksheet_preventive") {
             $param["c11100"] = $img64;
           } else {
             $message = "Gambar [1.1.1] harus dalam format JPEG atau PNG";
-            header("Location: " . $action . "?id=" . $id . "&step=2" . "&error=" . $save["message"]);
+            header("Location: ?action=" . $action . "&id=" . $id . "&step=2" . "&error=" . $save["message"]);
             die();
           }
         }
@@ -124,7 +124,7 @@ if ($action == "checksheet_preventive") {
             $param["c1161"] = $img64;
           } else {
             $message = "Gambar [1.1.6.1	Check Flow Power Cool] harus dalam format JPEG atau PNG";
-            header("Location: " . $action . "?id=" . $id . "&step=2" . "&error=" . $save["message"]);
+            header("Location: ?action=" . $action . "&id=" . $id . "&step=2" . "&error=" . $save["message"]);
             die();
           }
         }
@@ -150,7 +150,7 @@ if ($action == "checksheet_preventive") {
             $param["c1162"] = $img64;
           } else {
             $message = "Gambar [1.1.6.2	Check Flow Main Cool] harus dalam format JPEG atau PNG";
-            header("Location: " . $action . "?id=" . $id . "&step=2" . "&error=" . $save["message"]);
+            header("Location: ?action=" . $action . "&id=" . $id . "&step=2" . "&error=" . $save["message"]);
             die();
           }
         }
@@ -176,7 +176,7 @@ if ($action == "checksheet_preventive") {
             $param["c119"] = $img64;
           } else {
             $message = "Gambar [1.1.9	Check Bocor] harus dalam format JPEG atau PNG";
-            header("Location: " . $action . "?id=" . $id . "&step=2" . "&error=" . $save["message"]);
+            header("Location: ?action=" . $action . "&id=" . $id . "&step=2" . "&error=" . $save["message"]);
             die();
           }
         }
@@ -311,14 +311,14 @@ if ($action == "checksheet_preventive") {
         $save = $class->updateChecksheet($param);
 
         if ($save["status"] == true) {
-          header("Location: " . $action . "?success=Data%20Saved");
+          header("Location: ?action=" . $action . "&success=Data%20Saved");
         } else {
-          header("Location: " . $action . "?id=" . $id . "&step=2" . "&error=" . $save["message"]);
+          header("Location: ?action=" . $action . "&id=" . $id . "&step=2" . "&error=" . $save["message"]);
         }
       } else {
         $template["submenu"] = $id;
         $data["data"] = $class->getChecksheetById($id);
-        
+
         require(TEMPLATE_PATH . "/t_checksheet_step2.php");
       }
     }

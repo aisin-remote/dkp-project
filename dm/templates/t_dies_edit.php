@@ -34,7 +34,7 @@ and open the template in the editor.
                     </div>';
           }
           ?>
-          <form method="post" id="my-form" action="<?php echo $action; ?>?id=<?php echo $id; ?>" enctype="multipart/form-data">
+          <form method="post" id="my-form" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>" enctype="multipart/form-data">
 
             <div class="card mt-2">
               <div class="row">
@@ -182,7 +182,7 @@ and open the template in the editor.
     });
 
     function getDiesModel(group_id) {
-      $.getJSON("api_get_dies_model", {
+      $.getJSON("?action=api_get_dies_model", {
         group: group_id
       }, function(data) {
         var items = "";

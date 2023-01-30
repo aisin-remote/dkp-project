@@ -1,12 +1,14 @@
 <?php 
 if($action == "api_dashboard_prd") {
   $today = date("Y-m-d");
+  //$today = "2023-01-26";
   $jam_now = intval(date("H"));
   $min_now = intval(date("i"));
   /*if($min_now > 0) {
     $jam_now += 1;
   }*/
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
+  //$jam_end = "16";
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
   $query = "select a.line_id, b.name1 as line_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
             (select coalesce(sum(ng_qty),0) as ril_qty from t_prd_daily_ng 
@@ -157,3 +159,4 @@ if($action == "dashboard_line") {
   
   require( TEMPLATE_PATH . "/t_dashboard_line.php" );
 }
+?>

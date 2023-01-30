@@ -24,7 +24,7 @@ and open the template in the editor.
             <li class="breadcrumb-item active"><?php echo $template["submenu"]; ?></li>
             <li class="breadcrumb-item active">Edit</li>
             <li class="breadcrumb-item active">Detail</li>
-            <li class="breadcrumb-item active"><a href="<?php echo $action; ?>?line=<?php echo $data_item_dtl["line_id"]; ?>&date=<?php echo $data_item_dtl["xdate"]; ?>&shift=<?php echo $data_item_dtl["shift"]; ?>">back <i class="material-icons">arrow_back</i></a></li>
+            <li class="breadcrumb-item active"><a href="?action=<?php echo $action; ?>line=<?php echo $data_item_dtl["line_id"]; ?>&date=<?php echo $data_item_dtl["xdate"]; ?>&shift=<?php echo $data_item_dtl["shift"]; ?>">back <i class="material-icons">arrow_back</i></a></li>
           </ol>
           <?php
           if (isset($_GET["error"])) {
@@ -91,7 +91,7 @@ and open the template in the editor.
                 </div>
               </div>
             </div>
-            <form id="myForm" class="w-100" method="post" action="<?php echo $action; ?>?line=<?php echo $data_item_dtl["line_id"]; ?>&date=<?php echo $data_item_dtl["xdate"]; ?>&shift=<?php echo $data_item_dtl["shift"]; ?>&prd_seq=<?php echo $data_item_dtl["prd_seq"]; ?>">
+            <form id="myForm" class="w-100" method="post" action="?action=<?php echo $action; ?>&line=<?php echo $data_item_dtl["line_id"]; ?>&date=<?php echo $data_item_dtl["xdate"]; ?>&shift=<?php echo $data_item_dtl["shift"]; ?>&prd_seq=<?php echo $data_item_dtl["prd_seq"]; ?>">
               <div class="col-12 mt-1">
                 <div class="card">
                   <div class="card-header" style="background-color: #E4E4E4;">
@@ -503,7 +503,7 @@ and open the template in the editor.
       if($("#stop_id").val().length > 0 && parseFloat($("#stop_time").val()) > 0) {
         $.ajax({
           type: 'POST',
-          url: 'api_insert_daily_stop',
+          url: '?action=api_insert_daily_stop',
           data: {
             line_id: $("#line_id").val(),
             prd_dt: $("#prd_dt").val(),
@@ -540,7 +540,7 @@ and open the template in the editor.
     function saveDataNG() {
       $.ajax({
         type: 'POST',
-        url: 'api_insert_daily_ng',
+        url: '?action=api_insert_daily_ng',
         data: {
           line_id: $("#line_id").val(),
           prd_dt: $("#prd_dt").val(),
@@ -572,7 +572,7 @@ and open the template in the editor.
     function delStop(line_id, prd_dt, shift, prd_seq, stop_seq) {
       $.ajax({
         type: 'POST',
-        url: 'api_delete_daily_stop',
+        url: '?action=api_delete_daily_stop',
         data: {
           line_id: line_id,
           prd_dt: prd_dt,
@@ -599,7 +599,7 @@ and open the template in the editor.
     function delNG(line_id, prd_dt, shift, prd_seq, ng_seq) {
       $.ajax({
         type: 'POST',
-        url: 'api_delete_daily_ng',
+        url: '?action=api_delete_daily_ng',
         data: {
           line_id: line_id,
           prd_dt: prd_dt,
@@ -629,7 +629,7 @@ and open the template in the editor.
       var time_id = $("#prd_seq").val();
       $.ajax({
         type: 'POST',
-        url: 'api_get_time_stop',
+        url: '?action=api_get_time_stop',
         data: {
           srna_id: srna_id,
           shift: shift,

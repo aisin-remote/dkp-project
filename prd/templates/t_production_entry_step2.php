@@ -23,7 +23,7 @@ and open the template in the editor.
             <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
             <li class="breadcrumb-item active"><?php echo $template["submenu"]; ?></li>
             <li class="breadcrumb-item active">Edit</li>
-            <li class="breadcrumb-item active"><a class="" href="<?php echo $action; ?>">back <i class="material-icons">arrow_back</i></a></li>
+            <li class="breadcrumb-item active"><a class="" href="?action=<?php echo $action; ?>">back <i class="material-icons">arrow_back</i></a></li>
 
           </ol>
           <?php
@@ -138,7 +138,7 @@ and open the template in the editor.
                               . "<td class='text-right'>" . $list["prd_time"] . "</td>"
                               . "<td class='text-right'>" . $efficiency . "</td>"
                               . "<td class='text-center'>"
-                              . "<a href='$action?line=" . $list["line_id"] . "&date=" . $list["xdate"] . "&shift=" . $list["shift"] . "&prd_seq=" . $list["prd_seq"] . "' class='btn btn-link btn-sm text-center text-dark'><i class='material-icons'>edit_square</i></a>"
+                              . "<a href='?action=$action&line=" . $list["line_id"] . "&date=" . $list["xdate"] . "&shift=" . $list["shift"] . "&prd_seq=" . $list["prd_seq"] . "' class='btn btn-link btn-sm text-center text-dark'><i class='material-icons'>edit_square</i></a>"
                               . "</td>";
                             if($op_role == "LEADER") {
                               echo "<td class='text-center'>$btn_approve</td>";
@@ -170,7 +170,7 @@ and open the template in the editor.
     function approveDailyI(line_id,shift,prd_dt,prd_seq) {
       $.ajax({
         type: 'POST',
-        url: 'api_approve_daily_i',
+        url: '?action=api_approve_daily_i',
         data: {
           line_id: line_id,
           shift: shift,

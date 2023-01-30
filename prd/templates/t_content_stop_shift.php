@@ -55,7 +55,7 @@ and open the template in the editor.
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="d-flex justify-content-end">
                                                 <!-- button placement -->
-                                                <a class="btn btn-pale-green" href="<?php echo $action ?>?id=0"><span class="material-icons">add</span>New</a>
+                                                <a class="btn btn-pale-green" href="?action=<?php echo $action ?>&id=0"><span class="material-icons">add</span>New</a>
                                             </div>
                                         </div>
                                     </div>
@@ -93,7 +93,7 @@ and open the template in the editor.
                                                             . "<td class='align-middle'>" . $list["end_time"] . "</td>"
                                                             . "<td class='align-middle'>" . $list["stop_time"] . "</td>"
                                                             . "<td class='text-center'>"
-                                                            . "<a href='$action?id=" . $list["shift_id"] . "&id2=" . $list["time_id"] . "&id3=" . $list["srna_id"] . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"
+                                                            . "<a href='?action=$action&id=" . $list["shift_id"] . "&id2=" . $list["time_id"] . "&id3=" . $list["srna_id"] . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"
                                                             . "</td>"
                                                             . "</tr>";
                                                     }
@@ -132,7 +132,7 @@ and open the template in the editor.
                     className: 'btn btn-pale-green btn-sm',
                     text: '<i class="material-icons">download</i>Download Excel',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5]
+                        columns: [0, 1, 2, 3]
                     }
                 }, ]
             });

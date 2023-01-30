@@ -5,7 +5,7 @@ class KanbanRFID {
   public function getList() {
     $return = array();
     $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-    $sql = "SELECT a.*, TO_CHAR(crt_dt, 'DD-MM-YYYY') as reg_dt, b.name1 as cust_name, c.name1 as mat_name FROM m_io_kanban_rfid a "
+    $sql = "SELECT a.*, TO_CHAR(a.crt_dt, 'DD-MM-YYYY') as reg_dt, b.name1 as cust_name, c.name1 as mat_name FROM m_io_kanban_rfid a "
             . "INNER JOIN m_io_lfa1 b ON b.lifnr = a.lifnr "
             . "INNER JOIN m_io_mara c ON c.matnr = a.matnr "
             . "WHERE 1=1 ";
@@ -67,6 +67,48 @@ class KanbanRFID {
     return $return;
   }
   
+  public function massInsert($lifnr,$matnr,$rfid_kanban = array(),$crt_by) {
+    $return = array();
+    if (empty($rfid_kanban)) {
+      $return["status"] = false;
+      $return["message"] = "Data Empty";
+    } else {
+      $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+      $sql = "INSERT INTO m_io_kanban_rfid (rfid_tag,lifnr,matnr,crt_by,crt_dt) "
+              . "values ";
+      
+      $insertQuery = array();
+      $insertData = array();
+      
+      foreach ($rfid_kanban as $row) {
+        $insertQuery[] = "(?,?,?,?,CURRENT_TIMESTAMP)";
+        $insertData[] = $row;
+        $insertData[] = $lifnr;
+        $insertData[] = $matnr;
+        $insertData[] = $crt_by;
+      }
+      
+      if (!empty($insertQuery)) {
+        $sql .= implode(', ', $insertQuery);
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute($insertData)) {
+          $return["status"] = true;
+        } else {
+          $error = $stmt->errorInfo();
+          $return["status"] = false;
+          $return["message"] = trim(str_replace("\n", " ", $error[2]));
+          error_log($error[2]);
+        }
+        $stmt = null;
+        $conn = null;
+      } else {
+        $return["status"] = false;
+        $return["message"] = "Data Empty";
+      }
+    }
+    return $return;
+  }
+  
   public function update($param = array()) {
     $return = array();
     if(empty($param)) {
@@ -93,6 +135,21 @@ class KanbanRFID {
       $stmt = null;
       $conn = null;
     }
+    return $return;
+  }
+  
+  public function getRfidList($matnr = array()) {
+    $return = array();
+    $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
+    $sql = "SELECT * FROM m_io_kanban_rfid WHERE matnr in ('".implode("','",$matnr)."')";
+    $stmt = $conn->prepare($sql);    
+    if($stmt->execute()) {
+      while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
     return $return;
   }
 }

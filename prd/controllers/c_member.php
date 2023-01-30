@@ -13,9 +13,9 @@ if ($action == "member_operator") {
     $update = $class->updateStatus($extract_id);
 
     if ($update["status"] == true) {
-      header("Location: " . $action . "?success=Status%20Updated");
+      header("Location: ?action=" . $action . "&success=Status%20Updated");
     } else {
-      header("Location: " . $action . "?error=" . $update["message"]);
+      header("Location: ?action=" . $action . "&error=" . $update["message"]);
     }
   }
   if (isset($_GET["id"])) {
@@ -31,9 +31,9 @@ if ($action == "member_operator") {
         $save = $class->update($param);
       }
       if ($save["status"] == true) {
-        header("Location: " . $action . "?success=Data%20Saved");
+        header("Location: ?action=" . $action . "&success=Data%20Saved");
       } else {
-        header("Location: " . $action . "?id=" . $id . "&error=" . $save["message"]);
+        header("Location: ?action=" . $action . "&id=" . $id . "&error=" . $save["message"]);
       }
     } else {
       if ($id == "0") {

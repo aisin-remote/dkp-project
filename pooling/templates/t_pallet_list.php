@@ -47,8 +47,8 @@ and open the template in the editor.
                     <table class="table table-sm" id="data-table">
                       <thead>
                         <tr>
-                          <th>Pallet Tag</th>
-                          <th>Registered Date</th>
+                          <th class='text-center'>Pallet Tag</th>
+                          <th class='text-center'>Registered Date</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -56,8 +56,8 @@ and open the template in the editor.
                         if(!empty($data["list"])) {
                           foreach($data["list"] as $list) {
                             echo "<tr>"
-                            . "<td>".$list["pallet_id"]."</td>"
-                            . "<td>".$list["reg_dt"]."</td>"
+                            . "<td class='text-center'>".$list["pallet_id"]."</td>"
+                            . "<td class='text-center'>".$list["reg_dt"]."</td>"
                             . "</tr>";
                           }
                         }

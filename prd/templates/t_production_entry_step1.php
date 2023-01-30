@@ -31,7 +31,7 @@ and open the template in the editor.
                     </div>';
           }
           ?>
-          <form method="post" id="my-form" action="<?php echo $action; ?>?line=<?php echo $line; ?>&date=<?php echo $date; ?>&shift=<?php echo $shift; ?>">
+          <form method="post" id="my-form" action="?action=<?php echo $action; ?>&line=<?php echo $line; ?>&date=<?php echo $date; ?>&shift=<?php echo $shift; ?>">
 
             <div class="row mt-1">
               <div class="col-12">
@@ -245,7 +245,7 @@ and open the template in the editor.
     function getDefaultCycleTime() {
       $.ajax({
         type: 'POST',
-        url: 'api_get_default_cctime',
+        url: '?action=api_get_default_cctime',
         data: {
           dies_id: $("#dies_id").val()
         },

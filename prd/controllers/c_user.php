@@ -23,7 +23,7 @@ if($action == "user") {
         if($_POST["password1"] == $_POST["password2"]) {   
           $param["usrpw"] = $_POST["password1"];
         } else {
-          header("Location: ".$action."?id=".$id."&error=Password%20Missmatch");
+          header("Location: ?action=".$action."&id=".$id."&error=Password%20Missmatch");
           die();
         }
       }
@@ -35,9 +35,9 @@ if($action == "user") {
         $save = $class->update($param);
       }
       if($save["status"] == true) {
-        header("Location: ".$action."?success=Data%20Saved");
+        header("Location: ?action=".$action."&success=Data%20Saved");
       } else {
-        header("Location: ".$action."?id=".$id."&error=".$save["message"]);
+        header("Location: ?action=".$action."&id=".$id."&error=".$save["message"]);
       }
     } else {
       $data["user_role"] = array();

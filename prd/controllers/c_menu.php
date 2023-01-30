@@ -15,17 +15,17 @@ if($action == "menu") {
         $save = $class->update($param);
       }
       if($save["status"] == true) {
-        header("Location: ".$action."?success=Data%20Saved");
+        header("Location: ?action=".$action."&success=Data%20Saved");
       } else {
-        header("Location: ".$action."?id=".$id."&error=".$save["message"]);
+        header("Location: ?action=".$action."&id=".$id."&error=".$save["message"]);
       }
     } else if(isset($_GET["delete"])) {
       $save = array();
       $save = $class->delete($id);
       if($save["status"] == true) {
-        header("Location: ".$action."?success=Menu%20Deleted");
+        header("Location: ?action=".$action."&success=Menu%20Deleted");
       } else {
-        header("Location: ".$action."?error=".$save["message"]);
+        header("Location: ?action=".$action."&error=".$save["message"]);
       }
     } else {
       if($id == "0") {

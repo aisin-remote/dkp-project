@@ -13,8 +13,8 @@ define( "PAGE_TITLE", "PRODUCTION DIGITALIZATION");
 define( "FOOTER", "2022 &copy; PT. Aisin Indonesia Automotive");
 define( "APP_DIR", "prd");
 
-$dbhost = "5.181.217.2";
-$dbpass = "Ega2021";
+$dbhost = "localhost";
+$dbpass = "***";
 define( "DB_DSN", "pgsql:host=$dbhost;port=5432;dbname=db_aisin_main" );
 define( "DB_USERNAME", "postgres" );
 define( "DB_PASSWORD", $dbpass );
@@ -34,5 +34,3 @@ function handleException( $exception ) {
 }
  
 set_exception_handler( 'handleException' );
-
-?>

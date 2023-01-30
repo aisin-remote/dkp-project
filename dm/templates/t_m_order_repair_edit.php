@@ -49,7 +49,7 @@ and open the template in the editor.
                     </div>';
           }
           ?>
-          <form method="post" id="my-form" action="<?php echo $action; ?>?id=<?php echo $id; ?>" enctype="multipart/form-data">
+          <form method="post" id="my-form" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>" enctype="multipart/form-data">
 
             <div class="row">
               <div class="col-12">
@@ -213,7 +213,7 @@ and open the template in the editor.
     function getDiesModel(group_id) {
       $("#model_id").empty();
       var first_model = "";
-      $.getJSON("api_get_dies_model", {
+      $.getJSON("?action=api_get_dies_model", {
         group: group_id
       }, function(data) {
         var items = "";
@@ -244,7 +244,7 @@ and open the template in the editor.
 
     function getDiesList(model_id, group_id) {
       $("#dies_id").empty();
-      $.getJSON("api_get_dies_list", {
+      $.getJSON("?action=api_get_dies_list", {
         model: model_id,
         group_id: group_id
       }, function(data) {

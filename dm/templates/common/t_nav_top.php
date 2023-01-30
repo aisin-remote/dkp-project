@@ -14,10 +14,10 @@
         <button class="btn btn-link my-sm-0 " id="fs-btn"><i class="material-icons">fullscreen</i></button>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="profile" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="material-icons text-24px">account_circle</i></a>
+        <a class="nav-link" href="?action=profile" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="material-icons text-24px">account_circle</i></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="logout" data-toggle="tooltip" data-placement="bottom" title="Log Out"><i class="material-icons text-24px">logout</i></a>
+        <a class="nav-link" href="?action=logout" data-toggle="tooltip" data-placement="bottom" title="Log Out"><i class="material-icons text-24px">logout</i></a>
       </li>
     </ul>
   <?php } ?>

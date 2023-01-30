@@ -23,22 +23,21 @@ if ($action == "content_stop_per_shift") {
                 $save = $class->update($param);
             }
             if ($save["status"] == true) {
-                header("Location: " . $action . "?success=Data%20Saved");
+                header("Location: ?action=" . $action . "&success=Data%20Saved");
             } else {
-                header("Location: " . $action . "?id=" . $id . "&error=" . $save["message"]);
+                header("Location: ?action=" . $action . "&id=" . $id . "&error=" . $save["message"]);
             }
         } else {
-            $time_list = $class->getListTime();
             if ($id == "0") {
                 $data["data"] = array();
             } else {
                 $data["data"] = $class->getById($id, $id2, $id3);
-                $time_list = $class->getListTime($data["data"]["shift_id"]);
             }
             // $device_types = $class->getDeviceType();
 
             $shift_list = $class->getListShift();
             $srna_list = $class->getSrna();
+            $time_list = $class->getListTime();
             require(TEMPLATE_PATH . "/t_content_stop_shift_edit.php");
         }
     } else {

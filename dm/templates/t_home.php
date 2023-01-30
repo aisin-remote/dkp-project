@@ -120,7 +120,7 @@ and open the template in the editor.
 
     function updateDashboard() {
       $.getJSON(
-        "api_dashboard_dm", {},
+        "?action=api_dashboard_dm", {},
         function(data) {
           var data_dies = data.data_dies;
           var data_group = data.data_group;

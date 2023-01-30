@@ -93,6 +93,22 @@ class Material {
     }
     return $return;
   }
+  
+  public function isExist($id) {
+    $return = 0;
+    $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
+    $sql = "SELECT count(*) as cnt FROM m_io_mara WHERE UPPER(matnr) = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(":id", strtoupper($id), PDO::PARAM_STR);
+    if($stmt->execute()) {
+      while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+        $return = $row["cnt"];
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
 }
 
 ?>

@@ -55,7 +55,7 @@ and open the template in the editor.
                     <div class="col-lg-6 col-sm-12">
                       <div class="d-flex justify-content-end">
                         <!-- button placement -->
-                        <a class="btn btn-pale-green" href="<?php echo $action ?>?id=0"><span class="material-icons">add</span>New</a>
+                        <a class="btn btn-pale-green" href="?action=<?php echo $action ?>&id=0"><span class="material-icons">add</span>New</a>
                       </div>
                     </div>
                   </div>
@@ -69,7 +69,7 @@ and open the template in the editor.
                 <div class="card-body">
                   <div class="table-responsive">
                     <!-- Edit Here -->
-                    <form action="<?php echo $action; ?>" method="POST">
+                    <form action="?action=<?php echo $action; ?>" method="POST">
                       <table class="table table-sm table-striped" id="data-table-x">
                         <thead>
                           <tr>
@@ -92,7 +92,7 @@ and open the template in the editor.
                                 . "<td class=''>" . $list["name1"] . "</td>"
                                 . "<td class=''>" . $list["stats"] . "</td>"
                                 . "<td class='text-center'>"
-                                . "<a href='$action?id=" . $list["empid"] . "' class='btn btn-outline-dark btn-xs'><i class='material-icons'>edit</i> Edit</a>"
+                                . "<a href='?action=$action&id=" . $list["empid"] . "' class='btn btn-outline-dark btn-xs'><i class='material-icons'>edit</i> Edit</a>"
                                 . "</td>"
                                 . "</tr>";
                             }
@@ -160,7 +160,7 @@ and open the template in the editor.
           className: 'btn btn-pale-green btn-sm',
           text: '<i class="material-icons">download</i>Download Excel',
           exportOptions: {
-            columns: [1, 2, 3, 4]
+            columns: [0, 1, 2]
           }
         }, ]
       });
@@ -172,7 +172,7 @@ and open the template in the editor.
       $('#checkDelete').on('click', function() {
         $.ajax({
           type: "GET",
-          url: "api_delete_material",
+          url: "?action=api_delete_material",
           data: {
             matnr: $('#empid').val()
           },

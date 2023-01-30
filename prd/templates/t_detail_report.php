@@ -163,7 +163,7 @@ and open the template in the editor.
                               . "<td class='align-middle'>".$list["Lost Time(m)"]."</td>"
                               . "<td class='align-middle'>".$list["Efficiency"]."</td>"
                               . "<td class='text-center'>"
-                                . "<a href='$action?id=".$list["empid"]."' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"        
+                                . "<a href=?action='$action&id=".$list["empid"]."' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"        
                               . "</td>"                                    
                               . "</tr>";
                             }

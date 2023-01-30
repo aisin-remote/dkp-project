@@ -55,7 +55,7 @@ and open the template in the editor.
                     <div class="col-lg-6 col-sm-12">
                       <div class="d-flex justify-content-end">
                         <!-- button placement -->
-                        <a class="btn btn-dark-blue" href="<?php echo $action ?>?id=0"><span class="material-icons">add</span>New</a>
+                        <a class="btn btn-dark-blue" href="?action=<?php echo $action ?>&id=0"><span class="material-icons">add</span>New</a>
                       </div>
                     </div>
                   </div>
@@ -100,7 +100,7 @@ and open the template in the editor.
                                 . "<td class=''>" . $list["stats"] . "</td>"
                                 . "<td class=''>" . $list["iostat"] . "</td>"
                                 . "<td class='text-center pr-3'>"
-                                . "<a href='$action?id=" . $list["dies_id"] . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"
+                                . "<a href='?action=$action&id=" . $list["dies_id"] . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>edit</i> edit</a>"
                                 . "</td>"
                                 . "</tr>";
                             }

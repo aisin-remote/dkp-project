@@ -37,6 +37,15 @@ if($action == "home") {
       $data_eff[] = $row["eff"];
     }
   }
+  if(empty($data_line_name)) {
+    $query = "SELECT name1 FROM m_prd_line ORDER by line_id ASC";
+    $stmt = $conn->prepare($query);
+    if($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {   
+        $data_line_name[] = $row["name1"];
+      }
+    }
+  }
   
   require( TEMPLATE_PATH . "/t_home.php" );
 }

@@ -36,8 +36,6 @@ if ($action == "daily_production") {
         $prd_dt = $_GET["id2"];
         $shift = $_GET["id3"];
 
-        $date = str_replace("-", "", $prd_dt);
-
         $data["list"] = $class->getList2($line_id, $prd_dt, $shift);
         $data2["list"] = $class->getList3($line_id, $prd_dt, $shift);
         $data3["list"] = $class->getPrdTime($line_id, $prd_dt, $shift);
@@ -60,9 +58,7 @@ if ($action == "daily_production") {
 
         $nett_opr = $data3["list"][0]["nett_opr"];
 
-        $data_header = $class2->getHeaderById($line_id, $date, $shift);
-
-        // var_dump($line_id, $prd_dt, $shift);
+        // var_dump($data3["list"][0]["nett_opr"]);
         // die();
 
         require(TEMPLATE_PATH . "/t_report_daily_production2.php");
@@ -72,16 +68,14 @@ if ($action == "daily_production") {
         $shift = $_GET["id3"];
         $seq = $_GET["id4"];
 
-        $prd_dt = str_replace("-", "", $date);
-
         $list_stop = $stop->getList('S', "U");
         $list_action = $stop->getList('A');
-        $list_person = $class2->getPersonById($line, $prd_dt, $shift);
-        $data_item_dtl = $class2->getItemById($line, $prd_dt, $shift, $seq);
-        $data_stop = $class2->getStopList($line, $prd_dt, $shift, $seq);
+        $list_person = $class2->getPersonById($line, $date, $shift);
+        $data_item_dtl = $class2->getItemById($line, $date, $shift, $seq);
+        $data_stop = $class2->getStopList($line, $date, $shift, $seq);
 
         $list_ng_type = $class2->getNGType();
-        $data_ng = $class2->getNGList($line, $prd_dt, $shift, $seq);
+        $data_ng = $class2->getNGList($line, $date, $shift, $seq);
         $template["submenu"] = $data_item_dtl["line_name"];
 
         $dies_list = $dies->getListDies($line);

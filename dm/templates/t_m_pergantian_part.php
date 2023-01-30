@@ -44,7 +44,7 @@ and open the template in the editor.
                     </div>';
           }
           ?>
-          <form method="post" action="<?php echo $action; ?>?id=<?php $getId; ?>">
+          <form method="post" action="?action=<?php echo $action; ?>&id=<?php $getId; ?>">
 
             <div class="row">
               <div class="col-12">
@@ -58,7 +58,7 @@ and open the template in the editor.
                       <div class="col-lg-6 col-sm-12">
                         <div class="d-flex justify-content-end">
                           <!-- button placement -->
-                          <a class="btn btn-dark-blue btn-sm mx-2" href="<?php echo $action; ?>?id=0"><i class="material-icons">add</i> New</a>
+                          <a class="btn btn-dark-blue btn-sm mx-2" href="?action=<?php echo $action; ?>&id=0"><i class="material-icons">add</i> New</a>
                         </div>
                       </div>
                     </div>
@@ -86,17 +86,17 @@ and open the template in the editor.
                         </thead>
                         <tbody>
                           <?php
-                          if(!empty($data["list"])) {
-                            foreach($data["list"] as $row) {
+                          if (!empty($data["list"])) {
+                            foreach ($data["list"] as $row) {
                           ?>
-                          <tr>
-                            <td><?php echo $row["pchid"]; ?></td>
-                            <td><?php echo $row["group_id"]; ?></td>
-                            <td><?php echo $row["model_id"]; ?></td>
-                            <td><?php echo $row["dies_no"]; ?></td>
-                            <td><?php echo $row["pcdate"]; ?></td>
-                            <td><a class="btn btn-xs btn-outline-dark" href="<?php $action ?>?id=<?php echo $row["pchid"]; ?>"><i class="material-icons">edit_square</i></a></td>
-                          </tr>
+                              <tr>
+                                <td><?php echo $row["pchid"]; ?></td>
+                                <td><?php echo $row["group_id"]; ?></td>
+                                <td><?php echo $row["model_id"]; ?></td>
+                                <td><?php echo $row["dies_no"]; ?></td>
+                                <td><?php echo $row["pcdate"]; ?></td>
+                                <td><a class="btn btn-xs btn-outline-dark" href="?action=<?php echo $action ?>&id=<?php echo $row["pchid"]; ?>"><i class="material-icons">edit_square</i></a></td>
+                              </tr>
                           <?php
                             }
                           }
@@ -118,9 +118,8 @@ and open the template in the editor.
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    
     $(document).ready(function() {
-      
+
     });
   </script>
 </body>

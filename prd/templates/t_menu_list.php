@@ -83,8 +83,8 @@ and open the template in the editor.
                             . "<td>".$list["menuid"]."</td>"
                             . "<td>".$list["name1"]."</td>"
                             . "<td class='text-right'>".$list["sort1"]."</td>"
-                            . "<td class='text-center'><a href='$action?id=".$list["menuid"]."' class='btn btn-outline-secondary btn-xs'><i class='material-icons'>edit</i></a></td>"
-                            . "<td class='text-center'><a href='$action?id=".$list["menuid"]."&delete=true' class='btn btn-outline-danger btn-xs'><i class='material-icons'>delete</i></a></td>"
+                            . "<td class='text-center'><a href='?action=$action&id=".$list["menuid"]."' class='btn btn-outline-secondary btn-xs'><i class='material-icons'>edit</i></a></td>"
+                            . "<td class='text-center'><a href='?action=$action&id=".$list["menuid"]."&delete=true' class='btn btn-outline-danger btn-xs'><i class='material-icons'>delete</i></a></td>"
                             . "</tr>";
                           }
                         }

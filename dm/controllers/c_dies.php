@@ -12,9 +12,9 @@ if ($action == "dies") {
     $update = $class->updateStatus($extract_id);
 
     if ($update["status"] == true) {
-      header("Location: " . $action . "?success=Status%20Updated");
+      header("Location: ?action=" . $action . "&success=Status%20Updated");
     } else {
-      header("Location: " . $action . "?error=" . $update["message"]);
+      header("Location: ?action=" . $action . "&error=" . $update["message"]);
     }
   }
 
@@ -31,9 +31,9 @@ if ($action == "dies") {
     }
 
     if ($update["status"] == true) {
-      header("Location: " . $action . "?success=Location%20Updated");
+      header("Location: ?action=" . $action . "&success=Location%20Updated");
     } else {
-      header("Location: " . $action . "?error=" . $update["message"]);
+      header("Location: ?action=" . $action . "&error=" . $update["message"]);
     }
   }
 
@@ -87,7 +87,7 @@ if ($action == "dies") {
         } else {
           $go_save = false;
           $message = "Gambar harus dalam format JPEG atau PNG";
-          header("Location: " . $action . "?id=" . $id . "&error=" . $message);
+          header("Location: ?action=" . $action . "&id=" . $id . "&error=" . $message);
           die();
         }
       }
@@ -99,9 +99,9 @@ if ($action == "dies") {
         $save = $class->updateDies($param);
       }
       if ($save["status"] == true) {
-        header("Location: " . $action . "?success=Data%20Saved");
+        header("Location: ?action=" . $action . "&success=Data%20Saved");
       } else {
-        header("Location: " . $action . "?id=" . $id . "&error=" . $save["message"]);
+        header("Location: ?action=" . $action . "&id=" . $id . "&error=" . $save["message"]);
       }
     } else {
       $group_list = $class->getDiesGroup();

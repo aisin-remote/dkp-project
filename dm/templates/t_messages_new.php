@@ -5,37 +5,39 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-  <head>
-    <?php include "common/t_css.php"; ?>
-    <link href="vendors/ega/css/styles.css" rel="stylesheet" type="text/css"/>
-  </head>
-  <body>		
-    <?php include "common/t_nav_top.php"; ?>
-    <div id="layoutSidenav">
-      <?php include "common/t_nav_left.php"; ?>
-      <div id="layoutSidenav_content">
-        <main>
-          <form method="post" action="<?=$action?>?id=<?=$id?>">
+
+<head>
+  <?php include "common/t_css.php"; ?>
+  <link href="vendors/ega/css/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <?php include "common/t_nav_top.php"; ?>
+  <div id="layoutSidenav">
+    <?php include "common/t_nav_left.php"; ?>
+    <div id="layoutSidenav_content">
+      <main>
+        <form method="post" action="?action=<?= $action ?>&id=<?= $id ?>">
           <div class="container-fluid">
             <ol class="breadcrumb mb-2 mt-4">
               <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
               <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
             </ol>
-            <?php 
-            if(isset($_GET["error"])) {
+            <?php
+            if (isset($_GET["error"])) {
               echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                      Error : '.$_GET["error"].'
+                      Error : ' . $_GET["error"] . '
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>';
             }
             ?>
-            
-            <?php 
-            if(isset($_GET["success"])) {
+
+            <?php
+            if (isset($_GET["success"])) {
               echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                      Success : '.$_GET["success"].'
+                      Success : ' . $_GET["success"] . '
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -49,7 +51,7 @@ and open the template in the editor.
                     <div class="row">
                       <div class="col-lg-6 col-sm-12">
                         <!-- filter placement -->
-                        
+
                       </div>
                       <div class="col-lg-6 col-sm-12">
                         <div class="d-flex justify-content-end">
@@ -60,7 +62,7 @@ and open the template in the editor.
                     </div>
                   </div>
                 </div>
-              </div>              
+              </div>
             </div>
             <div class="row">
               <div class="col-12">
@@ -69,29 +71,29 @@ and open the template in the editor.
                     <div class="form-group">
                       <label for="subject">Subject</label>
                       <input type="text" class="form-control" id="subject" name="subject" placeholder="" required maxlength="255">
-                    </div>                    
+                    </div>
                     <div class="form-group">
                       <label for="msg_txt">Detail</label>
                       <textarea class="form-control" id="msg_txt" name="msg_txt" required maxlength="1000" rows="3"></textarea>
                     </div>
                   </div>
                 </div>
-              </div>              
+              </div>
             </div>
             <div class="row">
-              
+
             </div>
           </div>
-          </form>
-        </main>
-        <?php include 'common/t_footer.php'; ?>
-      </div>
+        </form>
+      </main>
+      <?php include 'common/t_footer.php'; ?>
     </div>
-    <?php include 'common/t_js.php'; ?>
-    <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
-    <script>
-      $(document).ready(function () {
-      });
-    </script>
-  </body>
+  </div>
+  <?php include 'common/t_js.php'; ?>
+  <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
+  <script>
+    $(document).ready(function() {});
+  </script>
+</body>
+
 </html>

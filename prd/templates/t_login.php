@@ -13,7 +13,7 @@
     <div class="card mt-3" style="border-radius: 20px;padding-top:20px;padding-bottom: 20px;">
       <div class="card-body">
         <div class="container">
-          <form action="login" method="POST">
+          <form action="?action=<?=$action?>" method="POST">
             <a href=".."><img class="mb-3" src=" media/images/logo.svg" width="150" alt="Company Logo" /></a>
             <!-- <img class="mb-3" src="media/images/logo.svg" alt="Company Logo" width="150"> -->
             <p class="h5 mb-3 font-weight-normal text-muted">Login to your Account</p>

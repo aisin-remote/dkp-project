@@ -84,7 +84,7 @@ and open the template in the editor.
                               . "<td class='text-center pr-3 align-middle'>" . $list["stop_time"] . "</td>"
                               . "<td class='text-center pr-3 align-middle'>" . $list["eff"] . "</td>"
                               . "<td class='text-center pr-3'>"
-                              . "<a href='$action?id=" . $list["line_id"] . "&id2=" . $list["prd_dt"] . "&id3=" . $list["shift"] . "&step=2" . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>visibility</i> </a>"
+                              . "<a href='?action=$action&id=" . $list["line_id"] . "&id2=" . $list["prd_dt"] . "&id3=" . $list["shift"] . "&step=2" . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>visibility</i> </a>"
                               . "</td>"
                               . "</tr>";
                           }

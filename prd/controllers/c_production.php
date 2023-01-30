@@ -42,10 +42,10 @@ if ($action == "daily_production_entry") {
         if ($save["status"] == true) {
           $dies->updateStroke($prev_dies_id, $param["dies_id"], $prev_prd_qty, $param["prd_qty"]);
           $success = "Data Saved";
-          header("Location: " . $action . "?line=" . $line . "&date=" . $date . "&shift=" . $shift . "&prd_seq=" . $seq . "&success=" . $success);
+          header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&prd_seq=" . $seq . "&success=" . $success);
         } else {
           $error = $save["message"];
-          header("Location: " . $action . "?line=" . $line . "&date=" . $date . "&shift=" . $shift . "&prd_seq=" . $seq . "&error=" . $error);
+          header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&prd_seq=" . $seq . "&error=" . $error);
         }
       }
       $list_stop = $stop->getList('S', null);
@@ -146,15 +146,15 @@ if ($action == "daily_production_entry") {
                 $param_stop["exe_empid"] = null;
                 $class->insertStop($param_stop);
               }
-              header("Location: " . $action . "?line=" . $line . "&date=" . $date . "&shift=" . $shift);
+              header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift);
             } else {
               $class->rollBackHeader($line, $date, $shift);
               $error = "Item - " . $save_item["message"];
-              header("Location: " . $action . "?line=" . $line . "&date=" . $date . "&shift=" . $shift . "&error=" . $error);
+              header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&error=" . $error);
             }
           } else {
             $error = "Header - " . $save_header["message"];
-            header("Location: " . $action . "?line=" . $line . "&date=" . $date . "&shift=" . $shift . "&error=" . $error);
+            header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&error=" . $error);
           }
         } else {
           $ld_list = $member->getList("LD");

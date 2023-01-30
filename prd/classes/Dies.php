@@ -278,8 +278,13 @@ class Dies
     }
 
     if (!empty($stats)) {
-      $sql .= " AND a.stats = '$stats' ";
+      if($stats == "A") {
+        $sql .= " AND a.stats = '$stats' AND a.iostat = 'I' ";
+      } else {
+        $sql .= " AND a.stats = '$stats' ";
+      }      
     }
+    
     $sql .= " ORDER by group_id ASC, model_id ASC, dies_no ASC ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute() or die($sql)) {

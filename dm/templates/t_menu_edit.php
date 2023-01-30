@@ -5,29 +5,31 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-  <head>
-    <?php include "common/t_css.php"; ?>
-    <link href="vendors/ega/css/styles.css" rel="stylesheet" type="text/css"/>
-  </head>
-  <body>		
-    <?php include "common/t_nav_top.php"; ?>
-    <div id="layoutSidenav">
-      <?php include "common/t_nav_left.php"; ?>
-      <div id="layoutSidenav_content">
-        <main>
-          <div class="container-fluid">
-            <ol class="breadcrumb mb-4 mt-4">
-              <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-              <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
-            </ol>
-            <?php 
-            if(isset($_GET["error"])) {
-              echo '<div class="alert alert-danger" role="alert">
-                      Error : '.$_GET["error"].'
+
+<head>
+  <?php include "common/t_css.php"; ?>
+  <link href="vendors/ega/css/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <?php include "common/t_nav_top.php"; ?>
+  <div id="layoutSidenav">
+    <?php include "common/t_nav_left.php"; ?>
+    <div id="layoutSidenav_content">
+      <main>
+        <div class="container-fluid">
+          <ol class="breadcrumb mb-4 mt-4">
+            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
+            <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
+          </ol>
+          <?php
+          if (isset($_GET["error"])) {
+            echo '<div class="alert alert-danger" role="alert">
+                      Error : ' . $_GET["error"] . '
                     </div>';
-            }
-            ?>
-            <form method="post" action="<?php echo $action; ?>?id=<?php echo $id; ?>">
+          }
+          ?>
+          <form method="post" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>">
             <div class="row">
               <div class="col-12">
                 <div class="card">
@@ -35,7 +37,7 @@ and open the template in the editor.
                     <div class="row">
                       <div class="col-lg-6 col-sm-12">
                         <!-- filter placement -->
-                        
+
                       </div>
                       <div class="col-lg-6 col-sm-12">
                         <div class="d-flex justify-content-end">
@@ -46,7 +48,7 @@ and open the template in the editor.
                     </div>
                   </div>
                 </div>
-              </div>              
+              </div>
             </div>
             <div class="row">
               <div class="col-12">
@@ -57,13 +59,13 @@ and open the template in the editor.
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Menu Group</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
                         <select name="groupid" class="form-control">
-                          <?php 
-                          if(!empty($data["menugroup"])) {
-                            foreach($data["menugroup"] as $grp) {
-                              if($grp["groupid"] == $data["data"]["groupid"]) {
-                                echo "<option value='".$grp["groupid"]."' selected>".$grp["groupdsc"]."</option>";
+                          <?php
+                          if (!empty($data["menugroup"])) {
+                            foreach ($data["menugroup"] as $grp) {
+                              if ($grp["groupid"] == $data["data"]["groupid"]) {
+                                echo "<option value='" . $grp["groupid"] . "' selected>" . $grp["groupdsc"] . "</option>";
                               } else {
-                                echo "<option value='".$grp["groupid"]."'>".$grp["groupdsc"]."</option>";
+                                echo "<option value='" . $grp["groupid"] . "'>" . $grp["groupdsc"] . "</option>";
                               }
                             }
                           }
@@ -71,21 +73,23 @@ and open the template in the editor.
                         </select>
                       </div>
                     </div>
-                    
+
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Menu ID</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
-                        <input type="text" name="menuid" class="form-control" maxlength="100" value="<?php echo $data["data"]["menuid"]; ?>" <?php if(!empty($data["data"]["menuid"])) {echo "readonly";} ?>>
+                        <input type="text" name="menuid" class="form-control" maxlength="100" value="<?php echo $data["data"]["menuid"]; ?>" <?php if (!empty($data["data"]["menuid"])) {
+                                                                                                                                                echo "readonly";
+                                                                                                                                              } ?>>
                       </div>
                     </div>
-                    
+
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Menu Description</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
                         <input type="text" name="name1" class="form-control" maxlength="255" value="<?php echo $data["data"]["name1"]; ?>">
                       </div>
                     </div>
-                    
+
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Sort Order</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
@@ -94,22 +98,22 @@ and open the template in the editor.
                     </div>
                   </div>
                 </div>
-              </div>              
+              </div>
             </div>
             <div class="row">
-              
+
             </div>
-            </form>
-          </div>
-        </main>
-        <?php include 'common/t_footer.php'; ?>
-      </div>
+          </form>
+        </div>
+      </main>
+      <?php include 'common/t_footer.php'; ?>
     </div>
-    <?php include 'common/t_js.php'; ?>
-    <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
-    <script>
-      $(document).ready(function () {
-      });
-    </script>
-  </body>
+  </div>
+  <?php include 'common/t_js.php'; ?>
+  <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
+  <script>
+    $(document).ready(function() {});
+  </script>
+</body>
+
 </html>

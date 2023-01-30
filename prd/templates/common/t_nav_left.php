@@ -4,7 +4,7 @@
       <div class="just-padding">
       
         <div class="list-group list-group-root well">
-          <a href="home" class="list-group-item <?php if($action=="home") {echo "active";} ?>"><i class="material-icons">home</i> Dashboard</a>
+          <a href="?action=home" class="list-group-item <?php if($action=="home") {echo "active";} ?>"><i class="material-icons">home</i> Dashboard</a>
           <?php
           if(isset($_SESSION["MENUGROUP"])) {
             foreach($_SESSION["MENUGROUP"] as $grp) {
@@ -19,9 +19,9 @@
               foreach ($_SESSION["USERMENU"] as $menu) {
                 if($menu["groupid"] == $grp["groupid"]) {
                   if ($action == strtolower($menu["menuid"])) {
-                    echo '<a href="' . $menu["menuid"] . '" class="list-group-item list-group-item-action active"><span class="text-nowrap">' . $menu["name1"] . '</span></a>';
+                    echo '<a href="?action=' . $menu["menuid"] . '" class="list-group-item list-group-item-action active"><span class="text-nowrap">' . $menu["name1"] . '</span></a>';
                   } else {
-                    echo '<a href="' . $menu["menuid"] . '" class="list-group-item list-group-item-action"><span class="text-nowrap">' . $menu["name1"] . '</span></a>';
+                    echo '<a href="?action=' . $menu["menuid"] . '" class="list-group-item list-group-item-action"><span class="text-nowrap">' . $menu["name1"] . '</span></a>';
                   }
                 }
               }

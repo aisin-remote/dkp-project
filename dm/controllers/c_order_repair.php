@@ -57,7 +57,7 @@ if ($action == "order_repair") {
         } else {
           $go_save = false;
           $message = "Gambar harus dalam format JPEG atau PNG";
-          header("Location: " . $action . "?id=" . $id . "&error=" . $message);
+          header("Location: ?action=" . $action . "&id=" . $id . "&error=" . $message);
           die();
         }
       }
@@ -70,9 +70,9 @@ if ($action == "order_repair") {
       }
 
       if ($save["status"] == true) {
-        header("Location: " . $action . "?success=Data%20Saved");
+        header("Location: ?action=" . $action . "&success=Data%20Saved");
       } else {
-        header("Location: " . $action . "?error=" . $save["message"]);
+        header("Location: ?action=" . $action . "&error=" . $save["message"]);
       }
     } else {
       $type_list = $class->getType();

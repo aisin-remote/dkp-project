@@ -33,7 +33,7 @@ and open the template in the editor.
                     </div>';
           }
           ?>
-          <form method="post" id="my-form" action="<?php echo $action; ?>?id=<?php echo $id; ?>&step=1">
+          <form method="post" id="my-form" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>&step=1">
 
             <div class="row">
               <div class="col-12">
@@ -42,7 +42,7 @@ and open the template in the editor.
                     <!-- Edit Here -->
 
                     <input type="hidden" name="model_id" class="form-control" maxlength="100" value="<?php echo $data["data"]["model_id"]; ?>">
-                    
+
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Preventive</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
@@ -52,7 +52,7 @@ and open the template in the editor.
                         </select>
                       </div>
                     </div>
-                    
+
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Dies Group</label>
                       <div class="col-lg-1 col-md-5 col-sm-12">
@@ -160,7 +160,7 @@ and open the template in the editor.
     function getDiesModel(group_id) {
       $("#model_id").empty();
       var first_model = "";
-      $.getJSON("api_get_dies_model", {
+      $.getJSON("?action=api_get_dies_model", {
         group: group_id
       }, function(data) {
         var items = "";
@@ -183,12 +183,12 @@ and open the template in the editor.
     }
 
     $("#model_id").change(function() {
-      getDiesList($("#group_id").val(),$("#model_id").val());
+      getDiesList($("#group_id").val(), $("#model_id").val());
     });
 
     function getDiesList(group_id, model_id) {
       $("#dies_id").empty();
-      $.getJSON("api_get_dies_list", {
+      $.getJSON("?action=api_get_dies_list", {
         model: model_id,
         group_id: group_id
       }, function(data) {

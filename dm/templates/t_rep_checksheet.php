@@ -84,7 +84,7 @@ and open the template in the editor.
                                                             . "<td class=''>" . $list["pmstat"] . "</td>"
                                                             . "<td class=''>" . $formatted_number = number_format($list["pmtstk"], 0, '.', ',') . "</td>"
                                                             . "<td class='text-center pr-3'>"
-                                                            . "<a href='$action?id=" . $list["pmtid"] . "&step=2' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>visibility</i></a>"
+                                                            . "<a href='?action=$action&id=" . $list["pmtid"] . "&step=2' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>visibility</i></a>"
                                                             . "</td>"
                                                             . "</tr>";
                                                     }

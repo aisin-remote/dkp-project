@@ -250,7 +250,7 @@ class User {
             from m_role_menu a 
             inner join m_menu b on b.menuid = a.menuid AND b.app_id = '".APP."' 
             inner join m_user_role c on c.roleid = a.roleid AND c.app_id = '".APP."' 
-            where UPPER(c.usrid) = '".strtoupper($usrid)."'
+            where UPPER(c.usrid) = '".strtoupper($usrid)."' AND a.app_id = '".APP."' 
             ORDER by sort1 ASC";
     $stmt = $conn->prepare($sql);
     if($stmt->execute()) {
