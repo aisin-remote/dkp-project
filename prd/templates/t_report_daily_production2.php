@@ -45,73 +45,44 @@ and open the template in the editor.
                     }
                     ?>
 
-                    <div class="row">
+                    <div class="row mt-1">
                         <div class="col-12">
-                            <div class="card mt-2">
-                                <div class="card-body px-0 py-0 pb-2" style="background-color: #F5F5F5;">
-                                    <div class=" table-responsive">
-                                        <!-- Edit Here -->
-                                        <table class="table table-sm table-borderless mb-0">
-                                            <thead>
-                                                <tr style="background-color: #E4E4E4;">
-                                                    <th class="pl-4 text-dark" colspan="7">HEADER INFORMATION</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="col-2 pl-4">Line Production</td>
-                                                    <td class="d-flex justify-content-end pr-2">:</td>
-                                                    <td class="col-2"><?php echo $data["data"]["line_id"]; ?></td>
-                                                    <td class="col-2 pl-4">Leader Name</td>
-                                                    <td class="d-flex justify-content-end pr-2">:</td>
-                                                    <td class="col-2"><?php echo $data["data"]["ld_name"]; ?></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-2 pl-4">Production Date</td>
-                                                    <td class="d-flex justify-content-end pr-2">:</td>
-                                                    <td class="col-2"><?php echo $data["data"]["prd_dt"]; ?></td>
-                                                    <td class="col-2 pl-4">JP Name</td>
-                                                    <td class="d-flex justify-content-end pr-2">:</td>
-                                                    <td class="col-2"><?php echo $data["data"]["jp_name"]; ?></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-2 pl-4">Shift</td>
-                                                    <td class="d-flex justify-content-end pr-2">:</td>
-                                                    <td class="col-2"><?php echo $data["data"]["shift"]; ?></td>
-                                                    <td class="col-2 pl-4">Operator 1</td>
-                                                    <td class="d-flex justify-content-end pr-2">:</td>
-                                                    <td class="col-2"><?php echo $data["data"]["op1_name"]; ?></td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td class="col-2 pl-4"></td>
-                                                    <td class="d-flex justify-content-end pr-2"></td>
-                                                    <td class=""></td>
-                                                    <td class="col-2 pl-4">Operator 2</td>
-                                                    <td class="d-flex justify-content-end pr-2">:</td>
-                                                    <td class="col-2"><?php echo $data["data"]["op2_name"]; ?></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="col-2 pl-4"></td>
-                                                    <td class="d-flex justify-content-end pr-2"></td>
-                                                    <td class=""></td>
-                                                    <td class="col-2 pl-4">Operator 3</td>
-                                                    <td class="d-flex justify-content-end pr-2">:</td>
-                                                    <td class="col-2"><?php echo $data["data"]["op3_name"]; ?></td>
-                                                    <td class="" rowspan="2"><a target="_blank" href="" class="btn btn-pale-green">Print Report</a></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="col-2 pl-4"></td>
-                                                    <td class="d-flex justify-content-end pr-2"></td>
-                                                    <td class=""></td>
-                                                    <td class="col-2 pl-4">Operator 4</td>
-                                                    <td class="d-flex justify-content-end pr-2">:</td>
-                                                    <td class="col-2"><?php echo $data["data"]["op4_name"]; ?></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                            <div class="card">
+                                <div class="card-header" style="background-color: #E4E4E4;">
+                                    <h6 class="mb-0">Header Information</h6>
+                                </div>
+                                <div class="card-body" style="background-color: #F5F5F5;">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-4">Line</div>
+                                                <div class="col-8">: <?php echo $data_header["line_name"]; ?></div>
+                                                <div class="col-4">Date</div>
+                                                <div class="col-8">: <?php echo $data_header["prod_date"]; ?></div>
+                                                <div class="col-4">Shift</div>
+                                                <div class="col-8">: <?php echo $data_header["shift_name"]; ?></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-4">Leader</div>
+                                                <div class="col-8">: <?php echo $data_header["ld_name"]; ?></div>
+                                                <div class="col-4">JP</div>
+                                                <div class="col-8" :>: <?php echo $data_header["jp_name"]; ?></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-4">Operator 1</div>
+                                                <div class="col-8">: <?php echo $data_header["op1_name"]; ?></div>
+                                                <div class="col-4">Operator 2</div>
+                                                <div class="col-8">: <?php echo $data_header["op2_name"]; ?></div>
+                                                <div class="col-4">Operator 3</div>
+                                                <div class="col-8">: <?php echo $data_header["op3_name"]; ?></div>
+                                                <div class="col-4">Operator 4</div>
+                                                <div class="col-8">: <?php echo $data_header["op4_name"]; ?></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -129,9 +100,7 @@ and open the template in the editor.
                                                 <th>Hour</th>
                                                 <th>Cycle Time</th>
                                                 <th>Planning Qty</th>
-                                                <th>Total Plan Qty</th>
                                                 <th>Prod Qty</th>
-                                                <th>Total Prod Qty</th>
                                                 <th>Total NG</th>
                                                 <th>Loss Time(m)</th>
                                                 <th>Efficiency</th>
@@ -147,9 +116,7 @@ and open the template in the editor.
                                                         . "<td class='align-middle'>" . $list["time_start"] . " - " . $list["time_end"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["cctime"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["pln_qty"] . "</td>"
-                                                        . "<td class='align-middle'>" . $list["tot_pln_qty"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["prd_qty"] . "</td>"
-                                                        . "<td class='align-middle'>" . $list["tot_prd_qty"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["tot_ng"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["loss_time"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["eff"] . "</td>"
@@ -170,15 +137,13 @@ and open the template in the editor.
                     <div class="row details">
                         <div class="col-12">
                             <div class="card mt-2">
+                                <div class="card-header" style="background-color: #E4E4E4;">
+                                    <h6 class="mb-0">Summary</h6>
+                                </div>
                                 <div class="card-body px-0 py-0 pb-2" style="background-color: #F0F0F0;">
                                     <div class=" table-responsive">
                                         <!-- Edit Here -->
-                                        <table class="table table-striped table-borderless table-responsive table-sm" id="data-table">
-                                            <thead>
-                                                <tr style="background-color: #E4E4E4;">
-                                                    <th class="pl-4 text-dark align-middle" colspan="19">Summary</th>
-                                                </tr>
-                                            </thead>
+                                        <table class="table table-striped table-borderless table-responsive table-sm">
                                             <thead>
                                                 <tr style="background-color: #F0F0F0;">
                                                     <th class="pl-4 text-dark text-right align-middle" colspan="14">ROL</th>
@@ -248,7 +213,7 @@ and open the template in the editor.
     <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_filter_label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <form method="get" action="#">
-              <input type="hidden" name="action" value="<?=$action?>">
+                <input type="hidden" name="action" value="<?= $action ?>">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modal_filter_label"><span class="material-icons">filter_alt</span> Filter</h5>
