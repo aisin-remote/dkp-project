@@ -45,7 +45,7 @@ and open the template in the editor.
 
                               echo "<div class='col-lg-3 p-0'>"
                                 . "<div class='card'>"
-                                . "<a id='dies_data' href='CHECKSHEET_PREVENTIVE?id=0&step=1&group_id=" . $dies["group_id"] . "&model_id=" . $dies["model_id"] . "&dies_id=" . $dies["dies_id"] . "' class='card-body border border-secondary rounded p-1  " . $dies["bg_color"] . "'>"
+                                . "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" . $dies["group_id"] . "&model_id=" . $dies["model_id"] . "&dies_id=" . $dies["dies_id"] . "' class='card-body border border-secondary rounded p-1  " . $dies["bg_color"] . "'>"
                                 . "<h4 class='card-title text-center mb-0 text-dark font-weight-bold'>" . $dies["dies_no"] . "</h4>"
                                 . "<p class='m-0 text-center text-dark small text-nowrap font-weight-bold' >Stroke</p>"
                                 . "<p class='m-0 text-dark small text-nowrap font-weight-bold '>" . str_pad("Prev", 6, " ", STR_PAD_RIGHT) . "<span>:" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span></p>"
@@ -153,7 +153,7 @@ and open the template in the editor.
                         console.log(data_group[i].pval1);
                         append_data += "<div class='col-lg-3 p-0'>";
                         append_data += "<div class='card'>";
-                        append_data += "<a id='dies_data' href='CHECKSHEET_PREVENTIVE?id=0&step=1&group_id=" + data_dies[x].group_id + "&model_id=" + data_dies[x].model_id + "&dies_id=" + data_dies[x].dies_id + "' class='card-body border border-secondary rounded p-1  " + data_dies[x].bg_color + "'>";
+                        append_data += "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" + data_dies[x].group_id + "&model_id=" + data_dies[x].model_id + "&dies_id=" + data_dies[x].dies_id + "' class='card-body border border-secondary rounded p-1  " + data_dies[x].bg_color + "'>";
                         append_data += "<h4 class='card-title text-center mb-0 text-dark font-weight-bold'>" + data_dies[x].dies_no + "</h4>"
                         append_data += "<p class='m-0 text-center text-dark small text-nowrap font-weight-bold' >Stroke</p>"
                         append_data += "<p class='m-0 text-dark small text-nowrap font-weight-bold '>" + "Prev " + "<span>: " + data_dies[x].stkrun + "</span></p>";
