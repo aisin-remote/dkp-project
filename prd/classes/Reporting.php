@@ -107,7 +107,8 @@ class Reporting
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT a.line_id, a.prd_dt, a.shift, a.prd_seq, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, a.prd_time, "
             . "(SELECT name1 FROM m_dm_dies_asset WHERE dies_id::character varying = a.dies_id), "
-            . "(SELECT COALESCE(SUM(ng_qty), 0) as tot_ng FROM t_prd_daily_ng WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift), "
+            . "(SELECT COALESCE(SUM(ng_qty), 0) as tot_ng FROM t_prd_daily_ng WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift AND prd_seq = a.prd_seq), "
+            . "(SELECT SUM(ng_qty) as tot_ng2 FROM t_prd_daily_ng WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift), "
             . "(SELECT COALESCE(SUM(stop_time), 0) as loss_time FROM t_prd_daily_stop WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift AND prd_seq = a.prd_seq) "
             . "FROM t_prd_daily_i a "
             . "WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' ";
@@ -161,6 +162,7 @@ class Reporting
             . "(SELECT model_id FROM m_dm_dies_asset WHERE dies_id::character varying = a.dies_id), "
             . "(SELECT dies_no FROM m_dm_dies_asset WHERE dies_id::character varying = a.dies_id), "
             . "(SELECT SUM(stop_time) as loss_time FROM t_prd_daily_stop WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift), "
+            . "(SELECT SUM(ng_qty) as tot_ng FROM t_prd_daily_ng WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift), "
             . "(SELECT COUNT(ng_type) as ril FROM t_prd_daily_ng WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift AND ng_type LIKE 'RIL%' ), "
             . "(SELECT COUNT(ng_type) as rol1 FROM t_prd_daily_ng WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift AND ng_type = 'ROL1' ), "
             . "(SELECT COUNT(ng_type) as rol2 FROM t_prd_daily_ng WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift AND ng_type = 'ROL2' ), "

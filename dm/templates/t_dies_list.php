@@ -69,7 +69,7 @@ and open the template in the editor.
                 <div class="card-body">
                   <div class="table-responsive">
                     <!-- Edit Here -->
-                    <form action="<?php echo $action; ?>" method="POST">
+                    <form action="?action=<?php echo $action; ?>" method="POST">
                       <table class="table table-striped table-sm" id="data-table-x">
                         <thead>
                           <tr>
@@ -108,7 +108,7 @@ and open the template in the editor.
                           ?>
                         </tbody>
                       </table>
-                      <button name="chg_status" type="submit" class="btn btn-dark-blue btn-sm mb-3">Change Status of Selected Row(s)</button> <button name="io_main" type="submit" class="btn btn-dark-blue-outlined btn-sm mb-3">Repair to Vendor / Return to Factory</button>
+                      <button name="chg_status" type="submit" class="btn btn-dark-blue btn-sm mb-3">Change Status of Run / Runout</button> <button name="io_main" type="submit" class="btn btn-dark-blue-outlined btn-sm mb-3">Repair to Maker / Return to Aisin</button>
                     </form>
                   </div>
                 </div>

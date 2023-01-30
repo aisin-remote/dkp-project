@@ -58,6 +58,10 @@ if ($action == "daily_production") {
 
         $tot_prd = $data["list"][7]["tot_prd_qty"];
 
+        $tot_ng = $data["list"][7]["tot_ng2"];
+
+        $qty_lastman = $tot_prd - $tot_ng;
+
         $nett_opr = $data3["list"][0]["nett_opr"];
 
         $data_header = $class2->getHeaderById($line_id, $date, $shift);

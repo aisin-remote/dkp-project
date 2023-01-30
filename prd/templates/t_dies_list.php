@@ -114,7 +114,7 @@ and open the template in the editor.
                           ?>
                         </tbody>
                       </table>
-                      <button name="chg_status" type="submit" class="btn btn-dark-blue btn-sm mb-3">Change Status of Selected Row(s)</button>
+                      <button name="chg_status" type="submit" class="btn btn-dark-blue btn-sm mb-3">Change Status of Run / Runout</button>
                     </form>
                   </div>
                 </div>
