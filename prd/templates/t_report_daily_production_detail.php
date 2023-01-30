@@ -89,7 +89,8 @@ and open the template in the editor.
                             </div>
                         </div>
                         <form method="post" action="?action=<?php echo $action; ?>&line=<?php echo $data_item_dtl["line_id"]; ?>&date=<?php echo $data_item_dtl["xdate"]; ?>&shift=<?php echo $data_item_dtl["shift"]; ?>&prd_seq=<?php echo $data_item_dtl["prd_seq"]; ?>">
-                            <div class="col-12 mt-1">
+                          <input type="hidden" name="action" value="<?=$action?>">  
+                          <div class="col-12 mt-1">
                                 <div class="card">
                                     <div class="card-header" style="background-color: #E4E4E4;">
                                         <h6 class="mb-0">Hour <?php echo $data_item_dtl["prd_seq"] . " - " . $data_item_dtl["time_start"] . " - " . $data_item_dtl["time_end"]; ?></h6>

@@ -54,7 +54,7 @@ and open the template in the editor.
                                                 <tr>
                                                     <th class="">Date</th>
                                                     <th class="">Time</th>
-                                                    <th class="">Model</th>
+                                                    <th class="">Group</th>
                                                     <th class="">Dies</th>
                                                     <th class="">Dies No.</th>
                                                     <th class="">Part Type</th>
@@ -100,6 +100,7 @@ and open the template in the editor.
     <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_filter_label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <form method="get" action="#">
+                <input type="hidden" name="action" value="<?= $action ?>">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modal_filter_label"><span class="material-icons">filter_alt</span> Filter</h5>
@@ -115,7 +116,7 @@ and open the template in the editor.
                             <div class="col"><input type="text" name="date_to" class="form-control datepicker" value="<?php echo $date_to; ?>"></div>
                         </div>
                         <div class="row my-2">
-                            <div class="col-4"><label class="col-form-label">Model</label></div>
+                            <div class="col-4"><label class="col-form-label">Group</label></div>
                             <div class="col"><input type="text" name="group_id" class="form-control" value="<?php echo $group_id; ?>"></div>
                         </div>
                         <div class="row my-2">

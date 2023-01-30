@@ -32,8 +32,8 @@ and open the template in the editor.
                     </div>';
                     }
                     ?>
-                    <form method="post" id="my-form" action="<?php echo $action; ?>?id=<?php echo $id; ?>&step=2" enctype="multipart/form-data">
-
+                    <form method="post" id="my-form" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>&step=2" enctype="multipart/form-data">
+                      
                         <div class="row">
                             <div class="col-12">
                                 <div class="card mt-2">

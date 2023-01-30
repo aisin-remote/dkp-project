@@ -108,6 +108,7 @@ and open the template in the editor.
   <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_filter_label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <form method="get" action="#">
+        <input type="hidden" name="action" value="<?=$action?>">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="modal_filter_label"><span class="material-icons">filter_alt</span> Filter</h5>
