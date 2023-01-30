@@ -24,7 +24,7 @@ and open the template in the editor.
             <li class="breadcrumb-item active"><?php echo $template["submenu"]; ?></li>
             <li class="breadcrumb-item active">Edit</li>
             <li class="breadcrumb-item active">Detail</li>
-            <li class="breadcrumb-item active"><a href="?action=<?php echo $action; ?>line=<?php echo $data_item_dtl["line_id"]; ?>&date=<?php echo $data_item_dtl["xdate"]; ?>&shift=<?php echo $data_item_dtl["shift"]; ?>">back <i class="material-icons">arrow_back</i></a></li>
+            <li class="breadcrumb-item active"><a href="?action=<?php echo $action; ?>&line=<?php echo $data_item_dtl["line_id"]; ?>&date=<?php echo $data_item_dtl["xdate"]; ?>&shift=<?php echo $data_item_dtl["shift"]; ?>">back <i class="material-icons">arrow_back</i></a></li>
           </ol>
           <?php
           if (isset($_GET["error"])) {
