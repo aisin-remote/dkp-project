@@ -6,10 +6,10 @@ ini_set( "display_errors", true );
 date_default_timezone_set( "Asia/Jakarta" );  // http://www.php.net/manual/en/timezones.php
 
 define( "CLIENT", "001" );
-define( "APP", "AISIN_IO");
+define( "APP", "AISIN_DM");
 define( "MACHINE", gethostname() );
 define( "LOGIN_SESSION", "aisin-id" );
-define( "PAGE_TITLE", "POOLING SYSTEM");
+define( "PAGE_TITLE", "DIES MAINTENANCE");
 define( "FOOTER", "2022 &copy; PT. Aisin Indonesia Automotive");
 define( "APP_DIR", "pooling");
 
