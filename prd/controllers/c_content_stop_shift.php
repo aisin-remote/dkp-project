@@ -32,12 +32,13 @@ if ($action == "content_stop_per_shift") {
                 $data["data"] = array();
             } else {
                 $data["data"] = $class->getById($id, $id2, $id3);
+                $time_list = $class->getListTime($data["data"]["shift_id"]);
             }
             // $device_types = $class->getDeviceType();
 
             $shift_list = $class->getListShift();
             $srna_list = $class->getSrna();
-            $time_list = $class->getListTime();
+
             require(TEMPLATE_PATH . "/t_content_stop_shift_edit.php");
         }
     } else {
