@@ -142,9 +142,9 @@ and open the template in the editor.
           <div class="modal-body pb-1">
             <div class="row">
               <div class="col-2"><label class="col-form-label">Date</label></div>
-              <div class="col"><input type="text" name="date_from" class="form-control datepicker"></div>
+              <div class="col"><input type="text" name="date_from" class="form-control datepicker" value="<?php echo $lddat_from; ?>"></div>
               <label class="col-form-label px-3">to</label>
-              <div class="col"><input type="text" name="date_to" class="form-control datepicker"></div>
+              <div class="col"><input type="text" name="date_to" class="form-control datepicker" value="<?php echo $lddat_to; ?>"></div>
             </div>
           </div>
           <div class="modal-body pt-1">
@@ -155,7 +155,11 @@ and open the template in the editor.
                   <?php
                   foreach ($customer as $cust) {
                   ?>
-                    <option value="<?php echo $cust["name1"]; ?>"><?php echo $cust["name1"]; ?></option>
+                    <option value="<?php echo $cust["name1"]; ?>" <?php
+                                                                  if ($cust['name1'] == $_GET["customer"]) {
+                                                                    echo "selected";
+                                                                  }
+                                                                  ?>><?php echo $cust["name1"]; ?></option>
                   <?php
                   }
                   ?>
@@ -184,7 +188,7 @@ and open the template in the editor.
       $("#data-table-x").DataTable({
         stateSave: true,
         order: [
-          [0, 'desc']
+          [0, 'asc']
         ],
         dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-2'l><'col-sm-12 col-md-4'f>>" +
           "<'row'<'col-sm-12'tr>>" +
@@ -199,15 +203,21 @@ and open the template in the editor.
           },
           {
             extend: 'csv',
-            title: "transaksi_scanner",
+            title: "Loading List",
             className: 'btn btn-success btn-sm',
             text: '<i class="material-icons">text_snippet</i> CSV',
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5, 6]
+            }
           },
           {
             extend: 'excel',
-            title: "transaksi_scanner",
+            title: "Loading List",
             className: 'btn btn-outline-success btn-sm',
             text: '<i class="material-icons">download</i> Excel',
+            exportOptions: {
+              columns: [0, 1, 2, 3, 4, 5, 6]
+            }
           }
         ]
       });
@@ -216,6 +226,25 @@ and open the template in the editor.
         dropdownParent: $('#modal_filter'),
         theme: 'bootstrap4',
         width: '100%'
+      });
+
+      $('td').each(function() {
+        if ($(this).html() == 'COMPLETED') {
+          $(this).css('color', 'green');
+        } else if ($(this).html() == 'UNCOMPLETED') {
+          $(this).css('color', 'red');
+        }
+      });
+
+      var table = $('#data-table-x').DataTable();
+      table.on('draw.dt', function() {
+        $('td').each(function() {
+          if ($(this).html() == 'COMPLETED') {
+            $(this).css('color', 'green');
+          } else if ($(this).html() == 'UNCOMPLETED') {
+            $(this).css('color', 'red');
+          }
+        });
       });
     });
   </script>

@@ -25,7 +25,7 @@ if ($action == "home") {
         $data_dies[$i]["bg_color"] = "bg-blink";
       }
 
-      if ($row["iostat"] == 'Vendor') {
+      if ($row["iostat"] == 'Maker') {
         $data_dies[$i]["bg_color"] = "bg-amber";
       }
       $i++;

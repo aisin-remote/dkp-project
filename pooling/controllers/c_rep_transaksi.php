@@ -5,14 +5,14 @@ if ($action == "r_transaksi_scanner") {
     $class = new Report();
 
 
-    $lddat_from = date('Ymd');
+    $lddat_from = date('Ymd', strtotime(date('Y-m-d') . '-30 day'));
     if (!empty($_GET["date_from"])) {
-        $lddat = $_GET["date_from"];
+        $lddat_from = $_GET["date_from"];
     }
 
     $lddat_to = date('Ymd');
     if (!empty($_GET["date_to"])) {
-        $lddat = $_GET["date_to"];
+        $lddat_to = $_GET["date_to"];
     }
 
     $fil_cust = $_GET["customer"];

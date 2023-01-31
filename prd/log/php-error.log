@@ -13,4 +13,3 @@ DETAIL:  Key (empid)=() already exists.
 [24-Nov-2022 13:51:20 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Production::insert() in C:\xampp\htdocs\aisin_prd\classes\Production.php on line 26
 [24-Nov-2022 13:51:21 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Production::insert() in C:\xampp\htdocs\aisin_prd\classes\Production.php on line 26
 [24-Nov-2022 13:51:22 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Production::insert() in C:\xampp\htdocs\aisin_prd\classes\Production.php on line 26
-[30-Jan-2023 10:09:57 Asia/Jakarta] SQLSTATE[08006] [7] FATAL:  password authentication failed for user "postgres"

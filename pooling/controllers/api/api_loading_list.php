@@ -108,68 +108,62 @@ if($action == "api_get_ldlist") {
 }
 
 if($action == "api_save_ldlist") {
+  set_time_limit(0);
   $class = new LoadingList();
   $data_scanning = json_decode($_REQUEST["data_scanning"],true);
   //pilah pilah dulu data per loading list
   $data_loading_list = [];
-  foreach($data_scanning as $row) {
-    $data_loading_list[] = $row["ldnum"];
-  }
-  $ldlist = array_unique($data_loading_list);
-  
-  //pilah2 data per loading list item
+  $i = 0;
   $message = "";
-  $xstatus = true;
-  foreach($ldlist as $ldnum) {
+  foreach($data_scanning as $row) {
+    //insert 1 1 aja
+    $i++;
     $data_itm = [];
-    $i = 0;
-    foreach($data_scanning as $row) {
-      if($row["ldnum"] == $ldnum) {
-        $data_itm[$i]["ldnum"] = $ldnum;
-        $data_itm[$i]["ldseq"] = $row["ldseq"];
-        $data_itm[$i]["matnr"] = $row["matnr"];
-        $param_dtl = [];
-        $x = 0;
-        foreach($data_scanning as $xrow) {
-          if($xrow["ldnum"] == $data_itm[$i]["ldnum"]) {
-            $data_itm[$i]["wmeng"] += 1;
-            $param_dtl[$x]["kanban_i"] = $xrow["kanban_i"];
-            $param_dtl[$x]["kanban_e"] = $xrow["kanban_e"];
-            $param_dtl[$x]["matnr"] = $xrow["matnr"];
-            $param_dtl[$x]["matn1"] = $xrow["matn1"];
-            $param_dtl[$x]["crt_by"] = $xrow["crt_by"];
-            $param_dtl[$x]["pallet_id"] = $xrow["pallet_id"];
-            $x++;
-          }
+    $data_itm["ldnum"] = $row["ldnum"];
+    $data_itm["ldseq"] = $row["ldseq"];
+    $data_itm["matnr"] = $row["matnr"];
+    $data_itm["wmeng"] = 1;
+    //update item
+    $update_itm = $class->updateWmeng($data_itm["ldnum"], $data_itm["ldseq"], $data_itm["wmeng"]);
+    //insert dtl
+    $param_dtl = [];
+    if($update_itm["status"] == true) {
+      $param_dtl[0]["kanban_i"] = $row["kanban_i"];
+      $param_dtl[0]["kanban_e"] = $row["kanban_e"];
+      $param_dtl[0]["matnr"] = $row["matnr"];
+      $param_dtl[0]["matn1"] = $row["matn1"];
+      $param_dtl[0]["crt_by"] = $row["crt_by"];
+      $param_dtl[0]["pallet_id"] = $row["pallet_id"];
+      
+      $insert_dtl = $class->insertDetail($data_itm["ldnum"], $data_itm["ldseq"], $param_dtl);
+      if($insert_dtl["status"] == true) {
+        $cek_item = $class->getItemById($data_itm[$i]["ldnum"]);
+        $cek_menge = 0;
+        $cek_wmeng = 0;
+        foreach ($cek_item as $ci) {
+          $cek_menge += intval($ci["menge"]);
+          $cek_wmeng += intval($ci["wmeng"]);
         }
-        
-        //insert detail
-        $insert_dtl = $class->insertDetail($data_itm[$i]["ldnum"], $data_itm[$i]["ldseq"], $param_dtl);
-        if($insert_dtl["status"] == true) {
-          //update data wmeng itm
-          $update_itm = $class->updateWmeng($data_itm[$i]["ldnum"], $data_itm[$i]["ldseq"], $data_itm[$i]["wmeng"]);
-          if($update_itm["status"] == true) {
-            $message .= "Loading List[".$data_itm[$i]["ldnum"]."], Part No[".$data_itm[$i]["matnr"]."], OK [Server]<br>";
-          } else {
-            $message .= $update_itm["message"]."<br>";
-            $xstatus = false;
-          }            
-        } else {
-          $message .= $insert_dtl["message"]."<br>";
-          $xstatus = false;
+        if($cek_menge == $cek_wmeng) {
+          //jika wmeng sudah memenuhi menge, maka close
+          $class->updateStatus($data_itm[$i]["ldnum"], 'C');
         }
-          
+      } else {
+        $message .= "Data ke $i Gagal Insert Kanban Ke System";
       }
+    } else {
+      $message .= "Data ke $i Gagal Update Qty Ke System";
     }
   }
-  
   $return["status"] = true;
-  $return["xstatus"] = $xstatus;
+  
   if(empty($message)) {
     $return["message"] = "Kanban OK, data scan tersimpan [server]";
+    $return["xstatus"] = true;
   } else {
+    $return["xstatus"] = false;
     $return["message"] = $message;
   }
-  echo json_encode($return); 
+  echo json_encode($return);   
 }
 ?>

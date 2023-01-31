@@ -13,17 +13,17 @@ define( "PAGE_TITLE", "POOLING SYSTEM");
 define( "FOOTER", "2022 &copy; PT. Aisin Indonesia Automotive");
 define( "APP_DIR", "pooling");
 
-$dbhost = "localhost";
-$dbpass = "AisinBisaBanget@2023";
-define( "DB_DSN", "pgsql:host=$dbhost;port=5432;dbname=prd_report" );
+$dbhost = "5.181.217.2";
+$dbpass = "Ega2021";
+define( "DB_DSN", "pgsql:host=$dbhost;port=5432;dbname=db_aisin_main" );
 define( "DB_USERNAME", "postgres" );
 define( "DB_PASSWORD", $dbpass );
 //10.80.27.196\\in_GIE,21433
 //guest_in
 //in_1402!asn
-define( "SQLSRV_DSN", "sqlsrv:Server=10.80.27.196\\in_GIE,21433;Database=J922" );
-define( "SQLSRV_USERNAME", "guest_in" );
-define( "SQLSRV_PASSWORD", "in_1402!asn" );
+define( "SQLSRV_DSN", "sqlsrv:Server=5.181.217.2;Database=J922" );
+define( "SQLSRV_USERNAME", "SA" );
+define( "SQLSRV_PASSWORD", "Root@2019" );
 
 define( "CLASS_PATH", "classes" );
 define( "CONTROLLER_PATH", "controllers" );

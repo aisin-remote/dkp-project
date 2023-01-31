@@ -33,7 +33,7 @@ and open the template in the editor.
                     }
                     ?>
                     <form method="post" id="my-form" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>&step=2" enctype="multipart/form-data">
-                      
+
                         <div class="row">
                             <div class="col-12">
                                 <div class="card mt-2">
@@ -112,7 +112,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-3 table-item">1.1.1.1</td>
                                                     <td class="align-middle px-3 table-item">Chemical Line Cooling Fix</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11110" <?= (($data["data"]["c11110"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11110" <?php echo (($data["data"]["c11110"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>

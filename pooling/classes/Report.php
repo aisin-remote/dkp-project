@@ -7,7 +7,7 @@ class Report
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT a.ldnum, a.pdsno, a.cycle1, to_char(a.lddat, 'MM-DD-YYYY') as date_only, "
-            . " to_char(a.lddat, 'HH12:MI') as time_only, a.stats, "
+            . " to_char(a.lddat, 'HH24:MI') as time_only, a.stats, "
             . " (select name1 from m_io_lfa1 where lifnr = a.lifnr) as customer "
             . " FROM t_io_ldlist_h a  "
             . " WHERE 1=1 ";
@@ -16,7 +16,7 @@ class Report
             $sql .= " AND TO_CHAR(a.lddat, 'YYYYMMDD') between '$lddat_from' AND '$lddat_to' ";
         }
         if (!empty($fil_cust)) {
-            $sql .= " AND customer = '$fil_cust' ";
+            $sql .= " AND (select name1 from m_io_lfa1 where lifnr = a.lifnr) = '$fil_cust' ";
         }
 
         $sql .= " ORDER by a.ldnum ASC ";
@@ -25,6 +25,11 @@ class Report
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                if ($row["stats"] == "N") {
+                    $row["stats"] = "UNCOMPLETED";
+                } elseif ($row["stats"] == "C") {
+                    $row["stats"] = "COMPLETED";
+                }
                 $return[] = $row;
             }
         }

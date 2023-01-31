@@ -366,4 +366,3 @@ LINE 1: ...', '1', $6, '1', '0', '1', '0', '1', '0', '1', '0', '1', $7
 [19-Dec-2022 15:31:06 Asia/Jakarta] ERROR:  value too long for type character varying(1)
 [19-Dec-2022 15:39:40 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "t_dm_pergantian_part_key"
 DETAIL:  Key (dies_id)=(003) already exists.
-[30-Jan-2023 10:18:55 Asia/Jakarta] SQLSTATE[08006] [7] FATAL:  password authentication failed for user "postgres"

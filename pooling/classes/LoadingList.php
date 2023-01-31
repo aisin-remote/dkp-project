@@ -239,7 +239,27 @@ class LoadingList {
       $return["message"] = "Loading List[".$ldnum."], Part No[".$cek_matnr."], ".trim(str_replace("\n", " ", $error[2]));
     }    
     return $return;
-  } 
+  }
+  
+  public function updateStatus($ldnnum, $stats) {
+    $return = [];
+    $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
+    $sql = "UPDATE t_io_ldlist_h SET stats = '$stats' ";
+    if($stats == "C") {
+      $sql .= ", cdats = CURRENT_TIMESTAMP ";
+    }
+    $sql .= " WHERE ldnum = '$ldnum'";
+    $stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare($sql);
+    if($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $return["status"] = false;
+      $error = $stmt->errorInfo();
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+    }    
+    return $return;
+  }
 }
 
 ?>
