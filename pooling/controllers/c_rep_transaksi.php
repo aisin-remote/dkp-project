@@ -14,13 +14,13 @@ if ($action == "r_transaksi_scanner") {
     //     $date_to = $_GET["date_to"];
     // }
 
-    // $rfid_id = $_GET["rfid_id"];
+    if (isset($_GET["id"])) {
+        $id = $_GET["id"];
 
-    // $device_id = $_GET["device_name"];
-
-    // $device_list = $device->getList();
-
-    $list = $class->getList();
-
-    require(TEMPLATE_PATH . "/t_rep_trans.php");
+        $list = $class->getList2($id);
+        require(TEMPLATE_PATH . "/t_rep_trans2.php");
+    } else {
+        $list = $class->getList();
+        require(TEMPLATE_PATH . "/t_rep_trans.php");
+    }
 }

@@ -55,13 +55,14 @@ and open the template in the editor.
                                             <table class="table table-sm" id="data-table-x">
                                                 <thead>
                                                     <tr>
+                                                        <th class=''>No.</th>
                                                         <th class=''>Loading List Number</th>
-                                                        <th class=''>PDS Number</th>
-                                                        <th class=''>Customer</th>
-                                                        <th class=''>Cycle</th>
-                                                        <th class=''>Delivery Date</th>
+                                                        <th class=''>Parts No.</th>
+                                                        <th class=''>Cust. Parts No.</th>
+                                                        <th class=''>Part Name</th>
+                                                        <!-- <th class=''>Delivery Date</th>
                                                         <th class=''>Status</th>
-                                                        <th class='text-center'>Action</th>
+                                                        <th class='text-center'>Action</th> -->
                                                         <!-- <th class='text-center'>Device Antenna</th> -->
                                                     </tr>
                                                 </thead>
@@ -71,14 +72,14 @@ and open the template in the editor.
                                                         foreach ($list as $row) {
                                                             echo
                                                             "<tr>"
+                                                                . "<td class='align-middle'>" . $row["trseq"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
-                                                                . "<td class='align-middle'>" . $row["pdsno"] . "</td>"
-                                                                . "<td class='align-middle'>" . $row["customer"] . "</td>"
-                                                                . "<td class='align-middle'>" . $row["cycle1"] . "</td>"
-                                                                . "<td class='align-middle'>" . $row["lddat"] . "</td>"
-                                                                . "<td class='align-middle'>" . $row["stats"] . "</td>"
-                                                                . "<td class='pr-3 align-middle text-center'><a href='?action=$action&id=" . $row["ldnum"] . "' class='p-2 btn btn-outline-primary btn-xs'><i class='material-icons'>info
-                                                                </i> detail</a></td>"
+                                                                . "<td class='align-middle'>" . $row["matnr"] . "</td>"
+                                                                . "<td class='align-middle'>" . $row["matn1"] . "</td>"
+                                                                . "<td class='align-middle'>" . $row["name1"] . "</td>"
+                                                                // . "<td class='align-middle'>" . $row["stats"] . "</td>"
+                                                                // . "<td class='pr-3 align-middle text-center'><a href='?action=$action&id=" . $row["ldnum"] . "' class='p-2 btn btn-outline-primary btn-xs'><i class='material-icons'>info
+                                                                // </i> detail</a></td>"
                                                                 . "</tr>";
                                                         }
                                                     }
