@@ -41,6 +41,34 @@ if($action == "api_dashboard_prd") {
     $error = $stmt->errorInfo();
     $message[] = trim(str_replace("\n", " ", $error[2]));
   }
+  
+  //cek shift
+  $shift1_s = strtotime(date("Y-m-d")." 06:00");
+  $shift1_e = strtotime(date("Y-m-d")." 13:59");
+  
+  $shift2_s = strtotime(date("Y-m-d")." 14:00");
+  $shift2_e = strtotime(date("Y-m-d")." 21:59");
+  
+  $shift3_s = strtotime(date("Y-m-d")." 22:00");
+  $shift3_e = strtotime(date("Y-m-d")." 23:59");
+  
+  $shift4_s = strtotime(date("Y-m-d")." 00:00");
+  $shift4_s = strtotime(date("Y-m-d")." 05:59");
+  
+  $current_time = strtotime(date("Y-m-d H:i"));
+  
+  $shift = "1";
+  if($current_time >= $shift1_s && $current_time <= $shift1_e) {
+    $shift = "1";
+  } else if($current_time >= $shift2_s && $current_time <= $shift2_e) {
+    $shift = "2";
+  } else if($current_time >= $shift3_s && $current_time <= $shift3_e) {
+    $shift = "3";
+  } else if($current_time >= $shift4_s && $current_time <= $shift4_e) {
+    $shift = "3";
+    $today = date(strtotime($today."- 1 days"),"Y-m-d");
+  }
+  
   $query_sum = "select line_id, line_name, sum(cctime) as cctime, sum(pln_qty) as pln_qty, sum(prd_time) as prd_time, sum(prd_qty) as prd_qty, sum(ril_qty) as ril_qty, sum(rol_qty) as rol_qty, sum(per_jam) as per_jam from ( 
     select a.line_id, b.name1 as line_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
     (select coalesce(sum(ng_qty),0) from t_prd_daily_ng 
