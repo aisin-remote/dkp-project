@@ -22,7 +22,9 @@ and open the template in the editor.
             </ol>
             <div class="card mb-3">
               <div class="card-body">
-                            
+                <div id="chart">
+
+                </div>
               </div>
             </div>         
           </div>
@@ -34,10 +36,98 @@ and open the template in the editor.
     <?php include 'common/t_js.php'; ?>
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
-      
+      var options = {
+        series: [
+          {            
+            data: 
+              <?php  echo json_encode($data_main, JSON_NUMERIC_CHECK); ?>
+            
+          }
+        ],
+        tooltip: {
+          x: {
+            format: "HH:mm"
+          }
+        },
+        chart: {
+          height: 450,
+          type: 'rangeBar'
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            barHeight: '80%'
+          }
+        },
+        xaxis: {
+          type: 'datetime',
+          labels: {
+            datetimeUTC: false,
+            rotate: -45
+          }
+        },
+        fill: {
+          type: 'solid',
+          opacity: 1
+        },
+        stroke: {
+          show: true,
+          colors: ["#cfcfcf"],
+        },
+        legend: {
+          position: 'top',
+          horizontalAlign: 'left'
+        },
+        /*annotations: {
+          xaxis: [
+            {
+              x: new Date().getTime(),
+              borderColor: '#775DD0',
+              label: {
+                style: {
+                  color: '#775DD0',
+                },
+                text: 'Current Time'
+              }
+            }
+          ]
+        }*/
+      };
+
+      var chart = new ApexCharts(document.querySelector("#chart"), options);
+      chart.render();
+
       $(document).ready(function () {
         
       });
+      
+      setInterval(updateAnnotation,5000);
+      
+      function updateAnnotation() {
+        chart.clearAnnotations();
+        chart.addXaxisAnnotation({
+          x: new Date().getTime(),
+          borderColor: '#775DD0',
+          label: {
+            style: {
+              color: '#775DD0',
+            },
+            text: 'Current Time'
+          },
+        });
+      }
+      
+      setInterval(updateDashboard,5000);
+      function updateDashboard() {
+        $.getJSON(
+          "?action=api_dashboard_pooling", 
+          {device_id:'<?=$_SERVER["REMOTE_ADDR"]?>'}, 
+          function(data) {
+            //var data_per_jam = data.data_per_jam;
+            chart.updateSeries([data]);
+          });
+      }
+       
     </script>
   </body>
 </html>

@@ -4,15 +4,18 @@ if ($action == "r_transaksi_scanner") {
     $template["menu"] = "Report Transaction Scanner";
     $class = new Report();
 
-    // $date_from = date('Ymd');
-    // if (!empty($_GET["date_from"])) {
-    //     $date_from = $_GET["date_from"];
-    // }
 
-    // $date_to = date('Ymd');
-    // if (!empty($_GET["date_to"])) {
-    //     $date_to = $_GET["date_to"];
-    // }
+    $lddat_from = date('Ymd');
+    if (!empty($_GET["date_from"])) {
+        $lddat = $_GET["date_from"];
+    }
+
+    $lddat_to = date('Ymd');
+    if (!empty($_GET["date_to"])) {
+        $lddat = $_GET["date_to"];
+    }
+
+    $fil_cust = $_GET["customer"];
 
     if (isset($_GET["id"])) {
         $id = $_GET["id"];
@@ -20,7 +23,9 @@ if ($action == "r_transaksi_scanner") {
         $list = $class->getList2($id);
         require(TEMPLATE_PATH . "/t_rep_trans2.php");
     } else {
-        $list = $class->getList();
+
+        $customer = $class->getCustomer();
+        $list = $class->getList($lddat_from, $lddat_to, $fil_cust);
         require(TEMPLATE_PATH . "/t_rep_trans.php");
     }
 }

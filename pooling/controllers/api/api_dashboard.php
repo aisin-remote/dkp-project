@@ -1,7 +1,5 @@
 <?php 
-if($action == "home") {
-  $template["group"] = "Home";
-  $template["menu"] = "Dashboard";
+if($action == "api_dashboard_pooling") {
   $cLdList = new LoadingList();
   $conn_sql_srv = new PDO(SQLSRV_DSN,SQLSRV_USERNAME,SQLSRV_PASSWORD);
   $today = date("Ymd");
@@ -62,7 +60,6 @@ if($action == "home") {
       $i++;
     }
   }
-    
-  require( TEMPLATE_PATH . "/t_home.php" );
+  echo json_encode($data_main);  
 }
 ?>

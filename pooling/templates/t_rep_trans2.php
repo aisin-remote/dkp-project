@@ -146,13 +146,13 @@ and open the template in the editor.
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
                 buttons: [{
                         extend: 'csv',
-                        title: "transaksi_scanner",
+                        title: "transaksi_scanner_detail",
                         className: 'btn btn-success btn-sm',
                         text: '<i class="material-icons">text_snippet</i> CSV',
                     },
                     {
                         extend: 'excel',
-                        title: "transaksi_scanner",
+                        title: "transaksi_scanner_detail",
                         className: 'btn btn-outline-success btn-sm',
                         text: '<i class="material-icons">download</i> Excel',
                     }

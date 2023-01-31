@@ -11,13 +11,14 @@ if($action == "api_dashboard_prd") {
   //$jam_end = "16";
   $message = [];
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-  $query = "select a.line_id, b.name1 as line_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
+  $query = "select a.line_id, b.name1 as line_name, CONCAT(c.group_id,' ',c.model_id,' ',c.dies_no) as dies_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
             (select coalesce(sum(ng_qty),0) as ril_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'RIL'), 
             (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') 
             from t_prd_daily_i a 
-            inner join m_prd_line b ON b.line_id = a.line_id 
+            inner join m_prd_line b ON b.line_id = a.line_id  
+            left join m_dm_dies_asset c on c.dies_id = a.dies_id::int
             where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' ";
   //$query .= "and a.stats = 'A' ";
   $query .= "ORDER BY line_name ASC";
@@ -29,17 +30,31 @@ if($action == "api_dashboard_prd") {
   $data_line_name = [];
   $data_eff = [];
   if($stmt->execute()) {
+    $i=0;
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {      
       $row["eff"] = round((($row["prd_qty"] * $row["cctime"] / 60 ) / $row["prd_time"]) * 100,2);      
       //$data_per_jam[] = $row;
       $data_ril[] = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"] ) * 100,2);
       $data_rol[] = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"] ) * 100,2);
-      //$data_line_name[] = $row["line_name"];
+      $data_line_name[$i]["line"] = $row["line_name"];
+      $data_line_name[$i]["dies"] = $row["dies_name"];
       $data_eff[] = $row["eff"];
+      $i++;
     }
   } else {
     $error = $stmt->errorInfo();
     $message[] = trim(str_replace("\n", " ", $error[2]));
+  }
+  if(empty($data_line_name)) {
+    $query = "SELECT name1 FROM m_prd_line ORDER by line_id ASC";
+    $stmt = $conn->prepare($query);
+    if($stmt->execute()) {
+      $i = 0;
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {   
+        $data_line_name[$i]["line"] = $row["name1"];
+        $data_line_name[$i]["dies"] = "-";
+      }
+    }
   }
   
   //cek shift
@@ -101,7 +116,7 @@ if($action == "api_dashboard_prd") {
   //$return["data_per_jam"] = $data_per_jam;
   $return["data_ril"] = $data_ril;
   $return["data_rol"] = $data_rol;
-  //$return["data_line_name"] = $data_line_name;
+  $return["data_line_name"] = $data_line_name;
   $return["data_eff"] = $data_eff;
   
   $return["data_ril_sum"] = $data_ril_sum;
