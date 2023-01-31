@@ -27,12 +27,17 @@ and open the template in the editor.
             <div class="card-body">
               <div class="container-fluid border-bottom mb-2">
                 <div class="row">
+                  <div class="col-12 d-none" id="btn-exit-fullscreen">
+                    <div class="d-flex justify-content-end">
+                      <button type="button" class="btn btn-link" onclick="closeFullscreen()"><i class="material-icons">fullscreen_exit</i></button>
+                    </div>
+                  </div>
                 <?php
                 if(!empty($data_line_name)) {
                   $i = 0;
                   foreach($data_line_name as $row) {
-                    echo "<div class='col-lg-3 col-md-6 col-sm-12 text-center border rounded pt-2'>"
-                    . "<h5>$row</h5>"
+                    echo "<div class='col-lg-3 col-md-6 col-sm-12 text-center border rounded pt-2' id='title_line_$i'>"
+                    . "<h5 id='line_name_$i' class='mb-0'>".$row["line"]."</h5><small id='dies_name_$i'>".$row["dies"]."</small>"
                     . "<div id='line_$i'></div>"
                     . "</div>";
                     $i++;
@@ -44,7 +49,7 @@ and open the template in the editor.
               <div class="container-fluid border-bottom mb-2">
                 <div id="chart2"></div>
               </div>              
-              <div class="container-fluid mb-2">
+              <!--div class="container-fluid mb-2">
                 <div class="table-responsive">
                   <table class="table table-striped table-bordered">
                     <thead>
@@ -53,7 +58,7 @@ and open the template in the editor.
                         <?php 
                         if(!empty($data_line_name)) {
                           foreach($data_line_name as $row) {
-                            echo "<th>$row</th>";
+                            echo "<th>".$row["line"]."</th>";
                           }
                         }
                         ?>
@@ -73,17 +78,17 @@ and open the template in the editor.
                     </tbody>
                   </table>
                 </div>
-              </div>
+              </div-->
               <div class="container-fluid">
                 <div class="table-responsive">
-                  <table class="table table-striped table-bordered">
+                  <table class="table table-striped table-bordered table-sm">
                     <thead>
                       <tr>
                         <th></th>
                         <?php 
                         if(!empty($data_line_name)) {
                           foreach($data_line_name as $row) {
-                            echo "<th>$row</th>";
+                            echo "<th>".$row["line"]."</th>";
                           }
                         }
                         ?>
@@ -239,7 +244,7 @@ and open the template in the editor.
         bar: {
           horizontal: false,
           borderRadius: 10,
-          columnWidth: '50%',
+          columnWidth: '30%',
           dataLabels: {
             total: {
               enabled: true,
@@ -253,7 +258,7 @@ and open the template in the editor.
       },
       xaxis: {
         type: 'text',
-        categories: ["<?php echo implode("\",\"",$data_line_name); ?>"],
+        categories: ["<?php echo implode("\",\"",array_map(null, ...$data_line_name)[0]); ?>"],
       },
       legend: {
         position: 'right',
@@ -268,7 +273,7 @@ and open the template in the editor.
     chart.render();
     
     $(document).ready(function() {
-      
+      updateDashboard();
     });
 
     function updateDashboard() {
@@ -284,9 +289,21 @@ and open the template in the editor.
           
           var data_ril_sum = data.data_ril_sum;
           var data_rol_sum = data.data_rol_sum;
-          //var data_line_name = data.data_line_name;
+          var data_line_name = data.data_line_name;
           var data_eff_sum = data.data_eff_sum;
           
+          if(data_line_name.length > 0) {
+            var i = 0;
+            $.each(data_line_name,function(row, value){
+              if($("#line_name_"+i).length > 0 ) {
+                $("#line_name_"+i).html(value.line);
+              }
+              if($("#dies_name_"+i).length > 0 ) {
+                $("#dies_name_"+i).html(value.dies);
+              }
+              i++;
+            });
+          }
           if(data_eff_sum.length > 0 && data_ril_sum.length > 0 && data_rol_sum.length > 0) {
             chart.updateSeries([{
               name: 'Efficiency',
@@ -300,17 +317,17 @@ and open the template in the editor.
             }]);
           }
           
-          if(data_eff.length > 0) {
+          /*if(data_eff_sum.length > 0) {
             var append_data = "<td></td>";
-            $.each(data_eff,function(row, value){
+            $.each(data_eff_sum,function(row, value){
               append_data += "<td>"+value+" %</td>";
             });
             $("#row_eff").html(append_data);
-          }
+          }*/
           
-          if(data_ril.length > 0) {
+          if(data_ril_sum.length > 0) {
             var append_data = "<td>RIL</td>";
-            $.each(data_ril,function(row, value){
+            $.each(data_ril_sum,function(row, value){
               append_data += "<td>"+value+" %</td>";
             });
             $("#row_ril").html(append_data);
@@ -357,6 +374,7 @@ and open the template in the editor.
 
     function fullscreen() {
       //document.body.style.zoom = '75%';
+      $("#btn-exit-fullscreen").removeClass("d-none");
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
       } else if (elem.mozRequestFullScreen) {
@@ -370,7 +388,19 @@ and open the template in the editor.
         elem.msRequestFullscreen();
       }
     }
-
+    
+    /* Close fullscreen */
+    function closeFullscreen() {
+      $("#btn-exit-fullscreen").addClass("d-none");
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) { /* Safari */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) { /* IE11 */
+        document.msExitFullscreen();
+      }
+    }
+    
     $("#fs-btn").click(fullscreen);
   </script>
 </body>
