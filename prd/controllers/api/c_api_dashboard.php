@@ -9,6 +9,7 @@ if($action == "api_dashboard_prd") {
   }*/
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
   //$jam_end = "16";
+  $message = [];
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
   $query = "select a.line_id, b.name1 as line_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
             (select coalesce(sum(ng_qty),0) as ril_qty from t_prd_daily_ng 
@@ -36,6 +37,9 @@ if($action == "api_dashboard_prd") {
       //$data_line_name[] = $row["line_name"];
       $data_eff[] = $row["eff"];
     }
+  } else {
+    $error = $stmt->errorInfo();
+    $message[] = trim(str_replace("\n", " ", $error[2]));
   }
   $query_sum = "select line_id, line_name, sum(cctime) as cctime, sum(pln_qty) as pln_qty, sum(prd_time) as prd_time, sum(prd_qty) as prd_qty, sum(ril_qty) as ril_qty, sum(rol_qty) as rol_qty, sum(per_jam) as per_jam from ( 
     select a.line_id, b.name1 as line_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
@@ -62,6 +66,9 @@ if($action == "api_dashboard_prd") {
       $data_ril_sum[] = round((($row["ril_qty"] * $row["cctime"] / $row["per_jam"]) / $row["prd_time"] ) * 100,2);
       $data_rol_sum[] = round((($row["rol_qty"] * $row["cctime"] / $row["per_jam"]) / $row["prd_time"] ) * 100,2);
     }
+  } else {
+    $error = $stmt->errorInfo();
+    $message[] = trim(str_replace("\n", " ", $error[2]));
   }
   //$return["data_per_jam"] = $data_per_jam;
   $return["data_ril"] = $data_ril;
@@ -73,6 +80,7 @@ if($action == "api_dashboard_prd") {
   $return["data_rol_sum"] = $data_rol_sum;
   //$return["data_line_name"] = $data_line_name;
   $return["data_eff_sum"] = $data_eff_sum;
+  $return["message"] = $message;
   
   echo json_encode($return);
 }
