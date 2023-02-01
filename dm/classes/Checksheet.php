@@ -75,9 +75,10 @@ class Checksheet {
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
       $sql = "INSERT INTO t_dm_cs_h (pmtid, pmtdt, pmtstk, pmtype, dies_id, pmtby) "
-              . "values (:pmtid, CURRENT_TIMESTAMP, (SELECT stkrun FROM m_dm_dies_asset WHERE dies_id = :dies_id), :pmtype, :dies_id, :pmtby) ";
+              . "values (:pmtid, :pmtdt, (SELECT stkrun FROM m_dm_dies_asset WHERE dies_id = :dies_id), :pmtype, :dies_id, :pmtby) ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":pmtid", $param["pmtid"], PDO::PARAM_STR);
+      $stmt->bindValue(":pmtdt", $param["pmtdt"], PDO::PARAM_STR);
       $stmt->bindValue(":model_id", $param["model_id"], PDO::PARAM_STR);
       $stmt->bindValue(":dies_id", $param["dies_id"], PDO::PARAM_STR);
       $stmt->bindValue(":pmtby", $param["pmtby"], PDO::PARAM_STR);
