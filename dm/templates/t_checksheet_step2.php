@@ -58,7 +58,7 @@ and open the template in the editor.
                         <tr>
                           <th class="align-middle px-3 table-header col-2" scope="col">Header Info.</th>
                           <th class="align-middle px-3 table-header col-3" scope="col"></th>
-                          <th class="align-middle px-3 table-header" scope="col"><?= $data["data"]["group_id"] ?> <?= $data["data"]["model_id"] ?></th>
+                          <th class="align-middle px-3 table-header" scope="col"><?= $data["data"]["group_id"] ?> <?= $data["data"]["model_id"] ?> <?= $data["data"]["dies_no"] ?></th>
                         </tr>
                       </thead>
 

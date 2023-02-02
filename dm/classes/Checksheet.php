@@ -36,7 +36,7 @@ class Checksheet
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT e.group_id, e.model_id, a.*, TO_CHAR(a.pmtdt, 'DD-MM-YYYY') as pmt_date, b.name1 as pmtby_name, c.pval2 as pm_type "
+    $sql = "SELECT e.group_id, e.model_id, e.dies_no, a.*, TO_CHAR(a.pmtdt, 'DD-MM-YYYY') as pmt_date, b.name1 as pmtby_name, c.pval2 as pm_type "
       . "FROM t_dm_cs_h a "
       . "INNER JOIN m_user b ON b.usrid = a.pmtby "
       . "INNER JOIN m_param c ON c.pid = 'PM_TYPE' and c.pval1 = a.pmtype "
