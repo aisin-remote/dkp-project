@@ -28,6 +28,10 @@ if ($action == "api_dashboard_dm") {
             if ($row["iostat"] == 'Maker') {
                 $data_dies[$i]["bg_color"] = "bg-amber";
             }
+
+            // if ($row["gstat"] == 'P' && $row[""]) {
+            //     $data_dies[$i]["bg_color"] = "bg-red-blink";
+            // }
             $i++;
         }
     }

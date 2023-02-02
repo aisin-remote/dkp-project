@@ -95,6 +95,10 @@ and open the template in the editor.
                             <td style="width: 100px;" class="bg-amber">Orange</td>
                             <td>Dies under repair to maker</td>
                           </tr>
+                          <tr>
+                            <td style="width: 100px;" class="bg-red-blink">Red Blinking</td>
+                            <td>Dies under preventive and being used in production</td>
+                          </tr>
                         </tbody>
                       </table>
                     </div>

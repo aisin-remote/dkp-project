@@ -53,6 +53,20 @@
   animation-iteration-count: infinite;
 }
 
+@keyframes ripple2 {
+  0%   {background-color:ivory;}
+  25%  {background-color:#d9534f;}
+  50%  {background-color:ivory;}
+  75%  {background-color:#d9534f;}
+  100% {background-color:ivory;}
+}
+
+.bg-red-blink {
+  animation-name: ripple2;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
 .bg-amber {
   background-color: #ff9933 !important;
   color: #000 !important;
