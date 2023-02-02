@@ -181,6 +181,7 @@ if ($action == "checksheet_preventive") {
           }
         }
         $param["dies_id"] = $_POST["dies_id"];
+        $param["group_id"] = $_POST["group_id"];
         $param["pmtype"] = $_POST["pmtype"];
         $param["pmtby"] = $_SESSION[LOGIN_SESSION];
         $param["jml_total"] = 0;
@@ -289,10 +290,14 @@ if ($action == "checksheet_preventive") {
         $param["c11923"] = (isset($_POST["c11923"])) ? 1 : 0;
         $param["c11924"] = (isset($_POST["c11924"])) ? 1 : 0;
 
-        // var_dump($param); jika jml_tot sudah 49 maka complete
+        // var_dump($param["jml_total"]);
+        // jika jml_tot sudah 49 maka complete
         // die();
+
+        // echo $param["group_id"] . " - " . $param["jml_total"];
+
         $save = array();
-        //echo $param["group_id"] . " - " . $param["jml_total"]; die();
+
         $param["pmstat"] = "N";
         if ($param["group_id"] == "CSH") {
           if ($param["jml_total"] >= 25) {
@@ -307,7 +312,7 @@ if ($action == "checksheet_preventive") {
             $dies->updateDiesGStat($param["dies_id"], "N");
           }
         }
-
+        // die();
         $save = $class->updateChecksheet($param);
 
         if ($save["status"] == true) {

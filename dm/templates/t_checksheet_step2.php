@@ -38,7 +38,7 @@ and open the template in the editor.
               <div class="col-12">
                 <div class="card">
                   <div class="card-body">
-                    <!-- <input type="hidden" name="dies_id" class="form-control" maxlength="100" value="</?php echo $data["data"]["dies_id"]; ?>"> -->
+                    <input type="hidden" name="group_id" class="form-control" maxlength="100" value="<?php echo $data["data"]["group_id"]; ?>">
                     <div class="d-flex justify-content-end">
                       <input type="hidden" name="save" value="save">
                       <button type="submit" type="button" name="btn-save" id="btn-save" class="btn btn-dark-blue btn-sm px-5 mx-2">Save</button>
