@@ -150,7 +150,7 @@ and open the template in the editor.
                     var x = 0;
                     $.each(data_dies, function(row, dies) {
                       if (data_dies[x].group_id == data_model[j].group_id && data_dies[x].model_id == data_model[j].model_id) {
-                        console.log(data_group[i].pval1);
+                        // console.log(data_dies[x].bg_color);
                         append_data += "<div class='col-lg-3 p-0'>";
                         append_data += "<div class='card'>";
                         append_data += "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" + data_dies[x].group_id + "&model_id=" + data_dies[x].model_id + "&dies_id=" + data_dies[x].dies_id + "' class='card-body border border-secondary rounded p-1  " + data_dies[x].bg_color + "'>";

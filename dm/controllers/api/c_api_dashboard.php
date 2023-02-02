@@ -25,7 +25,7 @@ if ($action == "api_dashboard_dm") {
                 $data_dies[$i]["bg_color"] = "bg-blink";
             }
 
-            if ($row["iostat"] == 'Vendor') {
+            if ($row["iostat"] == 'Maker') {
                 $data_dies[$i]["bg_color"] = "bg-amber";
             }
             $i++;
