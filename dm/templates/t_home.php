@@ -96,8 +96,8 @@ and open the template in the editor.
                             <td>Dies under repair to maker</td>
                           </tr>
                           <tr>
-                            <td style="width: 100px;" class="bg-red-blink">Red Blinking</td>
-                            <td>Dies under preventive and being used in production</td>
+                            <td style="width: 100px;" class="bg-red-blink">Red (Blinking)</td>
+                            <td>Dies under preventive maintenance and being used in production</td>
                           </tr>
                         </tbody>
                       </table>
