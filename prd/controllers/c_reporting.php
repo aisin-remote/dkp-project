@@ -66,7 +66,10 @@ if ($action == "daily_production") {
 
         $data_header = $class2->getHeaderById($line_id, $date, $shift);
 
-        // var_dump($line_id, $prd_dt, $shift);
+        // foreach ($data2["list"] as $data) {
+        //   $effArray = explode(" ", $data["eff"]);
+        //   // var_dump($effArray);
+        // }
         // die();
 
         require(TEMPLATE_PATH . "/t_report_daily_production2.php");

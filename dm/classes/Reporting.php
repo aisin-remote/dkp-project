@@ -6,7 +6,7 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, (select group_id from m_dm_dies_asset where dies_id = a.dies_id) FROM t_dm_cs_h a "
+        $sql = "SELECT a.*, (select group_id from m_dm_dies_asset where dies_id = a.dies_id) as group, (select model_id from m_dm_dies_asset where dies_id = a.dies_id) as model, (select dies_no from m_dm_dies_asset where dies_id = a.dies_id) as dies_num FROM t_dm_cs_h a "
             . "WHERE pmtid = '$id' ";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(":id", strtoupper($id), PDO::PARAM_STR);

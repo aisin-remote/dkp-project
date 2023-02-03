@@ -157,6 +157,7 @@ and open the template in the editor.
                                                     <th class="pl-4 text-dark align-middle">Losstime</th>
                                                     <th class="pl-4 text-dark align-middle">Qty Produksi</th>
                                                     <th class="pl-4 text-dark align-middle">Qty Lastman</th>
+                                                    <!-- <th class="pl-4 text-dark align-middle">Efficiency</th> -->
                                                     <th class="pl-4 text-dark align-middle text-center">RIL</th>
                                                     <th class="pl-4 text-dark align-middle text-center">CMM</th>
                                                     <th class="pl-4 text-dark align-middle text-center">TRIAL MANUFACTURING</th>
@@ -183,6 +184,7 @@ and open the template in the editor.
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["loss_time"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $tot_prd . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $qty_lastman . "</td>"
+                                                            // . "<td class='pl-4 align-middle text-center'>" . $list[""] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["ril"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol1"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol2"] . "</td>"
