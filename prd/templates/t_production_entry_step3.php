@@ -136,13 +136,13 @@ and open the template in the editor.
                     <div class="row mt-1">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Scan Qty OK</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
-                        <input class="form-control form-control-sm" type="number" name="scn_qty_ok" value="<?php echo $data_item_dtl["scn_qty_ok"]; ?>" readonly />
+                        <input class="form-control form-control-sm" type="number" id="scn_qty_ok" name="scn_qty_ok" value="<?php echo $data_item_dtl["scn_qty_ok"]; ?>" readonly />
                       </div>
                     </div>
                     <div class="row mt-1">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Scan Qty NG</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
-                        <input class="form-control form-control-sm" type="number" name="scn_qty_ng" value="<?php echo $data_item_dtl["scn_qty_ng"]; ?>" readonly />
+                        <input class="form-control form-control-sm" type="number" id="scn_qty_ng" name="scn_qty_ng" value="<?php echo $data_item_dtl["scn_qty_ng"]; ?>" readonly />
                       </div>
                     </div>
                     <div class="row mt-1">
@@ -451,6 +451,8 @@ and open the template in the editor.
         defaultMinute: "<?php echo explode(":",$data_item_dtl["time_end"])[1]?>",
         disableMobile: "true"
       });
+      
+      getDataScan();
     });
     
     $("#myForm").submit(function(event) {
@@ -654,6 +656,21 @@ and open the template in the editor.
           alert(error);
         },
         dataType: 'json'
+      });
+    }
+    
+    function getDataScan() {
+      var line = '<?=$data_item_dtl["line_name"]?>';
+      var time_start = "<?=$data_item_dtl["prd_dt"]?> <?=$data_item_dtl["time_start"]?>";
+      var time_end = "<?=$data_item_dtl["prd_dt"]?> <?=$data_item_dtl["time_end"]?>";
+      $.getJSON("http://avicenna-dev:8081/trace/api/getqty/"+line+"/{time_start}/{time_end}", function(result){
+        var ok_qty = result.dcQty;
+        $("#scn_qty_ok").val(ok_qty);
+        var ng_qty = result.ngQty;
+        $("#scn_qty_ng").val(ng_qty);
+      }).fail(function(jqxhr, textStatus, error) {
+        var err = textStatus + ", " + error;
+        console.log( "Request Failed: " + err );
       });
     }
   </script>
