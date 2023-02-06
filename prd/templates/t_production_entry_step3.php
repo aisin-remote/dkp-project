@@ -663,7 +663,7 @@ and open the template in the editor.
       var line = '<?=$data_item_dtl["line_name"]?>';
       var time_start = "<?=$data_item_dtl["prd_dt"]?> <?=$data_item_dtl["time_start"]?>";
       var time_end = "<?=$data_item_dtl["prd_dt"]?> <?=$data_item_dtl["time_end"]?>";
-      $.getJSON("http://avicenna-dev:8081/trace/api/getqty/"+line+"/{time_start}/{time_end}", function(result){
+      $.getJSON("http://avicenna-dev:8081/trace/api/getqty/"+line+"/"+time_start+"/"+time_end+"", function(result){
         var ok_qty = result.dcQty;
         $("#scn_qty_ok").val(ok_qty);
         var ng_qty = result.ngQty;
