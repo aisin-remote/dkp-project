@@ -278,13 +278,13 @@ class Dies
     }
 
     if (!empty($stats)) {
-      if($stats == "A") {
+      if ($stats == "A") {
         $sql .= " AND a.stats = '$stats' AND a.iostat = 'I' ";
       } else {
         $sql .= " AND a.stats = '$stats' ";
-      }      
+      }
     }
-    
+
     $sql .= " ORDER by group_id ASC, model_id ASC, dies_no ASC ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute() or die($sql)) {
@@ -318,8 +318,6 @@ class Dies
     $conn = null;
     return $return;
   }
-
-
 
   public function insertDies($param = array())
   {

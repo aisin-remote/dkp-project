@@ -178,7 +178,9 @@ class Reporting
             . "FROM t_prd_daily_i a "
             . "WHERE  a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' ";
 
-        // echo $sql;
+        // echo '<pre>';
+        // var_dump($sql);
+        // echo '</pre>';
         // die();
 
         $stmt = $conn->prepare($sql);

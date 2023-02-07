@@ -7,7 +7,7 @@ if ($action == "home") {
   $data_group = $dies->getDiesGroup();
   $data_dies = $dies->getListDies(null, 'A');
   $data_model = $class->getDiesModel();
-
+  $dies_prod = $dies->getDiesProd1();
 
   if (!empty($data_dies)) {
     $i = 0;
@@ -23,8 +23,12 @@ if ($action == "home") {
 
       if ($row["gstat"] == 'P') {
         $data_dies[$i]["bg_color"] = "bg-blink";
+        foreach ($dies_prod as $dies) {
+          if ($dies["dies_id"] == $row["dies_id"]) {
+            $data_dies[$i]["bg_color"] = "bg-red-blink";
+          }
+        }
       }
-
       if ($row["iostat"] == 'Maker') {
         $data_dies[$i]["bg_color"] = "bg-amber";
       }

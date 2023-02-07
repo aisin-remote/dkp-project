@@ -63,7 +63,7 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Date</label>
                       <div class="col-lg-2 col-md-5 col-sm-12">
-                        <input type="text" name="prd_dt" class="form-control datepicker" maxlength="100" value="<?php echo $date; ?>" readonly>
+                        <input type="text" id="prd_dt" name="prd_dt" class="form-control datepicker" maxlength="100" value="<?php echo $date; ?>" readonly>
                       </div>
                     </div>
 
@@ -212,6 +212,30 @@ and open the template in the editor.
     </div>
   </div>
   <input type="hidden" id="shift_count" value="<?php echo $shift_count; ?>">
+
+  <div class="modal fade" id="modal_delete" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_upload_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form method="GET" action="" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal_upload_label"><span class="material-icons">warning</span> Dies Sedang Dalam Maintenance</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="input-group mb-3">
+              <label class="custom-label" for="delete-confirmation">Dies ini sedang dalam maintenance!</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">OK</button>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
@@ -220,7 +244,8 @@ and open the template in the editor.
         altInput: true,
         altFormat: 'd-m-Y',
         dateFormat: 'Ymd',
-        disableMobile: "true"
+        disableMobile: "true",
+        maxDate: "today"
       });
 
       getDefaultCycleTime();
@@ -240,7 +265,10 @@ and open the template in the editor.
       $("#total_target").val(total_target);
     }
 
+
+
     $("#dies_id").change(getDefaultCycleTime);
+    $("#dies_id").change(getPreventive);
 
     function getDefaultCycleTime() {
       $.ajax({
@@ -261,6 +289,29 @@ and open the template in the editor.
         dataType: 'json'
       });
     }
+
+    function getPreventive() {
+      var dies_id = $("#dies_id").val();
+      $.ajax({
+        url: '?action=api_get_dies_preventive',
+        data: 'dies_id=' + dies_id,
+        success: (function(data) {
+          var json = data,
+            obj = JSON.parse(json);
+          if (obj.gstat === "P" && inputValue == formattedDate) {
+            $("#modal_delete").modal("show");
+          } else {
+            console.log("Tidak sedang dalam preventive")
+          }
+        })
+      })
+    }
+
+    var inputValue = $("#prd_dt").val();
+    var currentDate = new Date();
+    var formattedDate = currentDate.getFullYear().toString() +
+      (currentDate.getMonth() + 1).toString().padStart(2, '0') +
+      currentDate.getDate().toString().padStart(2, '0');
   </script>
 </body>
 

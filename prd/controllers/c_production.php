@@ -51,7 +51,7 @@ if ($action == "daily_production_entry") {
       $list_stop = $stop->getList('S', null);
       $list_action = $stop->getList('A');
       //$list_person = $class->getPersonById($line, $date, $shift);
-      $list_person = $member->getList("OP","A");
+      $list_person = $member->getList("OP", "A");
       $data_item_dtl = $class->getItemById($line, $date, $shift, $seq);
       $data_stop = $class->getStopList($line, $date, $shift, $seq);
 
@@ -73,9 +73,9 @@ if ($action == "daily_production_entry") {
         //cek apakah user ada role leader
         $op_role = "OPERATOR";
         $cek_user = $user->getUserRole($_SESSION[LOGIN_SESSION]);
-        if(!empty($cek_user)) {
+        if (!empty($cek_user)) {
           foreach ($cek_user as $usr) {
-            if($usr == "LEADER") {
+            if ($usr == "LEADER") {
               $op_role = "LEADER";
               break;
             }
@@ -164,7 +164,7 @@ if ($action == "daily_production_entry") {
           $template["submenu"] = $line_data["name1"];
           $shift_list = $class->getListShift();
           $shift_count = $class->getShiftCount($shift);
-          $dies_list = $dies->getListDies($line,"A");
+          $dies_list = $dies->getListDies($line, "A");
           require(TEMPLATE_PATH . "/t_production_entry_step1.php");
         }
       }
