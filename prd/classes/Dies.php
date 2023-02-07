@@ -39,6 +39,27 @@ class Dies
     return $return;
   }
 
+  public function getDiesProd1()
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT dies_id, time_start, time_end, prd_dt "
+      . "FROM t_prd_daily_i "
+      . "WHERE TO_CHAR(CURRENT_TIMESTAMP, 'HH24:MI') BETWEEN time_start AND time_end AND TO_CHAR(CURRENT_TIMESTAMP, 'YYYY-MM-DD')::date = prd_dt ";
+    $sql .= " ORDER BY dies_id ASC ";
+    // echo $sql;
+    // die();
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
   public function getModelById($id, $group_id)
   {
     $return = array();

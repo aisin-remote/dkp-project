@@ -9,7 +9,7 @@ and open the template in the editor.
 <head>
   <?php include "common/t_css.php"; ?>
   <link href="vendors/ega/css/styles.css" rel="stylesheet" type="text/css" />
-  <link href="vendors/apexchart/apexcharts.css" rel="stylesheet" type="text/css"/>
+  <link href="vendors/apexchart/apexcharts.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -32,33 +32,33 @@ and open the template in the editor.
                       <button type="button" class="btn btn-link" onclick="closeFullscreen()"><i class="material-icons">fullscreen_exit</i></button>
                     </div>
                   </div>
-                <?php
-                if(!empty($data_line_name)) {
-                  $i = 0;
-                  foreach($data_line_name as $row) {
-                    echo "<div class='col-lg-3 col-md-6 col-sm-12 text-center border rounded pt-2' id='title_line_$i'>"
-                    . "<h5 id='line_name_$i' class='mb-0'>".$row["line"]."</h5><small id='dies_name_$i'>".$row["dies"]."</small>"
-                    . "<div id='line_$i'></div>"
-                    . "</div>";
-                    $i++;
+                  <?php
+                  if (!empty($data_line_name)) {
+                    $i = 0;
+                    foreach ($data_line_name as $row) {
+                      echo "<div class='col-lg-3 col-md-6 col-sm-12 text-center border rounded pt-2' id='title_line_$i'>"
+                        . "<h5 id='line_name_$i' class='mb-0'>" . $row["line"] . "</h5><small class='" . $row["dies_color"] . "' id='dies_name_$i'>" . $row["dies"] . "</small>"
+                        . "<div id='line_$i'></div>"
+                        . "</div>";
+                      $i++;
+                    }
                   }
-                }
-                ?>
+                  ?>
                 </div>
               </div>
               <div class="container-fluid border-bottom mb-2">
                 <div id="chart2"></div>
-              </div>              
+              </div>
               <!--div class="container-fluid mb-2">
                 <div class="table-responsive">
                   <table class="table table-striped table-bordered">
                     <thead>
                       <tr>
                         <th>Actual (%)</th>
-                        <?php 
-                        if(!empty($data_line_name)) {
-                          foreach($data_line_name as $row) {
-                            echo "<th>".$row["line"]."</th>";
+                        <?php
+                        if (!empty($data_line_name)) {
+                          foreach ($data_line_name as $row) {
+                            echo "<th>" . $row["line"] . "</th>";
                           }
                         }
                         ?>
@@ -67,9 +67,9 @@ and open the template in the editor.
                     <tbody>
                       <tr id="row_eff">
                         <td></td>
-                        <?php 
-                        if(!empty($data_eff)) {
-                          foreach($data_eff as $row) {
+                        <?php
+                        if (!empty($data_eff)) {
+                          foreach ($data_eff as $row) {
                             echo "<th>$row %</th>";
                           }
                         }
@@ -85,10 +85,10 @@ and open the template in the editor.
                     <thead>
                       <tr>
                         <th></th>
-                        <?php 
-                        if(!empty($data_line_name)) {
-                          foreach($data_line_name as $row) {
-                            echo "<th>".$row["line"]."</th>";
+                        <?php
+                        if (!empty($data_line_name)) {
+                          foreach ($data_line_name as $row) {
+                            echo "<th>" . $row["line"] . "</th>";
                           }
                         }
                         ?>
@@ -97,9 +97,9 @@ and open the template in the editor.
                     <tbody>
                       <tr id="row_ril">
                         <td>RIL</td>
-                        <?php 
-                        if(!empty($data_ril)) {
-                          foreach($data_ril as $row) {
+                        <?php
+                        if (!empty($data_ril)) {
+                          foreach ($data_ril as $row) {
                             echo "<td>$row %</td>";
                           }
                         }
@@ -107,9 +107,9 @@ and open the template in the editor.
                       </tr>
                       <tr id="row_rol">
                         <td>ROL</td>
-                        <?php 
-                        if(!empty($data_rol)) {
-                          foreach($data_rol as $row) {
+                        <?php
+                        if (!empty($data_rol)) {
+                          foreach ($data_rol as $row) {
                             echo "<td>$row %</td>";
                           }
                         }
@@ -187,14 +187,14 @@ and open the template in the editor.
       },
       labels: ['Production Efficiency'],
     };
-    <?php 
-    if(!empty($data_line_name)) {
-      $i = 0;      
-      foreach($data_line_name as $row) {
+    <?php
+    if (!empty($data_line_name)) {
+      $i = 0;
+      foreach ($data_line_name as $row) {
         echo "";
-        
-        echo "var chart_line_".$i." = new ApexCharts(document.querySelector('#line_".$i."'), options_radial);
-              chart_line_".$i.".render();";
+
+        echo "var chart_line_" . $i . " = new ApexCharts(document.querySelector('#line_" . $i . "'), options_radial);
+              chart_line_" . $i . ".render();";
         $i++;
       }
     }
@@ -203,17 +203,17 @@ and open the template in the editor.
       series: [{
         name: 'Efficiency',
         type: 'line',
-        data: [<?php echo implode(", ",$data_eff_sum); ?>]
-      },{
+        data: [<?php echo implode(", ", $data_eff_sum); ?>]
+      }, {
         name: 'RIL',
         type: 'bar',
-        data: [<?php echo implode(", ",$data_ril_sum); ?>]
+        data: [<?php echo implode(", ", $data_ril_sum); ?>]
       }, {
         name: 'ROL',
         type: 'bar',
-        data: [<?php echo implode(", ",$data_rol_sum); ?>]
+        data: [<?php echo implode(", ", $data_rol_sum); ?>]
       }],
-        chart: {
+      chart: {
         type: 'line',
         height: 200,
         stacked: true,
@@ -226,7 +226,11 @@ and open the template in the editor.
       },
       dataLabels: {
         enabled: true,
-        formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+        formatter: function(value, {
+          seriesIndex,
+          dataPointIndex,
+          w
+        }) {
           return value + " %";
         }
       },
@@ -258,7 +262,7 @@ and open the template in the editor.
       },
       xaxis: {
         type: 'text',
-        categories: ["<?php echo implode("\",\"",array_map(null, ...$data_line_name)[0]); ?>"],
+        categories: ["<?php echo implode("\",\"", array_map(null, ...$data_line_name)[0]); ?>"],
       },
       legend: {
         position: 'right',
@@ -271,52 +275,53 @@ and open the template in the editor.
 
     var chart = new ApexCharts(document.querySelector("#chart2"), options);
     chart.render();
-    
+
     $(document).ready(function() {
       updateDashboard();
     });
 
     function updateDashboard() {
       $.getJSON(
-        "?action=api_dashboard_prd", 
-        {}, 
+        "?action=api_dashboard_prd", {},
         function(data) {
           //var data_per_jam = data.data_per_jam;
           var data_ril = data.data_ril;
           var data_rol = data.data_rol;
           //var data_line_name = data.data_line_name;
           var data_eff = data.data_eff;
-          
+
           var data_ril_sum = data.data_ril_sum;
           var data_rol_sum = data.data_rol_sum;
           var data_line_name = data.data_line_name;
           var data_eff_sum = data.data_eff_sum;
-          
-          if(data_line_name.length > 0) {
+
+          if (data_line_name.length > 0) {
             var i = 0;
-            $.each(data_line_name,function(row, value){
-              if($("#line_name_"+i).length > 0 ) {
-                $("#line_name_"+i).html(value.line);
+            $.each(data_line_name, function(row, value) {
+              if ($("#line_name_" + i).length > 0) {
+                $("#line_name_" + i).html(value.line);
               }
-              if($("#dies_name_"+i).length > 0 ) {
-                $("#dies_name_"+i).html(value.dies);
+              if ($("#dies_name_" + i).length > 0) {
+                $("#dies_name_" + i).html(value.dies);
+                $("#dies_name_" + i).removeClass("text-danger");
+                $("#dies_name_" + i).addClass(value.dies_color);
               }
               i++;
             });
           }
-          if(data_eff_sum.length > 0 && data_ril_sum.length > 0 && data_rol_sum.length > 0) {
+          if (data_eff_sum.length > 0 && data_ril_sum.length > 0 && data_rol_sum.length > 0) {
             chart.updateSeries([{
               name: 'Efficiency',
               data: data_eff
-            },{
+            }, {
               name: 'RIL',
               data: data_ril
-            },{
+            }, {
               name: 'ROL',
               data: data_ril
             }]);
           }
-          
+
           /*if(data_eff_sum.length > 0) {
             var append_data = "<td></td>";
             $.each(data_eff_sum,function(row, value){
@@ -324,52 +329,52 @@ and open the template in the editor.
             });
             $("#row_eff").html(append_data);
           }*/
-          
-          if(data_ril_sum.length > 0) {
+
+          if (data_ril_sum.length > 0) {
             var append_data = "<td>RIL</td>";
-            $.each(data_ril_sum,function(row, value){
-              append_data += "<td>"+value+" %</td>";
+            $.each(data_ril_sum, function(row, value) {
+              append_data += "<td>" + value + " %</td>";
             });
             $("#row_ril").html(append_data);
           }
-          if(data_rol.length > 0) {
+          if (data_rol.length > 0) {
             var append_data = "<td>ROL</td>";
-            $.each(data_rol,function(row, value){
-              append_data += "<td>"+value+" %</td>";
+            $.each(data_rol, function(row, value) {
+              append_data += "<td>" + value + " %</td>";
             });
             $("#row_rol").html(append_data);
           }
           /*update series per line*/
-          if(data_eff.length > 0) {
-            if(typeof chart_line_0 !== 'undefined' && data_eff[0] !== "undefined") {
+          if (data_eff.length > 0) {
+            if (typeof chart_line_0 !== 'undefined' && data_eff[0] !== "undefined") {
               chart_line_0.updateSeries([data_eff[0]]);
             }
-            if(typeof chart_line_1 !== 'undefined' && data_eff[1] !== "undefined") {
+            if (typeof chart_line_1 !== 'undefined' && data_eff[1] !== "undefined") {
               chart_line_1.updateSeries([data_eff[1]]);
             }
-            if(typeof chart_line_2 !== 'undefined' && data_eff[2] !== "undefined") {
+            if (typeof chart_line_2 !== 'undefined' && data_eff[2] !== "undefined") {
               chart_line_2.updateSeries([data_eff[2]]);
             }
-            if(typeof chart_line_3 !== 'undefined' && data_eff[3] !== "undefined") {
+            if (typeof chart_line_3 !== 'undefined' && data_eff[3] !== "undefined") {
               chart_line_3.updateSeries([data_eff[3]]);
             }
-            if(typeof chart_line_4 !== 'undefined' && data_eff[4] !== "undefined") {
+            if (typeof chart_line_4 !== 'undefined' && data_eff[4] !== "undefined") {
               chart_line_4.updateSeries([data_eff[4]]);
             }
-            if(typeof chart_line_5 !== 'undefined' && data_eff[5] !== "undefined") {
+            if (typeof chart_line_5 !== 'undefined' && data_eff[5] !== "undefined") {
               chart_line_5.updateSeries([data_eff[5]]);
             }
-            if(typeof chart_line_6 !== 'undefined' && data_eff[6] !== "undefined") {
+            if (typeof chart_line_6 !== 'undefined' && data_eff[6] !== "undefined") {
               chart_line_6.updateSeries([data_eff[6]]);
             }
-            if(typeof chart_line_7 !== 'undefined' && data_eff[7] !== "undefined") {
+            if (typeof chart_line_7 !== 'undefined' && data_eff[7] !== "undefined") {
               chart_line_7.updateSeries([data_eff[7]]);
             }
           }
         }
       );
     }
-    
+
     var elem = document.getElementById("fs");
 
     function fullscreen() {
@@ -388,19 +393,21 @@ and open the template in the editor.
         elem.msRequestFullscreen();
       }
     }
-    
+
     /* Close fullscreen */
     function closeFullscreen() {
       $("#btn-exit-fullscreen").addClass("d-none");
       if (document.exitFullscreen) {
         document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) { /* Safari */
+      } else if (document.webkitExitFullscreen) {
+        /* Safari */
         document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) { /* IE11 */
+      } else if (document.msExitFullscreen) {
+        /* IE11 */
         document.msExitFullscreen();
       }
     }
-    
+
     $("#fs-btn").click(fullscreen);
   </script>
 </body>

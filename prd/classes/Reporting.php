@@ -161,6 +161,7 @@ class Reporting
             . "(SELECT group_id FROM m_dm_dies_asset WHERE dies_id::character varying = a.dies_id), "
             . "(SELECT model_id FROM m_dm_dies_asset WHERE dies_id::character varying = a.dies_id), "
             . "(SELECT dies_no FROM m_dm_dies_asset WHERE dies_id::character varying = a.dies_id), "
+            . "(SELECT SUM(a.stop_time) as loss_time_p FROM t_prd_daily_stop a INNER JOIN m_prd_stop_reason_action ON a.stop_id = m_prd_stop_reason_action.srna_id WHERE m_prd_stop_reason_action.type2 = 'P' AND a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift'),"
             . "(SELECT SUM(stop_time) as loss_time FROM t_prd_daily_stop WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift), "
             . "(SELECT SUM(ng_qty) as tot_ng FROM t_prd_daily_ng WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift), "
             . "(SELECT COUNT(ng_type) as ril FROM t_prd_daily_ng WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift AND ng_type LIKE 'RIL%' ), "
