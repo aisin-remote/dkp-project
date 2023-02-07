@@ -1,4 +1,5 @@
 <?php 
+header('Access-Control-Allow-Origin: *');
 set_time_limit(0);
 session_start();
 require( "config.php" );

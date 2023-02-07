@@ -846,8 +846,8 @@ and open the template in the editor.
                           <th class="align-middle px-2 table-header" scope="col">1.1.9</th>
                           <th class="align-middle px-3 table-header" scope="col">Check Bocor</th>
                           <th class="align-middle px-3 table-header" scope="col">
-                            <input type="file" accept="image/png,image/jpg" name="c119" />
-                            <input type="hidden" name="c119_x" value="<?= $data["data"]["c119"]; ?>" />
+                            <!--input type="file" accept="image/png,image/jpg" name="c119" />
+                            <input type="hidden" name="c119_x" value="<?= $data["data"]["c119"]; ?>" /-->
                           </th>
                           <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c119"])) ? "<a download='file_check_bocor.jpg' href='data:image/jpg;base64," . $data["data"]["c119"] . "'>Download File</a>" : "" ?></th>
                           <th class="align-middle px-3 table-header" scope="col"></th>

@@ -78,20 +78,40 @@ if ($action == "checksheet_preventive") {
         $photo = $_FILES["c11100"];
         $param["group_id"] = $_POST["group_id"];
         $param["c11100"] = $_POST["c11100_x"];
-
+        $maxDim = 1080;
         if (!empty($photo["tmp_name"])) {
           $outputImage = "media/images/foto_c11100.jpg";
           if (file_exists($outputImage)) {
             unlink($outputImage);
           }
-          if ($photo["type"] == "image/jpeg" || $photo["type"] == "image/jpg" || $photo["type"] == "image/png") {
+          if ($photo["type"] == "image/jpeg" || $photo["type"] == "image/jpg" || $photo["type"] == "image/png") {            
             $img64 = "";
             $file_name = $photo["tmp_name"];
 
-            $file_name = $photo["tmp_name"];
+            list($width, $height, $type, $attr) = getimagesize($file_name);
+            $target_filename = $file_name;
+            $ratio = $width / $height;
+            if ($ratio > 1) {
+              //landscape
+              $new_width = $maxDim;
+              $new_height = $maxDim / $ratio;
+              $y = 0;
+              $x = ($width - $height) / 2;
+              $smallestSide = $height;
+            } else {
+              //portrait
+              $new_width = $maxDim * $ratio;
+              $new_height = $maxDim;
+              $x = 0;
+              $y = ($height - $width) / 2;
+              $smallestSide = $width;
+            }
             $src = imagecreatefromstring(file_get_contents($file_name));
-            imagejpeg($src, $outputImage, 100);
+            $dst = imagecreatetruecolor($maxDim, $maxDim);
+            imagecopyresampled($dst, $src, 0, 0, $x, $y, $maxDim, $maxDim, $smallestSide, $smallestSide);
             imagedestroy($src);
+            imagejpeg($dst, $outputImage, 100); // adjust format as needed
+            imagedestroy($dst);
             $img64 = base64_encode(file_get_contents($outputImage));
             unlink($outputImage);
 
@@ -114,10 +134,30 @@ if ($action == "checksheet_preventive") {
             $img64 = "";
             $file_name = $photo["tmp_name"];
 
-            $file_name = $photo["tmp_name"];
+            list($width, $height, $type, $attr) = getimagesize($file_name);
+            $target_filename = $file_name;
+            $ratio = $width / $height;
+            if ($ratio > 1) {
+              //landscape
+              $new_width = $maxDim;
+              $new_height = $maxDim / $ratio;
+              $y = 0;
+              $x = ($width - $height) / 2;
+              $smallestSide = $height;
+            } else {
+              //portrait
+              $new_width = $maxDim * $ratio;
+              $new_height = $maxDim;
+              $x = 0;
+              $y = ($height - $width) / 2;
+              $smallestSide = $width;
+            }
             $src = imagecreatefromstring(file_get_contents($file_name));
-            imagejpeg($src, $outputImage, 100);
+            $dst = imagecreatetruecolor($maxDim, $maxDim);
+            imagecopyresampled($dst, $src, 0, 0, $x, $y, $maxDim, $maxDim, $smallestSide, $smallestSide);
             imagedestroy($src);
+            imagejpeg($dst, $outputImage, 100); // adjust format as needed
+            imagedestroy($dst);
             $img64 = base64_encode(file_get_contents($outputImage));
             unlink($outputImage);
 
@@ -140,10 +180,30 @@ if ($action == "checksheet_preventive") {
             $img64 = "";
             $file_name = $photo["tmp_name"];
 
-            $file_name = $photo["tmp_name"];
+            list($width, $height, $type, $attr) = getimagesize($file_name);
+            $target_filename = $file_name;
+            $ratio = $width / $height;
+            if ($ratio > 1) {
+              //landscape
+              $new_width = $maxDim;
+              $new_height = $maxDim / $ratio;
+              $y = 0;
+              $x = ($width - $height) / 2;
+              $smallestSide = $height;
+            } else {
+              //portrait
+              $new_width = $maxDim * $ratio;
+              $new_height = $maxDim;
+              $x = 0;
+              $y = ($height - $width) / 2;
+              $smallestSide = $width;
+            }
             $src = imagecreatefromstring(file_get_contents($file_name));
-            imagejpeg($src, $outputImage, 100);
+            $dst = imagecreatetruecolor($maxDim, $maxDim);
+            imagecopyresampled($dst, $src, 0, 0, $x, $y, $maxDim, $maxDim, $smallestSide, $smallestSide);
             imagedestroy($src);
+            imagejpeg($dst, $outputImage, 100); // adjust format as needed
+            imagedestroy($dst);
             $img64 = base64_encode(file_get_contents($outputImage));
             unlink($outputImage);
 
@@ -166,10 +226,30 @@ if ($action == "checksheet_preventive") {
             $img64 = "";
             $file_name = $photo["tmp_name"];
 
-            $file_name = $photo["tmp_name"];
+            list($width, $height, $type, $attr) = getimagesize($file_name);
+            $target_filename = $file_name;
+            $ratio = $width / $height;
+            if ($ratio > 1) {
+              //landscape
+              $new_width = $maxDim;
+              $new_height = $maxDim / $ratio;
+              $y = 0;
+              $x = ($width - $height) / 2;
+              $smallestSide = $height;
+            } else {
+              //portrait
+              $new_width = $maxDim * $ratio;
+              $new_height = $maxDim;
+              $x = 0;
+              $y = ($height - $width) / 2;
+              $smallestSide = $width;
+            }
             $src = imagecreatefromstring(file_get_contents($file_name));
-            imagejpeg($src, $outputImage, 100);
+            $dst = imagecreatetruecolor($maxDim, $maxDim);
+            imagecopyresampled($dst, $src, 0, 0, $x, $y, $maxDim, $maxDim, $smallestSide, $smallestSide);
             imagedestroy($src);
+            imagejpeg($dst, $outputImage, 100); // adjust format as needed
+            imagedestroy($dst);
             $img64 = base64_encode(file_get_contents($outputImage));
             unlink($outputImage);
 
