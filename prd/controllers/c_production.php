@@ -54,11 +54,16 @@ if ($action == "daily_production_entry") {
       $list_person = $member->getList("OP", "A");
       $data_item_dtl = $class->getItemById($line, $date, $shift, $seq);
       $data_stop = $class->getStopList($line, $date, $shift, $seq);
-
+      $line_name = $data_item_dtl["line_name"];
+      $date_time_start = $data_item_dtl["prd_dt"]." ".$data_item_dtl["time_start"];
+      $date_time_end = $data_item_dtl["prd_dt"]." ".$data_item_dtl["time_end"];
+      $data_scn = $class->getDataScan($line_name, $date_time_start, $date_time_end);
+      $data_item_dtl["scn_qty_ok"] = $data_scn["dcQty"];
+      $data_item_dtl["scn_qty_ng"] = $data_scn["ngQty"];
       $list_ng_type = $class->getNGType();
       $data_ng = $class->getNGList($line, $date, $shift, $seq);
       $template["submenu"] = $data_item_dtl["line_name"];
-
+      
       $dies_list = $dies->getListDies($line, "A");
 
       require(TEMPLATE_PATH . "/t_production_entry_step3.php");

@@ -624,4 +624,30 @@ class Production
     $conn = null;
     return $return;
   }
+  
+  public function getDataScan($line_name, $date_time_start, $date_time_end) {
+    $curl = curl_init();
+    $url = "http://avicenna-dev:8081/trace/api/getqty/".$line_name."/".$date_time_start."/".$date_time_end;
+        
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_HEADER => 0,
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_SSL_VERIFYHOST => 2,
+        CURLOPT_SSL_VERIFYPEER => 0,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_POST => 1,
+        CURLOPT_POSTFIELDS => array(
+          
+        ),
+        CURLOPT_HTTPHEADER => "Content-Type: application/x-www-form-urlencoded"
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+    
+    return json_decode($response);
+  }
 }

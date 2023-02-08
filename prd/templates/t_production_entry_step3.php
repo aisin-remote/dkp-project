@@ -452,7 +452,7 @@ and open the template in the editor.
         disableMobile: "true"
       });
       
-      getDataScan();
+      //getDataScan();
     });
     
     $("#myForm").submit(function(event) {
