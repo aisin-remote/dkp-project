@@ -58,8 +58,16 @@ if ($action == "daily_production_entry") {
       $date_time_start = $data_item_dtl["prd_dt"]." ".$data_item_dtl["time_start"];
       $date_time_end = $data_item_dtl["prd_dt"]." ".$data_item_dtl["time_end"];
       $data_scn = $class->getDataScan($line_name, $date_time_start, $date_time_end);
-      $data_item_dtl["scn_qty_ok"] = $data_scn["dcQty"];
-      $data_item_dtl["scn_qty_ng"] = $data_scn["ngQty"];
+      
+      $data_item_dtl["scn_qty_ok"] = 0;
+      $data_item_dtl["scn_qty_ng"] = 0;
+      if(!empty($data_scn["dcQty"])) {
+        $data_item_dtl["scn_qty_ok"] = $data_scn["dcQty"];
+      }
+      if(!empty($data_scn["ngQty"])) {
+        $data_item_dtl["scn_qty_ng"] = $data_scn["ngQty"];
+      }
+        
       $list_ng_type = $class->getNGType();
       $data_ng = $class->getNGList($line, $date, $shift, $seq);
       $template["submenu"] = $data_item_dtl["line_name"];
