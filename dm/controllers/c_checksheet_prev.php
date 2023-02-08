@@ -78,7 +78,7 @@ if ($action == "checksheet_preventive") {
         $photo = $_FILES["c11100"];
         $param["group_id"] = $_POST["group_id"];
         $param["c11100"] = $_POST["c11100_x"];
-        $maxDim = 1080;
+        $maxDim = 720;
         if (!empty($photo["tmp_name"])) {
           $outputImage = "media/images/foto_c11100.jpg";
           if (file_exists($outputImage)) {
