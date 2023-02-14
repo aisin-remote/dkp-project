@@ -77,12 +77,16 @@ if ($action == "daily_production") {
 
         $data_header = $class2->getHeaderById($line_id, $date, $shift);
 
-        // foreach ($data2["list"] as $data) {
-        //   $effArray = explode(" ", $data["eff"]);
-        //   // var_dump($effArray);
-        // }
-        // die();
+        $cctime = $data2["list"][0]["cctime"];
 
+        $prd_time = array();
+        foreach ($data["list"] as $list) {
+          $prd_time[] = $list["prd_time"];
+        }
+        $prdtime = array_sum($prd_time);
+        $efficiency = (($tot_prd - $tot_ng) * $cctime / 60) / $prdtime;
+        $roundEff2 = round($efficiency, 3);
+        $totalEff2 = $roundEff2 * 100;
         require(TEMPLATE_PATH . "/t_report_daily_production2.php");
       } elseif ($step == "detail") {
         $line = $_GET["id"];

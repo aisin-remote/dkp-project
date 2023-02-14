@@ -184,7 +184,7 @@ and open the template in the editor.
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["loss_time"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $tot_prd . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $qty_lastman . "</td>"
-                                                            . "<td class='pl-4 align-middle text-center'>" . $list[""] . "</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $totalEff2 . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["ril"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol1"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol2"] . "</td>"
