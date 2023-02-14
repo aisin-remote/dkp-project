@@ -138,28 +138,30 @@ and open the template in the editor.
             });
 
             checklabel("enable_alarm");
-
-            $("#shift_id").change(function() {
-                getShiftTime($("#shift_id").val());
-            });
-
-            function getShiftTime(shift_id) {
-                $.getJSON("?action=api_get_shift_time", {
-                    shift: shift_id
-                }, function(data) {
-                    var items = "";
-                    //$("#model_id").empty();
-
-                    $.each(data, function(key, val) {
-                        console.log(val.time_id + " (" + val.time_start + " - " + val.time_end + ")");
-                        items += "<option value='" + val.time_id + "'>" + val.time_id + " (" + val.time_start + " - " + val.time_end + ")" + "</option>";
-                    });
-
-                    $("#time_id").html(items);
-                });
-            }
+            
+            getShiftTime($("#shift_id").val());
+        });
+        
+        $("#shift_id").change(function() {
+            getShiftTime($("#shift_id").val());
         });
 
+        function getShiftTime(shift_id) {
+            $.getJSON("?action=api_get_shift_time", {
+                shift: shift_id
+            }, function(data) {
+                var items = "";
+                //$("#model_id").empty();
+
+                $.each(data, function(key, val) {
+                    console.log(val.time_id + " (" + val.time_start + " - " + val.time_end + ")");
+                    items += "<option value='" + val.time_id + "'>" + val.time_id + " (" + val.time_start + " - " + val.time_end + ")" + "</option>";
+                });
+
+                $("#time_id").html(items);
+            });
+        }
+        
         $('#enable_alarm').on("change", function() {
             checklabel("enable_alarm");
         });
