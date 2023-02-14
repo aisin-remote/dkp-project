@@ -154,6 +154,26 @@ and open the template in the editor.
                 $("#fl-" + id).append("Inactive");
             }
         }
+        
+        $("#shift_id").change(function() {
+          getShiftTime($("#shift_id").val());
+        });
+
+        function getShiftTime(shift_id) {
+          $.getJSON("api_get_shift_time", {
+            shift: shift_id
+          }, function(data) {
+            var items = "";
+            //$("#model_id").empty();
+
+            $.each(data, function(key, val) {
+              console.log(val.time_id + " (" + val.time_start + " - " + val.time_end + ")");
+              items += "<option value='" + val.time_id + "'>" + val.time_id + " (" + val.time_start + " - " + val.time_end + ")" + "</option>";
+            });
+
+            $("#time_id").html(items);
+          });
+        }
     </script>
 </body>
 
