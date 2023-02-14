@@ -55,8 +55,8 @@ if ($action == "daily_production_entry") {
       $data_item_dtl = $class->getItemById($line, $date, $shift, $seq);
       $data_stop = $class->getStopList($line, $date, $shift, $seq);
       $line_name = $data_item_dtl["line_name"];
-      $date_time_start = $data_item_dtl["prd_dt"]." ".$data_item_dtl["time_start"];
-      $date_time_end = $data_item_dtl["prd_dt"]." ".$data_item_dtl["time_end"];
+      $date_time_start = $data_item_dtl["prd_dt"]."%20".$data_item_dtl["time_start"];
+      $date_time_end = $data_item_dtl["prd_dt"]."%20".$data_item_dtl["time_end"];
       $data_scn = $class->getDataScan($line_name, $date_time_start, $date_time_end);
       
       $data_item_dtl["scn_qty_ok"] = 0;
