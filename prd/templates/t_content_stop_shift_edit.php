@@ -138,10 +138,10 @@ and open the template in the editor.
             });
 
             checklabel("enable_alarm");
-            
+
             getShiftTime($("#shift_id").val());
         });
-        
+
         $("#shift_id").change(function() {
             getShiftTime($("#shift_id").val());
         });
@@ -161,7 +161,7 @@ and open the template in the editor.
                 $("#time_id").html(items);
             });
         }
-        
+
         $('#enable_alarm').on("change", function() {
             checklabel("enable_alarm");
         });

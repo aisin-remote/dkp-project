@@ -178,7 +178,7 @@ and open the template in the editor.
                                                         echo "<tr>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["group_id"] . " " . $list["model_id"] .  "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["dies_no"] . "</td>"
-                                                            . "<td class='pl-4 align-middle text-center'>" . $total_waktu . "</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $diff_in_minutes . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["loss_time_p"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $nett_opr . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["loss_time"] . "</td>"

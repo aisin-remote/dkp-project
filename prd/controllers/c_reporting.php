@@ -45,12 +45,23 @@ if ($action == "daily_production") {
         $time_start = $data["list"][0]["time_start"];
         $time_end = $data["list"][7]["time_end"];
 
-        $time_start = strtotime($time_start);
-        $time_end = strtotime($time_end);
+        $start = DateTime::createFromFormat('H:i', $time_start);
+        $end = DateTime::createFromFormat('H:i', $time_end);
 
-        $diff = $time_end - $time_start;
+        if ($end < $start) {
+          $end->modify('+1 day');
+        }
 
-        $total_waktu = $diff / 60;
+        $diff_in_minutes = ($end->getTimestamp() - $start->getTimestamp()) / 60;
+        $diff_in_hours = $diff_in_minutes / 60;
+
+
+        // echo $time_start;
+        // echo $time_end;
+        // echo "<pre>";
+        // var_dump($diff_in_minutes);
+        // echo "</pre>";
+        // die();
 
         $loss_time = $data2["list"][0]["loss_time"];
 
