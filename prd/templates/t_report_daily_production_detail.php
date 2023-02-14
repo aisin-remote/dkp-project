@@ -89,8 +89,8 @@ and open the template in the editor.
                             </div>
                         </div>
                         <form method="post" action="?action=<?php echo $action; ?>&line=<?php echo $data_item_dtl["line_id"]; ?>&date=<?php echo $data_item_dtl["xdate"]; ?>&shift=<?php echo $data_item_dtl["shift"]; ?>&prd_seq=<?php echo $data_item_dtl["prd_seq"]; ?>">
-                          <input type="hidden" name="action" value="<?=$action?>">  
-                          <div class="col-12 mt-1">
+                            <input type="hidden" name="action" value="<?= $action ?>">
+                            <div class="col-12 mt-1">
                                 <div class="card">
                                     <div class="card-header" style="background-color: #E4E4E4;">
                                         <h6 class="mb-0">Hour <?php echo $data_item_dtl["prd_seq"] . " - " . $data_item_dtl["time_start"] . " - " . $data_item_dtl["time_end"]; ?></h6>
@@ -156,7 +156,7 @@ and open the template in the editor.
                                             </div>
                                             <div class="col-xl-2 col-lg-3 col-md-9 col-sm-12">
                                                 <input type="hidden" name="save" value="true">
-                                                <button type="submit" name="btn_save" id="btn_save" value="save" class="btn btn-pale-green btn-block mt-sm-2 mt-xs-2 mt-md-0"><i class="material-icons">save</i> Save</button>
+                                                <!-- <button type="submit" name="btn_save" id="btn_save" value="save" class="btn btn-pale-green btn-block mt-sm-2 mt-xs-2 mt-md-0"><i class="material-icons">save</i> Save</button> -->
                                             </div>
                                         </div>
 
@@ -191,7 +191,7 @@ and open the template in the editor.
                             </div>
                         </form>
                         <div class="col-12 mt-1">
-                            <button type="button" id="add_content_stop_btn" class="btn btn-magenta" onclick="openModal01()">Add Content Stop</button>
+                            <!-- <button type="button" id="add_content_stop_btn" class="btn btn-magenta" onclick="openModal01()">Add Content Stop</button> -->
                         </div>
                         <div class="col-12 mt-1">
                             <div class="table-responsive">
@@ -234,7 +234,7 @@ and open the template in the editor.
                             </div>
                         </div>
                         <div class="col-12 mt-1">
-                            <button type="button" id="add_ng" class="btn btn-magenta" onclick="openModal02()">Add NG & Visualization</button>
+                            <!-- <button type="button" id="add_ng" class="btn btn-magenta" onclick="openModal02()">Add NG & Visualization</button> -->
                         </div>
                         <div class="col-12 mt-1">
                             <div class="table-responsive">
