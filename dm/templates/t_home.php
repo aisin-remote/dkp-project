@@ -20,6 +20,9 @@ and open the template in the editor.
         <div class="container-fluid mt-2" id="fs">
           <div class="card mb-3">
             <div class="card-body">
+              <div id="title" class="text-ega-blue text-center">
+                <h4 class='mb-3' style="font-weight: 700; ">DASHBOARD DIES MAINTENANCE</h4>
+              </div>
               <div class="row" id="dashboard">
                 <?php
                 if (!empty($data_group)) {
@@ -78,24 +81,20 @@ and open the template in the editor.
                           <tr>
                             <td style="width: 100px;" class="bg-ivory">White</td>
                             <td>Dies stroke < 1,600</td>
-                          </tr>
-                          <tr>
+
                             <td style="width: 100px;" class="bg-yellow">Yellow</td>
                             <td>Dies stroke >= 1,600</td>
-                          </tr>
-                          <tr>
+
                             <td style="width: 100px;" class="bg-danger">Red</td>
                             <td>Dies stroke > 2,000</td>
                           </tr>
                           <tr>
                             <td style="width: 100px;" class="bg-blink">Blue (Blinking)</td>
                             <td>Dies under preventive maintenance</td>
-                          </tr>
-                          <tr>
+
                             <td style="width: 100px;" class="bg-amber">Orange</td>
                             <td>Dies under repair to maker</td>
-                          </tr>
-                          <tr>
+
                             <td style="width: 100px;" class="bg-red-blink">Red (Blinking)</td>
                             <td>Dies not yet finish preventive</td>
                           </tr>
@@ -201,7 +200,15 @@ and open the template in the editor.
       }
     }
 
-    $("#fs-btn").click(fullscreen);
+    var div = document.querySelector('#title');
+    div.style.display = 'none';
+
+    // $("#fs-btn").click(fullscreen);
+    $("#fs-btn").click(function() {
+      fullscreen();
+      var div = document.querySelector('#title');
+      div.style.display = '';
+    });
 
     $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function(e) {
       var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
@@ -210,6 +217,8 @@ and open the template in the editor.
       // Now do something interesting
       if (event == "FullscreenOff") {
         document.body.style.zoom = '100%';
+        var div = document.querySelector('#title');
+        div.style.display = 'none';
       }
 
     });
