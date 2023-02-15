@@ -108,7 +108,7 @@ and open the template in the editor.
                     <div class="row">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Dies</div>
                       <div class="col-xl-4 col-lg-4 col-md-5 col-sm-6">
-                        <select name="dies_id" class="form-control select2" data-live-search="true">
+                        <select name="dies_id" id="dies_id" class="form-control select2" data-live-search="true">
                           <?php
                           foreach ($dies_list as $row) {
                           ?>
@@ -124,13 +124,13 @@ and open the template in the editor.
                     <div class="row mt-1">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Cycle Time</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
-                        <input class="form-control form-control-sm" type="number" name="cctime" value="<?php echo $data_item_dtl["cctime"]; ?>" readonly />
+                        <input class="form-control form-control-sm" type="number" name="cctime" id="cctime" value="<?php echo $data_item_dtl["cctime"]; ?>" readonly />
                       </div>
                     </div>
                     <div class="row mt-1">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Planning Qty</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
-                        <input class="form-control form-control-sm" type="number" name="pln_qty" value="<?php echo $data_item_dtl["pln_qty"]; ?>" readonly />
+                        <input class="form-control form-control-sm" type="number" name="pln_qty" id="pln_qty" value="<?php echo $data_item_dtl["pln_qty"]; ?>" readonly />
                       </div>
                     </div>
                     <div class="row mt-1">
@@ -148,13 +148,13 @@ and open the template in the editor.
                     <div class="row mt-1">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Production Qty</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
-                        <input class="form-control form-control-sm" type="number" name="prd_qty" value="<?php echo $data_item_dtl["prd_qty"]; ?>" />
+                        <input class="form-control form-control-sm" type="number" name="prd_qty" id="prd_qty" value="<?php echo $data_item_dtl["prd_qty"]; ?>" />
                       </div>
                     </div>
                     <div class="row mt-1">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Production Time</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
-                        <input class="form-control form-control-sm" type="number" name="prd_time" value="<?php echo $data_item_dtl["prd_time"]; ?>" readonly />
+                        <input class="form-control form-control-sm" type="number" name="prd_time" id="prd_time" value="<?php echo $data_item_dtl["prd_time"]; ?>" readonly />
                       </div>
                       <div class="col-xl-2 col-lg-3 col-md-9 col-sm-12">
                         <input type="hidden" name="save" value="true">
@@ -672,6 +672,42 @@ and open the template in the editor.
         var err = textStatus + ", " + error;
         console.log( "Request Failed: " + err );
       });
+    }
+    
+    $("#dies_id").change(function(){
+      getDefaultCycleTime();
+    });
+    
+    $("#cctime").change(function(){
+      calculateTarget();
+    });
+    
+    function getDefaultCycleTime() {
+      $.ajax({
+        type: 'POST',
+        url: '?action=api_get_default_cctime',
+        data: {
+          dies_id: $("#dies_id").val()
+        },
+        success: function(response) {
+          // handle the response here
+          $("#cctime").removeAttr("readonly");
+          $("#cctime").val(response.cctime);
+          calculateTarget();
+        },
+        error: function(error) {
+          // handle the error here
+          alert(error);
+        },
+        dataType: 'json'
+      });
+    }
+    
+    function calculateTarget() {
+      var cctime = parseInt($("#cctime").val());
+      var prd_time = parseInt($("#prd_time").val());
+      var total_target = Math.ceil((prd_time * 60) / cctime);
+      $("#pln_qty").val(total_target);
     }
   </script>
 </body>
