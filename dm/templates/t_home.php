@@ -20,8 +20,18 @@ and open the template in the editor.
         <div class="container-fluid mt-2" id="fs">
           <div class="card mb-3">
             <div class="card-body">
-              <div id="title" class="text-ega-blue text-center">
-                <h4 class='mb-3' style="font-weight: 700; ">DASHBOARD DIES MAINTENANCE</h4>
+              <div class="row">
+                <div class="col-3">
+                  <a id="logo" class="navbar-brand mb-3" href=".."><img src="media/images/logo.svg" height="30" alt="logo" /></a>
+                </div>
+                <div class="col-6">
+                  <div id="title" class="text-ega-blue text-center">
+                    <h4 class='mb-3' style="font-weight: 700; ">DASHBOARD DIES MAINTENANCE</h4>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <!-- DIV kosong -->
+                </div>
               </div>
               <div class="row" id="dashboard">
                 <?php
@@ -185,7 +195,7 @@ and open the template in the editor.
     var elem = document.getElementById("fs");
 
     function fullscreen() {
-      document.body.style.zoom = '75%';
+      document.body.style.zoom = '77%';
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
       } else if (elem.mozRequestFullScreen) {
@@ -201,13 +211,17 @@ and open the template in the editor.
     }
 
     var div = document.querySelector('#title');
+    var logo = document.querySelector('#logo');
     div.style.display = 'none';
+    logo.style.display = 'none';
 
     // $("#fs-btn").click(fullscreen);
     $("#fs-btn").click(function() {
       fullscreen();
       var div = document.querySelector('#title');
+      var logo = document.querySelector('#logo');
       div.style.display = '';
+      logo.style.display = '';
     });
 
     $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function(e) {
@@ -218,7 +232,9 @@ and open the template in the editor.
       if (event == "FullscreenOff") {
         document.body.style.zoom = '100%';
         var div = document.querySelector('#title');
+        var logo = document.querySelector('#logo');
         div.style.display = 'none';
+        logo.style.display = 'none';
       }
 
     });
