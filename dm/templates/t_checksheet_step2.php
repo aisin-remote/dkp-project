@@ -118,7 +118,7 @@ and open the template in the editor.
                             <h6 class="mb-0">Checksheet</h6>
                           </th>
                           <th class="align-middle px-3 table-header" scope="col">
-                            <input type="file" accept="image/png,image/jpg" name="c11100" />
+                            <input type="file" accept="image/png, image/jpeg" name="c11100" />
                             <input type="hidden" name="c11100_x" value="<?= $data["data"]["c11100"]; ?>" />
                           </th>
                           <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c11100"])) ? "<a download='file_chemical_cleaning.jpg' href='data:image/jpg;base64," . $data["data"]["c11100"] . "'>Download File</a>" : "" ?></th>
@@ -702,7 +702,7 @@ and open the template in the editor.
                           <th class="align-middle px-3 table-header" scope="col">1.1.6.1</th>
                           <th class="align-middle px-3 table-header" scope="col">Check Flow Power Cool</th>
                           <th class="align-middle px-3 table-header" scope="col">
-                            <input type="file" accept="image/png,image/jpg" name="c1161" id="upload-image" />
+                            <input type="file" accept="image/png, image/jpeg" name="c1161" id="upload-image" />
                             <input type="hidden" name="c1161_x" value="<?= $data["data"]["c1161"]; ?>">
                           </th>
                           <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c1161"])) ? "<a download='file_check_flow_power_cool.jpg' href='data:image/jpg;base64," . $data["data"]["c1161"] . "'>Download File</a>" : "" ?></th>
@@ -736,7 +736,7 @@ and open the template in the editor.
                           <th class="align-middle px-3 table-header" scope="col">1.1.6.2</th>
                           <th class="align-middle px-3 table-header" scope="col">Check Flow Main Cool</th>
                           <th class="align-middle px-3 table-header" scope="col">
-                            <input type="file" accept="image/png,image/jpg" name="c1162" id="upload-image" />
+                            <input type="file" accept="image/png, image/jpeg" name="c1162" id="upload-image" />
                             <input type="hidden" name="c1162_x" value="<?= $data["data"]["c1162"]; ?>">
                           </th>
                           <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c1162"])) ? "<a download='file_check_flow_main_cool.jpg' href='data:image/jpg;base64," . $data["data"]["c1162"] . "'>Download File</a>" : "" ?></th>
@@ -846,7 +846,7 @@ and open the template in the editor.
                           <th class="align-middle px-2 table-header" scope="col">1.1.9</th>
                           <th class="align-middle px-3 table-header" scope="col">Check Bocor</th>
                           <th class="align-middle px-3 table-header" scope="col">
-                            <!--input type="file" accept="image/png,image/jpg" name="c119" />
+                            <!--input type="file" accept="image/png, image/jpeg" name="c119" />
                             <input type="hidden" name="c119_x" value="<?= $data["data"]["c119"]; ?>" /-->
                           </th>
                           <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c119"])) ? "<a download='file_check_bocor.jpg' href='data:image/jpg;base64," . $data["data"]["c119"] . "'>Download File</a>" : "" ?></th>
