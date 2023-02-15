@@ -97,7 +97,7 @@ and open the template in the editor.
                           </tr>
                           <tr>
                             <td style="width: 100px;" class="bg-red-blink">Red (Blinking)</td>
-                            <td>Dies under preventive maintenance and being used in production</td>
+                            <td>Dies not yet finish preventive</td>
                           </tr>
                         </tbody>
                       </table>
