@@ -99,13 +99,12 @@ class User
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
       $sql = "INSERT INTO m_user (usrid,usrpw,name1,phone,stats,crt_by,crt_dt,lifnr) "
-        . "values (:usrid,:usrpw,:name1,:phone,:stats,:crt_by,CURRENT_TIMESTAMP,:lifnr)";
+        . "values (:usrid,:usrpw,:name1,:phone,'A',:crt_by,CURRENT_TIMESTAMP,:lifnr)";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":usrid", strtoupper($data["usrid"]), PDO::PARAM_STR);
       $stmt->bindValue(":usrpw", password_hash($data["usrpw"], PASSWORD_DEFAULT), PDO::PARAM_STR);
       $stmt->bindValue(":name1", $data["name1"], PDO::PARAM_STR);
       $stmt->bindValue(":phone", $data["phone"], PDO::PARAM_STR);
-      $stmt->bindValue(":stats", $data["stats"], PDO::PARAM_STR);
       $stmt->bindValue(":crt_by", strtoupper($data["crt_by"]), PDO::PARAM_STR);
       $stmt->bindValue(":lifnr", $data["lifnr"], PDO::PARAM_STR);
 
