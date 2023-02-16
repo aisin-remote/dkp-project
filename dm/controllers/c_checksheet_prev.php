@@ -380,12 +380,22 @@ if ($action == "checksheet_preventive") {
 
         $param["pmstat"] = "N";
         if ($param["group_id"] == "CSH") {
+          if ($param["pmtype"] == "2K" && $param["jml_total"] >= 21) {
+            $param["pmstat"] = "C";
+            //jika close update kembali gstat menjadi N
+            $dies->updateDiesGStat($param["dies_id"], "N");
+          }
           if ($param["jml_total"] >= 25) {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
           }
         } else {
+          if ($param["pmtype"] == "2K" && $param["jml_total"] >= 31) {
+            $param["pmstat"] = "C";
+            //jika close update kembali gstat menjadi N
+            $dies->updateDiesGStat($param["dies_id"], "N");
+          }
           if ($param["jml_total"] >= 35) {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N

@@ -118,7 +118,7 @@ and open the template in the editor.
                             <h6 class="mb-0">Checksheet</h6>
                           </th>
                           <th class="align-middle px-3 table-header" scope="col">
-                            <input type="file" accept="image/png,image/jpg" name="c11100" />
+                            <input type="file" accept="image/png, image/jpeg" name="c11100" />
                             <input type="hidden" name="c11100_x" value="<?= $data["data"]["c11100"]; ?>" />
                           </th>
                           <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c11100"])) ? "<a download='file_chemical_cleaning.jpg' href='data:image/jpg;base64," . $data["data"]["c11100"] . "'>Download File</a>" : "" ?></th>
@@ -139,7 +139,7 @@ and open the template in the editor.
                           <td class="align-middle px-3 table-item">1.1.1.1</td>
                           <td class="align-middle px-3 table-item">Chemical Line Cooling Fix</td>
                           <td class="align-middle px-3 table-item">
-                            <input class="" name="c11110" <?= (($data["data"]["c11110"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                            <input class="" name="c11110" <?php if ($data["data"]["pm_type"] != "PM Stroke 6000") {echo "disabled";} else {echo "";} ?> <?= (($data["data"]["c11110"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                           </td>
                           <td class="align-middle px-3 table-item"></td>
                           <td class="align-middle px-3 table-item"></td>
@@ -148,7 +148,7 @@ and open the template in the editor.
                           <td class="align-middle px-3 table-item">1.1.1.2</td>
                           <td class="align-middle px-3 table-item">Chemical Line Cooling Move</td>
                           <td class="align-middle px-3 table-item">
-                            <input class="" name="c11120" <?= (($data["data"]["c11120"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                            <input class="" name="c11120" <?php if ($data["data"]["pm_type"] != "PM Stroke 6000") {echo "disabled";} else {echo "";} ?> <?= (($data["data"]["c11120"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                           </td>
                           <td class="align-middle px-3 table-item"></td>
                           <td class="align-middle px-3 table-item"></td>
@@ -702,7 +702,7 @@ and open the template in the editor.
                           <th class="align-middle px-3 table-header" scope="col">1.1.6.1</th>
                           <th class="align-middle px-3 table-header" scope="col">Check Flow Power Cool</th>
                           <th class="align-middle px-3 table-header" scope="col">
-                            <input type="file" accept="image/png,image/jpg" name="c1161" id="upload-image" />
+                            <input type="file" accept="image/png, image/jpeg" name="c1161" id="upload-image" />
                             <input type="hidden" name="c1161_x" value="<?= $data["data"]["c1161"]; ?>">
                           </th>
                           <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c1161"])) ? "<a download='file_check_flow_power_cool.jpg' href='data:image/jpg;base64," . $data["data"]["c1161"] . "'>Download File</a>" : "" ?></th>
@@ -736,7 +736,7 @@ and open the template in the editor.
                           <th class="align-middle px-3 table-header" scope="col">1.1.6.2</th>
                           <th class="align-middle px-3 table-header" scope="col">Check Flow Main Cool</th>
                           <th class="align-middle px-3 table-header" scope="col">
-                            <input type="file" accept="image/png,image/jpg" name="c1162" id="upload-image" />
+                            <input type="file" <?php if ($data["data"]["pm_type"] != "PM Stroke 6000") { echo "disabled"; } else { echo ""; } ?> accept="image/png, image/jpeg" name="c1162" id="upload-image" />
                             <input type="hidden" name="c1162_x" value="<?= $data["data"]["c1162"]; ?>">
                           </th>
                           <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c1162"])) ? "<a download='file_check_flow_main_cool.jpg' href='data:image/jpg;base64," . $data["data"]["c1162"] . "'>Download File</a>" : "" ?></th>
@@ -749,7 +749,7 @@ and open the template in the editor.
                           <td class="align-middle px-4 table-item">1.1.6.2.1</td>
                           <td class="align-middle px-3 table-item">Fix</td>
                           <td class="align-middle px-3 table-item">
-                            <input class="" name="c11621" <?= (($data["data"]["c11621"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                            <input class="" name="c11621" <?php if ($data["data"]["pm_type"] != "PM Stroke 6000") { echo "disabled"; } else { echo ""; } ?> <?= (($data["data"]["c11621"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                           </td>
                           <td class="align-middle px-3 table-item"></td>
                           <td class="align-middle px-3 table-item"></td>
@@ -758,7 +758,7 @@ and open the template in the editor.
                           <td class="align-middle px-4 table-item">1.1.6.2.2</td>
                           <td class="align-middle px-3 table-item">Move</td>
                           <td class="align-middle px-3 table-item">
-                            <input class="" name="c11622" <?= (($data["data"]["c11622"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                            <input class="" name="c11622" <?php if ($data["data"]["pm_type"] != "PM Stroke 6000") { echo "disabled"; } else { echo ""; } ?> <?= (($data["data"]["c11622"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                           </td>
                           <td class="align-middle px-3 table-item"></td>
                           <td class="align-middle px-3 table-item"></td>
@@ -846,7 +846,7 @@ and open the template in the editor.
                           <th class="align-middle px-2 table-header" scope="col">1.1.9</th>
                           <th class="align-middle px-3 table-header" scope="col">Check Bocor</th>
                           <th class="align-middle px-3 table-header" scope="col">
-                            <!--input type="file" accept="image/png,image/jpg" name="c119" />
+                            <!--input type="file" accept="image/png, image/jpeg" name="c119" />
                             <input type="hidden" name="c119_x" value="<?= $data["data"]["c119"]; ?>" /-->
                           </th>
                           <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c119"])) ? "<a download='file_check_bocor.jpg' href='data:image/jpg;base64," . $data["data"]["c119"] . "'>Download File</a>" : "" ?></th>
