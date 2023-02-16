@@ -5,6 +5,56 @@ if ($action == "user") {
   $class = new User();
   $role = new Role();
   $data["list"];
+
+  if (isset($_GET['upload'])) {
+    require_once 'classes/PHPExcel.php';
+    require_once 'classes/PHPExcel/IOFactory.php';
+    $fileName = $_FILES["excel"]["tmp_name"];
+    try {
+      $objPHPExcel = PHPExcel_IOFactory::load($fileName);
+    } catch (Exception $e) {
+      header("Location: ?action=" . $action . "&error=" . $e->getMessage());
+    }
+    $activeSheetData = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+    $success = 0;
+    $fail = 0;
+    $processed = 0;
+    $i = 0;
+    if (!empty($activeSheetData)) {
+      foreach ($activeSheetData as $row) {
+        if ($i > 0) {
+          //check if exist
+          $param = array();
+          if (empty($row["A"])) {
+            break;
+          }
+          $param["usrid"] = $row["A"];
+          $param["name1"] = $row["B"];
+          $param["usrpw"] = $row["C"];
+          $param["user_role"] = explode(",", $row["D"]);
+          $param["crtby"] = $_SESSION[LOGIN_SESSION];
+          $param["chgby"] = $_SESSION[LOGIN_SESSION];
+
+          if ($class->isExist($row["A"])) {
+            $save = $class->update($param);
+          } else {
+            $save = $class->insert($param);
+          }
+
+          if ($save["status"] == true) {
+            $success += 1;
+          } else {
+            $fail += 1;
+          }
+          $processed++;
+        }
+        $i++;
+      }
+    }
+    $message = "Upload Complete [$success] data success, [$fail] data failed, [$processed] data processed";
+    header("Location: ?action=" . $action . "&success=$message");
+  }
+
   if (isset($_GET["id"])) {
     $id = $_GET["id"];
     if (isset($_POST["save"])) {

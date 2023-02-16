@@ -300,6 +300,27 @@ class User {
     $conn = null;
     return $return;
   }
+
+  public function isExist($usrid)
+  {
+    $return = false;
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT count(*) as cnt FROM m_user WHERE UPPER(usrid) = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(":id", strtoupper($usrid), PDO::PARAM_STR);
+    $count = 0;
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $count = intval($row["cnt"]);
+      }
+    }
+    if ($count > 0) {
+      $return = true;
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
   
   /*public function getVendorID($id) {
     $return = null;
@@ -317,5 +338,3 @@ class User {
     return $return;
   }*/
 }
-
-?>
