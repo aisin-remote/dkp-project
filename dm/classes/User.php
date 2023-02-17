@@ -207,8 +207,9 @@ class User
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
       $sql = "INSERT INTO m_user_role (usrid, roleid, app_id) VALUES ";
       $arr_insert = array();
-      $userid = strtoupper($userid);
+      $userid = strtoupper(trim($userid));
       foreach ($data as $role) {
+        $role = trim($role);
         $arr_insert[] = "('$userid','$role','" . APP . "')";
       }
       $sql .= implode(",", $arr_insert);
