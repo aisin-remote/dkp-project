@@ -46,7 +46,7 @@ and open the template in the editor.
                     </div>                        
                   </div>
                   <div class="col-12">
-                    <h6>Hourly Efficiency</h6>
+                    <h5 class="text-uppercase">Hourly Efficiency</h5>
                   </div>
                   <?php
                   if (!empty($data_line_name)) {
@@ -63,7 +63,7 @@ and open the template in the editor.
                 </div>
               </div>
               <div class="container-fluid border-bottom mb-2">
-                <h6>Shift Efficiency</h6>
+                <h5 class="text-uppercase">Per Shift Efficiency</h5>
                 <div id="chart2"></div>
               </div>
               <!--div class="container-fluid mb-2">
@@ -100,11 +100,11 @@ and open the template in the editor.
                 <div class="table-responsive">
                   <table class="table table-striped table-bordered table-sm">
                     <thead>
-                      <tr>
+                      <tr id="row_ln">
                         <th></th>
                         <?php
-                        if (!empty($data_line_name)) {
-                          foreach ($data_line_name as $row) {
+                        if (!empty($data_line_name_sum)) {
+                          foreach ($data_line_name_sum as $row) {
                             echo "<th>" . $row["line"] . "</th>";
                           }
                         }
@@ -115,8 +115,8 @@ and open the template in the editor.
                       <tr id="row_ril">
                         <td>RIL</td>
                         <?php
-                        if (!empty($data_ril)) {
-                          foreach ($data_ril as $row) {
+                        if (!empty($data_ril_sum)) {
+                          foreach ($data_ril_sum as $row) {
                             echo "<td>$row %</td>";
                           }
                         }
@@ -125,8 +125,8 @@ and open the template in the editor.
                       <tr id="row_rol">
                         <td>ROL</td>
                         <?php
-                        if (!empty($data_rol)) {
-                          foreach ($data_rol as $row) {
+                        if (!empty($data_rol_sum)) {
+                          foreach ($data_rol_sum as $row) {
                             echo "<td>$row %</td>";
                           }
                         }
@@ -279,7 +279,7 @@ and open the template in the editor.
       },
       xaxis: {
         type: 'text',
-        categories: ["<?php echo implode("\",\"", array_map(null, ...$data_line_name)[0]); ?>"],
+        categories: ["<?php echo implode("\",\"", array_map(null, ...$data_line_name_sum)[0]); ?>"],
       },
       legend: {
         position: 'right',
@@ -311,7 +311,8 @@ and open the template in the editor.
           var data_rol_sum = data.data_rol_sum;
           var data_line_name = data.data_line_name;
           var data_eff_sum = data.data_eff_sum;
-
+          var data_line_name_sum = data.data_line_name_sum;
+          var append_data = "";
           if (data_line_name.length > 0) {
             var i = 0;
             $.each(data_line_name, function(row, value) {
@@ -326,6 +327,15 @@ and open the template in the editor.
               i++;
             });
           }
+          
+          if(data_line_name_sum.length > 0) {
+            append_data = "<th></th>";
+            $.each(data_line_name_sum, function(row, value) {
+              append_data += "<th>" + value + "</th>";
+            });
+            $("#row_ln").html(append_data);
+          }
+          
           if (data_eff_sum.length > 0 && data_ril_sum.length > 0 && data_rol_sum.length > 0) {
             chart.updateSeries([{
               name: 'Efficiency',
@@ -348,15 +358,15 @@ and open the template in the editor.
           }*/
 
           if (data_ril_sum.length > 0) {
-            var append_data = "<td>RIL</td>";
+            append_data = "<td>RIL</td>";
             $.each(data_ril_sum, function(row, value) {
               append_data += "<td>" + value + " %</td>";
             });
             $("#row_ril").html(append_data);
           }
-          if (data_rol.length > 0) {
-            var append_data = "<td>ROL</td>";
-            $.each(data_rol, function(row, value) {
+          if (data_rol_sum.length > 0) {
+            append_data = "<td>ROL</td>";
+            $.each(data_rol_sum, function(row, value) {
               append_data += "<td>" + value + " %</td>";
             });
             $("#row_rol").html(append_data);

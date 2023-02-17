@@ -104,13 +104,17 @@ if ($action == "api_dashboard_prd") {
   $stmt = $conn->prepare($query_sum);
   $data_eff_sum = [];
   $data_ril_sum = [];
-  $data_rol_sum = [];
+  $data_rol_sum = [];  
+  $data_line_name_sum = [];
   if ($stmt->execute()) {
+    $i = 0;
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $eff_sum = round((($row["prd_qty"] * $row["cctime"] / $row["per_jam"]) / $row["prd_time"]) * 100, 2);
       $data_eff_sum[] = $eff_sum;
       $data_ril_sum[] = round((($row["ril_qty"] * $row["cctime"] / $row["per_jam"]) / $row["prd_time"]) * 100, 2);
       $data_rol_sum[] = round((($row["rol_qty"] * $row["cctime"] / $row["per_jam"]) / $row["prd_time"]) * 100, 2);
+      $data_line_name_sum[$i] = $row["line_name"];
+      $i++;
     }
   } else {
     $error = $stmt->errorInfo();
@@ -124,7 +128,7 @@ if ($action == "api_dashboard_prd") {
 
   $return["data_ril_sum"] = $data_ril_sum;
   $return["data_rol_sum"] = $data_rol_sum;
-  //$return["data_line_name"] = $data_line_name;
+  $return["data_line_name_sum"] = $data_line_name_sum;
   $return["data_eff_sum"] = $data_eff_sum;
   $return["message"] = $message;
 
