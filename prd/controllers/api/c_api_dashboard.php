@@ -19,7 +19,7 @@ if ($action == "api_dashboard_prd") {
             from t_prd_daily_i a 
             inner join m_prd_line b ON b.line_id = a.line_id  
             left join m_dm_dies_asset c on c.dies_id = a.dies_id::int
-            where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' ";
+            where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A' ";
   //$query .= "and a.stats = 'A' ";
   $query .= "ORDER BY line_name ASC";
   $stmt = $conn->prepare($query);
@@ -71,7 +71,7 @@ if ($action == "api_dashboard_prd") {
   $shift3_e = strtotime(date("Y-m-d") . " 23:59");
 
   $shift4_s = strtotime(date("Y-m-d") . " 00:00");
-  $shift4_s = strtotime(date("Y-m-d") . " 05:59");
+  $shift4_e = strtotime(date("Y-m-d") . " 05:59");
 
   $current_time = strtotime(date("Y-m-d H:i"));
 
@@ -98,7 +98,7 @@ if ($action == "api_dashboard_prd") {
     60 as per_jam 
     from t_prd_daily_i a 
     inner join m_prd_line b ON b.line_id = a.line_id 
-    where a.prd_dt = '$today' and a.shift = '$shift' and a.prd_qty > 0 ) t 
+    where a.prd_dt = '$today' and a.shift = '$shift' and a.stats = 'A' ) t 
     group by 1,2 order by 1 asc";
 
   $stmt = $conn->prepare($query_sum);
@@ -159,7 +159,7 @@ if ($action == "api_dashboard_prd_single") {
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') 
             from t_prd_daily_i a 
             inner join m_prd_line b ON b.line_id = a.line_id 
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end'";
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' a.stats = 'A'";
   $stmt = $conn->prepare($query);
   $eff = 0;
   $ril = 0;
@@ -227,7 +227,7 @@ if ($action == "dashboard_line") {
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') 
             from t_prd_daily_i a 
             inner join m_prd_line b ON b.line_id = a.line_id 
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end'";
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' a.stats = 'A'";
   $stmt = $conn->prepare($query);
   $eff = 0;
   $ril = 0;

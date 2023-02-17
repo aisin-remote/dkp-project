@@ -27,10 +27,26 @@ and open the template in the editor.
             <div class="card-body">
               <div class="container-fluid border-bottom mb-2">
                 <div class="row">
-                  <div class="col-12 d-none" id="btn-exit-fullscreen">
-                    <div class="d-flex justify-content-end">
-                      <button type="button" class="btn btn-link" onclick="closeFullscreen()"><i class="material-icons">fullscreen_exit</i></button>
-                    </div>
+                  <div class="col-12 d-none container-fluid" id="btn-exit-fullscreen">
+                    <div class="row">
+                      <div class="col-3">
+                        <a id="logo" class="navbar-brand mb-3" href=".."><img src="media/images/logo.svg" height="30" alt="logo" /></a>
+                      </div>
+                      <div class="col-6">
+                        <div id="title" class="text-ega-blue text-center">
+                          <h4 class='mb-3' style="font-weight: 700; ">DASHBOARD PRODUCTION DIGITALIZATION</h4>
+                        </div>
+                      </div>
+                      <div class="col-3">
+                        <!-- DIV kosong -->
+                        <div class="d-flex justify-content-end">
+                          <button type="button" class="btn btn-link" onclick="closeFullscreen()"><i class="material-icons">fullscreen_exit</i></button>
+                        </div>
+                      </div>
+                    </div>                        
+                  </div>
+                  <div class="col-12">
+                    <h6>Hourly Efficiency</h6>
                   </div>
                   <?php
                   if (!empty($data_line_name)) {
@@ -47,6 +63,7 @@ and open the template in the editor.
                 </div>
               </div>
               <div class="container-fluid border-bottom mb-2">
+                <h6>Shift Efficiency</h6>
                 <div id="chart2"></div>
               </div>
               <!--div class="container-fluid mb-2">
@@ -312,13 +329,13 @@ and open the template in the editor.
           if (data_eff_sum.length > 0 && data_ril_sum.length > 0 && data_rol_sum.length > 0) {
             chart.updateSeries([{
               name: 'Efficiency',
-              data: data_eff
+              data: data_eff_sum
             }, {
               name: 'RIL',
-              data: data_ril
+              data: data_ril_sum
             }, {
               name: 'ROL',
-              data: data_ril
+              data: data_rol_sum
             }]);
           }
 

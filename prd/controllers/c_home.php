@@ -19,7 +19,7 @@ if ($action == "home") {
             from t_prd_daily_i a 
             inner join m_prd_line b ON b.line_id = a.line_id  
             left join m_dm_dies_asset c on c.dies_id = a.dies_id::int
-            where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' ";
+            where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' and a.stats = 'A' ";
   //$query .= "and a.stats = 'A' ";
   $query .= "ORDER BY line_name ASC";
   $stmt = $conn->prepare($query);
@@ -56,7 +56,7 @@ if ($action == "home") {
   $shift3_e = strtotime(date("Y-m-d") . " 23:59");
 
   $shift4_s = strtotime(date("Y-m-d") . " 00:00");
-  $shift4_s = strtotime(date("Y-m-d") . " 05:59");
+  $shift4_e = strtotime(date("Y-m-d") . " 05:59");
 
   $current_time = strtotime(date("Y-m-d H:i"));
 
@@ -95,7 +95,7 @@ if ($action == "home") {
     60 as per_jam 
     from t_prd_daily_i a 
     inner join m_prd_line b ON b.line_id = a.line_id 
-    where a.prd_dt = '$today' and a.shift = '$shift' and a.prd_qty > 0 ) t 
+    where a.prd_dt = '$today' and a.shift = '$shift' and a.stats = 'A' ) t 
     group by 1,2 order by 1 asc";
 
   $stmt = $conn->prepare($query_sum);
