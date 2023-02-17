@@ -30,7 +30,9 @@ and open the template in the editor.
                   </div>
                 </div>
                 <div class="col-3">
-                  <!-- DIV kosong -->
+                  <div class="d-flex justify-content-end">
+                    <button id="close-fs" type="button" class="btn btn-link" onclick="closeFullscreen()"><i class="material-icons">fullscreen_exit</i></button>
+                  </div>
                 </div>
               </div>
               <div class="row" id="dashboard">
@@ -128,7 +130,7 @@ and open the template in the editor.
     setInterval(updateDashboard, 5000);
 
     $(document).ready(function() {
-
+      // closeFullscreen();
     });
 
     function updateDashboard() {
@@ -212,17 +214,33 @@ and open the template in the editor.
 
     var div = document.querySelector('#title');
     var logo = document.querySelector('#logo');
+    var closefs = document.querySelector('#close-fs');
     div.style.display = 'none';
     logo.style.display = 'none';
+    closefs.style.display = 'none';
 
     // $("#fs-btn").click(fullscreen);
     $("#fs-btn").click(function() {
       fullscreen();
       var div = document.querySelector('#title');
       var logo = document.querySelector('#logo');
+      var closefs = document.querySelector('#close-fs');
       div.style.display = '';
       logo.style.display = '';
+      closefs.style.display = '';
     });
+
+    function closeFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        /* Safari */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        /* IE11 */
+        document.msExitFullscreen();
+      }
+    }
 
     $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function(e) {
       var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
@@ -233,8 +251,11 @@ and open the template in the editor.
         document.body.style.zoom = '100%';
         var div = document.querySelector('#title');
         var logo = document.querySelector('#logo');
+        var closefs = document.querySelector('#close-fs');
         div.style.display = 'none';
         logo.style.display = 'none';
+        closefs.style.display = 'none';
+        closeFullscreen();
       }
 
     });
