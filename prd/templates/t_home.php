@@ -436,6 +436,17 @@ and open the template in the editor.
     }
 
     $("#fs-btn").click(fullscreen);
+    
+    $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function(e) {
+      var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
+      var event = state ? 'FullscreenOn' : 'FullscreenOff';
+
+      // Now do something interesting
+      if (event == "FullscreenOff") {
+        closeFullscreen();
+      }
+
+    });
   </script>
 </body>
 
