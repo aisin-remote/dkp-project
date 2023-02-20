@@ -56,6 +56,7 @@ if ($action == "api_dashboard_prd") {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $data_line_name[$i]["line"] = $row["name1"];
         $data_line_name[$i]["dies"] = "-";
+        $i++;
       }
     }
   }
