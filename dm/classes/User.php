@@ -332,6 +332,32 @@ class User
     return $return;
   }
 
+  public function updateStatus($extract_id)
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "UPDATE m_user SET stats = "
+      . "(CASE "
+      . "WHEN stats = 'A' THEN 'I' "
+      . "WHEN stats = 'I' THEN 'A' "
+      . "ELSE stats "
+      . "END) "
+      . "WHERE usrid IN('$extract_id')";
+
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
   /*public function getVendorID($id) {
     $return = null;
     $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
