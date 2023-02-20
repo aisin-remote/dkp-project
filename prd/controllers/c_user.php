@@ -55,6 +55,19 @@ if ($action == "user") {
     header("Location: ?action=" . $action . "&success=$message");
   }
 
+  if (isset($_POST["chg_status"])) {
+    $all_id = $_POST["chk_id"];
+    $extract_id = implode("','", $all_id);
+
+    $update = $class->updateStatus($extract_id);
+
+    if ($update["status"] == true) {
+      header("Location: ?action=" . $action . "&success=Status%20Updated");
+    } else {
+      header("Location: ?action=" . $action . "&error=" . $update["message"]);
+    }
+  }
+
   if (isset($_GET["id"])) {
     $id = $_GET["id"];
     if (isset($_POST["save"])) {

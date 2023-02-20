@@ -57,34 +57,39 @@ and open the template in the editor.
               <div class="card mt-2">
                 <div class="card-body">
                   <!-- Edit Here -->
-                  <table class="table table-sm" id="data-table-x">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>User Name</th>
-                        <th>Phone</th>
-                        <th>Roles</th>
-                        <th>Status</th>
-                        <th class="text-center">Edit</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                      if (!empty($data["list"])) {
-                        foreach ($data["list"] as $list) {
-                          echo "<tr>"
-                            . "<td>" . $list["usrid"] . "</td>"
-                            . "<td>" . $list["name1"] . "</td>"
-                            . "<td>" . $list["phone"] . "</td>"
-                            . "<td>" . $list["roles"] . "</td>"
-                            . "<td>" . $list["status_text"] . "</td>"
-                            . "<td class='text-center'><a href='?action=$action&id=" . $list["usrid"] . "' class='btn btn-outline-primary btn-sm'>edit</a></td>"
-                            . "</tr>";
+                  <form action="?action=<?php echo $action; ?>" method="POST">
+                    <table class="table table-sm" id="data-table-x">
+                      <thead>
+                        <tr>
+                          <th class="align-middle pl-2"><input id='checkAll' type='checkbox' style='height: 18px; width: 18px;' /></th>
+                          <th>ID</th>
+                          <th>User Name</th>
+                          <th>Phone</th>
+                          <th>Roles</th>
+                          <th>Status</th>
+                          <th class="text-center">Edit</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        if (!empty($data["list"])) {
+                          foreach ($data["list"] as $list) {
+                            echo "<tr>"
+                              . "<td class='align-middle chkbox pl-2'><input name='chk_id[]' type='checkbox' value='" . $list["usrid"] . "' style='height: 18px; width: 18px;' /></td>"
+                              . "<td>" . $list["usrid"] . "</td>"
+                              . "<td>" . $list["name1"] . "</td>"
+                              . "<td>" . $list["phone"] . "</td>"
+                              . "<td>" . $list["roles"] . "</td>"
+                              . "<td>" . $list["status_text"] . "</td>"
+                              . "<td class='text-center'><a href='?action=$action&id=" . $list["usrid"] . "' class='btn btn-outline-primary btn-sm'>edit</a></td>"
+                              . "</tr>";
+                          }
                         }
-                      }
-                      ?>
-                    </tbody>
-                  </table>
+                        ?>
+                      </tbody>
+                    </table>
+                    <button name="chg_status" type="submit" class="btn btn-dark-blue btn-sm mb-3">Change Status of Selected Row(s)</button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -162,6 +167,18 @@ and open the template in the editor.
     $('input[type="file"]').change(function(e) {
       var fileName = e.target.files[0].name;
       $('.custom-file-label').html(fileName);
+    });
+
+    $("#checkAll").change(function() {
+      $("input[type='checkbox']").prop("checked", this.checked);
+    });
+
+    $('td').each(function() {
+      if ($(this).html() == 'Active') {
+        $(this).css('color', 'green');
+      } else if ($(this).html() == 'Inactive') {
+        $(this).css('color', 'red');
+      }
     });
   </script>
 </body>

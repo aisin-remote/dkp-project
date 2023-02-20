@@ -142,6 +142,34 @@ and open the template in the editor.
     </div>
   </div>
 
+  <div class="modal fade" id="modal_upload" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_upload_label" aria-hidden="true">
+    <div class="modal-dialog">
+      <form method="POST" action="?action=<?php echo $action; ?>&upload=excel" enctype="multipart/form-data">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal_upload_label"><span class="material-icons">upload_file</span> Upload Data User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <a href="media/template/template-mp.xlsx">Download Template</a>
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="excel" name="excel" accept=".xls, .xlsx">
+                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-outline-primary">Upload</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
@@ -155,14 +183,23 @@ and open the template in the editor.
           "<'row'<'col-sm-12'tr>>" +
           "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
         buttons: [{
-          extend: 'excel',
-          title: "Member/Operator List",
-          className: 'btn btn-pale-green btn-sm',
-          text: '<i class="material-icons">download</i>Download Excel',
-          exportOptions: {
-            columns: [0, 1, 2]
+            extend: 'excel',
+            title: "Member/Operator List",
+            className: 'btn btn-success btn-sm',
+            text: '<i class="material-icons">download</i>Download Excel',
+            exportOptions: {
+              columns: [0, 1, 2]
+            }
+          },
+          {
+            className: 'btn btn-outline-success btn-sm',
+            text: '<i class="material-icons">upload_file</i> Upload by Excel',
+            action: function() {
+              $('#modal_upload').modal("show");
+
+            }
           }
-        }, ]
+        ]
       });
 
       $("#checkAll").change(function() {
@@ -199,6 +236,11 @@ and open the template in the editor.
       $("#empid").val(empid);
       $("#modal_delete").modal("show");
     }
+
+    $('input[type="file"]').change(function(e) {
+      var fileName = e.target.files[0].name;
+      $('.custom-file-label').html(fileName);
+    });
 
     $('td').each(function() {
       if ($(this).html() == 'Active') {
