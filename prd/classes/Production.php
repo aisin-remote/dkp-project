@@ -191,7 +191,7 @@ class Production
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
       $sql = "UPDATE t_prd_daily_i SET dies_id = :dies_id, prd_qty = :prd_qty, prd_time = :prd_time, "
         . "detail_text = :detail_text, dcqcp = :dcqcp, qaqcp = :qaqcp, scn_qty_ok = :scn_qty_ok, scn_qty_ng = :scn_qty_ng,"
-              . " cctime = :cctime, pln_qty = :pln_qty "
+        . " cctime = :cctime, pln_qty = :pln_qty "
         . "WHERE line_id = :line_id AND prd_dt = :prd_dt AND shift = :shift AND prd_seq = :prd_seq ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":dies_id", $param["dies_id"], PDO::PARAM_STR);
@@ -255,11 +255,13 @@ class Production
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, CONCAT(b.model_id, ' ', b.group_id, ' ', b.name1) as dies_name, "
-      . "(select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq) "
+      . "(select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), "
+      . "(select name1 from m_user where usrid = a.apr_by) as apr_name "
       . "FROM t_prd_daily_i a "
       . "INNER JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint) "
       . "WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$date' AND a.shift = '$shift' "
       . "ORDER BY prd_seq asc ";
+
     $stmt = $conn->prepare($sql);
     $count = 0;
     if ($stmt->execute()) {
@@ -434,13 +436,14 @@ class Production
     $conn = null;
     return $return;
   }
-  
-  public function getPrdStop($line, $date, $shift, $prd_seq, $stop_seq) {
+
+  public function getPrdStop($line, $date, $shift, $prd_seq, $stop_seq)
+  {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.type1, b.type2 FROM t_prd_daily_stop a "
-            . "INNER JOIN m_prd_stop_reason_action b ON b.srna_id = a.stop_id "
-            . "WHERE a.line_id = '$line' AND a.prd_dt = '$date' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq' AND a.stop_seq = '$stop_seq' ";
+      . "INNER JOIN m_prd_stop_reason_action b ON b.srna_id = a.stop_id "
+      . "WHERE a.line_id = '$line' AND a.prd_dt = '$date' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq' AND a.stop_seq = '$stop_seq' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -607,12 +610,13 @@ class Production
     $conn = null;
     return $return;
   }
-  
-  public function updateTargetDailyI($line, $date, $shift, $seq, $prd_time, $pln_qty) {
+
+  public function updateTargetDailyI($line, $date, $shift, $seq, $prd_time, $pln_qty)
+  {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "UPDATE t_prd_daily_i SET pln_qty = '$pln_qty', prd_time = '$prd_time' "
-            . "WHERE line_id = '$line' AND prd_dt = '$date' AND shift = '$shift' AND prd_seq = '$seq'";
+      . "WHERE line_id = '$line' AND prd_dt = '$date' AND shift = '$shift' AND prd_seq = '$seq'";
 
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
@@ -627,18 +631,19 @@ class Production
     $conn = null;
     return $return;
   }
-  
-  public function getDataScan($line_name, $date_time_start, $date_time_end) {
+
+  public function getDataScan($line_name, $date_time_start, $date_time_end)
+  {
     $curl = curl_init();
-    $url = str_replace(" ","%20","http://avicenna-dev:8081/trace/api/getqty/".$line_name."/".$date_time_start."/".$date_time_end);
-    
-    curl_setopt($curl, CURLOPT_URL, $url);    
+    $url = str_replace(" ", "%20", "http://avicenna-dev:8081/trace/api/getqty/" . $line_name . "/" . $date_time_start . "/" . $date_time_end);
+
+    curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    
+
     $result = curl_exec($curl);
     curl_close($curl);
-    $data = json_decode($result,1);
-    
+    $data = json_decode($result, 1);
+
     return $data;
   }
 }

@@ -104,6 +104,7 @@ and open the template in the editor.
                                                 <th>Total NG</th>
                                                 <th>Loss Time(m)</th>
                                                 <th>Efficiency</th>
+                                                <th>Apr. By</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
@@ -120,6 +121,7 @@ and open the template in the editor.
                                                         . "<td class='align-middle'>" . $list["tot_ng"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["loss_time"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["eff"] . "</td>"
+                                                        . "<td class='align-middle'>" . $list["apr_name"] . "</td>"
                                                         . "<td class='text-center pr-3'>"
                                                         . "<a href='?action=$action&id=" . $list["line_id"] . "&id2=" . $list["prd_dt"] . "&id3=" . $list["shift"] . "&id4=" . $list["prd_seq"] . "&step=detail" . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>visibility</i> </a>"
                                                         . "</td>"

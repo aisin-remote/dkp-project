@@ -105,7 +105,8 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.line_id, a.prd_dt, a.shift, a.prd_seq, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, a.prd_time, "
+        $sql = "SELECT a.line_id, a.prd_dt, a.shift, a.prd_seq, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, a.prd_time, a.apr_by, "
+            . "(SELECT name1 FROM m_user WHERE usrid = a.apr_by) as apr_name, "
             . "(SELECT name1 FROM m_dm_dies_asset WHERE dies_id::character varying = a.dies_id), "
             . "(SELECT COALESCE(SUM(ng_qty), 0) as tot_ng FROM t_prd_daily_ng WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift AND prd_seq = a.prd_seq), "
             . "(SELECT SUM(ng_qty) as tot_ng2 FROM t_prd_daily_ng WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift), "
