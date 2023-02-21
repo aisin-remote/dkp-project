@@ -631,12 +631,12 @@ class Production
   public function getDataScan($line_name, $date_time_start, $date_time_end) {
     $curl = curl_init();
     $url = str_replace(" ","%20","http://avicenna-dev:8081/trace/api/getqty/".$line_name."/".$date_time_start."/".$date_time_end);
-        
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_URL, $url);
     
-    $result = curl_exec($ch);
-    curl_close($ch);
+    curl_setopt($curl, CURLOPT_URL, $url);    
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    
+    $result = curl_exec($curl);
+    curl_close($curl);
     $data = json_decode($result,1);
     
     return $data;
