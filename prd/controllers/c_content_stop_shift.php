@@ -1,7 +1,7 @@
 <?php
 if ($action == "content_stop_per_shift") {
     $template["group"] = "Master Data";
-    $template["menu"] = "Content Stop/Shift";
+    $template["menu"] = "Content Stop per Shift";
     $data["list"];
     $class = new ContentStopShift();
     if (isset($_GET["id"])) {
@@ -12,12 +12,17 @@ if ($action == "content_stop_per_shift") {
             $param = $_POST;
             $param["crt_by"] = $_SESSION[LOGIN_SESSION];
             $param["chg_by"] = $_SESSION[LOGIN_SESSION];
-            $time_start = str_replace(":", "", $param["time_start"]);
-            $time_end = str_replace(":", "", $param["time_end"]);
-            $param["stop_time"] = floatval($time_end) - floatval($time_start);
+            $time_start = $param["time_start"];
+            $time_end = $param["time_end"];
+            $start = DateTime::createFromFormat('H:i', $time_start);
+            $end = DateTime::createFromFormat('H:i', $time_end);
+            $diff_in_minutes = ($end->getTimestamp() - $start->getTimestamp()) / 60;
+            $param["stop_time"] = $diff_in_minutes;
             $param["id"] = $id;
             $save = array();
             if ($id == "0") {
+                // var_dump($param);
+                // die();
                 $save = $class->insert($param);
             } else {
                 $save = $class->update($param);

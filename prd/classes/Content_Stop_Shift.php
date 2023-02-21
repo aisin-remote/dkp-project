@@ -127,17 +127,32 @@ class ContentStopShift
             $stmt->bindValue(":shift_id", strtoupper(trim($param["shift_id"])), PDO::PARAM_STR);
             $stmt->bindValue(":srna_id", $param["srna_id"], PDO::PARAM_STR);
             $stmt->bindValue(":time_id", $param["time_id"], PDO::PARAM_STR);
-            $stmt->bindValue(":start_time", $param["start_time"], PDO::PARAM_STR);
-            $stmt->bindValue(":end_time", $param["end_time"], PDO::PARAM_STR);
+            $stmt->bindValue(":start_time", $param["time_start"], PDO::PARAM_STR);
+            $stmt->bindValue(":end_time", $param["time_end"], PDO::PARAM_STR);
 
-            if ($stmt->execute()) {
-
-                $return["status"] = true;
-            } else {
+            if ($param["stop_time"] > 60) {
                 $error = $stmt->errorInfo();
                 $return["status"] = false;
                 $return["message"] = trim(str_replace("\n", " ", $error[2]));
-                error_log($error[2]);
+                $return["message"] = "Stop time tidak boleh lebih dari 60 menit!";
+            } elseif ($param["stop_time"] < 0) {
+                $error = $stmt->errorInfo();
+                $return["status"] = false;
+                $return["message"] = trim(str_replace("\n", " ", $error[2]));
+                $return["message"] = "Stop time tidak boleh kurang dari 0 menit!";
+            } else {
+                if ($stmt->execute()) {
+                    $return["status"] = true;
+                } else {
+                    $error = $stmt->errorInfo();
+                    $return["status"] = false;
+                    $return["message"] = trim(str_replace("\n", " ", $error[2]));
+                    $return["error_code"] = $error[0];
+                    if ($return["error_code"] == 23505) {
+                        $return["message"] = "Data dengan shift ID " . $param["shift_id"] . ", time ID " . $param["time_id"] . ", dan srna ID " . $param["srna_id"] . " sudah terdaftar!";
+                    }
+                    error_log($error[2]);
+                }
             }
             $stmt = null;
             $conn = null;
@@ -154,25 +169,39 @@ class ContentStopShift
         } else {
             $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
             $sql = "UPDATE m_prd_shift_stop SET shift_id = :shift_id, srna_id = :srna_id, time_id = :time_id, start_time = :start_time, end_time = :end_time, stop_time = '" . $param["stop_time"] . "' "
-                . "WHERE shift_id = '" . $param["id"] . "' ";
+                . "WHERE shift_id = :shift_id AND srna_id = :srna_id AND time_id = :time_id ";
 
-            // echo $sql;
-            // die();
             $stmt = $conn->prepare($sql);
             $stmt->bindValue(":id", $param["id"], PDO::PARAM_STR);
             $stmt->bindValue(":shift_id", $param["shift_id"], PDO::PARAM_STR);
             $stmt->bindValue(":srna_id", $param["srna_id"], PDO::PARAM_STR);
             $stmt->bindValue(":time_id", $param["time_id"], PDO::PARAM_STR);
-            $stmt->bindValue(":start_time", $param["start_time"], PDO::PARAM_STR);
-            $stmt->bindValue(":end_time", $param["end_time"], PDO::PARAM_STR);
+            $stmt->bindValue(":start_time", $param["time_start"], PDO::PARAM_STR);
+            $stmt->bindValue(":end_time", $param["time_end"], PDO::PARAM_STR);
 
-            if ($stmt->execute()) {
-                $return["status"] = true;
-            } else {
+            if ($param["stop_time"] > 60) {
                 $error = $stmt->errorInfo();
                 $return["status"] = false;
                 $return["message"] = trim(str_replace("\n", " ", $error[2]));
-                error_log($error[2]);
+                $return["message"] = "Stop time tidak boleh lebih dari 60 menit!";
+            } elseif ($param["stop_time"] < 0) {
+                $error = $stmt->errorInfo();
+                $return["status"] = false;
+                $return["message"] = trim(str_replace("\n", " ", $error[2]));
+                $return["message"] = "Stop time tidak boleh kurang dari 0 menit!";
+            } else {
+                if ($stmt->execute()) {
+                    $return["status"] = true;
+                } else {
+                    $error = $stmt->errorInfo();
+                    $return["status"] = false;
+                    $return["message"] = trim(str_replace("\n", " ", $error[2]));
+                    $return["error_code"] = $error[0];
+                    if ($return["error_code"] == 23505) {
+                        $return["message"] = "Data dengan shift ID " . $param["shift_id"] . ", time ID " . $param["time_id"] . ", dan srna ID " . $param["srna_id"] . " sudah terdaftar!";
+                    }
+                    error_log($error[2]);
+                }
             }
             $stmt = null;
             $conn = null;

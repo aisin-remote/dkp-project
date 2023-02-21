@@ -30,6 +30,10 @@ and open the template in the editor.
                     </div>';
                     }
                     ?>
+                    <input type="hidden" id="id" value="<?= $_GET["id"] ?>">
+                    <input type="hidden" id="id2" value="<?= $_GET["id2"] ?>">
+                    <input type="hidden" id="id3" value="<?= $_GET["id3"] ?>">
+
                     <form method="post" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>">
 
                         <div class="row">
@@ -109,7 +113,7 @@ and open the template in the editor.
                                                 <button type="submit" name="save" value="save" class="btn btn-pale-green"><span class="material-icons">save</span> Save</button>
                                             </div>
                                         </div>
-
+                                        <small>*Time Start tidak boleh lebih kecil dari Time Stop</small>
                                     </div>
                                 </div>
                             </div>
@@ -152,10 +156,14 @@ and open the template in the editor.
             }, function(data) {
                 var items = "";
                 //$("#model_id").empty();
+                var time_id = $("#id2").val();
 
                 $.each(data, function(key, val) {
-                    console.log(val.time_id + " (" + val.time_start + " - " + val.time_end + ")");
-                    items += "<option value='" + val.time_id + "'>" + val.time_id + " (" + val.time_start + " - " + val.time_end + ")" + "</option>";
+                    if (time_id == val.time_id) {
+                        items += "<option selected value='" + val.time_id + "'>" + val.time_id + " (" + val.time_start + " - " + val.time_end + ")" + "</option>";
+                    } else {
+                        items += "<option value='" + val.time_id + "'>" + val.time_id + " (" + val.time_start + " - " + val.time_end + ")" + "</option>";
+                    }
                 });
 
                 $("#time_id").html(items);
