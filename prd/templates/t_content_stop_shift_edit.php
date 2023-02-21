@@ -114,6 +114,8 @@ and open the template in the editor.
                                             </div>
                                         </div>
                                         <small>*Time Start tidak boleh lebih kecil dari Time Stop</small>
+                                        <br>
+                                        <small>*Stop time tidak boleh lebih dari 60 menit</small>
                                     </div>
                                 </div>
                             </div>
