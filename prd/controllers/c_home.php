@@ -17,7 +17,7 @@ if ($action == "home") {
             (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') 
             from t_prd_daily_i a 
-            inner join m_prd_line b ON b.line_id = a.line_id  
+            inner join m_prd_line b ON b.line_id = a.line_id
             left join m_dm_dies_asset c on c.dies_id = a.dies_id::int
             where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' and a.stats = 'A' ";
   //$query .= "and a.stats = 'A' ";
@@ -73,7 +73,7 @@ if ($action == "home") {
   }
 
   if (empty($data_line_name)) {
-    $query = "SELECT name1 FROM m_prd_line ORDER by line_id ASC";
+    $query = "SELECT name1 FROM m_prd_line WHERE line_ty = 'DM' ORDER by line_id ASC";
     $stmt = $conn->prepare($query);
     if ($stmt->execute()) {
       $i = 0;
@@ -105,7 +105,7 @@ if ($action == "home") {
   $data_rol_sum = [];
   $data_line_name_sum = [];
   if ($stmt->execute()) {
-    $i=0;
+    $i = 0;
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $eff_sum = round((($row["prd_qty"] * $row["cctime"] / $row["per_jam"]) / $row["prd_time"]) * 100, 2);
       $data_eff_sum[] = $eff_sum;

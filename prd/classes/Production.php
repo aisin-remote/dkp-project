@@ -11,9 +11,9 @@ class Production
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "select a.* from m_prd_line a WHERE 1=1 ";
+    $sql = "select a.* from m_prd_line a WHERE 1=1 AND line_ty = 'DM' ";
 
-    $sql .= " ORDER by a.line_id::int ASC ";
+    $sql .= " ORDER by a.line_id ASC ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
