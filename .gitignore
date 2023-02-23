@@ -1,2 +1,10 @@
 /nbproject/private/
 /prd/test.php
+dm/config_off.php
+dm/config.php
+dm/log/php-error.log
+pooling/log/php-error.log
+prd/config_off.php
+prd/config.php
+pooling/config.php
+pooling/config_off.php
