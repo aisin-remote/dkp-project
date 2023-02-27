@@ -41,7 +41,7 @@ class Report
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, (select name1 from m_io_mara where matnr = a.matnr) "
+        $sql = "SELECT a.*, TO_CHAR(a.dstat_dats, 'DD-MM-YYYY') as dats, (select name1 from m_io_mara where matnr = a.matnr) "
             . "FROM t_io_ldlist_dtl a "
             . "WHERE a.ldnum = '$id' ";
         $sql .= " ORDER by a.trseq ASC ";
@@ -50,6 +50,11 @@ class Report
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                if ($row["dstat"] == "D") {
+                    $row["dstat"] = "Delivered";
+                } else {
+                    $row["dstat"] = "Not Delivered";
+                }
                 $return[] = $row;
             }
         }

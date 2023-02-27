@@ -19,8 +19,12 @@ and open the template in the editor.
             <main>
                 <div class="container-fluid mt-2">
                     <ol class="breadcrumb mb-1">
-                        <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-                        <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
+                        <li class="breadcrumb-item">
+                            <?php echo $template["group"]; ?>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <?php echo $template["menu"]; ?>
+                        </li>
                     </ol>
 
                     <?php
@@ -60,6 +64,8 @@ and open the template in the editor.
                                                         <th class=''>Parts No.</th>
                                                         <th class=''>Cust. Parts No.</th>
                                                         <th class=''>Part Name</th>
+                                                        <th class=''>Status</th>
+                                                        <th class=''>Status Date</th>
                                                         <!-- <th class=''>Delivery Date</th>
                                                         <th class=''>Status</th>
                                                         <th class='text-center'>Action</th> -->
@@ -71,13 +77,14 @@ and open the template in the editor.
                                                     if (!empty($list)) {
                                                         foreach ($list as $row) {
                                                             echo
-                                                            "<tr>"
+                                                                "<tr>"
                                                                 . "<td class='align-middle'>" . $row["trseq"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["matnr"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["matn1"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["name1"] . "</td>"
-                                                                // . "<td class='align-middle'>" . $row["stats"] . "</td>"
+                                                                . "<td class='align-middle'>" . $row["dstat"] . "</td>"
+                                                                . "<td class='align-middle'>" . $row["dats"] . "</td>"
                                                                 // . "<td class='pr-3 align-middle text-center'><a href='?action=$action&id=" . $row["ldnum"] . "' class='p-2 btn btn-outline-primary btn-xs'><i class='material-icons'>info
                                                                 // </i> detail</a></td>"
                                                                 . "</tr>";
@@ -99,12 +106,14 @@ and open the template in the editor.
     </div>
     <input type="hidden" id="usrid" value="<?php echo $_SESSION[LOGIN_SESSION]; ?>">
 
-    <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_filter_label" aria-hidden="true">
+    <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="modal_filter_label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <form method="post" action="?action=<?php echo $action; ?>?delete=true">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modal_filter_label"><span class="material-icons">delete</span> Delete Log</h5>
+                        <h5 class="modal-title" id="modal_filter_label"><span class="material-icons">delete</span>
+                            Delete Log</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -119,7 +128,8 @@ and open the template in the editor.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-outline-danger" name="delete_log" value="filter">Delete</button>
+                        <button type="submit" class="btn btn-outline-danger" name="delete_log"
+                            value="filter">Delete</button>
                     </div>
                 </div>
             </form>
@@ -129,7 +139,7 @@ and open the template in the editor.
     <?php include 'common/t_js.php'; ?>
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // $('.collapse').collapse();
             $(".datepicker").flatpickr({
                 altInput: true,
@@ -145,17 +155,17 @@ and open the template in the editor.
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
                 buttons: [{
-                        extend: 'csv',
-                        title: "Detail Loading List",
-                        className: 'btn btn-success btn-sm',
-                        text: '<i class="material-icons">text_snippet</i> CSV',
-                    },
-                    {
-                        extend: 'excel',
-                        title: "Detail Loading List",
-                        className: 'btn btn-outline-success btn-sm',
-                        text: '<i class="material-icons">download</i> Excel',
-                    }
+                    extend: 'csv',
+                    title: "Detail Loading List",
+                    className: 'btn btn-success btn-sm',
+                    text: '<i class="material-icons">text_snippet</i> CSV',
+                },
+                {
+                    extend: 'excel',
+                    title: "Detail Loading List",
+                    className: 'btn btn-outline-success btn-sm',
+                    text: '<i class="material-icons">download</i> Excel',
+                }
                 ]
             });
         });
