@@ -19,8 +19,8 @@ class Reporting
                 LEFT JOIN m_prd_operator op1 ON op1.empid = a.op1id
                 LEFT JOIN m_prd_operator op2 ON op2.empid = a.op2id
                 LEFT JOIN m_prd_operator op3 ON op3.empid = a.op3id
-                LEFT JOIN m_prd_operator op4 ON op4.empid = a.op4id
-                WHERE a.line_id = '1' AND a.prd_dt = '2023-02-21' AND a.shift = '1' ";
+                LEFT JOIN m_prd_operator op4 ON op4.empid = a.op4id "
+            . "WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' ";
 
         // echo $sql;
         // die();
@@ -250,9 +250,11 @@ class Reporting
                     FROM t_prd_daily_ng
                     WHERE ng_type LIKE 'ROL10'
                     GROUP BY line_id, prd_dt, shift
-                ) p ON a.line_id = p.line_id AND a.prd_dt = p.prd_dt AND a.shift = p.shift
-                WHERE a.line_id = '1' AND a.prd_dt = '2023-02-21' AND a.shift = '1' ";
+                ) p ON a.line_id = p.line_id AND a.prd_dt = p.prd_dt AND a.shift = p.shift "
+            . "WHERE  a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' ";
 
+        // echo $sql;
+        // die();
         // echo $sql;
         // die();
 

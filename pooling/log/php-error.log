@@ -15,3 +15,7 @@ DETAIL:  Key (empid)=() already exists.
 [24-Nov-2022 13:51:22 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Production::insert() in C:\xampp\htdocs\aisin_prd\classes\Production.php on line 26
 [24-Nov-2022 14:56:16 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '}' in C:\xampp\htdocs\1DEV\AISIN\aisin_prd\classes\Production.php on line 29
 [24-Nov-2022 14:56:17 Asia/Jakarta] PHP Parse error:  syntax error, unexpected '}' in C:\xampp\htdocs\1DEV\AISIN\aisin_prd\classes\Production.php on line 29
+[21-Feb-2023 15:07:57 Asia/Jakarta] SQLSTATE[08001]: [Microsoft][ODBC Driver 17 for SQL Server]TCP Provider: The wait operation timed out.
+
+[21-Feb-2023 15:09:44 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_io_cust_pkey"
+DETAIL:  Key (lifnr)=(7A00016) already exists.
