@@ -356,19 +356,33 @@ if ($action == "checksheet_preventive") {
         $param["c11622"] = (isset($_POST["c11622"])) ? 1 : 0;
         $param["jml_total"] += $param["c11622"];
         $param["c117"] = (isset($_POST["c117"])) ? 1 : 0;
+        $param["jml_total"] += $param["c117"];
         $param["c1181"] = (isset($_POST["c1181"])) ? 1 : 0;
+        $param["jml_total"] += $param["c1181"];
         $param["c1182"] = (isset($_POST["c1182"])) ? 1 : 0;
+        $param["jml_total"] += $param["c1182"];
         $param["c1183"] = (isset($_POST["c1183"])) ? 1 : 0;
+        $param["jml_total"] += $param["c1183"];
         $param["c1184"] = (isset($_POST["c1184"])) ? 1 : 0;
+        $param["jml_total"] += $param["c1184"];
         $param["c1185"] = (isset($_POST["c1185"])) ? 1 : 0;
+        $param["jml_total"] += $param["c1185"];
         $param["c11911"] = (isset($_POST["c11911"])) ? 1 : 0;
+        $param["jml_total"] += $param["c11911"];
         $param["c11912"] = (isset($_POST["c11912"])) ? 1 : 0;
+        $param["jml_total"] += $param["c11912"];
         $param["c11913"] = (isset($_POST["c11913"])) ? 1 : 0;
+        $param["jml_total"] += $param["c11913"];
         $param["c11914"] = (isset($_POST["c11914"])) ? 1 : 0;
+        $param["jml_total"] += $param["c11914"];
         $param["c11921"] = (isset($_POST["c11921"])) ? 1 : 0;
+        $param["jml_total"] += $param["c11921"];
         $param["c11922"] = (isset($_POST["c11922"])) ? 1 : 0;
+        $param["jml_total"] += $param["c11922"];
         $param["c11923"] = (isset($_POST["c11923"])) ? 1 : 0;
+        $param["jml_total"] += $param["c11923"];
         $param["c11924"] = (isset($_POST["c11924"])) ? 1 : 0;
+        $param["jml_total"] += $param["c11924"];
 
         // var_dump($param["jml_total"]);
         // jika jml_tot sudah 49 maka complete
@@ -380,23 +394,34 @@ if ($action == "checksheet_preventive") {
 
         $param["pmstat"] = "N";
         if ($param["group_id"] == "CSH") {
-          if ($param["pmtype"] == "2K" && $param["jml_total"] >= 21) {
+          if ($param["pmtype"] == "2K" && $param["jml_total"] >= 32) {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
           }
-          if ($param["jml_total"] >= 25) {
+          if ($param["jml_total"] >= 36) {
+            $param["pmstat"] = "C";
+            //jika close update kembali gstat menjadi N
+            $dies->updateDiesGStat($param["dies_id"], "N");
+          }
+        } else if ($param["group_id"] == "OPN") {
+          if ($param["pmtype"] == "2K" && $param["jml_total"] >= 44) {
+            $param["pmstat"] = "C";
+            //jika close update kembali gstat menjadi N
+            $dies->updateDiesGStat($param["dies_id"], "N");
+          }
+          if ($param["jml_total"] >= 48) {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
           }
         } else {
-          if ($param["pmtype"] == "2K" && $param["jml_total"] >= 31) {
+          if ($param["pmtype"] == "2K" && $param["jml_total"] >= 45) {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
           }
-          if ($param["jml_total"] >= 35) {
+          if ($param["jml_total"] >= 49) {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
