@@ -344,7 +344,7 @@ class Production
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT * from m_prd_shift where shift_id = '$shift' order by shift_id asc, time_id asc ";
+    $sql = "SELECT * from m_prd_shift where shift_id = '$shift' AND app_id = '".APP."' order by shift_id asc, time_id asc ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
