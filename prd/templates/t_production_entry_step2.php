@@ -19,11 +19,18 @@ and open the template in the editor.
       <main>
         <div class="container-fluid">
           <ol class="breadcrumb mb-0 mt-2">
-            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["submenu"]; ?></li>
+            <li class="breadcrumb-item">
+              <?php echo $template["group"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["menu"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["submenu"]; ?>
+            </li>
             <li class="breadcrumb-item active">Edit</li>
-            <li class="breadcrumb-item active"><a class="" href="?action=<?php echo $action; ?>">back <i class="material-icons">arrow_back</i></a></li>
+            <li class="breadcrumb-item active"><a class="" href="?action=<?php echo $action; ?>">back <i
+                  class="material-icons">arrow_back</i></a></li>
 
           </ol>
           <?php
@@ -58,31 +65,49 @@ and open the template in the editor.
                     <div class="col-md-4 col-sm-12">
                       <div class="row">
                         <div class="col-4">Line</div>
-                        <div class="col-8">: <?php echo $data_header["line_name"]; ?></div>
+                        <div class="col-8">:
+                          <?php echo $data_header["line_name"]; ?>
+                        </div>
                         <div class="col-4">Date</div>
-                        <div class="col-8">: <?php echo $data_header["prod_date"]; ?></div>
+                        <div class="col-8">:
+                          <?php echo $data_header["prod_date"]; ?>
+                        </div>
                         <div class="col-4">Shift</div>
-                        <div class="col-8">: <?php echo $data_header["shift_name"]; ?></div>
+                        <div class="col-8">:
+                          <?php echo $data_header["shift_name"]; ?>
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-4 col-sm-12">
                       <div class="row">
                         <div class="col-4">Leader</div>
-                        <div class="col-8">: <?php echo $data_header["ld_name"]; ?></div>
+                        <div class="col-8">:
+                          <?php echo $data_header["ld_name"]; ?>
+                        </div>
                         <div class="col-4">JP</div>
-                        <div class="col-8" :>: <?php echo $data_header["jp_name"]; ?></div>
+                        <div class="col-8" :>:
+                          <?php echo $data_header["jp_name"]; ?>
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-4 col-sm-12">
                       <div class="row">
                         <div class="col-4">Operator 1</div>
-                        <div class="col-8">: <?php echo $data_header["op1_name"]; ?></div>
+                        <div class="col-8">:
+                          <?php echo $data_header["op1_name"]; ?>
+                        </div>
                         <div class="col-4">Operator 2</div>
-                        <div class="col-8">: <?php echo $data_header["op2_name"]; ?></div>
+                        <div class="col-8">:
+                          <?php echo $data_header["op2_name"]; ?>
+                        </div>
                         <div class="col-4">Operator 3</div>
-                        <div class="col-8">: <?php echo $data_header["op3_name"]; ?></div>
+                        <div class="col-8">:
+                          <?php echo $data_header["op3_name"]; ?>
+                        </div>
                         <div class="col-4">Operator 4</div>
-                        <div class="col-8">: <?php echo $data_header["op4_name"]; ?></div>
+                        <div class="col-8">:
+                          <?php echo $data_header["op4_name"]; ?>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -96,7 +121,7 @@ and open the template in the editor.
                 <div class="card-body">
                   <div class="table-responsive text-nowrap">
                     <!-- Edit Here -->
-                    <table id="table" class="table table-sm table-striped table-responsive">
+                    <table id="table" class="table table-sm table-striped">
                       <thead>
                         <tr>
                           <th class="">Dies</th>
@@ -167,7 +192,7 @@ and open the template in the editor.
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    $(document).ready(function() {});
+    $(document).ready(function () { });
 
     function approveDailyI(line_id, shift, prd_dt, prd_seq) {
       $.ajax({
@@ -179,7 +204,7 @@ and open the template in the editor.
           prd_dt: prd_dt,
           prd_seq: prd_seq
         },
-        success: function(response) {
+        success: function (response) {
           // handle the response here
           if (response.status == true) {
             location.reload();
@@ -187,7 +212,7 @@ and open the template in the editor.
             alert(response.message);
           }
         },
-        error: function(error) {
+        error: function (error) {
           // handle the error here
           alert(error);
         },
