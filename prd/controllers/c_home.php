@@ -7,7 +7,7 @@ if ($action == "home") {
   $jam_now = intval(date("H"));
   $min_now = intval(date("i"));
   /*if($min_now > 0) {
-    $jam_now += 1;
+  $jam_now += 1;
   }*/
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
@@ -19,7 +19,12 @@ if ($action == "home") {
             from t_prd_daily_i a 
             inner join m_prd_line b ON b.line_id = a.line_id
             left join m_dm_dies_asset c on c.dies_id = a.dies_id::int
-            where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' and a.stats = 'A' ";
+            LEFT JOIN ( 
+              SELECT line_id, line_ty 
+              FROM m_prd_line 
+              WHERE line_ty = 'DM' 
+            ) g ON a.line_id = g.line_id 
+            where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' and a.stats = 'A' AND a.line_id = g.line_id ";
   //$query .= "and a.stats = 'A' ";
   $query .= "ORDER BY line_name ASC";
   $stmt = $conn->prepare($query);
@@ -95,8 +100,13 @@ if ($action == "home") {
      and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') as rol_qty, 
     60 as per_jam 
     from t_prd_daily_i a 
-    inner join m_prd_line b ON b.line_id = a.line_id 
-    where a.prd_dt = '$today' and a.shift = '$shift' and a.stats = 'A' ) t 
+    inner join m_prd_line b ON b.line_id = a.line_id
+    LEFT JOIN ( 
+      SELECT line_id, line_ty 
+      FROM m_prd_line 
+      WHERE line_ty = 'DM' 
+    ) g ON a.line_id = g.line_id  
+    where a.prd_dt = '$today' and a.shift = '$shift' and a.stats = 'A' AND a.line_id = g.line_id ) t 
     group by 1,2 order by 1 asc";
 
   $stmt = $conn->prepare($query_sum);

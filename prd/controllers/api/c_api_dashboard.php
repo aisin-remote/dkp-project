@@ -5,7 +5,7 @@ if ($action == "api_dashboard_prd") {
   $jam_now = intval(date("H"));
   $min_now = intval(date("i"));
   /*if($min_now > 0) {
-    $jam_now += 1;
+  $jam_now += 1;
   }*/
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
   //$jam_end = "16";
@@ -19,7 +19,12 @@ if ($action == "api_dashboard_prd") {
             from t_prd_daily_i a 
             inner join m_prd_line b ON b.line_id = a.line_id  
             left join m_dm_dies_asset c on c.dies_id = a.dies_id::int
-            where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A' ";
+            LEFT JOIN ( 
+              SELECT line_id, line_ty 
+              FROM m_prd_line 
+              WHERE line_ty = 'DM' 
+            ) g ON a.line_id = g.line_id 
+            where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A' AND a.line_id = g.line_id ";
   //$query .= "and a.stats = 'A' ";
   $query .= "ORDER BY line_name ASC";
   $stmt = $conn->prepare($query);
@@ -99,13 +104,18 @@ if ($action == "api_dashboard_prd") {
     60 as per_jam 
     from t_prd_daily_i a 
     inner join m_prd_line b ON b.line_id = a.line_id 
-    where a.prd_dt = '$today' and a.shift = '$shift' and a.stats = 'A' ) t 
+    LEFT JOIN ( 
+      SELECT line_id, line_ty 
+      FROM m_prd_line 
+      WHERE line_ty = 'DM' 
+    ) g ON a.line_id = g.line_id 
+    where a.prd_dt = '$today' and a.shift = '$shift' and a.stats = 'A' AND a.line_id = g.line_id ) t 
     group by 1,2 order by 1 asc";
 
   $stmt = $conn->prepare($query_sum);
   $data_eff_sum = [];
   $data_ril_sum = [];
-  $data_rol_sum = [];  
+  $data_rol_sum = [];
   $data_line_name_sum = [];
   if ($stmt->execute()) {
     $i = 0;
@@ -144,7 +154,7 @@ if ($action == "api_dashboard_prd_single") {
   $min_now = intval(date("i"));
   $line_name = "???";
   /*if($min_now > 0) {
-    $jam_now += 1;
+  $jam_now += 1;
   }*/
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
   $query = "SELECT name1 FROM m_prd_line WHERE line_id = '$line_id'";
@@ -163,8 +173,13 @@ if ($action == "api_dashboard_prd_single") {
             (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') 
             from t_prd_daily_i a 
-            inner join m_prd_line b ON b.line_id = a.line_id 
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A'";
+            inner join m_prd_line b ON b.line_id = a.line_id
+            LEFT JOIN ( 
+              SELECT line_id, line_ty 
+              FROM m_prd_line 
+              WHERE line_ty = 'DM' 
+            ) g ON a.line_id = g.line_id 
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A' AND a.line_id = g.line_id ";
   $stmt = $conn->prepare($query);
   $eff = 0;
   $ril = 0;
@@ -220,7 +235,7 @@ if ($action == "dashboard_line") {
   $jam_now = intval(date("H"));
   $min_now = intval(date("i"));
   /*if($min_now > 0) {
-    $jam_now += 1;
+  $jam_now += 1;
   }*/
 
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
@@ -231,8 +246,13 @@ if ($action == "dashboard_line") {
             (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') 
             from t_prd_daily_i a 
-            inner join m_prd_line b ON b.line_id = a.line_id 
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A'";
+            inner join m_prd_line b ON b.line_id = a.line_id
+            LEFT JOIN ( 
+              SELECT line_id, line_ty 
+              FROM m_prd_line 
+              WHERE line_ty = 'DM' 
+            ) g ON a.line_id = g.line_id 
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A' a.line_id = g.line_id ";
   $stmt = $conn->prepare($query);
   $eff = 0;
   $ril = 0;

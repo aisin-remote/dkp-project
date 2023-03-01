@@ -14,3 +14,18 @@ DETAIL:  Key (empid)=() already exists.
 [24-Nov-2022 13:51:21 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Production::insert() in C:\xampp\htdocs\aisin_prd\classes\Production.php on line 26
 [24-Nov-2022 13:51:22 Asia/Jakarta] PHP Fatal error:  Cannot redeclare Production::insert() in C:\xampp\htdocs\aisin_prd\classes\Production.php on line 26
 [03-Feb-2023 15:51:35 Asia/Jakarta] SQLSTATE[08006] [7] FATAL:  password authentication failed for user "postgres"
+[01-Mar-2023 11:58:36 Asia/Jakarta] SQLSTATE[08006] [7] FATAL:  password authentication failed for user "postgres"
+FATAL:  password authentication failed for user "postgres"
+[01-Mar-2023 12:08:00 Asia/Jakarta] SQLSTATE[08006] [7] FATAL:  password authentication failed for user "postgres"
+FATAL:  password authentication failed for user "postgres"
+[01-Mar-2023 12:08:02 Asia/Jakarta] SQLSTATE[08006] [7] FATAL:  password authentication failed for user "postgres"
+FATAL:  password authentication failed for user "postgres"
+[01-Mar-2023 12:08:09 Asia/Jakarta] SQLSTATE[08006] [7] FATAL:  password authentication failed for user "postgres"
+FATAL:  password authentication failed for user "postgres"
+[01-Mar-2023 12:08:23 Asia/Jakarta] SQLSTATE[08006] [7] FATAL:  password authentication failed for user "postgres"
+FATAL:  password authentication failed for user "postgres"
+[01-Mar-2023 12:08:58 Asia/Jakarta] Call to a member function modify() on bool
+[01-Mar-2023 13:22:29 Asia/Jakarta] Call to a member function getTimestamp() on bool
+[01-Mar-2023 13:22:42 Asia/Jakarta] Call to a member function getTimestamp() on bool
+[01-Mar-2023 13:29:05 Asia/Jakarta] Call to a member function modify() on bool
+[01-Mar-2023 14:26:29 Asia/Jakarta] Call to a member function modify() on bool

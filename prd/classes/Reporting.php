@@ -43,17 +43,42 @@ class Reporting
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT a.prd_dt, TO_CHAR(a.prd_dt, 'YYYY') as prd_year, TO_CHAR(a.prd_dt, 'MM') as prd_month, 
-        a.shift, a.line_id, a.ldid, a.jpid, a.cctime, "
-            . "(SELECT coalesce(sum(ng_qty),0) as ng_qty from t_prd_daily_ng where line_id = a.line_id AND shift = a.shift AND prd_dt = a.prd_dt ), "
-            . "(SELECT coalesce(sum(prd_qty),0) as prd_qty from t_prd_daily_i where line_id = a.line_id AND shift = a.shift AND prd_dt = a.prd_dt), "
-            . "(SELECT coalesce(sum(prd_time),0) as prd_time from t_prd_daily_i where line_id = a.line_id AND shift = a.shift AND prd_dt = a.prd_dt), "
-            . "(SELECT coalesce(sum(pln_qty),0) as pln_qty from t_prd_daily_i where line_id = a.line_id AND shift = a.shift AND prd_dt = a.prd_dt), "
-            . "(SELECT name1 as ld_name from m_prd_operator where empid = a.ldid), "
-            . "(SELECT name1 as jp_name from m_prd_operator where empid = a.jpid), "
-            . "(SELECT coalesce(sum(stop_time),0) as stop_time from t_prd_daily_stop where line_id = a.line_id AND shift = a.shift AND prd_dt = a.prd_dt) "
-            . "FROM t_prd_daily_h a ";
+                       a.shift, a.line_id, a.ldid, a.jpid, a.cctime, coalesce(b.ng_qty, 0) as ng_qty, 
+                       coalesce(c.prd_qty,0) as prd_qty, coalesce(c.prd_time,0) as prd_time, 
+                       coalesce(c.pln_qty,0) as pln_qty, coalesce(d.stop_time, 0) as stop_time, e.ld_name, f.jp_name
+                FROM t_prd_daily_h a 
+                LEFT JOIN (
+                    SELECT line_id, shift, prd_dt, coalesce(sum(ng_qty),0) as ng_qty 
+                    FROM t_prd_daily_ng
+                    GROUP BY line_id, shift, prd_dt
+                ) b ON a.line_id = b.line_id AND a.shift = b.shift AND a.prd_dt = b.prd_dt
+                LEFT JOIN (
+                    SELECT line_id, shift, prd_dt, coalesce(sum(prd_qty),0) as prd_qty, 
+                           coalesce(sum(prd_time),0) as prd_time, coalesce(sum(pln_qty),0) as pln_qty
+                    FROM t_prd_daily_i
+                    GROUP BY line_id, shift, prd_dt
+                ) c ON a.line_id = c.line_id AND a.shift = c.shift AND a.prd_dt = c.prd_dt
+                LEFT JOIN (
+                    SELECT line_id, shift, prd_dt, coalesce(sum(stop_time),0) as stop_time
+                    FROM t_prd_daily_stop
+                    GROUP BY line_id, shift, prd_dt
+                ) d ON a.line_id = d.line_id AND a.shift = d.shift AND a.prd_dt = d.prd_dt
+                LEFT JOIN (
+                    SELECT empid, name1 as ld_name 
+                    FROM m_prd_operator
+                ) e ON a.ldid = e.empid
+                LEFT JOIN (
+                    SELECT empid, name1 as jp_name 
+                    FROM m_prd_operator
+                ) f ON a.jpid = f.empid 
+                LEFT JOIN (
+                    SELECT line_id, line_ty
+                    FROM m_prd_line
+                    WHERE line_ty = 'DM'
+                ) g ON a.line_id = g.line_id
+                WHERE a.line_id = g.line_id ";
         if ($date_from !== "*" && $date_to !== "*") {
-            $sql .= " WHERE TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
+            $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
         }
         if (!empty($prd_year)) {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYY') = '$prd_year' ";
@@ -73,7 +98,6 @@ class Reporting
         if (!empty($jpid)) {
             $sql .= " AND a.jpid = '$jpid' ";
         }
-        $sql .= "GROUP BY a.line_id, a.prd_dt, a.shift ";
         $sql .= " ORDER BY a.line_id ASC, a.prd_dt ASC, a.shift ASC ";
 
         // echo '<pre>';
@@ -111,13 +135,33 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.line_id, a.prd_dt, a.shift, a.prd_seq, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, a.prd_time, a.apr_by, "
-            . "(SELECT name1 FROM m_user WHERE usrid = a.apr_by) as apr_name, "
-            . "(SELECT name1 FROM m_dm_dies_asset WHERE dies_id::character varying = a.dies_id), "
-            . "(SELECT COALESCE(SUM(ng_qty), 0) as tot_ng FROM t_prd_daily_ng WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift AND prd_seq = a.prd_seq), "
-            . "(SELECT SUM(ng_qty) as tot_ng2 FROM t_prd_daily_ng WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift), "
-            . "(SELECT COALESCE(SUM(stop_time), 0) as loss_time FROM t_prd_daily_stop WHERE line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift AND prd_seq = a.prd_seq) "
+        $sql = "SELECT a.line_id, a.prd_dt, a.shift, a.prd_seq, a.time_start, a.time_end, a.cctime, "
+            . "a.pln_qty, coalesce(a.prd_qty, 0) as prd_qty, a.prd_time, a.apr_by, b.name1 as apr_name, "
+            . "c.name1, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time "
             . "FROM t_prd_daily_i a "
+            . "LEFT JOIN m_user b ON a.apr_by = b.usrid "
+            . "LEFT JOIN m_dm_dies_asset c ON a.dies_id::integer = c.dies_id "
+            . "LEFT JOIN (
+                SELECT line_id, prd_dt, shift, prd_seq, COALESCE(SUM(ng_qty), 0) as ng_qty
+                FROM t_prd_daily_ng
+                GROUP BY line_id, prd_dt, shift, prd_seq
+            ) d ON a.line_id = d.line_id AND a.prd_dt = d.prd_dt AND a.shift = d.shift AND a.prd_seq = d.prd_seq "
+            . "LEFT JOIN (
+                SELECT line_id, prd_dt, shift, prd_seq, COALESCE(SUM(stop_time), 0) as stop_time
+                FROM t_prd_daily_stop
+                GROUP BY line_id, prd_dt, shift, prd_seq
+            ) e ON a.line_id = e.line_id AND a.prd_dt = e.prd_dt AND a.shift = e.shift AND a.prd_seq = e.prd_seq "
+            . "LEFT JOIN (
+                SELECT a.line_id, a.prd_dt, a.shift, COALESCE(SUM(a.ng_qty), 0) as ng_qty
+                FROM t_prd_daily_ng a
+                LEFT JOIN (
+                    SELECT line_id, line_ty
+                    FROM m_prd_line
+                    WHERE line_ty = 'DM'
+                ) b ON a.line_id = b.line_id
+                WHERE a.line_id = b.line_id
+                GROUP BY a.line_id, a.prd_dt, a.shift
+            ) f ON a.line_id = f.line_id AND a.prd_dt = f.prd_dt AND a.shift = f.shift "
             . "WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' ";
         $sql .= " ORDER BY  a.prd_seq";
 
@@ -165,7 +209,7 @@ class Reporting
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT a.*, b.group_id, b.model_id, b.dies_no, c.loss_time_p, d.loss_time, e.tot_ng, 
-        COALESCE(f.ril, 0) as ril, g.rol1, h.rol2, i.rol3, j.rol4, k.rol5, l.rol6, m.rol7, n.rol8, o.rol9, p.rol10
+        COALESCE(f.ng_qty, 0) as ril, coalesce(g.ng_qty, 0) as rol1, coalesce(h.ng_qty, 0) as rol2, coalesce(i.ng_qty, 0) as rol3, coalesce(j.ng_qty, 0) as rol4, coalesce(k.ng_qty, 0) as rol5, coalesce(l.ng_qty, 0) as rol6, coalesce(m.ng_qty, 0) as rol7, coalesce(n.ng_qty, 0) as rol8, coalesce(o.ng_qty, 0) as rol9, coalesce(p.ng_qty, 0) as rol10
                 FROM t_prd_daily_i a 
                 INNER JOIN m_dm_dies_asset b ON b.dies_id::character varying = a.dies_id
                 LEFT JOIN (
@@ -186,67 +230,67 @@ class Reporting
                     GROUP BY line_id, prd_dt, shift
                 ) e ON a.line_id = e.line_id AND a.prd_dt = e.prd_dt AND a.shift = e.shift
                 LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as ril
+                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as ril, SUM(ng_qty) as ng_qty
                     FROM t_prd_daily_ng
                     WHERE ng_type LIKE 'RIL%'
                     GROUP BY line_id, prd_dt, shift
                 ) f ON a.line_id = f.line_id AND a.prd_dt = f.prd_dt AND a.shift = f.shift
                 LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol1
+                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol1, SUM(ng_qty) as ng_qty
                     FROM t_prd_daily_ng
                     WHERE ng_type LIKE 'ROL1'
                     GROUP BY line_id, prd_dt, shift
                 ) g ON a.line_id = g.line_id AND a.prd_dt = g.prd_dt AND a.shift = g.shift
                 LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol2
+                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol2, SUM(ng_qty) as ng_qty
                     FROM t_prd_daily_ng
                     WHERE ng_type LIKE 'ROL2'
                     GROUP BY line_id, prd_dt, shift
                 ) h ON a.line_id = h.line_id AND a.prd_dt = h.prd_dt AND a.shift = h.shift
                 LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol3
+                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol3, SUM(ng_qty) as ng_qty
                     FROM t_prd_daily_ng
                     WHERE ng_type LIKE 'ROL3'
                     GROUP BY line_id, prd_dt, shift
                 ) i ON a.line_id = i.line_id AND a.prd_dt = i.prd_dt AND a.shift = i.shift
                 LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol4
+                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol4, SUM(ng_qty) as ng_qty
                     FROM t_prd_daily_ng
                     WHERE ng_type LIKE 'ROL4'
                     GROUP BY line_id, prd_dt, shift
                 ) j ON a.line_id = j.line_id AND a.prd_dt = j.prd_dt AND a.shift = j.shift
                 LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol5
+                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol5, SUM(ng_qty) as ng_qty
                     FROM t_prd_daily_ng
                     WHERE ng_type LIKE 'ROL5'
                     GROUP BY line_id, prd_dt, shift
                 ) k ON a.line_id = k.line_id AND a.prd_dt = k.prd_dt AND a.shift = k.shift
                 LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol6
+                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol6, SUM(ng_qty) as ng_qty
                     FROM t_prd_daily_ng
                     WHERE ng_type LIKE 'ROL6'
                     GROUP BY line_id, prd_dt, shift
                 ) l ON a.line_id = l.line_id AND a.prd_dt = l.prd_dt AND a.shift = l.shift
                 LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol7
+                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol7, SUM(ng_qty) as ng_qty
                     FROM t_prd_daily_ng
                     WHERE ng_type LIKE 'ROL7'
                     GROUP BY line_id, prd_dt, shift
                 ) m ON a.line_id = m.line_id AND a.prd_dt = m.prd_dt AND a.shift = m.shift
                 LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol8
+                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol8, SUM(ng_qty) as ng_qty
                     FROM t_prd_daily_ng
                     WHERE ng_type LIKE 'ROL8'
                     GROUP BY line_id, prd_dt, shift
                 ) n ON a.line_id = n.line_id AND a.prd_dt = n.prd_dt AND a.shift = n.shift
                 LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol9
+                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol9, SUM(ng_qty) as ng_qty
                     FROM t_prd_daily_ng
                     WHERE ng_type LIKE 'ROL9'
                     GROUP BY line_id, prd_dt, shift
                 ) o ON a.line_id = o.line_id AND a.prd_dt = o.prd_dt AND a.shift = o.shift
                 LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol10
+                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol10, SUM(ng_qty) as ng_qty
                     FROM t_prd_daily_ng
                     WHERE ng_type LIKE 'ROL10'
                     GROUP BY line_id, prd_dt, shift
