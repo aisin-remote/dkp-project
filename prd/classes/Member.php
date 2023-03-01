@@ -7,7 +7,7 @@ class Member
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT * FROM m_prd_operator WHERE empid = :id";
+    $sql = "SELECT * FROM m_prd_operator WHERE empid = :id AND app_id = '" . APP . "' ";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":id", strtoupper($id), PDO::PARAM_STR);
     if ($stmt->execute()) {
@@ -26,7 +26,7 @@ class Member
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.pval2 as role_name FROM m_prd_operator a "
       . "LEFT JOIN m_param b ON b.pid = 'OPR_ROLE' and b.pval1 = a.role1 "
-      . "WHERE 1=1 ";
+      . "WHERE a.app_id = '" . APP . "' ";
     if (!empty($role)) {
       $sql .= " AND a.role1 = '$role' ";
     }
@@ -78,8 +78,8 @@ class Member
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO m_prd_operator (empid, name1, role1, stats) "
-        . "values (:empid, :name1, :role1, 'A') ";
+      $sql = "INSERT INTO m_prd_operator (empid, name1, role1, stats, app_id) "
+        . "values (:empid, :name1, :role1, 'A', '" . APP . "') ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":empid", strtoupper(trim($param["empid"])), PDO::PARAM_STR);
       $stmt->bindValue(":name1", $param["name1"], PDO::PARAM_STR);
@@ -108,7 +108,7 @@ class Member
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
       $sql = "UPDATE m_prd_operator SET empid = :empid, name1 = :name1, role1 = :role1 "
-        . "WHERE empid = :empid";
+        . "WHERE empid = :empid AND app_id = '" . APP . "' ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":empid", strtoupper($param["empid"]), PDO::PARAM_STR);
       $stmt->bindValue(":name1", $param["name1"], PDO::PARAM_STR);
@@ -138,7 +138,7 @@ class Member
       . "WHEN stats = 'I' THEN 'A' "
       . "ELSE stats "
       . "END) "
-      . "WHERE empid IN('$extract_id')";
+      . "WHERE empid IN('$extract_id') AND app_id = '" . APP . "' ";
 
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
@@ -158,7 +158,7 @@ class Member
   {
     $return = false;
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT count(*) as cnt FROM m_prd_operator WHERE UPPER(empid) = :id";
+    $sql = "SELECT count(*) as cnt FROM m_prd_operator WHERE UPPER(empid) = :id AND app_id = '" . APP . "' ";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":id", strtoupper($usrid), PDO::PARAM_STR);
     $count = 0;

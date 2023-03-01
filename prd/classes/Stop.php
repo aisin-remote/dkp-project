@@ -1,11 +1,13 @@
 <?php
 
-class Stop {
+class Stop
+{
 
-  public function getById($id) {
+  public function getById($id)
+  {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT * FROM m_prd_stop_reason_action WHERE srna_id = :id";
+    $sql = "SELECT * FROM m_prd_stop_reason_action WHERE srna_id = :id AND app_id = '" . APP . "' ";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":id", strtoupper($id), PDO::PARAM_STR);
     if ($stmt->execute()) {
@@ -18,20 +20,21 @@ class Stop {
     return $return;
   }
 
-  public function getList($type = null, $type2 = null) {
+  public function getList($type = null, $type2 = null)
+  {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.pval2 as type1_text, c.pval2 as type2_text FROM m_prd_stop_reason_action a "
-            . "LEFT JOIN m_param b ON b.pval1 = a.type1 AND b.pid = 'SRNA_TYPE' "
-            . "LEFT JOIN m_param c ON c.pval1 = a.type2 AND c.pid = 'SRNA_TYPE2' "
-            . "WHERE 1=1 ";
-    if(!empty($type)) {
+      . "LEFT JOIN m_param b ON b.pval1 = a.type1 AND b.pid = 'SRNA_TYPE' "
+      . "LEFT JOIN m_param c ON c.pval1 = a.type2 AND c.pid = 'SRNA_TYPE2' "
+      . "WHERE a.app_id = '" . APP . "' ";
+    if (!empty($type)) {
       $sql .= " AND a.type1 = '$type' ";
     }
-    if(!empty($type2)) {
+    if (!empty($type2)) {
       $sql .= " AND a.type2 = '$type2' ";
     }
-    $sql .= " ORDER by srna_id ASC ";
+    $sql .= " ORDER by a.srna_id ASC ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -43,29 +46,12 @@ class Stop {
     return $return;
   }
 
-  public function getListType() {
+  public function getListType()
+  {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT pval1 as type, pval2 as name1 FROM m_param "
-            . "WHERE pid = 'SRNA_TYPE' ";
-
-    $sql .= " ORDER by seq ASC ";
-    $stmt = $conn->prepare($sql);
-    if ($stmt->execute()) {
-      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $return[] = $row;
-      }
-    }
-    $stmt = null;
-    $conn = null;
-    return $return;
-  }
-  
-  public function getListType2() {
-    $return = array();
-    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT pval1 as type, pval2 as name1 FROM m_param "
-            . "WHERE pid = 'SRNA_TYPE2' ";
+      . "WHERE pid = 'SRNA_TYPE' ";
 
     $sql .= " ORDER by seq ASC ";
     $stmt = $conn->prepare($sql);
@@ -79,15 +65,35 @@ class Stop {
     return $return;
   }
 
-  public function insert($param = array()) {
+  public function getListType2()
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT pval1 as type, pval2 as name1 FROM m_param "
+      . "WHERE pid = 'SRNA_TYPE2' ";
+
+    $sql .= " ORDER by seq ASC ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function insert($param = array())
+  {
     $return = array();
     if (empty($param)) {
       $return["status"] = false;
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO m_prd_stop_reason_action (srna_id, type1, type2, name1) "
-              . "values (:srna_id, :type1, :type2, :name1) ";
+      $sql = "INSERT INTO m_prd_stop_reason_action (srna_id, type1, type2, name1, app_id) "
+        . "values (:srna_id, :type1, :type2, :name1, '" . APP . "') ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":srna_id", strtoupper(trim($param["srna_id"])), PDO::PARAM_STR);
       $stmt->bindValue(":type1", $param["type1"], PDO::PARAM_STR);
@@ -114,15 +120,16 @@ class Stop {
     return $return;
   }
 
-  public function update($param = array()) {
+  public function update($param = array())
+  {
     $return = array();
     if (empty($param)) {
       $return["status"] = false;
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "UPDATE m_prd_stop_reason_action SET type1 = :type1, type2 = :type2, name1 = :name1 "
-              . "WHERE srna_id = :srna_id";
+      $sql = "UPDATE m_prd_stop_reason_action SET type1 = :type1, type2 = :type2, name1 = :name1, app_id = '" . APP . "' "
+        . "WHERE srna_id = :srna_id AND app_id = '" . APP . "'";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":srna_id", $param["srna_id"], PDO::PARAM_STR);
       $stmt->bindValue(":type1", $param["type1"], PDO::PARAM_STR);
@@ -148,11 +155,12 @@ class Stop {
     }
     return $return;
   }
-  
-  public function getPlannedStopByShift($shift_id) {
+
+  public function getPlannedStopByShift($shift_id)
+  {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT * FROM m_prd_shift_stop WHERE shift_id = '$shift_id' ";
+    $sql = "SELECT * FROM m_prd_shift_stop WHERE shift_id = '$shift_id' AND app_id = '" . APP . "' ";
 
     $sql .= " ORDER BY shift_id ASC, time_id ASC, srna_id ASC  ";
     $stmt = $conn->prepare($sql);

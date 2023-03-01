@@ -6,7 +6,7 @@ class ContentStopShift
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT DISTINCT shift_id FROM m_prd_shift "
+        $sql = "SELECT DISTINCT shift_id FROM m_prd_shift WHERE app_id = '" . APP . "' "
             . "ORDER BY shift_id ASC ";
 
         // echo $sql;
@@ -27,7 +27,7 @@ class ContentStopShift
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT srna_id, name1 FROM m_prd_stop_reason_action "
-            . "WHERE type1 = 'S' "
+            . "WHERE type1 = 'S' AND app_id = '" . APP . "' "
             . "ORDER BY srna_id ASC ";
 
         // echo $sql;
@@ -52,7 +52,9 @@ class ContentStopShift
         $sql = "SELECT * FROM m_prd_shift ";
 
         if (!empty($shift)) {
-            $sql .= " WHERE shift_id = '$shift' ";
+            $sql .= " WHERE shift_id = '$shift' AND app_id = '" . APP . "' ";
+        } else {
+            $sql .= " WHERE app_id = '" . APP . "' ";
         }
 
         $sql .= " ORDER BY CAST(time_id AS INTEGER) ASC ";
@@ -74,8 +76,11 @@ class ContentStopShift
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, (select name1 from m_prd_stop_reason_action where srna_id = a.srna_id) as srna_name, (select time_start from m_prd_shift where shift_id = a.shift_id and time_id = a.time_id) as start1, (select time_end from m_prd_shift where shift_id = a.shift_id and time_id = a.time_id) as end1 "
+        $sql = "SELECT a.*, b.name1 as srna_name, c.time_Start as start1, c.time_end as end1 "
             . "FROM m_prd_shift_stop a "
+            . "LEFT JOIN m_prd_stop_reason_action b ON a.srna_id = b.srna_id "
+            . "LEFT JOIN m_prd_shift c ON a.shift_id = c.shift_id and a.time_id = c.time_id "
+            . "WHERE a.app_id = '" . APP . "'  "
             . "ORDER BY a.shift_id ASC, a.srna_id ASC, a.time_id ASC ";
 
         // echo $sql;
@@ -95,7 +100,7 @@ class ContentStopShift
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT * FROM m_prd_shift_stop WHERE shift_id = '$id' AND time_id = '$id2' AND srna_id = '$id3' ";
+        $sql = "SELECT * FROM m_prd_shift_stop WHERE shift_id = '$id' AND time_id = '$id2' AND srna_id = '$id3' AND app_id = '" . APP . "' ";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(":id", strtoupper($id), PDO::PARAM_STR);
         if ($stmt->execute()) {
@@ -118,8 +123,8 @@ class ContentStopShift
             $return["message"] = "Data Empty";
         } else {
             $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-            $sql = "INSERT INTO m_prd_shift_stop (shift_id, srna_id, time_id, start_time, end_time, stop_time ) "
-                . "values (:shift_id, :srna_id, :time_id, :start_time, :end_time, '" . $param["stop_time"] . "' )";
+            $sql = "INSERT INTO m_prd_shift_stop (shift_id, srna_id, time_id, start_time, end_time, stop_time, app_id ) "
+                . "values (:shift_id, :srna_id, :time_id, :start_time, :end_time, '" . $param["stop_time"] . "', '" . APP . "' )";
 
             // echo $sql;
             // die();
@@ -169,7 +174,7 @@ class ContentStopShift
         } else {
             $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
             $sql = "UPDATE m_prd_shift_stop SET shift_id = :shift_id, srna_id = :srna_id, time_id = :time_id, start_time = :start_time, end_time = :end_time, stop_time = '" . $param["stop_time"] . "' "
-                . "WHERE shift_id = :shift_id AND srna_id = :srna_id AND time_id = :time_id ";
+                . "WHERE shift_id = :shift_id AND srna_id = :srna_id AND time_id = :time_id AND app_id = '" . APP . "' ";
 
             $stmt = $conn->prepare($sql);
             $stmt->bindValue(":id", $param["id"], PDO::PARAM_STR);
