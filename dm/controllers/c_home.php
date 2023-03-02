@@ -4,10 +4,12 @@ if ($action == "home") {
   $template["menu"] = "Dashboard";
   $dies = new Dies();
   $class = new Home();
+  $zona = new Zona();
   $data_group = $dies->getDiesGroup();
   $data_dies = $dies->getListDies(null, 'A');
   $data_model = $class->getDiesModel();
   $dies_prod = $dies->getDiesProd1();
+  $list_zona = $zona->getList();
 
   if (!empty($data_dies)) {
     $i = 0;

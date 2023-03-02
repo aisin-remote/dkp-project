@@ -131,6 +131,21 @@ and open the template in the editor.
                     </div>
 
                     <div class="form-group row">
+                      <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Dies Position</label>
+                      <div class="col-lg-6 col-md-5 col-sm-12">
+                        <select name="zona_id" id="dies_id" class="form-control select2">
+                        <?php
+                          foreach ($list_zona as $zona) {
+                              ?>
+                              <option value="<?php echo $zona["zona_id"]; ?>"><?php echo $zona["desc"]; ?></option>
+                              <?php
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
                       <div class="col-lg-4 col-md-3 col-sm-12 d-sm-none d-md-block"></div>
                       <div class="col-lg-5 col-md-5 col-sm-12">
                         <button type="submit" name="save" id="submit-btn" value="save" class="btn btn-dark-blue"><span class="material-icons">save</span> Save</button>

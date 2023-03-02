@@ -40,7 +40,7 @@ if ($action == "r_checksheet_preventive") {
     }
   } else {
 
-    $data["list"] = $class->getListChecksheet($date_from, $date_to, $pmtid, $group_id, $model_id, $dies_no, $pmtype, $pmstat);
+    $data["list"] = $class->getListChecksheet($date_from, $date_to, $pmtid, $group_id, $model_id, $dies_no, $pmtype, 'C');
     require(TEMPLATE_PATH . "/t_rep_checksheet.php");
   }
 }

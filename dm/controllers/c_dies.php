@@ -4,6 +4,7 @@ if ($action == "dies") {
   $template["menu"] = "Dies";
   $data["list"];
   $class = new Dies();
+  $zona = new Zona();
 
   if (isset($_POST["chg_status"])) {
     $all_id = $_POST["chk_id"];
@@ -113,6 +114,7 @@ if ($action == "dies") {
         $data["data"] = $class->getDiesById($id);
         $model_list = $class->getDiesModel(null, $data["data"]["group_id"]);
       }
+      $list_zona = $zona->getList();
       require(TEMPLATE_PATH . "/t_dies_edit.php");
     }
   } else {

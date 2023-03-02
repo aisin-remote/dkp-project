@@ -5,6 +5,7 @@ if ($action == "checksheet_preventive") {
   $data["list"];
   $dies = new Dies();
   $class = new Checksheet();
+  $zona = new Zona();
 
   if (isset($_GET["id"])) {
     $id = $_GET["id"];
@@ -68,7 +69,7 @@ if ($action == "checksheet_preventive") {
         if (isset($_GET["dies_id"])) {
           $dies_id = $_GET["dies_id"];
         }
-
+        $list_zona = $zona->getList();
         require(TEMPLATE_PATH . "/t_checksheet_step1.php");
       }
     } elseif ($step == "2") {
@@ -438,7 +439,7 @@ if ($action == "checksheet_preventive") {
       } else {
         $template["submenu"] = $id;
         $data["data"] = $class->getChecksheetById($id);
-
+        $list_zona = $zona->getList();
         require(TEMPLATE_PATH . "/t_checksheet_step2.php");
       }
     }
