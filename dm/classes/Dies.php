@@ -298,8 +298,8 @@ class Dies
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO m_dm_dies_asset (dies_no, model_id, group_id, name1, ctsec, ewstk, img01, stktot, stkrun, stk2k, stk2k_stat, stk6k, stk6k_stat, stats) "
-        . "values (:dies_no, :model_id, :group_id, :name1, :ctsec, :ewstk, :img01, '0', '0', '0','N','0','N', 'A') ";
+      $sql = "INSERT INTO m_dm_dies_asset (dies_no, model_id, group_id, name1, ctsec, ewstk, img01, stktot, stkrun, stk2k, stk2k_stat, stk6k, stk6k_stat, stats, zona_id) "
+        . "values (:dies_no, :model_id, :group_id, :name1, :ctsec, :ewstk, :img01, '0', '0', '0','N','0','N', 'A', :zona) ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":dies_no", $param["dies_no"], PDO::PARAM_STR);
       $stmt->bindValue(":model_id", $param["model_id"], PDO::PARAM_STR);
@@ -309,6 +309,7 @@ class Dies
       $stmt->bindValue(":ewstk", $param["ewstk"], PDO::PARAM_STR);
       $stmt->bindValue(":img01", $param["img01"], PDO::PARAM_STR);
       $stmt->bindValue(":stktot", $param["stktot"], PDO::PARAM_STR);
+      $stmt->bindValue(":zona", $param["zona_id"], PDO::PARAM_STR);
 
       if ($stmt->execute()) {
         $return["status"] = true;
@@ -332,7 +333,7 @@ class Dies
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "UPDATE m_dm_dies_asset SET dies_no = :dies_no, model_id = :model_id, group_id = :group_id, name1 = :name1, ctsec = :ctsec, ewstk = :ewstk, img01 = :img01 "
+      $sql = "UPDATE m_dm_dies_asset SET dies_no = :dies_no, model_id = :model_id, group_id = :group_id, name1 = :name1, ctsec = :ctsec, ewstk = :ewstk, img01 = :img01, zona_id = :zona_id "
         . "WHERE dies_id = :dies_id AND group_id = :group_id AND model_id = :model_id ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":dies_id", $param["dies_id"], PDO::PARAM_STR);
@@ -343,6 +344,7 @@ class Dies
       $stmt->bindValue(":ctsec", $param["ctsec"], PDO::PARAM_STR);
       $stmt->bindValue(":ewstk", $param["ewstk"], PDO::PARAM_STR);
       $stmt->bindValue(":img01", $param["img01"], PDO::PARAM_STR);
+      $stmt->bindValue(":zona_id", $param["zona_id"], PDO::PARAM_STR);
 
       if ($stmt->execute()) {
         $return["status"] = true;

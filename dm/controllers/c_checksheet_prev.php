@@ -428,8 +428,10 @@ if ($action == "checksheet_preventive") {
             $dies->updateDiesGStat($param["dies_id"], "N");
           }
         }
+        $zona_id = $_POST["zona_id"];
+        // echo $zona_id;
         // die();
-        $save = $class->updateChecksheet($param);
+        $save = $class->updateChecksheet($param, $zona_id);
 
         if ($save["status"] == true) {
           header("Location: ?action=" . $action . "&success=Data%20Saved");

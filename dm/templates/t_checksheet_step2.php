@@ -103,14 +103,22 @@ and open the template in the editor.
                         <tr>
                           <td class="align-middle px-3 table-item">Dies Position</td>
                           <td class="align-middle px-3 table-item">
-                            <select name="zona_id" id="dies_id" class="form-control select2" disabled>
+                            <select name="zona_id" id="zona_id" class="form-control select2" disabled>
                             <?php
                             foreach ($list_zona as $zona) {
-                              if ($zona["zona_type"] == "M") {
-
+                              if ($zona["zona_id"] == $data["data"]["zona_id"]) {
                                 ?>
-                                  <option value="<?php echo $zona["zona_id"]; ?>"><?php echo $zona["desc"]; ?></option>
+                                    <!-- <option value="<?php echo $zona["zona_id"]; ?>" <?php if ($zona["zona_id"] == $data["data"]["zona_id"]) {
+                                         echo "selected";
+                                       } ?>><?php echo $zona["desc"]; ?></option> -->
+                                      <option value="<?php echo $zona["zona_id"]; ?>" selected><?php echo $zona["desc"]; ?></option>
+                                <?php
+                              } else {
+                                if ($zona["zona_type"] == "P") {
+                                  ?>
+                                      <option value="<?php echo $zona["zona_id"]; ?>"><?php echo $zona["desc"]; ?></option>
                                   <?php
+                                }
                               }
                             }
                             ?>

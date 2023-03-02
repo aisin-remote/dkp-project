@@ -36,7 +36,7 @@ class Checksheet
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT e.group_id, e.model_id, e.dies_no, a.*, TO_CHAR(a.pmtdt, 'DD-MM-YYYY') as pmt_date, b.name1 as pmtby_name, c.pval2 as pm_type "
+    $sql = "SELECT e.group_id, e.model_id, e.dies_no, e.zona_id, a.*, TO_CHAR(a.pmtdt, 'DD-MM-YYYY') as pmt_date, b.name1 as pmtby_name, c.pval2 as pm_type "
       . "FROM t_dm_cs_h a "
       . "INNER JOIN m_user b ON b.usrid = a.pmtby "
       . "INNER JOIN m_param c ON c.pid = 'PM_TYPE' and c.pval1 = a.pmtype "
@@ -81,7 +81,9 @@ class Checksheet
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
       $sql = "INSERT INTO t_dm_cs_h (pmtid, pmtdt, pmtstk, pmtype, dies_id, pmtby) "
         . "values (:pmtid, :pmtdt, (SELECT stkrun FROM m_dm_dies_asset WHERE dies_id = :dies_id), :pmtype, :dies_id, :pmtby) ";
+      $sql2 = "UPDATE m_dm_dies_asset SET zona_id = '".$param["zona_id"]."' WHERE dies_id = ".$param["dies_id"]." AND stats = 'A'";
       $stmt = $conn->prepare($sql);
+      $stmt2 = $conn->prepare($sql2);
       $stmt->bindValue(":pmtid", $param["pmtid"], PDO::PARAM_STR);
       $stmt->bindValue(":pmtdt", $param["pmtdt"], PDO::PARAM_STR);
       $stmt->bindValue(":model_id", $param["model_id"], PDO::PARAM_STR);
@@ -89,7 +91,7 @@ class Checksheet
       $stmt->bindValue(":pmtby", $param["pmtby"], PDO::PARAM_STR);
       $stmt->bindValue(":pmtype", $param["pmtype"], PDO::PARAM_STR);
 
-      if ($stmt->execute()) {
+      if ($stmt->execute() && $stmt2->execute()) {
         $return["status"] = true;
       } else {
         $error = $stmt->errorInfo();
@@ -113,7 +115,7 @@ class Checksheet
     }
   }
 
-  public function updateChecksheet($param = array())
+  public function updateChecksheet($param = array(), $zona_id)
   {
     $return = array();
     if (empty($param)) {
@@ -200,7 +202,9 @@ class Checksheet
         $sql .= ",cdate = CURRENT_TIMESTAMP ";
       }
       $sql .= "WHERE pmtid = :pmtid ";
+      $sql2 = "UPDATE m_dm_dies_asset SET zona_id = '".$zona_id."' WHERE dies_id = ".$param["dies_id"]." AND stats = 'A'";
       $stmt = $conn->prepare($sql);
+      $stmt2 = $conn->prepare($sql2);
       $stmt->bindValue(":pmtid", strtoupper(trim($param["pmtid"])), PDO::PARAM_STR);
       $stmt->bindValue(":c11100", $param["c11100"], PDO::PARAM_STR); //gambar
       $stmt->bindValue(":c11110", $param["c11110"], PDO::PARAM_STR);
@@ -277,7 +281,7 @@ class Checksheet
       $stmt->bindValue(":c11924", $param["c11924"], PDO::PARAM_STR);
       $stmt->bindValue(":pmstat", $param["pmstat"], PDO::PARAM_STR);
 
-      if ($stmt->execute()) {
+      if ($stmt->execute() && $stmt2->execute()) {
         $return["status"] = true;
         if ($param["pmstat"] == "C") {
           $this->resetStroke($param["dies_id"], $param["pmtype"]);

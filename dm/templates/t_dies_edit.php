@@ -137,7 +137,7 @@ and open the template in the editor.
                         <?php
                           foreach ($list_zona as $zona) {
                               ?>
-                              <option value="<?php echo $zona["zona_id"]; ?>"><?php echo $zona["desc"]; ?></option>
+                              <option value="<?php echo $zona["zona_id"]; ?>" <?php if ($zona["zona_id"] == $data["data"]["zona_id"]) {echo "selected";} ?>><?php echo $zona["desc"]; ?></option>
                               <?php
                           }
                           ?>
