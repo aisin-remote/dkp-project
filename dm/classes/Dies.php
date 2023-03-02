@@ -217,7 +217,7 @@ class Dies
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.dies_id, a.dies_no, a.model_id, a.group_id, a.name1, a.stktot, a.stkrun, a.stats, a.stk6k, a.ewstk, a.gstat, a.iostat FROM m_dm_dies_asset a "
+    $sql = "SELECT a.dies_id, a.dies_no, a.model_id, a.group_id, a.name1, a.stktot, a.stkrun, a.stats, a.stk6k, a.ewstk, a.gstat, a.iostat, a.zona_id FROM m_dm_dies_asset a "
       . "INNER JOIN m_dm_dies_model b ON b.model_id = a.model_id AND b.group_id = a.group_id "
       . "WHERE 1=1 ";
     if (!empty($line)) {

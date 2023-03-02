@@ -20,10 +20,12 @@ and open the template in the editor.
         <div class="container-fluid mt-2" id="fs">
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                aria-selected="true">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+              <a class="nav-link" id="mapping-tab" data-toggle="tab" href="#mapping" role="tab" aria-controls="mapping"
+                aria-selected="false">Mapping</a>
             </li>
           </ul>
           <div class="tab-content" id="myTabContent">
@@ -32,7 +34,8 @@ and open the template in the editor.
                 <div class="card-body">
                   <div class="row">
                     <div class="col-3">
-                      <a id="logo" class="navbar-brand mb-3" href=".."><img src="media/images/logo.svg" height="30" alt="logo" /></a>
+                      <a id="logo" class="navbar-brand mb-3" href=".."><img src="media/images/logo.svg" height="30"
+                          alt="logo" /></a>
                     </div>
                     <div class="col-6">
                       <div id="title" class="text-ega-blue text-center">
@@ -41,7 +44,8 @@ and open the template in the editor.
                     </div>
                     <div class="col-3">
                       <div class="d-flex justify-content-end">
-                        <button id="close-fs" type="button" class="btn btn-link" onclick="closeFullscreen()"><i class="material-icons">fullscreen_exit</i></button>
+                        <button id="close-fs" type="button" class="btn btn-link" onclick="closeFullscreen()"><i
+                            class="material-icons">fullscreen_exit</i></button>
                       </div>
                     </div>
                   </div>
@@ -129,42 +133,40 @@ and open the template in the editor.
                 </div>
               </div>
             </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="tab-pane fade" id="mapping" role="tabpanel" aria-labelledby="mapping-tab">
               <div class="card mb-3 border-top-0">
                 <div class="card-body">
                   <div class="d-flex justify-content-center mt-1">
-                    <div class="row">
-                      <?php
+                      <div class="row" id="mappingDashboard"></div>
+
+                      <!-- <?php
                       foreach ($list_zona as $list) {
                         if ($list["zona_type"] == "P") {
                           echo "<div class='col-3'>"
-                            . "<div class='card ".$list["bg"]."' style='width: 300px'>"
+                            . "<div class='card " . $list["bg"] . "' style='width: 300px'>"
                             . "<div class='card-body'>"
                             . "<div class='card-title'>" . $list["desc"] . "</div>"
-                            . "<div id='".$list["zona_id"]."'></div>"
+                            . "<div id='" . $list["zona_id"] . "'></div>"
                             . "</div>"
                             . "</div>"
                             . "</div>";
                         }
                       }
-                      ?>
-                    </div>
-                    <!-- <div class="card" style="width: 300px">
-                      <div class="card-body">
-                        <div class="card-title">Parking Area DC5</div>
-                      </div>
-                    </div> -->
+                      ?> -->
                   </div>
-                  <div class="d-flex justify-content-center mt-1">
+                  <!-- <div class="d-flex justify-content-center mt-1">
                     <div class="row">
                       <?php
                       foreach ($list_zona as $list) {
                         if ($list["zona_type"] == "M") {
                           echo "<div class='col-3'>"
-                            . "<div class='card ".$list["bg"]."' style='width: 300px'>"
+                            . "<div class='card " . $list["bg"] . "' style='width: 300px'>"
                             . "<div class='card-body'>"
                             . "<div class='card-title'>" . $list["desc"] . "</div>"
-                            . "<div id='".$list["zona_id"]."'></div>"
+                            . "<div class='d-flex'>"
+                            . "<div class='row' id='" . $list["zona_id"] . "'>"
+                            . "</div>"
+                            . "</div>"
                             . "</div>"
                             . "</div>"
                             . "</div>";
@@ -172,91 +174,12 @@ and open the template in the editor.
                       }
                       ?>
                     </div>
-                    <!-- <div class="card" style="width: 300px">
-                      <div class="card-body">
-                        <div class="card-title">Parking Area DC5</div>
-                      </div>
-                    </div> -->
                   </div>
-                  <!-- <div class="d-flex container justify-content-center">
-                    <div>
-                      <div class="card" style="width: 300px">
-                        <div class="card-body">
-                          <div class="card-title">Parking Area TCC A</div>
-                        </div>
-                      </div>
-                      <br />
-                      <div class="card">
-                        <div class="card-body bg-success">
-                          <div class="card-title">Zone TCC A</div>
-                        </div>
-                      </div>
-                      <div class="card">
-                        <div class="card-body bg-success">
-                          <div class="card-title">Zone TCC B</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="card" style="width: 300px">
-                        <div class="card-body">
-                          <div class="card-title">Parking Area Emergency A</div>
-                        </div>
-                      </div>
-                      <br />
-                      <div class="card">
-                        <div class="card-body bg-warning">
-                          <div class="card-title">Zone Emergency A</div>
-                        </div>
-                      </div>
-                      <div class="card">
-                        <div class="card-body bg-success">
-                          <div class="card-title">Zone OPN A</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="card" style="width: 300px">
-                        <div class="card-body">
-                          <div class="card-title">Parking Area Emergency B</div>
-                        </div>
-                      </div>
-                      <br />
-                      <div class="card">
-                        <div class="card-body bg-warning">
-                          <div class="card-title">Zone Emergency B</div>
-                        </div>
-                      </div>
-                      <div class="card">
-                        <div class="card-body bg-success">
-                          <div class="card-title">Zone OPN B</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="card" style="width: 300px">
-                        <div class="card-body">
-                          <div class="card-title">Parking Area CSH B</div>
-                        </div>
-                      </div>
-                      <br />
-                      <div class="card">
-                        <div class="card-body bg-success">
-                          <div class="card-title">Zone CSH A</div>
-                        </div>
-                      </div>
-                      <div class="card">
-                        <div class="card-body bg-success">
-                          <div class="card-title">Zone CSH B</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
+                </div> -->
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </main>
       <?php include 'common/t_footer.php'; ?>
     </div>
@@ -266,15 +189,16 @@ and open the template in the editor.
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
     setInterval(updateDashboard, 5000);
+    setInterval(mapping, 3000);
 
-    $(document).ready(function() {
+    $(document).ready(function () {
       // closeFullscreen();
     });
 
     function updateDashboard() {
       $.getJSON(
         "?action=api_dashboard_dm", {},
-        function(data) {
+        function (data) {
           var data_dies = data.data_dies;
           var data_group = data.data_group;
           var data_model = data.data_model
@@ -282,13 +206,13 @@ and open the template in the editor.
           var append_data = "";
           if (data_group.length !== 0) {
             var i = 0;
-            $.each(data_group, function(row, grp) {
+            $.each(data_group, function (row, grp) {
               append_data += "<div class='col-lg-4 col-md-6 col-sm-12 px-1'><div class='card'>";
               append_data += "<div class='card-header text-center'><h4 class='card-title mb-0 text-uli-blue font-weight-bold'>" + data_group[i].pval1 + "</h4></div>";
               append_data += "<div class='card-body p-1 rounded'><div class='container-fluid'>";
               if (data_model.length !== 0) {
                 var j = 0;
-                $.each(data_model, function(row, mdl) {
+                $.each(data_model, function (row, mdl) {
                   if (data_model[j].group_id == data_group[i].pval1) {
                     append_data += "<div class='row mb-1'>";
                     append_data += "<div class='col-lg-3 p-1'>";
@@ -301,7 +225,7 @@ and open the template in the editor.
                     append_data += "<div class='col-lg-9 p-1'><div class='container-fluid'>";
                     append_data += "<div class='row'>";
                     var x = 0;
-                    $.each(data_dies, function(row, dies) {
+                    $.each(data_dies, function (row, dies) {
                       if (data_dies[x].group_id == data_model[j].group_id && data_dies[x].model_id == data_model[j].model_id) {
                         // console.log(data_dies[x].bg_color);
                         append_data += "<div class='col-lg-3 p-0'>";
@@ -332,6 +256,46 @@ and open the template in the editor.
       );
     }
 
+    function mapping() {
+      $.getJSON("?action=api_mapping_dm", {},
+        function (data) {
+          var dies = data.data_dies
+          var zona = data.data_zona
+          var model = data.data_model
+
+          var append_data = ""
+
+          if (zona.length != 0) {
+            $.each(zona, function (row, z) {
+              append_data += "<div class='col-3'>";
+              append_data += "<div class='card "+z.bg+"' style='width: 300px; height: 250px'>";
+              append_data += "<div class='card-body'>";
+              append_data += "<div class='card-title font-weight-bold'>" + z.desc + "</div>";
+              append_data += "<div class='d-flex justify-content-end'>";
+              append_data += "<div class='row'>";
+              if (dies.length != 0) {
+                $.each(dies, function (row, d) {
+                  if (d.zona_id == z.zona_id) {
+                    // if (dies[j].model_id == model[j].model_id) {
+                    //   var color = model[j].colour
+                    // }
+                    append_data += "<div class='col'>";
+                    append_data += "<div class='card' style='background-color: '>";
+                    append_data += "<a id='dies_data' class='card-body border border-secondary rounded p-1'>";
+                    append_data += "<h6 class='card-title text-center mb-0 text-dark font-weight-bold'>" + d.dies_no + "</h6>"
+                    append_data += "</a>";
+                    append_data += "</div></div>";
+                  }
+                })
+              }
+              append_data += "</div></div></div></div></div>";
+            })
+            $("#mappingDashboard").html(append_data);
+          }
+        }
+      )
+    }
+
     var elem = document.getElementById("fs");
 
     function fullscreen() {
@@ -358,7 +322,7 @@ and open the template in the editor.
     closefs.style.display = 'none';
 
     // $("#fs-btn").click(fullscreen);
-    $("#fs-btn").click(function() {
+    $("#fs-btn").click(function () {
       fullscreen();
       var div = document.querySelector('#title');
       var logo = document.querySelector('#logo');
@@ -380,7 +344,7 @@ and open the template in the editor.
       }
     }
 
-    $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function(e) {
+    $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function (e) {
       var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
       var event = state ? 'FullscreenOn' : 'FullscreenOff';
 
