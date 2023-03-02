@@ -18,102 +18,240 @@ and open the template in the editor.
     <div id="layoutSidenav_content">
       <main>
         <div class="container-fluid mt-2" id="fs">
-          <div class="card mb-3">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-3">
-                  <a id="logo" class="navbar-brand mb-3" href=".."><img src="media/images/logo.svg" height="30" alt="logo" /></a>
-                </div>
-                <div class="col-6">
-                  <div id="title" class="text-ega-blue text-center">
-                    <h4 class='mb-3' style="font-weight: 700; ">DASHBOARD DIES MAINTENANCE</h4>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <div class="card mb-3 border-top-0">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-3">
+                      <a id="logo" class="navbar-brand mb-3" href=".."><img src="media/images/logo.svg" height="30" alt="logo" /></a>
+                    </div>
+                    <div class="col-6">
+                      <div id="title" class="text-ega-blue text-center">
+                        <h4 class='mb-3' style="font-weight: 700; ">DASHBOARD DIES MAINTENANCE</h4>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="d-flex justify-content-end">
+                        <button id="close-fs" type="button" class="btn btn-link" onclick="closeFullscreen()"><i class="material-icons">fullscreen_exit</i></button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-3">
-                  <div class="d-flex justify-content-end">
-                    <button id="close-fs" type="button" class="btn btn-link" onclick="closeFullscreen()"><i class="material-icons">fullscreen_exit</i></button>
-                  </div>
-                </div>
-              </div>
-              <div class="row" id="dashboard">
-                <?php
-                if (!empty($data_group)) {
-                  foreach ($data_group as $grp) {
-                    echo "<div class='col-lg-4 col-md-6 col-sm-12 px-1'><div class='card'>"
-                      . "<div class='card-header text-center'><h4 class='card-title mb-0 text-uli-blue font-weight-bold'>" . $grp["pval2"] . "</h4></div>"
-                      . "<div class='card-body p-1 rounded'><div class='container-fluid'>";
-                    if (!empty($data_model)) {
-                      foreach ($data_model as $mdl) {
-                        if ($mdl["group_id"] == $grp["pval1"]) {
-                          echo "<div class='row mb-1'>"
-                            . "<div class='col-lg-3 p-1'>"
-                            . "<div class='card'>"
-                            . "<div class='px-2 py-2 card-body rounded border border-secondary rounded' style=' background-color: " . $mdl["colour"] . "; '>"
-                            . "<h4 class='card-title text-center mb-0 font-weight-bold " . $mdl["font_colour"] . "'>" . $mdl["model_id"] . "</h4>"
-                            . "</div>"
-                            . "</div>"
-                            . "</div>";
-                          echo "<div class='col-lg-9 p-1'><div class='container-fluid'>"
-                            . "<div class='row'>";
-                          foreach ($data_dies as $dies) {
-                            if ($dies["group_id"] == $mdl["group_id"] && $dies["model_id"] == $mdl["model_id"]) {
-
-                              echo "<div class='col-lg-3 p-0'>"
+                  <div class="row" id="dashboard">
+                    <?php
+                    if (!empty($data_group)) {
+                      foreach ($data_group as $grp) {
+                        echo "<div class='col-lg-4 col-md-6 col-sm-12 px-1'><div class='card'>"
+                          . "<div class='card-header text-center'><h4 class='card-title mb-0 text-uli-blue font-weight-bold'>" . $grp["pval2"] . "</h4></div>"
+                          . "<div class='card-body p-1 rounded'><div class='container-fluid'>";
+                        if (!empty($data_model)) {
+                          foreach ($data_model as $mdl) {
+                            if ($mdl["group_id"] == $grp["pval1"]) {
+                              echo "<div class='row mb-1'>"
+                                . "<div class='col-lg-3 p-1'>"
                                 . "<div class='card'>"
-                                . "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" . $dies["group_id"] . "&model_id=" . $dies["model_id"] . "&dies_id=" . $dies["dies_id"] . "' class='card-body border border-secondary rounded p-1  " . $dies["bg_color"] . "'>"
-                                . "<h4 class='card-title text-center mb-0 text-dark font-weight-bold'>" . $dies["dies_no"] . "</h4>"
-                                . "<p class='m-0 text-center text-dark small text-nowrap font-weight-bold' >Stroke</p>"
-                                . "<p class='m-0 text-dark small text-nowrap font-weight-bold '>" . str_pad("Prev", 6, " ", STR_PAD_RIGHT) . "<span>:" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span></p>"
-                                . "<p class='m-0 text-dark small text-nowrap font-weight-bold '>" . str_pad("Act", 6, " ", STR_PAD_RIGHT) . "<span>:" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</span></p>"
-                                . "</a>"
+                                . "<div class='px-2 py-2 card-body rounded border border-secondary rounded' style=' background-color: " . $mdl["colour"] . "; '>"
+                                . "<h4 class='card-title text-center mb-0 font-weight-bold " . $mdl["font_colour"] . "'>" . $mdl["model_id"] . "</h4>"
+                                . "</div>"
+                                . "</div>"
+                                . "</div>";
+                              echo "<div class='col-lg-9 p-1'><div class='container-fluid'>"
+                                . "<div class='row'>";
+                              foreach ($data_dies as $dies) {
+                                if ($dies["group_id"] == $mdl["group_id"] && $dies["model_id"] == $mdl["model_id"]) {
+
+                                  echo "<div class='col-lg-3 p-0'>"
+                                    . "<div class='card'>"
+                                    . "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" . $dies["group_id"] . "&model_id=" . $dies["model_id"] . "&dies_id=" . $dies["dies_id"] . "' class='card-body border border-secondary rounded p-1  " . $dies["bg_color"] . "'>"
+                                    . "<h4 class='card-title text-center mb-0 text-dark font-weight-bold'>" . $dies["dies_no"] . "</h4>"
+                                    . "<p class='m-0 text-center text-dark small text-nowrap font-weight-bold' >Stroke</p>"
+                                    . "<p class='m-0 text-dark small text-nowrap font-weight-bold '>" . str_pad("Prev", 6, " ", STR_PAD_RIGHT) . "<span>:" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span></p>"
+                                    . "<p class='m-0 text-dark small text-nowrap font-weight-bold '>" . str_pad("Act", 6, " ", STR_PAD_RIGHT) . "<span>:" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</span></p>"
+                                    . "</a>"
+                                    . "</div>"
+                                    . "</div>";
+                                }
+                              }
+                              echo "</div></div>"
                                 . "</div>"
                                 . "</div>";
                             }
                           }
-                          echo "</div></div>"
+                        }
+                        echo "</div></div></div></div>";
+                      }
+                    }
+                    ?>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col-lg-12 col-md-12 col-sm-12 px-1">
+                      <div class="card">
+                        <div class='card-header align-middle'>
+                          <h5 class='card-title mb-0 text-uli-blue font-weight-bold'>Legend</h5>
+                        </div>
+                        <div class="card-body p-1 ">
+                          <table class="table table-borderless table-sm mb-0">
+                            <tbody>
+                              <tr>
+                                <td style="width: 100px;" class="bg-ivory">White</td>
+                                <td>Dies stroke < 1,600</td>
+
+                                <td style="width: 100px;" class="bg-yellow">Yellow</td>
+                                <td>Dies stroke >= 1,600</td>
+
+                                <td style="width: 100px;" class="bg-danger">Red</td>
+                                <td>Dies stroke > 2,000</td>
+                              </tr>
+                              <tr>
+                                <td style="width: 100px;" class="bg-blink">Blue (Blinking)</td>
+                                <td>Dies under preventive maintenance</td>
+
+                                <td style="width: 100px;" class="bg-amber">Orange</td>
+                                <td>Dies under repair to maker</td>
+
+                                <td style="width: 100px;" class="bg-red-blink">Red (Blinking)</td>
+                                <td>Dies not yet finish preventive</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <div class="card mb-3 border-top-0">
+                <div class="card-body">
+                  <div class="d-flex justify-content-center mt-1">
+                    <div class="row">
+                      <?php
+                      foreach ($list_zona as $list) {
+                        if ($list["zona_type"] == "P") {
+                          echo "<div class='col-3'>"
+                            . "<div class='card ".$list["bg"]."' style='width: 300px'>"
+                            . "<div class='card-body'>"
+                            . "<div class='card-title'>" . $list["desc"] . "</div>"
+                            . "<div id='".$list["zona_id"]."'></div>"
+                            . "</div>"
                             . "</div>"
                             . "</div>";
                         }
                       }
-                    }
-                    echo "</div></div></div></div>";
-                  }
-                }
-                ?>
-              </div>
-              <div class="row mt-4">
-                <div class="col-lg-12 col-md-12 col-sm-12 px-1">
-                  <div class="card">
-                    <div class='card-header align-middle'>
-                      <h5 class='card-title mb-0 text-uli-blue font-weight-bold'>Legend</h5>
+                      ?>
                     </div>
-                    <div class="card-body p-1 ">
-                      <table class="table table-borderless table-sm mb-0">
-                        <tbody>
-                          <tr>
-                            <td style="width: 100px;" class="bg-ivory">White</td>
-                            <td>Dies stroke < 1,600</td>
-
-                            <td style="width: 100px;" class="bg-yellow">Yellow</td>
-                            <td>Dies stroke >= 1,600</td>
-
-                            <td style="width: 100px;" class="bg-danger">Red</td>
-                            <td>Dies stroke > 2,000</td>
-                          </tr>
-                          <tr>
-                            <td style="width: 100px;" class="bg-blink">Blue (Blinking)</td>
-                            <td>Dies under preventive maintenance</td>
-
-                            <td style="width: 100px;" class="bg-amber">Orange</td>
-                            <td>Dies under repair to maker</td>
-
-                            <td style="width: 100px;" class="bg-red-blink">Red (Blinking)</td>
-                            <td>Dies not yet finish preventive</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                    <!-- <div class="card" style="width: 300px">
+                      <div class="card-body">
+                        <div class="card-title">Parking Area DC5</div>
+                      </div>
+                    </div> -->
                   </div>
+                  <div class="d-flex justify-content-center mt-1">
+                    <div class="row">
+                      <?php
+                      foreach ($list_zona as $list) {
+                        if ($list["zona_type"] == "M") {
+                          echo "<div class='col-3'>"
+                            . "<div class='card ".$list["bg"]."' style='width: 300px'>"
+                            . "<div class='card-body'>"
+                            . "<div class='card-title'>" . $list["desc"] . "</div>"
+                            . "<div id='".$list["zona_id"]."'></div>"
+                            . "</div>"
+                            . "</div>"
+                            . "</div>";
+                        }
+                      }
+                      ?>
+                    </div>
+                    <!-- <div class="card" style="width: 300px">
+                      <div class="card-body">
+                        <div class="card-title">Parking Area DC5</div>
+                      </div>
+                    </div> -->
+                  </div>
+                  <!-- <div class="d-flex container justify-content-center">
+                    <div>
+                      <div class="card" style="width: 300px">
+                        <div class="card-body">
+                          <div class="card-title">Parking Area TCC A</div>
+                        </div>
+                      </div>
+                      <br />
+                      <div class="card">
+                        <div class="card-body bg-success">
+                          <div class="card-title">Zone TCC A</div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body bg-success">
+                          <div class="card-title">Zone TCC B</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="card" style="width: 300px">
+                        <div class="card-body">
+                          <div class="card-title">Parking Area Emergency A</div>
+                        </div>
+                      </div>
+                      <br />
+                      <div class="card">
+                        <div class="card-body bg-warning">
+                          <div class="card-title">Zone Emergency A</div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body bg-success">
+                          <div class="card-title">Zone OPN A</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="card" style="width: 300px">
+                        <div class="card-body">
+                          <div class="card-title">Parking Area Emergency B</div>
+                        </div>
+                      </div>
+                      <br />
+                      <div class="card">
+                        <div class="card-body bg-warning">
+                          <div class="card-title">Zone Emergency B</div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body bg-success">
+                          <div class="card-title">Zone OPN B</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="card" style="width: 300px">
+                        <div class="card-body">
+                          <div class="card-title">Parking Area CSH B</div>
+                        </div>
+                      </div>
+                      <br />
+                      <div class="card">
+                        <div class="card-body bg-success">
+                          <div class="card-title">Zone CSH A</div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-body bg-success">
+                          <div class="card-title">Zone CSH B</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
                 </div>
               </div>
             </div>
