@@ -137,20 +137,35 @@ and open the template in the editor.
               <div class="card mb-3 border-top-0">
                 <div class="card-body">
                   <div class="d-flex justify-content-center mt-1">
-                    <div class="row" id="mappingDashboard">
+                    <div class="row" id="mappingP">
                       <?php
                       foreach ($list_zona as $list) {
-                        echo "<div class='col-3'>"
-                          . "<div class='card " . $list["bg"] . "' style='width: 300px; height: 250px'>"
-                          . "<div class='card-body'>"
-                          . "<div class='card-title font-weight-bold'>" . $list["desc"] . "</div>"
-                          . "<div class='d-flex'>"
-                          . "<div class='row' id='" . $list["zona_id"] . "'>"
-                          . "</div>"
-                          . "</div>"
-                          . "</div>"
-                          . "</div>"
-                          . "</div>";
+                        if ($list["zona_type"] == "P") {
+                          echo "<div class='col-3'>"
+                            . "<div class='card " . $list["bg"] . "' style='width: 300px; height: 250px'>"
+                            . "<div class='card-body'>"
+                            . "<div class='card-title font-weight-bold'>" . $list["desc"] . "</div>"
+                            . "</div>"
+                            . "</div>"
+                            . "</div>";
+                        }
+                      }
+                      ?>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center mt-1">
+                    <div class="row" id="mappingM">
+                      <?php
+                      foreach ($list_zona as $list) {
+                        if ($list["zona_type"] == "M") {
+                          echo "<div class='col-3'>"
+                            . "<div class='card " . $list["bg"] . "' style='width: 300px; height: 250px'>"
+                            . "<div class='card-body'>"
+                            . "<div class='card-title font-weight-bold'>" . $list["desc"] . "</div>"
+                            . "</div>"
+                            . "</div>"
+                            . "</div>";
+                        }
                       }
                       ?>
                     </div>
@@ -243,41 +258,73 @@ and open the template in the editor.
           var zona = data.data_zona
           var model = data.data_model
 
-          var append_data = ""
+          var append_dataP = ""
+          var append_dataM = ""
 
           if (zona.length != 0) {
             var i = 0
             $.each(zona, function (row, z) {
-              append_data += "<div class='col-3'>";
-              append_data += "<div class='card " + zona[i].bg + "' style='width: 300px; height: 220px'>";
-              append_data += "<div class='card-body'>";
-              append_data += "<div class='card-title font-weight-bold'>" + zona[i].desc + "</div>";
-              append_data += "<div class='d-flex justify-content-end'>";
-              append_data += "<div class='row'>";
-              if (model.length != 0) {
-                var j = 0
-                $.each(model, function (row, m) {
-                  var k = 0
-                  $.each(dies, function (row, d) {
-                    if (dies[k].zona_id == zona[i].zona_id) {
-                      if (dies[k].model_id == model[j].model_id && dies[k].group_id == model[j].group_id) {
-                        append_data += "<div class='col-3'>";
-                        append_data += "<div class='card' style='width: 45px; background-color: " + model[j].colour + "'>";
-                        append_data += "<a id='dies_data' class='card-body rounded p-1'>";
-                        append_data += "<h6 class='card-title text-center mb-0 font-weight-bold "+model[j].font_colour+"'>" + d.dies_no + "</h6>"
-                        append_data += "</a>";
-                        append_data += "</div></div>";
+              if (zona[i].zona_type == "P") {
+                append_dataP += "<div class='col-3'>";
+                append_dataP += "<div class='card " + zona[i].bg + "' style='width: 300px; height: 220px'>";
+                append_dataP += "<div class='card-body'>";
+                append_dataP += "<div class='card-title font-weight-bold'>" + zona[i].desc + "</div>";
+                append_dataP += "<div class='d-flex justify-content-end'>";
+                append_dataP += "<div class='row'>";
+                if (model.length != 0) {
+                  var j = 0
+                  $.each(model, function (row, m) {
+                    var k = 0
+                    $.each(dies, function (row, d) {
+                      if (dies[k].zona_id == zona[i].zona_id) {
+                        if (dies[k].model_id == model[j].model_id && dies[k].group_id == model[j].group_id) {
+                          append_dataP += "<div class='col-3'>";
+                          append_dataP += "<div class='card' style='width: 45px; background-color: " + model[j].colour + "'>";
+                          append_dataP += "<a id='dies_data' class='card-body rounded p-1'>";
+                          append_dataP += "<h6 class='card-title text-center mb-0 font-weight-bold " + model[j].font_colour + "'>" + d.dies_no + "</h6>"
+                          append_dataP += "</a>";
+                          append_dataP += "</div></div>";
+                        }
                       }
-                    }
-                    k++
+                      k++
+                    })
+                    j++
                   })
-                  j++
-                })
+                }
+                append_dataP += "</div></div></div></div></div>";
+              } else if (zona[i].zona_type == "M") {
+                append_dataM += "<div class='col-3'>";
+                append_dataM += "<div class='card " + zona[i].bg + "' style='width: 300px; height: 220px'>";
+                append_dataM += "<div class='card-body'>";
+                append_dataM += "<div class='card-title font-weight-bold'>" + zona[i].desc + "</div>";
+                append_dataM += "<div class='d-flex justify-content-end'>";
+                append_dataM += "<div class='row'>";
+                if (model.length != 0) {
+                  var j = 0
+                  $.each(model, function (row, m) {
+                    var k = 0
+                    $.each(dies, function (row, d) {
+                      if (dies[k].zona_id == zona[i].zona_id) {
+                        if (dies[k].model_id == model[j].model_id && dies[k].group_id == model[j].group_id) {
+                          append_dataM += "<div class='col-3'>";
+                          append_dataM += "<div class='card' style='width: 45px; background-color: " + model[j].colour + "'>";
+                          append_dataM += "<a id='dies_data' class='card-body rounded p-1'>";
+                          append_dataM += "<h6 class='card-title text-center mb-0 font-weight-bold " + model[j].font_colour + "'>" + d.dies_no + "</h6>"
+                          append_dataM += "</a>";
+                          append_dataM += "</div></div>";
+                        }
+                      }
+                      k++
+                    })
+                    j++
+                  })
+                }
+                append_dataM += "</div></div></div></div></div>";
               }
-              append_data += "</div></div></div></div></div>";
               i++
             })
-            $("#mappingDashboard").html(append_data);
+            $("#mappingP").html(append_dataP);
+            $("#mappingM").html(append_dataM);
           }
         }
       )
