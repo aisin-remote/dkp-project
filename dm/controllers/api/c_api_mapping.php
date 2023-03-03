@@ -3,7 +3,7 @@ if ($action == "api_mapping_dm") {
     $dies = new Dies();
     $zona = new Zona();
     $model = new Home();
-    $data_dies = $dies->getListDies(null, 'A');
+    $data_dies = $dies->getListDies(null, 'A', null, null);
     $data_zona = $zona->getList();
     $data_model = $model->getDiesModel();
 

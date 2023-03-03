@@ -137,49 +137,29 @@ and open the template in the editor.
               <div class="card mb-3 border-top-0">
                 <div class="card-body">
                   <div class="d-flex justify-content-center mt-1">
-                      <div class="row" id="mappingDashboard"></div>
-
-                      <!-- <?php
-                      foreach ($list_zona as $list) {
-                        if ($list["zona_type"] == "P") {
-                          echo "<div class='col-3'>"
-                            . "<div class='card " . $list["bg"] . "' style='width: 300px'>"
-                            . "<div class='card-body'>"
-                            . "<div class='card-title'>" . $list["desc"] . "</div>"
-                            . "<div id='" . $list["zona_id"] . "'></div>"
-                            . "</div>"
-                            . "</div>"
-                            . "</div>";
-                        }
-                      }
-                      ?> -->
-                  </div>
-                  <!-- <div class="d-flex justify-content-center mt-1">
-                    <div class="row">
+                    <div class="row" id="mappingDashboard">
                       <?php
                       foreach ($list_zona as $list) {
-                        if ($list["zona_type"] == "M") {
-                          echo "<div class='col-3'>"
-                            . "<div class='card " . $list["bg"] . "' style='width: 300px'>"
-                            . "<div class='card-body'>"
-                            . "<div class='card-title'>" . $list["desc"] . "</div>"
-                            . "<div class='d-flex'>"
-                            . "<div class='row' id='" . $list["zona_id"] . "'>"
-                            . "</div>"
-                            . "</div>"
-                            . "</div>"
-                            . "</div>"
-                            . "</div>";
-                        }
+                        echo "<div class='col-3'>"
+                          . "<div class='card " . $list["bg"] . "' style='width: 300px; height: 250px'>"
+                          . "<div class='card-body'>"
+                          . "<div class='card-title font-weight-bold'>" . $list["desc"] . "</div>"
+                          . "<div class='d-flex'>"
+                          . "<div class='row' id='" . $list["zona_id"] . "'>"
+                          . "</div>"
+                          . "</div>"
+                          . "</div>"
+                          . "</div>"
+                          . "</div>";
                       }
                       ?>
                     </div>
                   </div>
-                </div> -->
                 </div>
               </div>
             </div>
           </div>
+        </div>
       </main>
       <?php include 'common/t_footer.php'; ?>
     </div>
@@ -266,29 +246,36 @@ and open the template in the editor.
           var append_data = ""
 
           if (zona.length != 0) {
+            var i = 0
             $.each(zona, function (row, z) {
               append_data += "<div class='col-3'>";
-              append_data += "<div class='card "+z.bg+"' style='width: 300px; height: 250px'>";
+              append_data += "<div class='card " + zona[i].bg + "' style='width: 300px; height: 220px'>";
               append_data += "<div class='card-body'>";
-              append_data += "<div class='card-title font-weight-bold'>" + z.desc + "</div>";
+              append_data += "<div class='card-title font-weight-bold'>" + zona[i].desc + "</div>";
               append_data += "<div class='d-flex justify-content-end'>";
               append_data += "<div class='row'>";
-              if (dies.length != 0) {
-                $.each(dies, function (row, d) {
-                  if (d.zona_id == z.zona_id) {
-                    // if (dies[j].model_id == model[j].model_id) {
-                    //   var color = model[j].colour
-                    // }
-                    append_data += "<div class='col'>";
-                    append_data += "<div class='card' style='background-color: '>";
-                    append_data += "<a id='dies_data' class='card-body border border-secondary rounded p-1'>";
-                    append_data += "<h6 class='card-title text-center mb-0 text-dark font-weight-bold'>" + d.dies_no + "</h6>"
-                    append_data += "</a>";
-                    append_data += "</div></div>";
-                  }
+              if (model.length != 0) {
+                var j = 0
+                $.each(model, function (row, m) {
+                  var k = 0
+                  $.each(dies, function (row, d) {
+                    if (dies[k].zona_id == zona[i].zona_id) {
+                      if (dies[k].model_id == model[j].model_id && dies[k].group_id == model[j].group_id) {
+                        append_data += "<div class='col-3'>";
+                        append_data += "<div class='card' style='width: 45px; background-color: " + model[j].colour + "'>";
+                        append_data += "<a id='dies_data' class='card-body rounded p-1'>";
+                        append_data += "<h6 class='card-title text-center mb-0 font-weight-bold "+model[j].font_colour+"'>" + d.dies_no + "</h6>"
+                        append_data += "</a>";
+                        append_data += "</div></div>";
+                      }
+                    }
+                    k++
+                  })
+                  j++
                 })
               }
               append_data += "</div></div></div></div></div>";
+              i++
             })
             $("#mappingDashboard").html(append_data);
           }
