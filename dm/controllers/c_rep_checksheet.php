@@ -3,6 +3,7 @@ if ($action == "r_checksheet_preventive") {
   $template["group"] = "Reporting";
   $template["menu"] = "Checksheet Preventive";
   $data["list"];
+  $dies = new Dies();
   $class = new Reporting();
 
   $date_from = date('Ymd', strtotime(date('Y-m-d') . '-30 day'));
@@ -18,7 +19,7 @@ if ($action == "r_checksheet_preventive") {
   $pmtid = $_GET["pmtid"];
   $group_id = $_GET["group_id"];
   $model_id = $_GET["model_id"];
-  $dies_no = $_GET["dies_no"];
+  $dies_no = $_GET["dies_id"];
   $pmtype = $_GET["pmtype"];
   $pmstat = $_GET["pmstat"];
 
@@ -41,6 +42,9 @@ if ($action == "r_checksheet_preventive") {
   } else {
 
     $data["list"] = $class->getListChecksheet($date_from, $date_to, $pmtid, $group_id, $model_id, $dies_no, $pmtype, 'C');
+    $group_list = $dies->getDiesGroup();
+    $model_list = $dies->getDiesModel(null, $group_list[0]["pval1"]);
+    $diesid_list = $dies->getListDies(null, "A", $group_list[0]["pval1"], $model_list[0]["model_id"]);
     require(TEMPLATE_PATH . "/t_rep_checksheet.php");
   }
 }
