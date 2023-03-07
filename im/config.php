@@ -15,7 +15,7 @@ define("APP_DIR", "wms");
 
 $dbhost = "localhost";
 $dbpass = "AisinBisaBanget@2023";
-define("DB_DSN", "pgsql:host=$dbhost;port=5432;dbname=db_aisin_main");
+define("DB_DSN", "pgsql:host=$dbhost;port=5432;dbname=prd_report");
 define("DB_USERNAME", "postgres");
 define("DB_PASSWORD", $dbpass);
 //10.80.27.196\\in_GIE,21433
