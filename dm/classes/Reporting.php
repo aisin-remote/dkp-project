@@ -10,7 +10,7 @@ class Reporting
                 FROM t_dm_cs_h a
                 LEFT JOIN m_dm_dies_asset b ON b.dies_id = a.dies_id
                 INNER JOIN m_zona c ON c.zona_id = b.zona_id
-                WHERE pmtid = '".$id."'";
+                WHERE pmtid = '" . $id . "'";
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(":id", strtoupper($id), PDO::PARAM_STR);
         if ($stmt->execute()) {
@@ -43,7 +43,7 @@ class Reporting
             $sql .= " AND b.model_id = '$model_id' ";
         }
         if (!empty($dies_no)) {
-            $sql .= " AND b.dies_no = '$dies_no' ";
+            $sql .= " AND b.dies_id = '$dies_no' ";
         }
         if (!empty($pmtype)) {
             $sql .= " AND a.pmtype = '$pmtype' ";
@@ -87,7 +87,7 @@ class Reporting
             $sql .= " AND d.model_id = '$model_id' ";
         }
         if (!empty($dies_no)) {
-            $sql .= " AND d.dies_no = '$dies_no' ";
+            $sql .= " AND d.dies_id = '$dies_no' ";
         }
         $sql .= " ORDER by a.dies_id ASC ";
         $stmt = $conn->prepare($sql);
@@ -123,7 +123,7 @@ class Reporting
             $sql .= " AND b.model_id = '$model_id' ";
         }
         if (!empty($dies_no)) {
-            $sql .= " AND b.dies_no = '$dies_no' ";
+            $sql .= " AND b.dies_id = '$dies_no' ";
         }
         if (!empty($ori_type)) {
             $sql .= " AND a.ori_typ = '$ori_type' ";
@@ -164,7 +164,7 @@ class Reporting
             $sql .= " AND model_id = '$model_id' ";
         }
         if (!empty($dies_no)) {
-            $sql .= " AND dies_no = '$dies_no' ";
+            $sql .= " AND dies_id = '$dies_no' ";
         }
         $sql .= " GROUP BY dies_id";
         $sql .= " ORDER by dies_id ASC ";

@@ -108,8 +108,8 @@ if ($action == "checksheet_preventive") {
               $smallestSide = $width;
             }
             $src = imagecreatefromstring(file_get_contents($file_name));
-            $dst = imagecreatetruecolor($maxDim, $maxDim);
-            imagecopyresampled($dst, $src, 0, 0, $x, $y, $maxDim, $maxDim, $smallestSide, $smallestSide);
+            $dst = imagecreatetruecolor($new_width, $new_height);
+            imagecopyresampled($dst, $src, 0, 0, $x, $y, $new_width, $new_height, $smallestSide, $smallestSide);
             imagedestroy($src);
             imagejpeg($dst, $outputImage, 100); // adjust format as needed
             imagedestroy($dst);
@@ -154,8 +154,8 @@ if ($action == "checksheet_preventive") {
               $smallestSide = $width;
             }
             $src = imagecreatefromstring(file_get_contents($file_name));
-            $dst = imagecreatetruecolor($maxDim, $maxDim);
-            imagecopyresampled($dst, $src, 0, 0, $x, $y, $maxDim, $maxDim, $smallestSide, $smallestSide);
+            $dst = imagecreatetruecolor($new_width, $new_height);
+            imagecopyresampled($dst, $src, 0, 0, $x, $y, $new_width, $new_height, $smallestSide, $smallestSide);
             imagedestroy($src);
             imagejpeg($dst, $outputImage, 100); // adjust format as needed
             imagedestroy($dst);
@@ -200,8 +200,8 @@ if ($action == "checksheet_preventive") {
               $smallestSide = $width;
             }
             $src = imagecreatefromstring(file_get_contents($file_name));
-            $dst = imagecreatetruecolor($maxDim, $maxDim);
-            imagecopyresampled($dst, $src, 0, 0, $x, $y, $maxDim, $maxDim, $smallestSide, $smallestSide);
+            $dst = imagecreatetruecolor($new_width, $new_height);
+            imagecopyresampled($dst, $src, 0, 0, $x, $y, $new_width, $new_height, $smallestSide, $smallestSide);
             imagedestroy($src);
             imagejpeg($dst, $outputImage, 100); // adjust format as needed
             imagedestroy($dst);

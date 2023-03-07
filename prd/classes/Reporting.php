@@ -209,7 +209,7 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, b.group_id, b.model_id, b.dies_no, c.loss_time_p, d.loss_time, e.tot_ng, 
+        $sql = "SELECT a.*, b.group_id, b.model_id, b.dies_no, c.loss_time_p, coalesce(d.loss_time, 0) as loss_time, e.tot_ng, 
         COALESCE(f.ng_qty, 0) as ril, coalesce(g.ng_qty, 0) as rol1, coalesce(h.ng_qty, 0) as rol2, coalesce(i.ng_qty, 0) as rol3, coalesce(j.ng_qty, 0) as rol4, coalesce(k.ng_qty, 0) as rol5, coalesce(l.ng_qty, 0) as rol6, coalesce(m.ng_qty, 0) as rol7, coalesce(n.ng_qty, 0) as rol8, coalesce(o.ng_qty, 0) as rol9, coalesce(p.ng_qty, 0) as rol10
                 FROM t_prd_daily_i a 
                 INNER JOIN m_dm_dies_asset b ON b.dies_id::character varying = a.dies_id
