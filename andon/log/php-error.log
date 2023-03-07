@@ -1,0 +1,5 @@
+[20-Feb-2023 12:09:12 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_login.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\1DEV\AISIN\andon\controllers\c_login.php on line 26
+[28-Feb-2023 11:59:32 Asia/Jakarta] Class 'Dashboard' not found
+[28-Feb-2023 12:00:21 Asia/Jakarta] Call to a member function getLine() on null
+[28-Feb-2023 15:37:06 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_shift_stop_pkey"
+DETAIL:  Key (shift_id, time_id, srna_id)=(2, 2, 3002) already exists.
