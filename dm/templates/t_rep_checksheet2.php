@@ -110,7 +110,7 @@ and open the template in the editor.
                                                         <input type="file" accept="image/png,image/jpg" name="c11100" />
                                                         <input type="hidden" name="c11100_x" value="<?= $data["data"]["c11100"]; ?>" />
                                                     </th>
-                                                    <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c11100"])) ? "<a id='c11100' class='view-image' target='_blank' href='data:image/jpg;base64," . $data["data"]["c11100"] . "'>View Image</a>" : "" ?></th>
+                                                    <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c11100"])) ? "<a id='c11100' class='view-image btn btn-outline-primary btn-sm' target='_blank' href='data:image/jpg;base64," . $data["data"]["c11100"] . "'>View Image</a>" : "" ?></th>
                                                     <th class="align-middle px-3 table-header" scope="col"></th>
                                                 </tr>
                                             </thead>
@@ -669,7 +669,7 @@ and open the template in the editor.
                                                         <input type="file" accept="image/png,image/jpg" name="c1161" id="upload-image" />
                                                         <input type="hidden" name="c1161_x" value="<?= $data["data"]["c1161"]; ?>">
                                                     </th>
-                                                    <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c1161"])) ? "<a class='view-image' href='data:image/jpg;base64," . $data["data"]["c1161"] . "'>View Image</a>" : "" ?></th>
+                                                    <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c1161"])) ? "<a class='view-image btn btn-outline-primary btn-sm' href='data:image/jpg;base64," . $data["data"]["c1161"] . "'>View Image</a>" : "" ?></th>
                                                     <th class="align-middle px-3 table-header" scope="col"></th>
                                                 </tr>
                                             </thead>
@@ -703,7 +703,7 @@ and open the template in the editor.
                                                         <input type="file" accept="image/png,image/jpg" name="c1162" id="upload-image" />
                                                         <input type="hidden" name="c1162_x" value="<?= $data["data"]["c1162"]; ?>">
                                                     </th>
-                                                    <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c1162"])) ? "<a class='view-image' href='data:image/jpg;base64," . $data["data"]["c1162"] . "'>View Image</a>" : "" ?></th>
+                                                    <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c1162"])) ? "<a class='view-image btn btn-outline-primary btn-sm' href='data:image/jpg;base64," . $data["data"]["c1162"] . "'>View Image</a>" : "" ?></th>
                                                     <th class="align-middle px-3 table-header" scope="col"></th>
                                                 </tr>
                                             </thead>
