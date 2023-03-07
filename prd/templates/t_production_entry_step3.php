@@ -249,6 +249,7 @@ and open the template in the editor.
                       <th class='text-center'>Qty Steuchi</th>
                       <th>Konten Stop</th>
                       <th>Konten Penanganan (Action)</th>
+                      <th>Remarks</th>
                       <th>Eksekutor</th>
                       <th class='text-center'>Action</th>
                     </tr>
@@ -268,6 +269,7 @@ and open the template in the editor.
                           . "<td class='text-center'>" . $row["qty_stc"] . "</td>"
                           . "<td>" . $row["stop_name"] . "</td>"
                           . "<td>" . $row["action_name"] . "</td>"
+                          . "<td>" . $row["remarks"] . "</td>"
                           . "<td>" . $row["exe_name"] . "</td>"
                           . "<td class='text-center'>$button_del</td>"
                           . "</tr>";
@@ -366,6 +368,12 @@ and open the template in the editor.
                     }
                     ?>
                   </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="remarks" class="col-sm-3 col-form-label">Remarks</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" id="remarks">
                 </div>
               </div>
               <div class="form-group row">
@@ -564,6 +572,7 @@ and open the template in the editor.
             end_time: $("#end_time").val(),
             stop_time: $("#stop_time").val(),
             qty_stc: $("#qty_stc").val(),
+            remarks: $("#remarks").val(),
             stop_id: $("#stop_id").val(),
             action_id: $("#action_id").val(),
             exe_empid: $("#exe_empid").val()

@@ -2,7 +2,7 @@
 if ($action == "daily_production") {
   $template["group"] = "Report";
   $template["menu"] = "Daily Production";
-  $template["submenu"] = "View Details";
+  $template["submenu"] = "View Summary";
   $data["list"];
   $class = new Reporting();
   $class2 = new Production();
@@ -182,4 +182,54 @@ if ($action == "daily_production") {
     $data["list"] = $class->getList($date_from, $date_to, $prd_year, $prd_month, $shift, $line_id, $ldid, $jpid);
     require(TEMPLATE_PATH . "/t_report_daily_production.php");
   }
+}
+
+if ($action == "report_detail") {
+  $template["group"] = "Report";
+  $template["menu"] = "Daily Production";
+  $template["submenu"] = "View Details";
+  $report = new Reporting();
+
+  $date_from = date('Ymd');
+  if (!empty($_GET["date_from"])) {
+    $date_from = $_GET["date_from"];
+  }
+
+  $date_to = date('Ymd');
+  if (!empty($_GET["date_to"])) {
+    $date_to = $_GET["date_to"];
+  }
+
+  $shift = $_GET["shift"];
+    $line_id = $_GET["line_id"];
+    $ldid = $_GET["ldid"];
+    $jpid = $_GET["jpid"];
+
+  $data["list"] = $report->getReportDetail($date_from, $date_to, $shift, $line_id, $ldid, $jpid);
+  require(TEMPLATE_PATH . "/t_report_detail.php");
+}
+
+if ($action == "report_stop") {
+  $template["group"] = "Report";
+  $template["menu"] = "Daily Production";
+  $template["submenu"] = "View Details Stop";
+  $report = new Reporting();
+
+  $date_from = date('Ymd');
+  if (!empty($_GET["date_from"])) {
+    $date_from = $_GET["date_from"];
+  }
+
+  $date_to = date('Ymd');
+  if (!empty($_GET["date_to"])) {
+    $date_to = $_GET["date_to"];
+  }
+
+  $shift = $_GET["shift"];
+    $line_id = $_GET["line_id"];
+    $ldid = $_GET["ldid"];
+    $jpid = $_GET["jpid"];
+
+  $data["list"] = $report->getReportStop($date_from, $date_to, $shift, $line_id, $ldid, $jpid);
+  require(TEMPLATE_PATH . "/t_report_stop.php");
 }

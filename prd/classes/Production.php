@@ -388,8 +388,8 @@ class Production
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO t_prd_daily_stop (line_id, prd_dt, shift, prd_seq, stop_seq, start_time, end_time, stop_time, qty_stc, stop_id, action_id, exe_empid) "
-        . "values (:line_id, :prd_dt, :shift, :prd_seq, (select coalesce(max(stop_seq),0)+1 as stop_seq FROM t_prd_daily_stop where line_id = :line_id2 AND prd_dt = :prd_dt2 AND shift = :shift2 AND prd_seq = :prd_seq2), :start_time, :end_time, :stop_time, :qty_stc, :stop_id, :action_id, :exe_empid) ";
+      $sql = "INSERT INTO t_prd_daily_stop (line_id, prd_dt, shift, prd_seq, stop_seq, start_time, end_time, stop_time, qty_stc, stop_id, remarks, action_id, exe_empid) "
+        . "values (:line_id, :prd_dt, :shift, :prd_seq, (select coalesce(max(stop_seq),0)+1 as stop_seq FROM t_prd_daily_stop where line_id = :line_id2 AND prd_dt = :prd_dt2 AND shift = :shift2 AND prd_seq = :prd_seq2), :start_time, :end_time, :stop_time, :qty_stc, :stop_id, :remarks, :action_id, :exe_empid) ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
       $stmt->bindValue(":prd_dt", $param["prd_dt"], PDO::PARAM_STR);
@@ -404,6 +404,7 @@ class Production
       $stmt->bindValue(":stop_time", $param["stop_time"], PDO::PARAM_STR);
       $stmt->bindValue(":qty_stc", $param["qty_stc"], PDO::PARAM_STR);
       $stmt->bindValue(":stop_id", $param["stop_id"], PDO::PARAM_STR);
+      $stmt->bindValue(":remarks", $param["remarks"], PDO::PARAM_STR);
       $stmt->bindValue(":action_id", $param["action_id"], PDO::PARAM_STR);
       $stmt->bindValue(":exe_empid", $param["exe_empid"], PDO::PARAM_STR);
 

@@ -19,9 +19,15 @@ and open the template in the editor.
       <main>
         <div class="container-fluid">
           <ol class="breadcrumb mb-4 mt-4">
-            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-            <li class="breadcrumb-item"><?php echo $template["menu"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["submenu"]; ?></li>
+            <li class="breadcrumb-item">
+              <?php echo $template["group"]; ?>
+            </li>
+            <li class="breadcrumb-item">
+              <?php echo $template["menu"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["submenu"]; ?>
+            </li>
           </ol>
           <?php
           if (isset($_GET["error"])) {
@@ -41,9 +47,10 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Konten ID</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
-                        <input type="text" name="srna_id" class="form-control" maxlength="100" value="<?php echo $data["data"]["srna_id"]; ?>" <?php if (!empty($data["data"]["srna_id"])) {
-                                                                                                                                                  echo "readonly";
-                                                                                                                                                } ?> required>
+                        <input type="text" name="srna_id" class="form-control" maxlength="100"
+                          value="<?php echo $data["data"]["srna_id"]; ?>" <?php if (!empty($data["data"]["srna_id"])) {
+                               echo "readonly";
+                             } ?> required>
                       </div>
                     </div>
 
@@ -53,11 +60,11 @@ and open the template in the editor.
                         <select name="type1" class="form-control select2">
                           <?php
                           foreach ($type_list as $type) {
-                          ?>
+                            ?>
                             <option value="<?php echo $type["type"]; ?>" <?php if ($type["type"] == $data["data"]["type1"]) {
-                                                                            echo "selected";
-                                                                          } ?>><?php echo $type["name1"]; ?></option>
-                          <?php
+                                 echo "selected";
+                               } ?>><?php echo $type["name1"]; ?></option>
+                            <?php
                           }
                           ?>
                         </select>
@@ -69,11 +76,28 @@ and open the template in the editor.
                         <select name="type2" class="form-control select2">
                           <?php
                           foreach ($type2_list as $type) {
-                          ?>
+                            ?>
                             <option value="<?php echo $type["type"]; ?>" <?php if ($type["type"] == $data["data"]["type2"]) {
-                                                                            echo "selected";
-                                                                          } ?>><?php echo $type["name1"]; ?></option>
+                                 echo "selected";
+                               } ?>><?php echo $type["name1"]; ?></option>
+                            <?php
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Planned/Unplanned</label>
+                      <div class="col-lg-2 col-md-5 col-sm-12">
+                        <select name="type2" class="form-control select2">
                           <?php
+                          foreach ($type2_list as $type) {
+                            ?>
+                            <option value="<?php echo $type["type"]; ?>" <?php if ($type["type"] == $data["data"]["type2"]) {
+                                 echo "selected";
+                               } ?>><?php echo $type["name1"]; ?></option>
+                            <?php
                           }
                           ?>
                         </select>
@@ -83,14 +107,16 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Description</label>
                       <div class="col-lg-6 col-md-5 col-sm-12">
-                        <input type="text" name="name1" class="form-control" maxlength="100" value="<?php echo $data["data"]["name1"]; ?>" required>
+                        <input type="text" name="name1" class="form-control" maxlength="100"
+                          value="<?php echo $data["data"]["name1"]; ?>" required>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-lg-2 col-md-3 col-sm-12 d-sm-none d-md-block"></div>
                       <div class="col-lg-5 col-md-5 col-sm-12">
-                        <button type="submit" name="save" value="save" class="btn btn-pale-green"><span class="material-icons">save</span> Save</button>
+                        <button type="submit" name="save" value="save" class="btn btn-pale-green"><span
+                            class="material-icons">save</span> Save</button>
                       </div>
                     </div>
 
@@ -110,11 +136,11 @@ and open the template in the editor.
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       checklabel("enable_alarm");
     });
 
-    $('#enable_alarm').on("change", function() {
+    $('#enable_alarm').on("change", function () {
       checklabel("enable_alarm");
     });
 

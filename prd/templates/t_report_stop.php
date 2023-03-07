@@ -54,38 +54,38 @@ and open the template in the editor.
                       <thead>
                         <tr>
                           <th class="align-middle">Date</th>
-                          <th class="align-middle">Year</th>
-                          <th class="align-middle">Month</th>
                           <th class="align-middle">Shift</th>
                           <th class="align-middle">Line DC</th>
-                          <th class="align-middle">Leader</th>
                           <th class="align-middle">JP</th>
-                          <th class="text-center align-middle">Planning Qty</th>
-                          <th class="text-center align-middle">Prod. Qty</th>
-                          <th class="text-center align-middle">NG Qty</th>
-                          <th class="text-center align-middle">Lost Time(m)</th>
-                          <th class="text-center align-middle">Efficiency (%)</th>
-                          <th class="text-center align-middle">Details</th>
+                          <th class="align-middle">Dies</th>
+                          <th class="align-middle">Hour</th>
+                          <th class="align-middle">Start Time</th>
+                          <th class="align-middle">End Time</th>
+                          <th class="align-middle">Stop Time(m)</th>
+                          <th class="align-middle">Qty Steuchi</th>
+                          <th class="align-middle">Konten Stop</th>
+                          <th class="align-middle">Konten Penanganan (Action)</th>
+                          <th class="align-middle">Remarks</th>
+                          <th class="align-middle">Eksekutor</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php if (!empty($data["list"])) {
                           foreach ($data["list"] as $list) {
                             echo "<tr>" . "<td class='align-middle'>" . $list["prd_dt"] . "</td>"
-                              . "<td class='align-middle'>" . $list["prd_year"] . "</td>"
-                              . "<td class='align-middle'>" . $list["prd_month"] . "</td>"
                               . "<td class='align-middle'>" . $list["shift"] . "</td>"
                               . "<td class='align-middle'>" . $list["line_name"] . "</td>"
-                              . "<td class='align-middle'>" . $list["ld_name"] . "</td>"
-                              . "<td class='align-middle'>" . $list["jp_name"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["pln_qty"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["prd_qty"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["ng_qty"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["stop_time"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["eff"] . "</td>"
-                              . "<td class='text-center pr-3'>"
-                              . "<a href='?action=$action&id=" . $list["line_id"] . "&id2=" . $list["prd_dt"] . "&id3=" . $list["shift"] . "&step=2" . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>visibility</i> </a>"
-                              . "</td>"
+                              . "<td class='align-middle'>" . $list["operator"] . "</td>"
+                              . "<td class='align-middle'>" . $list["dies_name"] . "</td>"
+                              . "<td class='align-middle'>" . $list["time_start"] ." - ". $list["time_end"] . "</td>"
+                              . "<td class='align-middle'>" . $list["start_time"] . "</td>"
+                              . "<td class='align-middle'>" . $list["end_time"] . "</td>"
+                              . "<td class='align-middle'>" . $list["stop_time"] . "</td>"
+                              . "<td class='align-middle'>" . $list["qty_stc"] . "</td>"
+                              . "<td class='align-middle'>" . $list["stop"] . "</td>"
+                              . "<td class='align-middle'>" . $list["action"] . "</td>"
+                              . "<td class='align-middle'>" . $list["remarks"] . "</td>"
+                              . "<td class='align-middle'>" . $list["eksekutor"] . "</td>"
                               . "</tr>";
                           }
                         }

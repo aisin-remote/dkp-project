@@ -29,3 +29,5 @@ FATAL:  password authentication failed for user "postgres"
 [01-Mar-2023 13:22:42 Asia/Jakarta] Call to a member function getTimestamp() on bool
 [01-Mar-2023 13:29:05 Asia/Jakarta] Call to a member function modify() on bool
 [01-Mar-2023 14:26:29 Asia/Jakarta] Call to a member function modify() on bool
+[07-Mar-2023 15:04:48 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_report_detail.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aiia_prod_report\prd\controllers\c_reporting.php on line 194
+[07-Mar-2023 15:05:04 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_report_detail.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aiia_prod_report\prd\controllers\c_reporting.php on line 194

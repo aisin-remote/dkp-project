@@ -249,6 +249,7 @@ and open the template in the editor.
                       <th class='text-center'>Qty Steuchi</th>
                       <th>Konten Stop</th>
                       <th>Konten Penanganan (Action)</th>
+                      <th>Remarks</th>
                       <th>Eksekutor</th>
                       <!-- <th class='text-center'>Action</th> -->
                     </tr>
@@ -268,6 +269,7 @@ and open the template in the editor.
                                 . "<td class='text-center'>" . $row["qty_stc"] . "</td>"
                                 . "<td>" . $row["stop_name"] . "</td>"
                                 . "<td>" . $row["action_name"] . "</td>"
+                                . "<td>" . $row["remarks"] . "</td>"
                                 . "<td>" . $row["exe_name"] . "</td>"
                                 // . "<td class='text-center'>$button_del</td>"
                                 . "</tr>";
