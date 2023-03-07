@@ -13,8 +13,8 @@ define("PAGE_TITLE", "INVENTORY MANAGEMENT SYSTEM");
 define("FOOTER", "2022 &copy; PT. Aisin Indonesia Automotive");
 define("APP_DIR", "wms");
 
-$dbhost = "5.181.217.2";
-$dbpass = "Ega2021";
+$dbhost = "localhost";
+$dbpass = "AisinBisaBanget@2023";
 define("DB_DSN", "pgsql:host=$dbhost;port=5432;dbname=db_aisin_main");
 define("DB_USERNAME", "postgres");
 define("DB_PASSWORD", $dbpass);
