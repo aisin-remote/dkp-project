@@ -250,7 +250,7 @@ and open the template in the editor.
                       <th>Konten Stop</th>
                       <th>Konten Penanganan (Action)</th>
                       <th>Eksekutor</th>
-                      <th class='text-center'>Action</th>
+                      <!-- <th class='text-center'>Action</th> -->
                     </tr>
                   </thead>
                   <tbody id="data_stop">
@@ -269,7 +269,7 @@ and open the template in the editor.
                                 . "<td>" . $row["stop_name"] . "</td>"
                                 . "<td>" . $row["action_name"] . "</td>"
                                 . "<td>" . $row["exe_name"] . "</td>"
-                                . "<td class='text-center'>$button_del</td>"
+                                // . "<td class='text-center'>$button_del</td>"
                                 . "</tr>";
                         }
                     }
@@ -292,7 +292,7 @@ and open the template in the editor.
                       <th class='text-center'>NG Visualization</th>
                       <th class='text-center'>Quantity</th>
                       <th>Created By</th>
-                      <th class='text-center'>Action</th>
+                      <!-- <th class='text-center'>Action</th> -->
                     </tr>
                   </thead>
                   <tbody id="data_ng">
@@ -307,7 +307,7 @@ and open the template in the editor.
                                 . "<td class='text-center'>" . $row["loc_x"] . "," . $row["loc_y"] . "</td>"
                                 . "<td class='text-center'>" . $row["ng_qty"] . "</td>"
                                 . "<td>" . $row["crt_by_name"] . "</td>"
-                                . "<td class='text-center'>$button_del</td>"
+                                // . "<td class='text-center'>$button_del</td>"
                                 . "</tr>";
                         }
                     }

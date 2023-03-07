@@ -237,7 +237,9 @@ class Production
       . "LEFT JOIN m_prd_operator op2 ON op2.empid = a.op2id "
       . "LEFT JOIN m_prd_operator op3 ON op3.empid = a.op3id "
       . "LEFT JOIN m_prd_operator op4 ON op4.empid = a.op4id "
-      . "WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$date' AND a.shift = '$shift'";
+      . "WHERE a.line_id = '$line' AND a.prd_dt = '$date' AND a.shift = '$shift'";
+    // echo $sql;
+    // die();
     $stmt = $conn->prepare($sql);
     $count = 0;
     if ($stmt->execute()) {
@@ -344,7 +346,7 @@ class Production
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT * from m_prd_shift where shift_id = '$shift' AND app_id = '".APP."' order by shift_id asc, time_id asc ";
+    $sql = "SELECT * from m_prd_shift where shift_id = '$shift' AND app_id = '" . APP . "' order by shift_id asc, time_id asc ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -364,7 +366,9 @@ class Production
       . "LEFT JOIN m_prd_stop_reason_action b ON b.srna_id = a.stop_id "
       . "LEFT JOIN m_prd_stop_reason_action c ON c.srna_id = a.action_id "
       . "LEFT JOIN m_prd_operator d ON d.empid = a.exe_empid "
-      . "WHERE a.line_id = '$line_id' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$prd_dt' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq'";
+      . "WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq'";
+    // echo $sql;
+    // die();
     $stmt = $conn->prepare($sql);
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

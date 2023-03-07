@@ -220,9 +220,11 @@ class Reporting
                     GROUP BY a.line_id, a.prd_dt, a.shift
                 ) c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift
                 LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, SUM(stop_time) as loss_time
-                    FROM t_prd_daily_stop
-                    GROUP BY line_id, prd_dt, shift
+                    SELECT a.line_id, a.prd_dt, a.shift, SUM(a.stop_time) AS loss_time 
+                    FROM t_prd_daily_stop a 
+                    INNER JOIN m_prd_stop_reason_action b ON a.stop_id = b.srna_id
+                    WHERE b.type2 = 'U' 
+                    GROUP BY a.line_id, a.prd_dt, a.shift
                 ) d ON a.line_id = d.line_id AND a.prd_dt = d.prd_dt AND a.shift = d.shift
                 LEFT JOIN (
                     SELECT line_id, prd_dt, shift, SUM(ng_qty) as tot_ng
@@ -305,6 +307,8 @@ class Reporting
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
             if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $rol = $row["rol1"] + $row["rol2"] + $row["rol3"] + $row["rol4"] + $row["rol5"] + $row["rol6"] + $row["rol7"] + $row["rol8"] + $row["rol9"] + $row["rol10"];
+                $row["rol"] = $rol;
                 $return[] = $row;
             }
         }
