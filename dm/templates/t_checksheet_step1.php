@@ -182,9 +182,9 @@ and open the template in the editor.
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
     $(document).ready(function () {
-
+      editLink($('#dies_id').val());
     });
-
+    
     $("#my-form").submit(function (event) {
       // event.preventDefault();
       $("#group_id, #model_id").removeAttr("disabled");
@@ -250,16 +250,18 @@ and open the template in the editor.
       });
     }
 
-    $(function () {
-      $('#dies_id').on('change', function () {
-        var selectedValue = $(this).val();
-        $('.dropdown-menu a').each(function () {
-          var href = $(this).attr('href');
-          href = href.replace(/dies_id=[^&]*/, 'dies_id=' + selectedValue);
-          $(this).attr('href', href);
-        });
-      });
+    
+    $('#dies_id').change(function () {
+      var selectedValue = $(this).value;
+      editLink(selectedValue);
     });
+    function editLink(dies_id) {
+      $('.dropdown-menu a').each(function () {
+        var href = $(this).attr('href');
+        href = href.replace(/dies_id=[^&]*/, 'dies_id=' + dies_id);
+        $(this).attr('href', href);
+      });
+    }
   </script>
 </body>
 

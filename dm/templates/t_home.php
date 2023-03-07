@@ -141,7 +141,7 @@ and open the template in the editor.
                       <?php
                       foreach ($list_zona as $list) {
                         if ($list["zona_type"] == "P") {
-                          echo "<div class='col-3'>"
+                          echo "<div class='col-3 mb-2'>"
                             . "<div class='card " . $list["bg"] . "' style='width: 300px; height: 250px'>"
                             . "<div class='card-body'>"
                             . "<div class='card-title font-weight-bold'>" . $list["desc"] . "</div>"
@@ -153,12 +153,14 @@ and open the template in the editor.
                       ?>
                     </div>
                   </div>
+                  <hr>
+                  <h5 class="mt-2">Die Maintenance Area</h5>
                   <div class="d-flex justify-content-center mt-1">
                     <div class="row" id="mappingM">
                       <?php
                       foreach ($list_zona as $list) {
                         if ($list["zona_type"] == "M") {
-                          echo "<div class='col-3'>"
+                          echo "<div class='col-3 mb-2'>"
                             . "<div class='card " . $list["bg"] . "' style='width: 300px; height: 250px'>"
                             . "<div class='card-body'>"
                             . "<div class='card-title font-weight-bold'>" . $list["desc"] . "</div>"
@@ -265,7 +267,7 @@ and open the template in the editor.
             var i = 0
             $.each(zona, function (row, z) {
               if (zona[i].zona_type == "P") {
-                append_dataP += "<div class='col-3'>";
+                append_dataP += "<div class='col-3 mb-2'>";
                 append_dataP += "<div class='card " + zona[i].bg + "' style='width: 300px; height: 220px'>";
                 append_dataP += "<div class='card-body'>";
                 append_dataP += "<div class='card-title font-weight-bold'>" + zona[i].desc + "</div>";
@@ -278,7 +280,7 @@ and open the template in the editor.
                     $.each(dies, function (row, d) {
                       if (dies[k].zona_id == zona[i].zona_id) {
                         if (dies[k].model_id == model[j].model_id && dies[k].group_id == model[j].group_id) {
-                          append_dataP += "<div class='col-3'>";
+                          append_dataP += "<div class='col-3 mb-1'>";
                           append_dataP += "<div class='card' style='width: 45px; background-color: " + model[j].colour + "'>";
                           append_dataP += "<a id='dies_data' class='card-body rounded p-1'>";
                           append_dataP += "<h6 class='card-title text-center mb-0 font-weight-bold " + model[j].font_colour + "'>" + d.dies_no + "</h6>"
@@ -293,7 +295,7 @@ and open the template in the editor.
                 }
                 append_dataP += "</div></div></div></div></div>";
               } else if (zona[i].zona_type == "M") {
-                append_dataM += "<div class='col-3'>";
+                append_dataM += "<div class='col-3 mb-2'>";
                 append_dataM += "<div class='card " + zona[i].bg + "' style='width: 300px; height: 220px'>";
                 append_dataM += "<div class='card-body'>";
                 append_dataM += "<div class='card-title font-weight-bold'>" + zona[i].desc + "</div>";
@@ -306,7 +308,7 @@ and open the template in the editor.
                     $.each(dies, function (row, d) {
                       if (dies[k].zona_id == zona[i].zona_id) {
                         if (dies[k].model_id == model[j].model_id && dies[k].group_id == model[j].group_id) {
-                          append_dataM += "<div class='col-3'>";
+                          append_dataM += "<div class='col-3 mb-1'>";
                           append_dataM += "<div class='card' style='width: 45px; background-color: " + model[j].colour + "'>";
                           append_dataM += "<a id='dies_data' class='card-body rounded p-1'>";
                           append_dataM += "<h6 class='card-title text-center mb-0 font-weight-bold " + model[j].font_colour + "'>" + d.dies_no + "</h6>"
