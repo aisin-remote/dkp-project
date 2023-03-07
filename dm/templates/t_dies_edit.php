@@ -24,8 +24,12 @@ and open the template in the editor.
       <main>
         <div class="container-fluid">
           <ol class="breadcrumb mb-4 mt-4">
-            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
+            <li class="breadcrumb-item">
+              <?php echo $template["group"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["menu"]; ?>
+            </li>
           </ol>
           <?php
           if (isset($_GET["error"])) {
@@ -34,7 +38,8 @@ and open the template in the editor.
                     </div>';
           }
           ?>
-          <form method="post" id="my-form" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>" enctype="multipart/form-data">
+          <form method="post" id="my-form" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>"
+            enctype="multipart/form-data">
 
             <div class="card mt-2">
               <div class="row">
@@ -42,23 +47,24 @@ and open the template in the editor.
                   <div class="card-body">
                     <!-- Edit Here -->
 
-                    <input type="hidden" name="dies_id" class="form-control" value="<?php echo $data["data"]["dies_id"]; ?>">
+                    <input type="hidden" name="dies_id" class="form-control"
+                      value="<?php echo $data["data"]["dies_id"]; ?>">
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Group</label>
                       <div class="col-lg-4 col-md-5 col-sm-12">
                         <select name="group_id" id="group_id" class="form-control" <?php if (!empty($data["data"]["group_id"])) {
-                                                                                      echo "disabled";
-                                                                                    } ?>>
+                          echo "disabled";
+                        } ?>>
                           <?php
                           foreach ($group_list as $group) {
-                          ?>
+                            ?>
                             <option value="<?php echo $group["pval1"]; ?>" <?php
-                                                                            if ($group['pval1'] == $data["data"]["group_id"]) {
-                                                                              echo "selected";
-                                                                            }
-                                                                            ?>><?php echo $group["pval1"]; ?></option>
-                          <?php
+                               if ($group['pval1'] == $data["data"]["group_id"]) {
+                                 echo "selected";
+                               }
+                               ?>><?php echo $group["pval1"]; ?></option>
+                            <?php
                           }
                           ?>
                         </select>
@@ -69,17 +75,17 @@ and open the template in the editor.
                       <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Model</label>
                       <div class="col-lg-6 col-md-5 col-sm-12">
                         <select name="model_id" id="model_id" class="form-control" <?php echo $data["data"]["model_id"]; ?> <?php if (!empty($data["data"]["model_id"])) {
-                                                                                                                              echo "disabled";
-                                                                                                                            } ?>>
+                              echo "disabled";
+                            } ?>>
                           <?php
                           foreach ($model_list as $model) {
-                          ?>
+                            ?>
                             <option value="<?php echo $model["model_id"]; ?>" <?php
-                                                                              if ($model['model_id'] == $data["data"]["model_id"]) {
-                                                                                echo "selected";
-                                                                              }
-                                                                              ?>><?php echo $model["model_id"]; ?></option>
-                          <?php
+                               if ($model['model_id'] == $data["data"]["model_id"]) {
+                                 echo "selected";
+                               }
+                               ?>><?php echo $model["model_id"]; ?></option>
+                            <?php
                           }
                           ?>
                         </select>
@@ -89,44 +95,50 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Dies No.</label>
                       <div class="col-lg-4 col-md-5 col-sm-12">
-                        <input type="text" name="dies_no" class="form-control" maxlength="100" value="<?php echo $data["data"]["dies_no"]; ?>" required>
+                        <input type="text" name="dies_no" class="form-control" maxlength="100"
+                          value="<?php echo $data["data"]["dies_no"]; ?>" required>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Description</label>
                       <div class="col-lg-8 col-md-5 col-sm-12">
-                        <input type="text" name="name1" class="form-control" maxlength="100" value="<?php echo $data["data"]["name1"]; ?>">
+                        <input type="text" name="name1" class="form-control" maxlength="100"
+                          value="<?php echo $data["data"]["name1"]; ?>">
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Cycle Time(Second)</label>
                       <div class="col-lg-4 col-md-5 col-sm-12">
-                        <input type="number" name="ctsec" class="form-control" maxlength="100" value="<?php echo $data["data"]["ctsec"]; ?>" required>
+                        <input type="number" name="ctsec" class="form-control" maxlength="100"
+                          value="<?php echo $data["data"]["ctsec"]; ?>" required>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Early Warning Stroke</label>
                       <div class="col-lg-4 col-md-5 col-sm-12">
-                        <input type="number" name="ewstk" class="form-control" maxlength="100" value="<?php echo $data["data"]["ewstk"]; ?>" required>
+                        <input type="number" name="ewstk" class="form-control" maxlength="100"
+                          value="<?php echo $data["data"]["ewstk"]; ?>" required>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Total Stroke</label>
                       <div class="col-lg-4 col-md-5 col-sm-12">
-                        <input type="number" name="stktot" class="form-control" maxlength="100" value="<?php echo $data["data"]["stktot"]; ?>" <?php if ($data["data"]["stktot"] !== null) {
-                                                                                                                                                  echo 'readonly';
-                                                                                                                                                }  ?>>
+                        <input type="number" name="stktot" class="form-control" maxlength="100"
+                          value="<?php echo $data["data"]["stktot"]; ?>" <?php if ($data["data"]["stktot"] !== null) {
+                               echo 'readonly';
+                             } ?>>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Running Stroke</label>
                       <div class="col-lg-4 col-md-5 col-sm-12">
-                        <input type="number" name="stkrun" class="form-control" maxlength="100" value="<?php echo $data["data"]["stkrun"]; ?>" readonly>
+                        <input type="number" name="stkrun" class="form-control" maxlength="100"
+                          value="<?php echo $data["data"]["stkrun"]; ?>" readonly>
                       </div>
                     </div>
 
@@ -134,11 +146,13 @@ and open the template in the editor.
                       <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Dies Position</label>
                       <div class="col-lg-6 col-md-5 col-sm-12">
                         <select name="zona_id" id="dies_id" class="form-control select2">
-                        <?php
+                          <?php
                           foreach ($list_zona as $zona) {
-                              ?>
-                              <option value="<?php echo $zona["zona_id"]; ?>" <?php if ($zona["zona_id"] == $data["data"]["zona_id"]) {echo "selected";} ?>><?php echo $zona["desc"]; ?></option>
-                              <?php
+                            ?>
+                            <option value="<?php echo $zona["zona_id"]; ?>" <?php if ($zona["zona_id"] == $data["data"]["zona_id"]) {
+                                 echo "selected";
+                               } ?>><?php echo $zona["desc"]; ?></option>
+                            <?php
                           }
                           ?>
                         </select>
@@ -147,8 +161,36 @@ and open the template in the editor.
 
                     <div class="form-group row">
                       <div class="col-lg-4 col-md-3 col-sm-12 d-sm-none d-md-block"></div>
-                      <div class="col-lg-5 col-md-5 col-sm-12">
-                        <button type="submit" name="save" id="submit-btn" value="save" class="btn btn-dark-blue"><span class="material-icons">save</span> Save</button>
+                      <div class="col-lg-5 col-md-5 col-sm-12 mx-3">
+                        <div class="row">
+                          <button type="submit" name="save" id="submit-btn" value="save" class="btn btn-dark-blue"><span
+                              class="material-icons">save</span> Save</button>
+                          <?php if ($_GET["id"] != 0) {
+
+                            ?>
+                            <div class="dropdown mx-2">
+                              <button class="btn btn-dark-blue dropdown-toggle" type="button" data-toggle="dropdown"
+                                aria-expanded="false">
+                                Dies History
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item"
+                                  href="?action=r_checksheet_preventive&dies_id=<?= $_GET["id"]; ?>">Checksheet
+                                  Preventive</a>
+                                <a class="dropdown-item"
+                                  href="?action=r_pergantian_part&dies_id=<?= $_GET["id"]; ?>">Pergantian
+                                  Part</a>
+                                <a class="dropdown-item"
+                                  href="?action=r_order_repair_and_improvement&dies_id=<?= $_GET["id"]; ?>">Order
+                                  Repair
+                                  and Improvement</a>
+                                <a class="dropdown-item"
+                                  href="?action=r_stroke_total_dies&dies_id=<?= $_GET["id"]; ?>">Stroke Total
+                                  Dies</a>
+                              </div>
+                            </div>
+                          <?php } ?>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -157,8 +199,8 @@ and open the template in the editor.
                 <div class="col-6 mt-3">
                   <h6>Dies Picture</h6>
                   <img id="output" class="cropit-preview" src="<?php if (!empty($data["data"]["img01"])) {
-                                                                  echo "data:image/jpeg;base64," . $data["data"]["img01"];
-                                                                } ?>">
+                    echo "data:image/jpeg;base64," . $data["data"]["img01"];
+                  } ?>">
                   <div class="custom-file mt-2">
                     <input type="file" name="img01" accept="image/*" onchange="loadFile(event)">
                     <input type="hidden" name="img01x" value="<?php echo $data["data"]["img01"]; ?>">
@@ -177,33 +219,33 @@ and open the template in the editor.
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script>
-    $(document).ready(function() {});
+    $(document).ready(function () { });
 
-    var loadFile = function(event) {
+    var loadFile = function (event) {
       var reader = new FileReader();
-      reader.onload = function() {
+      reader.onload = function () {
         var output = document.getElementById('output');
         output.src = reader.result;
       };
       reader.readAsDataURL(event.target.files[0]);
     };
 
-    $("#my-form").submit(function(event) {
+    $("#my-form").submit(function (event) {
       $("#group_id, #model_id").removeAttr("disabled");
     });
 
-    $("#group_id").change(function() {
+    $("#group_id").change(function () {
       getDiesModel($("#group_id").val());
     });
 
     function getDiesModel(group_id) {
       $.getJSON("?action=api_get_dies_model", {
         group: group_id
-      }, function(data) {
+      }, function (data) {
         var items = "";
         //$("#model_id").empty();
 
-        $.each(data, function(key, val) {
+        $.each(data, function (key, val) {
           console.log(val.model_id);
           items += "<option value='" + val.model_id + "'>" + val.model_id + "</option>";
         });

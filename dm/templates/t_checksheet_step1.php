@@ -139,10 +139,29 @@ and open the template in the editor.
 
                     <div class="form-group row">
                       <div class="col-lg-2 col-md-3 col-sm-12 d-sm-none d-md-block"></div>
-                      <div class="col-lg-5 col-md-5 col-sm-12">
-                        <input type="hidden" name="save" value="true">
-                        <button type="submit" name="btn_save" id="btn_save" value="save" class="btn btn-dark-blue"><span
-                            class="material-icons">save</span> Save</button>
+                      <div class="col-lg-5 col-md-5 col-sm-12 mx-3">
+                        <div class="row">
+                          <input type="hidden" name="save" value="true">
+                          <button type="submit" name="btn_save" id="btn_save" value="save"
+                            class="btn btn-dark-blue"><span class="material-icons">save</span> Save</button>
+                          <div class="dropdown mx-2">
+                            <button class="btn btn-dark-blue dropdown-toggle" type="button" data-toggle="dropdown"
+                              aria-expanded="false">
+                              Dies History
+                            </button>
+                            <div class="dropdown-menu">
+                              <a class="dropdown-item" href="?action=r_checksheet_preventive&dies_id=">Checksheet
+                                Preventive</a>
+                              <a class="dropdown-item" href="?action=r_pergantian_part&dies_id=">Pergantian
+                                Part</a>
+                              <a class="dropdown-item" href="?action=r_order_repair_and_improvement&dies_id=">Order
+                                Repair
+                                and Improvement</a>
+                              <a class="dropdown-item" href="?action=r_stroke_total_dies&dies_id=">Stroke Total
+                                Dies</a>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -230,6 +249,17 @@ and open the template in the editor.
         $("#dies_id").html(items);
       });
     }
+
+    $(function () {
+      $('#dies_id').on('change', function () {
+        var selectedValue = $(this).val();
+        $('.dropdown-menu a').each(function () {
+          var href = $(this).attr('href');
+          href = href.replace(/dies_id=[^&]*/, 'dies_id=' + selectedValue);
+          $(this).attr('href', href);
+        });
+      });
+    });
   </script>
 </body>
 
