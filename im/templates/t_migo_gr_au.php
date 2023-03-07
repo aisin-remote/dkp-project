@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+  <head>
+    <?php include "common/t_css.php"; ?>
+    <link href="vendors/ega/css/styles.css" rel="stylesheet" type="text/css"/>
+  </head>
+  <body>		
+    <?php include "common/t_nav_top.php"; ?>
+    <div id="layoutSidenav">
+      <?php include "common/t_nav_left.php"; ?>
+      <div id="layoutSidenav_content">
+        <main>
+          <div class="container-fluid">
+            <ol class="breadcrumb mb-1 mt-1">
+              <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
+              <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
+            </ol>
+            <?php 
+            if(isset($_GET["error"])) {
+              echo '<div class="alert alert-danger alert-dismissible fade show mb-1" role="alert">
+                      '.$_GET["error"].'
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>';
+            }
+            
+            if(isset($_GET["success"])) {
+              echo '<div class="alert alert-success alert-dismissible fade show mb-1" role="alert">
+                      '.$_GET["success"].'
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>';
+            }
+            ?>
+            <form id="my_form" method="post" action="?action=<?php echo $action; ?>">
+              <input type="hidden" name="save" value="post">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-lg-6 col-sm-12">
+                        <!-- filter placement -->
+                        
+                      </div>
+                      <div class="col-lg-6 col-sm-12">
+                        <div class="d-flex justify-content-end">
+                          <!-- button placement -->
+                          <button type="submit" id="btn_save" name="btn_save" value="btn_save" class="btn btn-primary"><span class="material-icons">send</span> Post</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>              
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="card mt-1">
+                  <div class="card-body">
+                    <!-- Edit Here -->                    
+                    
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Posting Date</label>
+                      <div class="col-lg-3 col-md-6 col-sm-12">
+                        <input type="date" name="budat" class="form-control" value="<?=date("Y-m-d")?>" >
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Plant</label>
+                      <div class="col-lg-4 col-md-5 col-sm-12">
+                        <select name="werks" class="form-control" id="werks" required="required">
+                          <option value="">Please Select Plant</option>
+                          <?php 
+                          if(!empty($data["plants"])) {
+                            foreach($data["plants"] as $grp) {
+                              echo "<option value='".$grp["werks"]."'>".$grp["werks"]." - ".$grp["name1"]."</option>";                              
+                            }
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>                    
+                    
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Production Order</label>
+                      <div class="col-lg-4 col-md-6 col-sm-12">
+                        <input type="text" name="aufnr" class="form-control" maxlength="20" value="" required="required">
+                      </div>
+                    </div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th colspan="4" class="text-right"><button type="button" class="btn btn-info" id="btn_add_item">Add Item</button></th>
+                        </tr>
+                        <tr>
+                          <th>Material</th>
+                          <th>Storage Location</th>
+                          <th>Quantity</th>
+                          <th class="text-center">Del</th>
+                        </tr>
+                      </thead>
+                      <tbody id="mseg">
+                        <tr id="mseg_data_1">
+                          <td>
+                            <select name="matnr[]" class="form-control" required="required">
+                              <option value="">Please Select Material</option>
+                              <?php 
+                              if(!empty($data["materials"])) {
+                                foreach($data["materials"] as $grp) {
+                                  echo "<option value='".$grp["matnr"]."'>".$grp["matnr"]." - ".$grp["name1"]."</option>";                              
+                                }
+                              }
+                              ?>
+                            </select>
+                          </td>
+                          <td style="width: 400px!important;">
+                            <select name="lgort[]" class="form-control lgort" required="required">
+                              <option value=''>Please Select S.Loc</option>
+                              <?php 
+                              if(!empty($data["slocs"])) {
+                                foreach($data["slocs"] as $grp) {
+                                  echo "<option value='".$grp["lgort"]."'>".$grp["lgort"]." - ".$grp["name1"]."</option>";                              
+                                }
+                              }
+                              ?>
+                            </select>
+                          </td>
+                          <td>
+                            <input type="number" name="menge[]" class="form-control menge" min="0" value="" placeholder="0" required="required">
+                          </td>
+                          <td class="text-center">
+                            <button id="btn_del_item_1" type="button" class="btn btn-outline-danger" onclick="deleteItem('1')"><i class="material-icons">delete</i></button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>              
+            </div>
+            <div class="row">
+              
+            </div>
+            </form>
+          </div>
+        </main>
+        <?php include 'common/t_footer.php'; ?>
+      </div>
+    </div>
+    <?php include 'common/t_js.php'; ?>
+    <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
+    <script>
+      $(document).ready(function () {
+        updateLgort();
+      });
+      
+      $("#my_form").submit(function(){
+        $("#btn_save").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+        $("button").attr("disabled","disabled");
+      });
+      
+      $("#werks").change(function(){
+        updateLgort();
+      });
+      
+      function updateLgort() {
+        $(".lgort").html("<option value=''>Please Select S.Loc</option>");
+        $.getJSON("?action=api_wms_get_sloc", {werks:$("#werks").val()}, function(result){
+          $.each(result, function(i, field){
+            $(".lgort").append("<option value='"+field.lgort+"'>"+field.lgort+" - "+field.name1+"</option>");
+          });
+        });
+      }
+      
+      $("#btn_add_item").click(function(){
+        // get the last DIV which ID starts with ^= "klon"
+        var $div = $('tr[id^="mseg_data_"]:last');
+
+        // Read the Number from that DIV's ID (i.e: 3 from "klon3")
+        // And increment that number by 1
+        var num_before = parseInt( $div.prop("id").match(/\d+/g), 10 );
+        var num = num_before +1;
+
+        // Clone it and assign the new ID (i.e: from num 4 to ID "klon4")
+        var $klon_id = 'mseg_data_'+num;
+        var $klon = $div.clone().prop('id', $klon_id );
+
+        // Finally insert $klon wherever you want
+        $div.after( $klon );
+        
+        $("#"+$klon_id+" #btn_del_item_"+num_before).prop("id","btn_del_item_"+num);
+        $("#btn_del_item_"+num).attr("onclick","deleteItem('"+num+"')");
+        $("#"+$klon_id+" .menge").val("");
+      });
+      
+      function deleteItem(num) {
+        if(num == "1") {
+          alert("First item cannot be deleted");
+        } else {
+          $("#mseg_data_"+num).remove();
+        }
+        
+      }
+    </script>
+  </body>
+</html>
