@@ -69,26 +69,40 @@ if ($action == "api_delete_daily_stop") {
 
 if ($action == "api_insert_daily_ng") {
   $class = new Production();
+  $dies = new Dies();
   $param = $_REQUEST;
   if (empty($param["ng_qty"])) {
     $param["ng_qty"] = 0;
   }
+  $prev_data = $class->getItemById($param["line_id"], str_replace("-", "", $param["prd_dt"]), $param["shift"], $param["prd_seq"]);
+  $prev_dies_id = $prev_data["dies_id"];
+  //var_dump($prev_data); die();
   $save = array();
   if (!empty($param["line_id"])) {
     $save = $class->insertNG($param);
+    if($save == true) {
+      $dies->updateStroke($prev_dies_id, $prev_dies_id, 0, $param["ng_qty"]);
+    }
   }
   echo json_encode($save);
 }
 
 if ($action == "api_delete_daily_ng") {
   $class = new Production();
+  $dies = new Dies();
   $line_id = $_REQUEST["line_id"];
   $prd_dt = $_REQUEST["prd_dt"];
   $shift = $_REQUEST["shift"];
   $prd_seq = $_REQUEST["prd_seq"];
   $ng_seq = $_REQUEST["ng_seq"];
+  
+  $get_prev_ng = $class->getNGByID($line_id, $prd_dt, $shift, $prd_seq, $ng_seq);
+  //var_dump($get_prev_ng);die();
   $del = array();
   $del = $class->deleteNG($line_id, $prd_dt, $shift, $prd_seq, $ng_seq);
+  if($del["status"] == true) {
+    $dies->updateStroke($get_prev_ng["dies_id"], $get_prev_ng["dies_id"], $get_prev_ng["ng_qty"], 0);
+  }
   echo json_encode($del);
 }
 

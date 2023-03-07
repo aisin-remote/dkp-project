@@ -106,7 +106,8 @@ if ($action == "daily_production_entry") {
             //insert item
             $cctime = $param["cctime"];
             $dies_id = $param["dies_id"];
-
+            //update zona dies sesuai line id
+            $dies->updateZonaId($param["dies_id"], $param["line_id"]);
             $get_item = $class->getItemTemplateByShift($shift);
             $jml_item = count($get_item);
             $planned_stops = $stop->getPlannedStopByShift($shift);

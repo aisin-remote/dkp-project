@@ -229,10 +229,10 @@ class Production
     $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'DD-MM-YYYY') as prod_date, b.name1 as line_name, c.pval1 as shift_name, "
       . "ld.name1 as ld_name, jp.name1 as jp_name, op1.name1 as op1_name, op2.name1 as op2_name, op3.name1 as op3_name, op4.name1 as op4_name "
       . "FROM t_prd_daily_h a "
-      . "INNER JOIN m_prd_line b ON b.line_id = a.line_id "
-      . "INNER JOIN m_param c ON c.pid = 'SHIFT' and c.seq = a.shift "
-      . "INNER JOIN m_prd_operator ld ON ld.empid = a.ldid "
-      . "INNER JOIN m_prd_operator jp ON jp.empid = a.jpid "
+      . "LEFT JOIN m_prd_line b ON b.line_id = a.line_id "
+      . "LEFT JOIN m_param c ON c.pid = 'SHIFT' and c.seq = a.shift "
+      . "LEFT JOIN m_prd_operator ld ON ld.empid = a.ldid "
+      . "LEFT JOIN m_prd_operator jp ON jp.empid = a.jpid "
       . "LEFT JOIN m_prd_operator op1 ON op1.empid = a.op1id "
       . "LEFT JOIN m_prd_operator op2 ON op2.empid = a.op2id "
       . "LEFT JOIN m_prd_operator op3 ON op3.empid = a.op3id "
@@ -587,6 +587,32 @@ class Production
       $return["message"] = trim(str_replace("\n", " ", $error[2]));
       error_log($error[2]);
     }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+  
+  public function getNGByID($line_id, $date, $shift, $prd_seq, $ng_seq)
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT a.*, b.dies_id FROM t_prd_daily_ng a, t_prd_daily_i b "
+            . "WHERE a.line_id = b.line_id "
+            . "AND a.prd_dt = b.prd_dt "
+            . "AND a.shift = b.shift "
+            . "AND a.prd_seq = b.prd_seq "
+            . "AND a.line_id = b.line_id "
+            . "AND a.prd_dt = '$date' "
+            . "AND a.shift = '$shift' "
+            . "AND a.prd_seq = '$prd_seq' "
+            . "AND a.ng_seq = '$ng_seq' ";
+
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return = $row;
+      }
+    } 
     $stmt = null;
     $conn = null;
     return $return;

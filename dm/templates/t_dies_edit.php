@@ -161,14 +161,13 @@ and open the template in the editor.
 
                     <div class="form-group row">
                       <div class="col-lg-4 col-md-3 col-sm-12 d-sm-none d-md-block"></div>
-                      <div class="col-lg-5 col-md-5 col-sm-12 mx-3">
-                        <div class="row">
+                      <div class="col-lg-6 col-md-9 col-sm-12 d-flex justify-content-around">
                           <button type="submit" name="save" id="submit-btn" value="save" class="btn btn-dark-blue"><span
                               class="material-icons">save</span> Save</button>
                           <?php if ($_GET["id"] != 0) {
 
                             ?>
-                            <div class="dropdown mx-2">
+                            <div class="dropdown">
                               <button class="btn btn-dark-blue dropdown-toggle" type="button" data-toggle="dropdown"
                                 aria-expanded="false">
                                 Dies History
@@ -190,7 +189,6 @@ and open the template in the editor.
                               </div>
                             </div>
                           <?php } ?>
-                        </div>
                       </div>
                     </div>
                   </div>
