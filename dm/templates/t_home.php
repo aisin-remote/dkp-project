@@ -21,11 +21,11 @@ and open the template in the editor.
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
               <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                aria-selected="true">Home</a>
+                aria-selected="true">Dies Status</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" id="mapping-tab" data-toggle="tab" href="#mapping" role="tab" aria-controls="mapping"
-                aria-selected="false">Mapping</a>
+                aria-selected="false">Dies Map</a>
             </li>
           </ul>
           <div class="tab-content container-fluid" id="myTabContent">
@@ -136,7 +136,7 @@ and open the template in the editor.
             <div class="tab-pane fade" id="mapping" role="tabpanel" aria-labelledby="mapping-tab">
               <div class="card mb-3 border-0">
                 <div class="card-body p-0">
-                  <h5 class="mt-3 ml-3">Dies Parking Area</h5>
+                  <h5 class="mt-3 ml-3">Parking Area</h5>
                   <div class="d-flex justify-content-center mt-1">
                     <div class="row" id="mappingP">
                       <?php
@@ -155,7 +155,7 @@ and open the template in the editor.
                     </div>
                   </div>
                   <hr />
-                  <h5 class="ml-3">Dies Production Area</h5>
+                  <h5 class="ml-3">Production Area</h5>
                   <div class="d-flex justify-content-center mt-1">
                     <div class="row" id="mappingL">
                       <?php
@@ -174,7 +174,7 @@ and open the template in the editor.
                     </div>
                   </div>
                   <hr>
-                  <h5 class="mt-2 ml-3">Dies Maintenance Area</h5>
+                  <h5 class="mt-2 ml-3">Maintenance Area</h5>
                   <center>
                     <!-- <div class="d-flex justify-content-center mt-1"> -->
                       <div class="row" id="mappingM">
