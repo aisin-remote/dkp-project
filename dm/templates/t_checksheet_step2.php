@@ -139,25 +139,37 @@ and open the template in the editor.
                           <td class="align-middle px-3 table-item"></td>
                         </tr>
                         <tr>
-                          <td class="align-middle px-3 table-item">Dies Position</td>
+                          <td class="align-middle px-3 table-item">Zona Maintenance</td>
+                          <td class="align-middle px-3 table-item">
+                            <select name="zona1" id="zona1" class="form-control select2">
+                              <?php
+                              foreach ($list_zona as $zona) {                                
+                                if ($zona["zona_type"] == "M") {
+                                  $selected = "";
+                                  if($zona["zona_id"] == $data["data"]["zona1"]){
+                                    $selected = "selected";
+                                  }
+                                  ?>
+                                  <option value="<?php echo $zona["zona_id"]; ?>"  <?=$selected?>><?php echo $zona["desc"]; ?></option>
+                                  <?php
+                                }
+                              }
+                              ?>
+                            </select>
+                          </td>
+                          <td class="align-middle px-3 table-item"></td>
+                        </tr>
+                        <tr>
+                          <td class="align-middle px-3 table-item">Zona Parkir</td>
                           <td class="align-middle px-3 table-item">
                             <select name="zona_id" id="zona_id" class="form-control select2" disabled>
+                              <option value="">Pilih Zona Parkir</option>
                               <?php
-                              foreach ($list_zona as $zona) {
-                                if ($zona["zona_id"] == $data["data"]["zona_id"]) {
+                              foreach ($list_zona as $zona) {                                
+                                if ($zona["zona_type"] == "P") {
                                   ?>
-                                  <!-- <option value="<?php echo $zona["zona_id"]; ?>" <?php if ($zona["zona_id"] == $data["data"]["zona_id"]) {
-                                       echo "selected";
-                                     } ?>><?php echo $zona["desc"]; ?></option> -->
-                                  <option value="<?php echo $zona["zona_id"]; ?>" selected><?php echo $zona["desc"]; ?>
-                                  </option>
+                                  <option value="<?php echo $zona["zona_id"]; ?>"><?php echo $zona["desc"]; ?></option>
                                   <?php
-                                } else {
-                                  if ($zona["zona_type"] == "P") {
-                                    ?>
-                                    <option value="<?php echo $zona["zona_id"]; ?>"><?php echo $zona["desc"]; ?></option>
-                                    <?php
-                                  }
                                 }
                               }
                               ?>
@@ -1190,7 +1202,9 @@ and open the template in the editor.
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
     $(document).ready(function () {
-      $('.view_img').EZView();
+      if($('.view_img').length > 0) {
+        $('.view_img').EZView();
+      }      
     });
 
     $("#my-form").submit(function (event) {
@@ -1232,11 +1246,13 @@ and open the template in the editor.
               $("#imgc1162").attr("required", "required");
             }
             
-            $("select").removeAttr("disabled");
+            $("#zona_id").removeAttr("disabled");
+            $("#zona_id").attr("required","required");
             console.log("csh");
           } else {
             $("input[type=file]").removeAttr("required");
-            $("select").attr("disabled", "disabled");
+            $("#zona_id").removeAttr("required");
+            $("#zona_id").attr("disabled", "disabled");
             console.log("csh else");
           }
         } else {
@@ -1264,11 +1280,13 @@ and open the template in the editor.
             if($("#c1162_x").val().length == 0) {
               $("#imgc1162").attr("required", "required");
             }
-            $("select").removeAttr("disabled");
+            $("#zona_id").removeAttr("disabled");
+            $("#zona_id").attr("required","required");
             console.log("csh 6k");
           } else {
             $("input[type=file]").removeAttr("required");
-            $("select").attr("disabled", "disabled");
+            $("#zona_id").removeAttr("required");
+            $("#zona_id").attr("disabled", "disabled");
             console.log("csh 6k else");
           }
         }
@@ -1298,11 +1316,13 @@ and open the template in the editor.
             if($("#c1162_x").val().length == 0) {
               $("#imgc1162").attr("required", "required");
             }
-            $("select").removeAttr("disabled");
+            $("#zona_id").removeAttr("disabled");
+            $("#zona_id").attr("required","required");
             console.log("tcc 6k");
           } else {
             $("input[type=file]").removeAttr("required");
-            $("select").attr("disabled", "disabled")
+            $("#zona_id").removeAttr("required");
+            $("#zona_id").attr("disabled", "disabled");
             console.log("tcc 6k else")
           }
         } else {
@@ -1330,11 +1350,13 @@ and open the template in the editor.
             if($("#c1162_x").val().length == 0) {
               $("#imgc1162").attr("required", "required");
             }
-            $("select").removeAttr("disabled");
+            $("#zona_id").removeAttr("disabled");
+            $("#zona_id").attr("required","required");
             console.log("tcc");
           } else {
             $("input[type=file]").removeAttr("required");
-            $("select").attr("disabled", "disabled");
+            $("#zona_id").removeAttr("required");
+            $("#zona_id").attr("disabled", "disabled");
             console.log("tcc else");
           }
         }
@@ -1364,11 +1386,13 @@ and open the template in the editor.
             if($("#c1162_x").val().length == 0) {
               $("#imgc1162").attr("required", "required");
             }
-            $("select").removeAttr("disabled", "disabled");
+            $("#zona_id").removeAttr("disabled");
+            $("#zona_id").attr("required","required");
             console.log("opn 6k");
           } else {
             $("input[type=file]").removeAttr("required");
-            $("select").attr("disabled", "disabled");
+            $("#zona_id").removeAttr("required");
+            $("#zona_id").attr("disabled", "disabled");
             console.log("opn 6k else");
           }
         } else {
@@ -1396,11 +1420,13 @@ and open the template in the editor.
             if($("#c1162_x").val().length == 0) {
               $("#imgc1162").attr("required", "required");
             }
-            $("select").removeAttr("disabled", "disabled");
+            $("#zona_id").removeAttr("disabled");
+            $("#zona_id").attr("required","required");
             console.log("opn");
           } else {
             $("input[type=file]").removeAttr("required");
-            $("select").attr("disabled", "disabled");
+            $("#zona_id").removeAttr("required");
+            $("#zona_id").attr("disabled", "disabled");
             console.log("opn else");
           }
         }

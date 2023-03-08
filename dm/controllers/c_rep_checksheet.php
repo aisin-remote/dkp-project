@@ -5,6 +5,7 @@ if ($action == "r_checksheet_preventive") {
   $data["list"];
   $dies = new Dies();
   $class = new Reporting();
+  $zona = new Zona();
 
   $date_from = date('Ymd', strtotime(date('Y-m-d') . '-30 day'));
   if (!empty($_GET["date_from"])) {
@@ -34,7 +35,7 @@ if ($action == "r_checksheet_preventive") {
         } else {
           $data["data"] = $class->getById($id);
         }
-
+        $list_zona = $zona->getList();
         // $data["list"] = $class->getList2($id);
         require(TEMPLATE_PATH . "/t_rep_checksheet2.php");
       }

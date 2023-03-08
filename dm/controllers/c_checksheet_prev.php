@@ -384,7 +384,8 @@ if ($action == "checksheet_preventive") {
         $param["jml_total"] += $param["c11923"];
         $param["c11924"] = (isset($_POST["c11924"])) ? 1 : 0;
         $param["jml_total"] += $param["c11924"];
-        $param["zona2"] = $_POST["zona_id"];
+        $param["zona2"] = trim($_POST["zona_id"]);
+        $param["zona1"] = trim($_POST["zona1"]);
         // var_dump($param["jml_total"]);
         // jika jml_tot sudah 49 maka complete
         // die();

@@ -67,17 +67,17 @@ if ($action == "api_dashboard_prd") {
   }
 
   //cek shift
-  $shift1_s = strtotime(date("Y-m-d") . " 06:00");
-  $shift1_e = strtotime(date("Y-m-d") . " 13:59");
+  $shift1_s = strtotime(date("Y-m-d") . " 07:00");
+  $shift1_e = strtotime(date("Y-m-d") . " 14:59");
 
-  $shift2_s = strtotime(date("Y-m-d") . " 14:00");
-  $shift2_e = strtotime(date("Y-m-d") . " 21:59");
+  $shift2_s = strtotime(date("Y-m-d") . " 15:00");
+  $shift2_e = strtotime(date("Y-m-d") . " 22:59");
 
-  $shift3_s = strtotime(date("Y-m-d") . " 22:00");
+  $shift3_s = strtotime(date("Y-m-d") . " 23:00");
   $shift3_e = strtotime(date("Y-m-d") . " 23:59");
 
   $shift4_s = strtotime(date("Y-m-d") . " 00:00");
-  $shift4_e = strtotime(date("Y-m-d") . " 05:59");
+  $shift4_e = strtotime(date("Y-m-d") . " 06:59");
 
   $current_time = strtotime(date("Y-m-d H:i"));
 
@@ -104,12 +104,13 @@ if ($action == "api_dashboard_prd") {
     60 as per_jam 
     from t_prd_daily_i a 
     inner join m_prd_line b ON b.line_id = a.line_id 
+	  INNER JOIN m_param p ON p.pid = 'SHIFT' AND a.shift = p.seq 
     LEFT JOIN ( 
       SELECT line_id, line_ty 
       FROM m_prd_line 
       WHERE line_ty = 'DM' 
     ) g ON a.line_id = g.line_id 
-    where a.prd_dt = '$today' and a.shift = '$shift' and a.stats = 'A' AND a.line_id = g.line_id ) t 
+    where a.prd_dt = '$today' and p.pval4 = '$shift' and a.stats = 'A' AND a.line_id = g.line_id ) t 
     group by 1,2 order by 1 asc";
 
   $stmt = $conn->prepare($query_sum);

@@ -84,11 +84,47 @@ and open the template in the editor.
                                                     <td class="align-middle px-3 table-item"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="align-middle px-3 table-item">Dies Position</td>
-                                                    <td class="align-middle px-3 table-item">
-                                                        <input class="form-control form-control-sm" name="pmtby" type="text" value="<?php echo $data["data"]["desc"]; ?>" readonly>
-                                                    </td>
-                                                    <td class="align-middle px-3 table-item"></td>
+                                                  <td class="align-middle px-3 table-item">Zona Maintenance</td>
+                                                  <td class="align-middle px-3 table-item">
+                                                    <select name="zona1" id="zona1" class="form-control select2" disabled>
+                                                      <?php
+                                                      foreach ($list_zona as $zona) {                                
+                                                        if ($zona["zona_type"] == "M") {
+                                                          $selected = "";
+                                                          if($zona["zona_id"] == $data["data"]["zona1"]){
+                                                            $selected = "selected";
+                                                          }
+                                                          ?>
+                                                          <option value="<?php echo $zona["zona_id"]; ?>"  <?=$selected?>><?php echo $zona["desc"]; ?></option>
+                                                          <?php
+                                                        }
+                                                      }
+                                                      ?>
+                                                    </select>
+                                                  </td>
+                                                  <td class="align-middle px-3 table-item"></td>
+                                                </tr>
+                                                <tr>
+                                                  <td class="align-middle px-3 table-item">Zona Parkir</td>
+                                                  <td class="align-middle px-3 table-item">
+                                                    <select name="zona_id" id="zona_id" class="form-control select2" disabled>
+                                                      <option value="">Pilih Zona Parkir</option>
+                                                      <?php
+                                                      foreach ($list_zona as $zona) {                                
+                                                        if ($zona["zona_type"] == "P") {
+                                                          $selected = "";
+                                                          if($zona["zona_id"] == $data["data"]["zona2"]){
+                                                            $selected = "selected";
+                                                          }
+                                                          ?>
+                                                          <option value="<?php echo $zona["zona_id"]; ?>"  <?=$selected?>><?php echo $zona["desc"]; ?></option>
+                                                          <?php
+                                                        }
+                                                      }
+                                                      ?>
+                                                    </select>
+                                                  </td>
+                                                  <td class="align-middle px-3 table-item"></td>
                                                 </tr>
                                             </tbody>
                                         </table>

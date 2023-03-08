@@ -216,7 +216,7 @@ and open the template in the editor.
           if ($i == 0) {
             first_model = val.model_id;
             if (first_model.length > 0) {
-              getDiesList(first_model);
+              getDiesList($("#group_id").val(), first_model);
             }
           }
           console.log(val.model_id);

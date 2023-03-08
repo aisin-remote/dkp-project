@@ -198,12 +198,16 @@ class Checksheet
         . "c11923 = :c11923, "
         . "c11924 = :c11924,"
         . "pmstat = :pmstat,"
-        . "zona2 = '".$zona_id."' ";
+        . "zona1 = '".$param["zona1"]."',"
+        . "zona2 = '".$param["zona2"]."' ";
       if ($param["pmstat"] == "C") {
         $sql .= ",cdate = CURRENT_TIMESTAMP ";
+        $sql2 = "UPDATE m_dm_dies_asset SET zona_id = '".$param["zona2"]."' WHERE dies_id = ".$param["dies_id"]." ";
+      } else {
+        $sql2 = "UPDATE m_dm_dies_asset SET zona_id = '".$param["zona1"]."' WHERE dies_id = ".$param["dies_id"]." ";
       }
       $sql .= "WHERE pmtid = :pmtid ";
-      $sql2 = "UPDATE m_dm_dies_asset SET zona_id = '".$zona_id."' WHERE dies_id = ".$param["dies_id"]." AND stats = 'A'";
+      
       $stmt = $conn->prepare($sql);
       $stmt2 = $conn->prepare($sql2);
       $stmt->bindValue(":pmtid", strtoupper(trim($param["pmtid"])), PDO::PARAM_STR);

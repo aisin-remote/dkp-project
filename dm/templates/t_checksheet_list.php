@@ -70,7 +70,7 @@ and open the template in the editor.
                 <div class="card-body">
                   <div class="table-responsive">
                     <!-- Edit Here -->
-                    <table class="table table-striped table-sm" id="data-table">
+                    <table class="table table-striped table-sm" id="data-table-y">
                       <thead>
                         <tr>
                           <th class="">PM. Doc. No.</th>
@@ -120,7 +120,14 @@ and open the template in the editor.
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    $(document).ready(function() {});
+    $(document).ready(function() {
+      $("#data-table-y").DataTable({
+          stateSave: true,
+          order: [
+              [0, 'desc']
+          ]
+      });
+    });
   </script>
 </body>
 

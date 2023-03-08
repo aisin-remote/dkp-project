@@ -458,4 +458,12 @@ class Dies
     $conn = null;
     return $return;
   }
+  
+  public function resetStroke2K($dies_id) {
+    
+  }
+  
+  public function resetStroke6K($dies_id) {
+    
+  }
 }
