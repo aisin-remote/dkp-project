@@ -90,10 +90,10 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Group</label>
                       <div class="col-lg-2 col-md-5 col-sm-12">
-                        <select name="type2" class="form-control select2">
+                        <select name="type3" class="form-control select2">
                           <option value="" selected>No Group</option>
-                          <option value="mesin">MESIN</option>
-                          <option value="dies">DIES</option>
+                          <option value="MESIN" <?php if($data["data"]["type3"] == "MESIN"){echo "selected";} ?>>MESIN</option>
+                          <option value="DIES" <?php if($data["data"]["type3"] == "DIES"){echo "selected";} ?>>DIES</option>
                         </select>
                       </div>
                     </div>
@@ -101,8 +101,8 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Sub Group</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
-                        <input type="text" name="subgroup" class="form-control" maxlength="100"
-                          value="">
+                        <input type="text" name="type4" class="form-control" maxlength="100"
+                          value="<?=$data["data"]["type4"]?>">
                       </div>
                     </div>
 

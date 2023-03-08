@@ -325,7 +325,7 @@ and open the template in the editor.
       <!-- Modal -->
       <div class="modal fade" id="mymodal01" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="mymodal01Label" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="mymodal01Label">Add Content</h5>
@@ -344,7 +344,7 @@ and open the template in the editor.
                     if (!empty($list_stop)) {
                       foreach ($list_stop as $row) {
                         ?>
-                        <option value="<?php echo $row["srna_id"]; ?>"><?php echo $row["type2_text"] . " - " . $row["name1"]; ?>
+                        <option value="<?php echo $row["srna_id"]; ?>"><?php echo $row["type2_text"] . " - " . $row["type3"] . " - " . $row["type4"] . " - " . $row["name1"]; ?>
                         </option>
                         <?php
                       }

@@ -15,6 +15,12 @@ if ($action == "checksheet_preventive") {
       if (isset($_POST["save"])) {
         $param = $_POST;
         $param["pmtby"] = $_SESSION[LOGIN_SESSION];
+        //cek apakah zona maintenance sedang dipakai
+        $zone_used = $zona->isUsed($param["zona_id"], $param["dies_id"]);
+        if($zone_used["count"] > 0) {
+          header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&error=Zona Maintenance [".$zone_used["desc"]."] Sedang Dipakai!");
+          die();
+        }
         //cek dulu apakah dies sudah saatnya maintenance
         $cek_dies = $dies->getDiesById($param["dies_id"]);
         //pengecekan jika belum 2000
@@ -391,7 +397,12 @@ if ($action == "checksheet_preventive") {
         // die();
 
         // echo $param["group_id"] . " - " . $param["jml_total"];
-
+        //cek apakah zona maintenance dipakai
+        $zone_used = $zona->isUsed($param["zona1"], $param["dies_id"]);
+        if($zone_used["count"] > 0) {
+          header("Location: ?action=" . $action . "&id=" . $id . "&step=2" . "&error=Zona Maintenance [".$zone_used["desc"]."] Sedang Dipakai!");
+          die();
+        }
         $save = array();
 
         $param["pmstat"] = "N";
