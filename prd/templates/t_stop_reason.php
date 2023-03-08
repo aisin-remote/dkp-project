@@ -75,6 +75,8 @@ and open the template in the editor.
                           <th class="align-middle">Konten ID</th>
                           <th class="align-middle">Type</th>
                           <th class="align-middle">Planned/Unplanned</th>
+                          <th class="align-middle">Group</th>
+                          <th class="align-middle">Sub Group</th>
                           <th class="align-middle">Description</th>
                           <th class="align-middle">Shift</th>
                           <th class="text-center align-middle">Action</th>
@@ -88,6 +90,8 @@ and open the template in the editor.
                               . "<td class='align-middle'>" . $list["srna_id"] . "</td>"
                               . "<td class='align-middle'>" . $list["type1_text"] . "</td>"
                               . "<td class='align-middle'>" . $list["type2_text"] . "</td>"
+                              . "<td class='align-middle'>" . $list["type3"] . "</td>"
+                              . "<td class='align-middle'>" . $list["type4"] . "</td>"
                               . "<td class='align-middle'>" . $list["name1"] . "</td>"
                               . "<td class='align-middle'>" . $list["shift"] . "</td>"
                               . "<td class='text-center'>"
