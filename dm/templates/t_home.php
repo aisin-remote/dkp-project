@@ -136,7 +136,7 @@ and open the template in the editor.
             <div class="tab-pane fade" id="mapping" role="tabpanel" aria-labelledby="mapping-tab">
               <div class="card mb-3 border-0">
                 <div class="card-body p-0">
-                  <h5 class="mt-2">Dies Parking Area</h5>
+                  <h5 class="mt-3 ml-3">Dies Parking Area</h5>
                   <div class="d-flex justify-content-center mt-1">
                     <div class="row" id="mappingP">
                       <?php
@@ -155,7 +155,7 @@ and open the template in the editor.
                     </div>
                   </div>
                   <hr />
-                  <h5>Dies Production Area</h5>
+                  <h5 class="ml-3">Dies Production Area</h5>
                   <div class="d-flex justify-content-center mt-1">
                     <div class="row" id="mappingL">
                       <?php
@@ -174,7 +174,7 @@ and open the template in the editor.
                     </div>
                   </div>
                   <hr>
-                  <h5 class="mt-2">Dies Maintenance Area</h5>
+                  <h5 class="mt-2 ml-3">Dies Maintenance Area</h5>
                   <center>
                     <!-- <div class="d-flex justify-content-center mt-1"> -->
                       <div class="row" id="mappingM">
@@ -182,7 +182,7 @@ and open the template in the editor.
                         foreach ($list_zona as $list) {
                           if ($list["zona_type"] == "M") {
                             echo "<div class='col-3 mb-2'>"
-                              . "<div class='card " . $list["bg"] . "' style='width: 300px; height: 250px'>"
+                              . "<div class='card " . $list["bg"] . "' style='width: 300px; height: 170px'>"
                               . "<div class='card-body p-2'>"
                               . "<div class='card-title p-1 text-white font-weight-bold'>" . $list["desc"] . "</div>"
                               . "</div>"
@@ -207,7 +207,7 @@ and open the template in the editor.
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    // setInterval(updateDashboard, 5000);
+    setInterval(updateDashboard, 5000);
     setInterval(mapping, 3000);
 
     $(document).ready(function () {
@@ -318,10 +318,10 @@ and open the template in the editor.
                 append_dataP += "</div></div></div></div>";
               } else if (zona[i].zona_type == "M") {
                 append_dataM += "<div class='col-3 mb-2'>";
-                append_dataM += "<div class='card " + zona[i].bg + "' style='width: 300px; height: 220px'>";
+                append_dataM += "<div class='card " + zona[i].bg + "' style='width: 300px; height: 170px'>";
                 append_dataM += "<div class='card-body p-2'>";
                 append_dataM += "<div class='card-title p-1 text-white font-weight-bold'>" + zona[i].desc + "</div>";
-                append_dataM += "<div class='row no-gutters justify-content-center'>";
+                append_dataM += "<div class='row no-gutters'>";
                 if (model.length != 0) {
                   var j = 0
                   $.each(model, function (row, m) {
