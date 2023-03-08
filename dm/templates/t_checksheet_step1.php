@@ -122,7 +122,7 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Zone</label>
                       <div class="col-lg-2 col-md-5 col-sm-12">
-                        <select name="zona_id" id="dies_id" class="form-control select2">
+                        <select name="zona_id" id="zona_id" class="form-control select2">
                           <?php
                           foreach ($list_zona as $zona) {
                             if ($zona["zona_type"] == "M") {

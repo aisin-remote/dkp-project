@@ -339,12 +339,12 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.prd_dt, a.shift, c.name1 AS line_name, e.name1 AS operator, b.name1 AS dies_name, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, coalesce(f.ng_qty, 0) as tot_ng, COALESCE(g.stop_time, 0) as loss_time, h.name1 AS apr_name 
+        $sql = "SELECT a.prd_dt, a.prd_time, a.shift, c.name1 AS line_name, e.name1 AS operator, b.name1 AS dies_name, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, coalesce(f.ng_qty, 0) as tot_ng, COALESCE(g.stop_time, 0) as loss_time, h.name1 AS apr_name 
                 FROM t_prd_daily_i a
-                LEFT JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint)
-                LEFT JOIN m_prd_line c ON c.line_id = a.line_id AND c.line_ty = 'DM'
-                LEFT JOIN t_prd_daily_h d ON d.prd_dt = a.prd_dt AND d.shift = a.shift AND d.line_id = a.line_id
-                LEFT JOIN m_prd_operator e ON e.empid = d.jpid
+                INNER JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint)
+                INNER JOIN m_prd_line c ON c.line_id = a.line_id AND c.line_ty = 'DM'
+                INNER JOIN t_prd_daily_h d ON d.prd_dt = a.prd_dt AND d.shift = a.shift AND d.line_id = a.line_id
+                INNER JOIN m_prd_operator e ON e.empid = d.jpid
                 LEFT JOIN t_prd_daily_ng f ON f.prd_dt = a.prd_dt AND f.shift = a.shift AND f.line_id = a.line_id
                 LEFT JOIN t_prd_daily_stop g ON g.prd_dt = a.prd_dt AND g.shift = a.shift AND g.line_id = a.line_id
                 LEFT JOIN m_user h ON h.usrid = a.apr_by
