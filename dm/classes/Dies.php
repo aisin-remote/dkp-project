@@ -460,10 +460,40 @@ class Dies
   }
   
   public function resetStroke2K($dies_id) {
-    
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "UPDATE m_dm_dies_asset SET stkrun = '0', stk2k = '0' WHERE dies_id = '$dies_id'";
+
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
   }
   
   public function resetStroke6K($dies_id) {
-    
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "UPDATE m_dm_dies_asset SET stkrun = '0', stk2k = '0', stk6k = '0' WHERE dies_id = '$dies_id'";
+
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
   }
 }
