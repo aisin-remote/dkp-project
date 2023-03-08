@@ -408,7 +408,7 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.prd_dt, a.shift, c.name1 AS line_name, e.name1 AS operator, b.name1 AS dies_name, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, a.apr_by, f.start_time, f.end_time, f.stop_time, f.qty_stc, g.name1 AS stop, h.name1 AS action, f.remarks, i.name1 AS eksekutor 
+        $sql = "SELECT a.prd_dt, a.shift, c.name1 AS line_name, e.name1 AS operator, b.name1 AS dies_name, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, a.apr_by, f.start_time, f.end_time, f.stop_time, f.qty_stc, g.type3, g.type4, g.name1 AS stop, h.name1 AS action, f.remarks, i.name1 AS eksekutor 
                 FROM t_prd_daily_i a
                 LEFT JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint)
                 LEFT JOIN m_prd_line c ON c.line_id = a.line_id AND c.line_ty = 'DM'

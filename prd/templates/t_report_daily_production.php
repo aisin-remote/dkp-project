@@ -123,14 +123,8 @@ and open the template in the editor.
               <label class="col-form-label px-3">to</label>
               <div class="col"><input type="text" name="date_to" class="form-control datepicker" value="<?php echo $date_to; ?>"></div>
             </div>
-            <!-- <div class="row my-2">
-              <div class="col-4"><label class="col-form-label">Year</label></div>
-              <div class="col"><input type="text" name="prd_year" class="form-control" value="<?php echo $prd_year; ?>"></div>
-            </div>
-            <div class="row my-2">
-              <div class="col-4"><label class="col-form-label">Month</label></div>
-              <div class="col"><input type="text" name="prd_month" class="form-control" value="<?php echo $prd_month; ?>"></div>
-            </div> -->
+            <!-- <div clas
+           -->
             <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Shift</label></div>
               <div class="col"><input type="text" name="shift" class="form-control" value="<?php echo $shift; ?>"></div>
