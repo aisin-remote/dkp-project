@@ -88,19 +88,21 @@ and open the template in the editor.
                     </div>
 
                     <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Planned/Unplanned</label>
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Group</label>
                       <div class="col-lg-2 col-md-5 col-sm-12">
                         <select name="type2" class="form-control select2">
-                          <?php
-                          foreach ($type2_list as $type) {
-                            ?>
-                            <option value="<?php echo $type["type"]; ?>" <?php if ($type["type"] == $data["data"]["type2"]) {
-                                 echo "selected";
-                               } ?>><?php echo $type["name1"]; ?></option>
-                            <?php
-                          }
-                          ?>
+                          <option value="" selected>No Group</option>
+                          <option value="mesin">MESIN</option>
+                          <option value="dies">DIES</option>
                         </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Sub Group</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <input type="text" name="subgroup" class="form-control" maxlength="100"
+                          value="">
                       </div>
                     </div>
 

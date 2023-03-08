@@ -123,14 +123,14 @@ and open the template in the editor.
               <label class="col-form-label px-3">to</label>
               <div class="col"><input type="text" name="date_to" class="form-control datepicker" value="<?php echo $date_to; ?>"></div>
             </div>
-            <div class="row my-2">
+            <!-- <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Year</label></div>
               <div class="col"><input type="text" name="prd_year" class="form-control" value="<?php echo $prd_year; ?>"></div>
             </div>
             <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Month</label></div>
               <div class="col"><input type="text" name="prd_month" class="form-control" value="<?php echo $prd_month; ?>"></div>
-            </div>
+            </div> -->
             <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Shift</label></div>
               <div class="col"><input type="text" name="shift" class="form-control" value="<?php echo $shift; ?>"></div>
@@ -139,14 +139,14 @@ and open the template in the editor.
               <div class="col-4"><label class="col-form-label">Line DC</label></div>
               <div class="col"><input type="text" name="line_id" class="form-control" value="<?php echo $line_id; ?>"></div>
             </div>
-            <div class="row my-2">
+            <!-- <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Leader</label></div>
               <div class="col"><input type="text" name="ldid" class="form-control" value="<?php echo $ldid; ?>"></div>
             </div>
             <div class="row my-2">
               <div class="col-4"><label class="col-form-label">JP</label></div>
               <div class="col"><input type="text" name="jpid" class="form-control" value="<?php echo $jpid; ?>"></div>
-            </div>
+            </div> -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>

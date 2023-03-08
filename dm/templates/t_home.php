@@ -154,7 +154,7 @@ and open the template in the editor.
                     </div>
                   </div>
                   <hr>
-                  <h5 class="mt-2">Die Maintenance Area</h5>
+                  <h5 class="mt-2">Dies Maintenance Area</h5>
                   <div class="d-flex justify-content-center mt-1">
                     <div class="row" id="mappingM">
                       <?php
@@ -215,7 +215,7 @@ and open the template in the editor.
                     append_data += "<div class='col-lg-3 p-1'>";
                     append_data += "<div class='card'>";
                     append_data += "<div class='px-2 py-2 card-body rounded border border-secondary rounded' style=' background-color: " + data_model[j].colour + "; '>";
-                    append_data += "<h4 class='card-title text-center mb-0 font-weight-bold " + data_model[j].font_colour + "'>" + data_model[j].model_id + "</h4>";
+                    append_data += "<h4 class='card-title text-center text-white mb-0 font-weight-bold " + data_model[j].font_colour + "'>" + data_model[j].model_id + "</h4>";
                     append_data += "</div>";
                     append_data += "</div>";
                     append_data += "</div>";
