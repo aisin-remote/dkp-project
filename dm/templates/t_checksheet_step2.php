@@ -70,8 +70,8 @@ and open the template in the editor.
                             Dies</a>
                         </div>
                       </div>
-                      <button type="button" class="btn btn-dark-blue btn-sm px-4" id="btn-print">Print
-                        Checksheet</button>
+                      <!--button type="button" class="btn btn-dark-blue btn-sm px-4" id="btn-print">Print
+                        Checksheet</button-->
                     </div>
                   </div>
                 </div>

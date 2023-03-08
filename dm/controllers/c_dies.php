@@ -9,7 +9,7 @@ if ($action == "dies") {
   if (isset($_POST["chg_status"])) {
     $all_id = $_POST["chk_id"];
     $extract_id = implode("','", $all_id);
-
+    
     $update = $class->updateStatus($extract_id);
 
     if ($update["status"] == true) {
@@ -92,7 +92,12 @@ if ($action == "dies") {
           die();
         }
       }
-
+      //cek zona
+      $zone_used = $zona->isUsed($param["zona_id"], $param["dies_id"]);
+      if($zone_used["count"] > 0) {
+        header("Location: ?action=" . $action . "&id=" . $id . "&error=Zona Maintenance [".$zone_used["desc"]."] Sedang Dipakai!");
+        die();
+      }
       $save = array();
       if ($id == "0") {
         $save = $class->insertDies($param);
