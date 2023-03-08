@@ -63,6 +63,8 @@ and open the template in the editor.
                           <th class="align-middle">End Time</th>
                           <th class="align-middle">Stop Time(m)</th>
                           <th class="align-middle">Qty Steuchi</th>
+                          <th class="align-middle">Group</th>
+                          <th class="align-middle">Sub Group</th>
                           <th class="align-middle">Konten Stop</th>
                           <th class="align-middle">Konten Penanganan (Action)</th>
                           <th class="align-middle">Remarks</th>
@@ -82,7 +84,9 @@ and open the template in the editor.
                               . "<td class='align-middle'>" . $list["end_time"] . "</td>"
                               . "<td class='align-middle'>" . $list["stop_time"] . "</td>"
                               . "<td class='align-middle'>" . $list["qty_stc"] . "</td>"
-                              . "<td class='align-middle'>" . $list["type3"] ." - ". $list["type4"] ." - ". $list["stop"] . "</td>"
+                              . "<td class='align-middle'>" . $list["type3"] . "</td>"
+                              . "<td class='align-middle'>" . $list["type4"] . "</td>"
+                              . "<td class='align-middle'>" . $list["stop"] . "</td>"
                               . "<td class='align-middle'>" . $list["action"] . "</td>"
                               . "<td class='align-middle'>" . $list["remarks"] . "</td>"
                               . "<td class='align-middle'>" . $list["eksekutor"] . "</td>"
