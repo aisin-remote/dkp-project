@@ -50,7 +50,7 @@ and open the template in the editor.
                       <button type="submit" type="button" name="btn-save" id="btn-save"
                         class="btn btn-dark-blue btn-sm px-5 mx-2">Save</button>
                       <div class="dropdown mr-2">
-                        <button class="btn btn-sm btn-dark-blue dropdown-toggle" type="button" data-toggle="dropdown"
+                        <button id="btn-hist" class="btn btn-sm btn-dark-blue dropdown-toggle" type="button" data-toggle="dropdown"
                           aria-expanded="false">
                           Dies History
                         </button>
@@ -184,7 +184,7 @@ and open the template in the editor.
                           </th>
                           <th class="align-middle px-3 table-header" scope="col">
                             <input type="file" id="imgc11100" accept="image/png, image/jpeg" name="c11100" />
-                            <input type="hidden" name="c11100_x" value="<?= $data["data"]["c11100"]; ?>" />
+                            <input type="hidden" name="c11100_x" id="c11100_x" value="<?= $data["data"]["c11100"]; ?>" />
                           </th>
                           <th class="align-middle px-3 table-header" scope="col">
                             <?= (!empty($data["data"]["c11100"])) ? "<a class='view_img btn btn-outline-primary btn-sm' href='data:image/jpg;base64," . $data["data"]["c11100"] . "'>View Image</a>" : "" ?>
@@ -907,7 +907,7 @@ and open the template in the editor.
                               echo "";
                             } ?> accept="image/png, image/jpeg" name="c1162"
                               id="upload-image" />
-                            <input type="hidden" name="c1162_x" value="<?= $data["data"]["c1162"]; ?>">
+                            <input type="hidden" name="c1162_x" id="c1162_x" value="<?= $data["data"]["c1162"]; ?>">
                           </th>
                           <th class="align-middle px-3 table-header" scope="col">
                             <?= (!empty($data["data"]["c1162"])) ? "<a class='view_img btn btn-outline-primary btn-sm' href='data:image/jpg;base64," . $data["data"]["c1162"] . "'>View Image</a>" : "" ?>
@@ -1199,6 +1199,9 @@ and open the template in the editor.
 
       $("#btn-print").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
       $("#btn-print").attr("disabled", "disabled");
+      
+      $("#btn-hist").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+      $("#btn-hist").attr("disabled", "disabled");
     });
 
     function cek_cb() {
@@ -1221,13 +1224,20 @@ and open the template in the editor.
             $("#c1181").is(":checked") && $("#c1182").is(":checked") &&
             $("#c11911").is(":checked") && $("#c11912").is(":checked") && $("#c11913").is(":checked") && $("#c11914").is(":checked") &&
             $("#c11921").is(":checked") && $("#c11922").is(":checked") && $("#c11923").is(":checked") && $("#c11924").is(":checked")) {
-            $("input[type=file]").attr("required", "required");
-            $("select").removeAttr("disabled")
-            console.log("csh")
+            if($("#c11100_x").val().length == 0) {
+              $("#imgc11100").attr("required", "required");
+            }
+            
+            if($("#c1162_x").val().length == 0) {
+              $("#imgc1162").attr("required", "required");
+            }
+            
+            $("select").removeAttr("disabled");
+            console.log("csh");
           } else {
             $("input[type=file]").removeAttr("required");
-            $("select").attr("disabled", "disabled")
-            console.log("csh else")
+            $("select").attr("disabled", "disabled");
+            console.log("csh else");
           }
         } else {
           if (
@@ -1247,13 +1257,19 @@ and open the template in the editor.
             $("#c1181").is(":checked") && $("#c1182").is(":checked") &&
             $("#c11911").is(":checked") && $("#c11912").is(":checked") && $("#c11913").is(":checked") && $("#c11914").is(":checked") &&
             $("#c11921").is(":checked") && $("#c11922").is(":checked") && $("#c11923").is(":checked") && $("#c11924").is(":checked")) {
-            $("input[type=file]").attr("required", "required");
-            $("select").removeAttr("disabled")
-            console.log("csh 6k")
+            if($("#c11100_x").val().length == 0) {
+              $("#imgc11100").attr("required", "required");
+            }
+            
+            if($("#c1162_x").val().length == 0) {
+              $("#imgc1162").attr("required", "required");
+            }
+            $("select").removeAttr("disabled");
+            console.log("csh 6k");
           } else {
             $("input[type=file]").removeAttr("required");
-            $("select").attr("disabled", "disabled")
-            console.log("csh 6k else")
+            $("select").attr("disabled", "disabled");
+            console.log("csh 6k else");
           }
         }
       } else if ($("#group").val() == "TCC") {
@@ -1275,9 +1291,15 @@ and open the template in the editor.
             $("#c1181").is(":checked") && $("#c1182").is(":checked") && $("#c1183").is(":checked") && $("#c1184").is(":checked") && $("#c1185").is(":checked") &&
             $("#c11911").is(":checked") && $("#c11912").is(":checked") && $("#c11913").is(":checked") && $("#c11914").is(":checked") &&
             $("#c11921").is(":checked") && $("#c11922").is(":checked") && $("#c11923").is(":checked") && $("#c11924").is(":checked")) {
-            $("input[type=file]").attr("required", "required");
-            $("select").removeAttr("disabled")
-            console.log("tcc 6k")
+            if($("#c11100_x").val().length == 0) {
+              $("#imgc11100").attr("required", "required");
+            }
+            
+            if($("#c1162_x").val().length == 0) {
+              $("#imgc1162").attr("required", "required");
+            }
+            $("select").removeAttr("disabled");
+            console.log("tcc 6k");
           } else {
             $("input[type=file]").removeAttr("required");
             $("select").attr("disabled", "disabled")
@@ -1301,13 +1323,19 @@ and open the template in the editor.
             $("#c1181").is(":checked") && $("#c1182").is(":checked") && $("#c1183").is(":checked") && $("#c1184").is(":checked") && $("#c1185").is(":checked") &&
             $("#c11911").is(":checked") && $("#c11912").is(":checked") && $("#c11913").is(":checked") && $("#c11914").is(":checked") &&
             $("#c11921").is(":checked") && $("#c11922").is(":checked") && $("#c11923").is(":checked") && $("#c11924").is(":checked")) {
-            $("input[type=file]").attr("required", "required");
-            $("select").removeAttr("disabled")
-            console.log("tcc")
+            if($("#c11100_x").val().length == 0) {
+              $("#imgc11100").attr("required", "required");
+            }
+            
+            if($("#c1162_x").val().length == 0) {
+              $("#imgc1162").attr("required", "required");
+            }
+            $("select").removeAttr("disabled");
+            console.log("tcc");
           } else {
             $("input[type=file]").removeAttr("required");
-            $("select").attr("disabled", "disabled")
-            console.log("tcc else")
+            $("select").attr("disabled", "disabled");
+            console.log("tcc else");
           }
         }
       } else if ($("#group").val() == "OPN") {
@@ -1329,13 +1357,19 @@ and open the template in the editor.
             $("#c1181").is(":checked") && $("#c1182").is(":checked") && $("#c1183").is(":checked") && $("#c1184").is(":checked") &&
             $("#c11911").is(":checked") && $("#c11912").is(":checked") && $("#c11913").is(":checked") && $("#c11914").is(":checked") &&
             $("#c11921").is(":checked") && $("#c11922").is(":checked") && $("#c11923").is(":checked") && $("#c11924").is(":checked")) {
-            $("input[type=file]").attr("required", "required");
-            $("select").removeAttr("disabled", "disabled")
-            console.log("opn 6k")
+            if($("#c11100_x").val().length == 0) {
+              $("#imgc11100").attr("required", "required");
+            }
+            
+            if($("#c1162_x").val().length == 0) {
+              $("#imgc1162").attr("required", "required");
+            }
+            $("select").removeAttr("disabled", "disabled");
+            console.log("opn 6k");
           } else {
             $("input[type=file]").removeAttr("required");
-            $("select").attr("disabled", "disabled")
-            console.log("opn 6k else")
+            $("select").attr("disabled", "disabled");
+            console.log("opn 6k else");
           }
         } else {
           if (
@@ -1355,13 +1389,19 @@ and open the template in the editor.
             $("#c1181").is(":checked") && $("#c1182").is(":checked") && $("#c1183").is(":checked") && $("#c1184").is(":checked") &&
             $("#c11911").is(":checked") && $("#c11912").is(":checked") && $("#c11913").is(":checked") && $("#c11914").is(":checked") &&
             $("#c11921").is(":checked") && $("#c11922").is(":checked") && $("#c11923").is(":checked") && $("#c11924").is(":checked")) {
-            $("input[type=file]").attr("required", "required");
-            $("select").removeAttr("disabled", "disabled")
-            console.log("opn")
+            if($("#c11100_x").val().length == 0) {
+              $("#imgc11100").attr("required", "required");
+            }
+            
+            if($("#c1162_x").val().length == 0) {
+              $("#imgc1162").attr("required", "required");
+            }
+            $("select").removeAttr("disabled", "disabled");
+            console.log("opn");
           } else {
             $("input[type=file]").removeAttr("required");
-            $("select").attr("disabled", "disabled")
-            console.log("opn else")
+            $("select").attr("disabled", "disabled");
+            console.log("opn else");
           }
         }
       }

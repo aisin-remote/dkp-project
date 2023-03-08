@@ -79,8 +79,8 @@ class Checksheet
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO t_dm_cs_h (pmtid, pmtdt, pmtstk, pmtype, dies_id, pmtby) "
-        . "values (:pmtid, :pmtdt, (SELECT stkrun FROM m_dm_dies_asset WHERE dies_id = :dies_id), :pmtype, :dies_id, :pmtby) ";
+      $sql = "INSERT INTO t_dm_cs_h (pmtid, pmtdt, pmtstk, pmtype, dies_id, pmtby, zona1) "
+        . "values (:pmtid, :pmtdt, (SELECT stkrun FROM m_dm_dies_asset WHERE dies_id = :dies_id), :pmtype, :dies_id, :pmtby, '".$param["zona_id"]."') ";
       $sql2 = "UPDATE m_dm_dies_asset SET zona_id = '".$param["zona_id"]."' WHERE dies_id = ".$param["dies_id"]." AND stats = 'A'";
       $stmt = $conn->prepare($sql);
       $stmt2 = $conn->prepare($sql2);
@@ -197,7 +197,8 @@ class Checksheet
         . "c11922 = :c11922, "
         . "c11923 = :c11923, "
         . "c11924 = :c11924,"
-        . "pmstat = :pmstat ";
+        . "pmstat = :pmstat,"
+        . "zona2 = '".$zona_id."' ";
       if ($param["pmstat"] == "C") {
         $sql .= ",cdate = CURRENT_TIMESTAMP ";
       }
