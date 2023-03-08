@@ -82,7 +82,7 @@ and open the template in the editor.
                               . "<td class='align-middle'>" . $list["end_time"] . "</td>"
                               . "<td class='align-middle'>" . $list["stop_time"] . "</td>"
                               . "<td class='align-middle'>" . $list["qty_stc"] . "</td>"
-                              . "<td class='align-middle'>" . $list["stop"] . "</td>"
+                              . "<td class='align-middle'>" . $list["type3"] ." - ". $list["type4"] ." - ". $list["stop"] . "</td>"
                               . "<td class='align-middle'>" . $list["action"] . "</td>"
                               . "<td class='align-middle'>" . $list["remarks"] . "</td>"
                               . "<td class='align-middle'>" . $list["eksekutor"] . "</td>"
