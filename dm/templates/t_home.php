@@ -139,50 +139,13 @@ and open the template in the editor.
                   <h5 class="mt-2">Dies Parking Area</h5>
                   <div class="d-flex justify-content-center mt-1">
                     <div class="row" id="mappingP">
-                          <?php
-                          foreach ($list_zona as $list) {
-                            if ($list["zona_type"] == "P") {
-                              echo "<div class='col-3 mb-2'>"
-                                . "<div class='card " . $list["bg"] . "' style='width: 300px; height: 250px'>"
-                                . "<div class='card-body p-2'>"
-                                . "<div class='card-title p-1 font-weight-bold'>" . $list["desc"] . "</div>"
-                                . "</div>"
-                                . "</div>"
-                                . "</div>";
-                            }
-                          }
-                          ?>
-                    </div>
-                  </div>
-                  <hr />
-                  <h5>Dies Production Area</h5>
-                      <div class="row no-gutters" id="mappingL">
-                        <?php
-                        foreach ($list_zona as $list) {
-                          if ($list["zona_type"] == "L") {
-                            echo "<div class='col'>"
-                              . "<div class='card " . $list["bg"] . "' style='width: 110px; height: 110px'>"
-                              . "<div class='card-body p-2'>"
-                              . "<div class='card-title p-1 font-weight-bold'>" . $list["desc"] . "</div>"
-                              . "</div>"
-                              . "</div>"
-                              . "</div>";
-                          }
-                        }
-                        ?>
-                      </div>
-                  
-                  <hr>
-                  <h5 class="mt-2">Dies Maintenance Area</h5>
-                  <div class="d-flex justify-content-center mt-1">
-                    <div class="row" id="mappingM">
                       <?php
                       foreach ($list_zona as $list) {
-                        if ($list["zona_type"] == "M") {
+                        if ($list["zona_type"] == "P") {
                           echo "<div class='col-3 mb-2'>"
                             . "<div class='card " . $list["bg"] . "' style='width: 300px; height: 250px'>"
                             . "<div class='card-body p-2'>"
-                            . "<div class='card-title p-1 text-white font-weight-bold'>" . $list["desc"] . "</div>"
+                            . "<div class='card-title p-1 font-weight-bold'>" . $list["desc"] . "</div>"
                             . "</div>"
                             . "</div>"
                             . "</div>";
@@ -191,6 +154,46 @@ and open the template in the editor.
                       ?>
                     </div>
                   </div>
+                  <hr />
+                  <h5>Dies Production Area</h5>
+                  <div class="d-flex justify-content-center mt-1">
+                    <div class="row" id="mappingL">
+                      <?php
+                      foreach ($list_zona as $list) {
+                        if ($list["zona_type"] == "L") {
+                          echo "<div class='col'>"
+                            . "<div class='card " . $list["bg"] . "' style='width: 110px; height: 110px'>"
+                            . "<div class='card-body p-2'>"
+                            . "<div class='card-title p-1 font-weight-bold'>" . $list["desc"] . "</div>"
+                            . "</div>"
+                            . "</div>"
+                            . "</div>";
+                        }
+                      }
+                      ?>
+                    </div>
+                  </div>
+                  <hr>
+                  <h5 class="mt-2">Dies Maintenance Area</h5>
+                  <center>
+                    <!-- <div class="d-flex justify-content-center mt-1"> -->
+                      <div class="row" id="mappingM">
+                        <?php
+                        foreach ($list_zona as $list) {
+                          if ($list["zona_type"] == "M") {
+                            echo "<div class='col-3 mb-2'>"
+                              . "<div class='card " . $list["bg"] . "' style='width: 300px; height: 250px'>"
+                              . "<div class='card-body p-2'>"
+                              . "<div class='card-title p-1 text-white font-weight-bold'>" . $list["desc"] . "</div>"
+                              . "</div>"
+                              . "</div>"
+                              . "</div>";
+                          }
+                        }
+                        ?>
+                      </div>
+                    <!-- </div> -->
+                  </center>
                 </div>
               </div>
             </div>
@@ -318,7 +321,7 @@ and open the template in the editor.
                 append_dataM += "<div class='card " + zona[i].bg + "' style='width: 300px; height: 220px'>";
                 append_dataM += "<div class='card-body p-2'>";
                 append_dataM += "<div class='card-title p-1 text-white font-weight-bold'>" + zona[i].desc + "</div>";
-                append_dataM += "<div class='row no-gutters'>";
+                append_dataM += "<div class='row no-gutters justify-content-center'>";
                 if (model.length != 0) {
                   var j = 0
                   $.each(model, function (row, m) {
