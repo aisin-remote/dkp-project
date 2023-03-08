@@ -95,7 +95,7 @@ and open the template in the editor.
                     }
                     ?>
                   </div>
-                  <div class="row mt-4">
+                  <div class="row mt-2">
                     <div class="col-lg-12 col-md-12 col-sm-12 px-1">
                       <div class="card">
                         <div class='card-header align-middle'>
