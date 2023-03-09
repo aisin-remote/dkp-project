@@ -630,7 +630,7 @@ and open the template in the editor.
                                             <thead style="background-color: #E4E4E4;">
                                                 <tr>
                                                     <th class="align-middle px-2 table-header" scope="col">1.1.5</th>
-                                                    <th class="align-middle px-3 table-header" scope="col">MTBF Core Pin</th>
+                                                    <th class="align-middle px-3 table-header" scope="col">Check PIN Back</th>
                                                     <th class="align-middle px-3 table-header" scope="col"></th>
                                                     <th class="align-middle px-3 table-header" scope="col"></th>
                                                     <th class="align-middle px-3 table-header" scope="col"></th>
@@ -770,7 +770,7 @@ and open the template in the editor.
                                                     <th class="align-middle px-2 table-header" scope="col">1.1.7</th>
                                                     <th class="align-middle px-3 table-header" scope="col">Check Ejector</th>
                                                     <th class="align-middle px-3 table-header" scope="col">
-                                                        <input class="" name="c117" <?= (($data["data"]["c117"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c117" <?= (($data["data"]["c117"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </th>
                                                     <th class="align-middle px-3 table-header" scope="col"></th>
                                                     <th class="align-middle px-3 table-header" scope="col"></th>
@@ -792,7 +792,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-3 table-item">1.1.8.1</td>
                                                     <td class="align-middle px-3 table-item">Slider C1</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c1181" <?= (($data["data"]["c1181"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c1181" <?= (($data["data"]["c1181"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -801,7 +801,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-3 table-item">1.1.8.2</td>
                                                     <td class="align-middle px-3 table-item">Slider C2</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c1182" <?= (($data["data"]["c1182"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c1182" <?= (($data["data"]["c1182"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -810,7 +810,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-3 table-item">1.1.8.3</td>
                                                     <td class="align-middle px-3 table-item">Slider C3</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c1183" <?= (($data["data"]["c1183"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c1183" <?= (($data["data"]["c1183"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -819,7 +819,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-3 table-item">1.1.8.4</td>
                                                     <td class="align-middle px-3 table-item">Slider C4</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c1184" <?= (($data["data"]["c1184"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c1184" <?= (($data["data"]["c1184"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -828,7 +828,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-3 table-item">1.1.8.5</td>
                                                     <td class="align-middle px-3 table-item">Slider C5</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c1185" <?= (($data["data"]["c1185"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c1185" <?= (($data["data"]["c1185"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -863,7 +863,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.9.1.1</td>
                                                     <td class="align-middle px-3 table-item">Power Cool Fix 1</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11911" <?= (($data["data"]["c11911"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11911" <?= (($data["data"]["c11911"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -872,7 +872,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.9.1.2</td>
                                                     <td class="align-middle px-3 table-item">Power Cool Fix 2</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11912" <?= (($data["data"]["c11912"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11912" <?= (($data["data"]["c11912"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -881,7 +881,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.9.1.3</td>
                                                     <td class="align-middle px-3 table-item">Main Cool Fix</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11913" <?= (($data["data"]["c11913"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11913" <?= (($data["data"]["c11913"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -890,7 +890,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.9.1.4</td>
                                                     <td class="align-middle px-3 table-item">Sprue Bush</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11914" <?= (($data["data"]["c11914"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11914" <?= (($data["data"]["c11914"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -912,7 +912,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.9.2.1</td>
                                                     <td class="align-middle px-3 table-item">Power Cool Move 1</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11921" <?= (($data["data"]["c11921"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11921" <?= (($data["data"]["c11921"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -921,7 +921,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.9.2.2</td>
                                                     <td class="align-middle px-3 table-item">Power Cool Move 2</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11922" <?= (($data["data"]["c11922"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11922" <?= (($data["data"]["c11922"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -930,7 +930,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.9.2.3</td>
                                                     <td class="align-middle px-3 table-item">Main Cool Move</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11923" <?= (($data["data"]["c11923"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11923" <?= (($data["data"]["c11923"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -939,7 +939,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.9.2.4</td>
                                                     <td class="align-middle px-3 table-item">Sprue Core</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11924" <?= (($data["data"]["c11924"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Good" data-off="Not Good" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11924" <?= (($data["data"]["c11924"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>

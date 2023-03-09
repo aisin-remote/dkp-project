@@ -49,3 +49,23 @@ if ($action == "r_checksheet_preventive") {
     require(TEMPLATE_PATH . "/t_rep_checksheet.php");
   }
 }
+
+if ($action == "r_checksheet_prev_detail") {
+  $template["group"] = "Reporting";
+  $template["menu"] = "Checksheet Preventive Detail";
+
+  $class = new Reporting();
+
+  $date_from = date('Ymd', strtotime(date('Y-m-d') . '-30 day'));
+  if (!empty($_GET["date_from"])) {
+    $date_from = $_GET["date_from"];
+  }
+
+  $date_to = date('Ymd');
+  if (!empty($_GET["date_to"])) {
+    $date_to = $_GET["date_to"];
+  }
+
+  $data["list"] = $class->getListChecksheet($date_from, $date_to, $pmtid, $group_id, $model_id, $dies_no, $pmtype, 'C');
+  require(TEMPLATE_PATH . "/t_rep_checksheet_detail.php");
+}

@@ -27,8 +27,11 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, b.group_id, b.model_id, b.dies_no, b.name1, TO_CHAR(a.pmtdt, 'DD-MM-YYYY') as pmt_date FROM t_dm_cs_h a "
-            . "INNER JOIN m_dm_dies_asset b on b.dies_id = a.dies_id "
+        $sql = "SELECT a.*, b.group_id, b.model_id, b.dies_no, b.name1, TO_CHAR(a.pmtdt, 'DD-MM-YYYY') as pmt_date, c.desc AS zona1, d.desc AS zona2 
+                FROM t_dm_cs_h a 
+                INNER JOIN m_dm_dies_asset b on b.dies_id = a.dies_id
+                LEFT JOIN m_zona c on c.zona_id = a.zona1
+                LEFT JOIN m_zona d on d.zona_id = a.zona2 "
             . "WHERE 1=1 ";
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.pmtdt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";

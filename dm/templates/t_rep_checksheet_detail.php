@@ -67,13 +67,111 @@ and open the template in the editor.
                                                     <th class="">Stroke</th>
                                                     <th class="">Zona Maintenance</th>
                                                     <th class="">Zona Parkir</th>
-                                                    <th class="text-center">View</th>
+                                                    <th class="">Chemical Line Cooling Fix</th>
+                                                    <th class="">Chemical Line Cooling Move</th>
+                                                    <th class="">Die Crack Fix</th>
+                                                    <th class="">Die Crack Move</th>
+                                                    <th class="">Die Crack Slider</th>
+                                                    <th class="">Katakrute Fix</th>
+                                                    <th class="">Katakrute Move</th>
+                                                    <th class="">Yakitsuki Fix</th>
+                                                    <th class="">Yakitsuki Move</th>
+                                                    <th class="">Yakitsuki Slider</th>
+                                                    <th class="">Check Parting Line Fix</th>
+                                                    <th class="">Check Parting Line Move</th>
+                                                    <th class="">Check Parting Line Slider</th>
+                                                    <th class="">Check V-Notch Fix</th>
+                                                    <th class="">Check V-Notch Move</th>
+                                                    <th class="">Cleaning Block Vacuum</th>
+                                                    <th class="">Cleaning Piston Vacuum</th>
+                                                    <th class="">Cleaning Pipa Vacuum</th>
+                                                    <th class="">Fitting Check Piston Vacuum</th>
+                                                    <th class="">Ganti O-Ring Piston Vacuum</th>
+                                                    <th class="">Ganti Hose Vacuum</th>
+                                                    <th class="">Valve Open</th>
+                                                    <th class="">Valve Close</th>
+                                                    <th class="">Valve Operation Time</th>
+                                                    <th class="">Valve Stroke</th>
+                                                    <th class="">MTBF Core Pin Fix</th>
+                                                    <th class="">MTBF Core Pin Move</th>
+                                                    <th class="">MTBF Core Pin Slider</th>
+                                                    <th class="">Check PIN Back Fix</th>
+                                                    <th class="">Check PIN Back Move</th>
+                                                    <th class="">Check PIN Back Slider</th>
+                                                    <th class="">Check Flow Power Cool Fix</th>
+                                                    <th class="">Check Flow Power Cool Move</th>
+                                                    <th class="">Check Flow Main Cool Fix</th>
+                                                    <th class="">Check Flow Main Cool Move</th>
+                                                    <th class="">Check Ejector</th>
+                                                    <th class="">Check Hydraulic Core SliderC1</th>
+                                                    <th class="">Check Hydraulic Core SliderC2</th>
+                                                    <th class="">Check Hydraulic Core SliderC3</th>
+                                                    <th class="">Check Hydraulic Core SliderC4</th>
+                                                    <th class="">Check Hydraulic Core SliderC5</th>
+                                                    <th class="">Fix Power Cool Fix1</th>
+                                                    <th class="">Fix Power Cool Fix2</th>
+                                                    <th class="">Fix Main Cool Fix</th>
+                                                    <th class="">Fix Sprue Bush</th>
+                                                    <th class="">Move Power Cool Move1</th>
+                                                    <th class="">Move Power Cool Move2</th>
+                                                    <th class="">Move Main Cool Move</th>
+                                                    <th class="">Move Sprue Core</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                 if (!empty($data["list"])) {
                                                     foreach ($data["list"] as $list) {
+                                                        $c11110 = $list["c11110"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11120 = $list["c11120"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11211 = $list["c11211"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11212 = $list["c11212"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11213 = $list["c11213"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11221 = $list["c11221"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11222 = $list["c11222"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11231 = $list["c11231"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11232 = $list["c11232"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11233 = $list["c11233"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11241 = $list["c11241"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11242 = $list["c11242"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11243 = $list["c11243"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11251 = $list["c11251"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11252 = $list["c11252"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11311 = $list["c11311"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11312 = $list["c11312"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11313 = $list["c11313"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11314 = $list["c11314"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11315 = $list["c11315"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11316 = $list["c11316"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c113211 = $list["c113211"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c113212 = $list["c113212"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11322 = $list["c11322"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11323 = $list["c11323"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c1141 = $list["c1141"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c1142 = $list["c1142"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c1143 = $list["c1143"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c1151 = $list["c1151"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c1152 = $list["c1152"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c1153 = $list["c1153"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11611 = $list["c11611"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11612 = $list["c11612"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11621 = $list["c11621"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11622 = $list["c11622"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c117 = $list["c117"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c1181 = $list["c1181"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c1182 = $list["c1182"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c1183 = $list["c1183"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c1184 = $list["c1184"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c1185 = $list["c1185"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11911 = $list["c11911"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11912 = $list["c11912"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11913 = $list["c11913"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11914 = $list["c11914"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11921 = $list["c11921"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11922 = $list["c11922"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11923 = $list["c11923"] == '1' ? 'Completed' : 'On Progress';
+                                                        $c11924 = $list["c11924"] == '1' ? 'Completed' : 'On Progress';
+
                                                         if (!empty($list["cdate"])) {
                                                             $new_date = date("Y-m-d", strtotime($list["cdate"]));
                                                         } else {
@@ -91,9 +189,55 @@ and open the template in the editor.
                                                             . "<td class=''>" . $formatted_number = number_format($list["pmtstk"], 0, '.', ',') . "</td>"
                                                             . "<td class=''>" . $list["zona1"] . "</td>"
                                                             . "<td class=''>" . $list["zona2"] . "</td>"
-                                                            . "<td class='text-center pr-3'>"
-                                                            . "<a href='?action=$action&id=" . $list["pmtid"] . "&step=2' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>visibility</i></a>"
-                                                            . "</td>"
+                                                            . "<td class=''>" . $c11110 . "</td>"
+                                                            . "<td class=''>" . $c11120 . "</td>"
+                                                            . "<td class=''>" . $c11211 . "</td>"
+                                                            . "<td class=''>" . $c11212 . "</td>"
+                                                            . "<td class=''>" . $c11213 . "</td>"
+                                                            . "<td class=''>" . $c11221 . "</td>"
+                                                            . "<td class=''>" . $c11222 . "</td>"
+                                                            . "<td class=''>" . $c11231 . "</td>"
+                                                            . "<td class=''>" . $c11232 . "</td>"
+                                                            . "<td class=''>" . $c11233 . "</td>"
+                                                            . "<td class=''>" . $c11241 . "</td>"
+                                                            . "<td class=''>" . $c11242 . "</td>"
+                                                            . "<td class=''>" . $c11243 . "</td>"
+                                                            . "<td class=''>" . $c11251 . "</td>"
+                                                            . "<td class=''>" . $c11252 . "</td>"
+                                                            . "<td class=''>" . $c11311 . "</td>"
+                                                            . "<td class=''>" . $c11312 . "</td>"
+                                                            . "<td class=''>" . $c11313 . "</td>"
+                                                            . "<td class=''>" . $c11314 . "</td>"
+                                                            . "<td class=''>" . $c11315 . "</td>"
+                                                            . "<td class=''>" . $c11316 . "</td>"
+                                                            . "<td class=''>" . $c113211 . "</td>"
+                                                            . "<td class=''>" . $c113212 . "</td>"
+                                                            . "<td class=''>" . $c11322 . "</td>"
+                                                            . "<td class=''>" . $c11323 . "</td>"
+                                                            . "<td class=''>" . $c1141 . "</td>"
+                                                            . "<td class=''>" . $c1142 . "</td>"
+                                                            . "<td class=''>" . $c1143 . "</td>"
+                                                            . "<td class=''>" . $c1151 . "</td>"
+                                                            . "<td class=''>" . $c1152 . "</td>"
+                                                            . "<td class=''>" . $c1153 . "</td>"
+                                                            . "<td class=''>" . $c11611 . "</td>"
+                                                            . "<td class=''>" . $c11612 . "</td>"
+                                                            . "<td class=''>" . $c11621 . "</td>"
+                                                            . "<td class=''>" . $c11622 . "</td>"
+                                                            . "<td class=''>" . $c117 . "</td>"
+                                                            . "<td class=''>" . $c1181 . "</td>"
+                                                            . "<td class=''>" . $c1182 . "</td>"
+                                                            . "<td class=''>" . $c1183 . "</td>"
+                                                            . "<td class=''>" . $c1184 . "</td>"
+                                                            . "<td class=''>" . $c1185 . "</td>"
+                                                            . "<td class=''>" . $c11911 . "</td>"
+                                                            . "<td class=''>" . $c11912 . "</td>"
+                                                            . "<td class=''>" . $c11913 . "</td>"
+                                                            . "<td class=''>" . $c11914 . "</td>"
+                                                            . "<td class=''>" . $c11921 . "</td>"
+                                                            . "<td class=''>" . $c11922 . "</td>"
+                                                            . "<td class=''>" . $c11923 . "</td>"
+                                                            . "<td class=''>" . $c11924 . "</td>"
                                                             . "</tr>";
                                                     }
                                                 }
@@ -229,12 +373,9 @@ and open the template in the editor.
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
                 buttons: [{
                     extend: 'excel',
-                    title: "Report Checksheet Preventive",
+                    title: "Report Checksheet Preventive Detail",
                     className: 'btn btn-dark-blue btn-sm',
                     text: '<i class="material-icons">download</i>Download Excel',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
-                    }
                 },
                 {
                     className: 'btn btn-dark-blue-outlined btn-sm',
