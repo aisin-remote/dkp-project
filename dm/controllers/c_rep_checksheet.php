@@ -54,7 +54,9 @@ if ($action == "r_checksheet_prev_detail") {
   $template["group"] = "Reporting";
   $template["menu"] = "Checksheet Preventive Detail";
 
+  $dies = new Dies();
   $class = new Reporting();
+  $zona = new Zona();
 
   $date_from = date('Ymd', strtotime(date('Y-m-d') . '-30 day'));
   if (!empty($_GET["date_from"])) {

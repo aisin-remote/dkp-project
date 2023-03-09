@@ -139,7 +139,7 @@ and open the template in the editor.
                                 </select></div>
                         </div>
                         <div class="row my-2">
-                            <div class="col-4"><label class="col-form-label">Dies</label></div>
+                            <div class="col-4"><label class="col-form-label">Model</label></div>
                             <div class="col"><select name="model_id" id="model_id" class="form-control select2"
                                     style="width: 300px">
                                     <?php

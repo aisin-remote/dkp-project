@@ -143,7 +143,7 @@ and open the template in the editor.
                         </div>
                         <div class="row my-2">
                             <div class="col-4"><label class="col-form-label">Group</label></div>
-                            <div class="col"><select name="group_id" id="group_id" class="form-control select2"
+                            <div class="col"><select name="group_id" onchange="getDiesModel(value)" id="group_id" class="form-control select2"
                                     style="width: 300px">
                                     <?php
                                     foreach ($group_list as $group) {
@@ -157,7 +157,7 @@ and open the template in the editor.
                                 </select></div>
                         </div>
                         <div class="row my-2">
-                            <div class="col-4"><label class="col-form-label">Dies</label></div>
+                            <div class="col-4"><label class="col-form-label">Model</label></div>
                             <div class="col"><select name="model_id" id="model_id" class="form-control select2"
                                     style="width: 300px">
                                     <?php
