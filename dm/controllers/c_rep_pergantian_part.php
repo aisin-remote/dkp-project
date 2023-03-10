@@ -8,14 +8,14 @@ if ($action == "r_pergantian_part") {
     $dies = new Dies();
 
 
-    $date_from = date('Ymd', strtotime(date('Y-m-d') . '-30 day'));
+    $date_from = date('Ymd');
     if (!empty($_GET["date_from"])) {
-        $date_from = $_GET["date_from"];
+      $date_from = $_GET["date_from"];
     }
 
     $date_to = date('Ymd');
     if (!empty($_GET["date_to"])) {
-        $date_to = $_GET["date_to"];
+      $date_to = $_GET["date_to"];
     }
 
     $group_id = $_GET["group_id"];
@@ -36,14 +36,14 @@ if ($action == "r_pergantian_part_detail") {
     $class = new Reporting();
     $dies = new Dies();
 
-    $date_from = date('Ymd', strtotime(date('Y-m-d') . '-30 day'));
+    $date_from = date('Ymd');
     if (!empty($_GET["date_from"])) {
-        $date_from = $_GET["date_from"];
+      $date_from = $_GET["date_from"];
     }
 
     $date_to = date('Ymd');
     if (!empty($_GET["date_to"])) {
-        $date_to = $_GET["date_to"];
+      $date_to = $_GET["date_to"];
     }
 
     $group_id = $_GET["group_id"];

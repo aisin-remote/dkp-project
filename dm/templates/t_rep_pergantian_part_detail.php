@@ -65,7 +65,7 @@ and open the template in the editor.
                                                     <th class="">Part</th>
                                                     <th class="">Core Pin No.</th>
                                                     <th class="">Posisi</th>
-                                                    <th class="">Remarks</th>
+                                                    <th class="">Alasan Ganti</th>
                                                     <th class="">Created By</th>
                                                 </tr>
                                             </thead>
@@ -83,7 +83,7 @@ and open the template in the editor.
                                                             . "<td class=''>" . $list["name1"] . "</td>"
                                                             . "<td class=''>" . $list["text1"] . "</td>"
                                                             . "<td class=''>" . $list["text2"] . "</td>"
-                                                            . "<td class=''>" . $list["desc1"] . "</td>"
+                                                            . "<td class=''>" . $list["text3"] . "</td>"
                                                             . "<td class=''>" . $list["crt_by"] . "</td>"
                                                             . "</tr>";
                                                     }
@@ -131,6 +131,7 @@ and open the template in the editor.
                             <div class="col-4"><label class="col-form-label">Group</label></div>
                             <div class="col"><select name="group_id" id="group_id" class="form-control select2"
                                     style="width: 300px">
+                                    <option selected>Pilih Group</option>
                                     <?php
                                     foreach ($group_list as $group) {
                                         ?>
@@ -146,6 +147,7 @@ and open the template in the editor.
                             <div class="col-4"><label class="col-form-label">Model</label></div>
                             <div class="col"><select name="model_id" id="model_id" class="form-control select2"
                                     style="width: 300px">
+                                    <option selected>Pilih Model</option>
                                     <?php
                                     foreach ($model_list as $model) {
                                         ?>
@@ -161,6 +163,7 @@ and open the template in the editor.
                             <div class="col-4"><label class="col-form-label">Dies No #</label></div>
                             <div class="col"><select name="dies_id" id="dies_id" class="form-control select2"
                                     style="width: 300px">
+                                    <option selected>Pilih Dies</option>
                                     <?php
                                     foreach ($diesid_list as $dies) {
                                         ?>
@@ -232,12 +235,12 @@ and open the template in the editor.
                 //$("#model_id").empty();
                 var $i = 0
                 $.each(data, function (key, val) {
-                    if ($i == 0) {
-                        first_model = val.model_id;
-                        if (first_model.length > 0) {
-                            getDiesList(first_model);
-                        }
-                    }
+                    // if ($i == 0) {
+                    //     first_model = val.model_id;
+                    //     if (first_model.length > 0) {
+                    //         getDiesList(first_model);
+                    //     }
+                    // }
                     console.log(val.model_id);
                     items += "<option value='" + val.model_id + "'>" + val.model_id + "</option>";
                     $i++;
@@ -262,7 +265,9 @@ and open the template in the editor.
 
                 $.each(data, function (key, val) {
                     console.log(val.model_id);
-                    items += "<option value='" + val.dies_id + "'>" + val.dies_no + " - " + val.name1 + "</option>";
+                    if (val.model_id == model_id) {
+                        items += "<option value='" + val.dies_id + "'>" + val.dies_no + " - " + val.name1 + "</option>";
+                    }
                 });
 
                 $("#dies_id").html(items);
@@ -284,7 +289,7 @@ and open the template in the editor.
                     if ($i == 0) {
                         first_model = val.model_id;
                         if (first_model.length > 0) {
-                            getDiesList(first_model);
+                            items += "<option>Pilih Model</option>"
                         }
                     }
                     console.log(val.model_id);
@@ -311,7 +316,9 @@ and open the template in the editor.
 
                 $.each(data, function (key, val) {
                     console.log(val.model_id);
-                    items += "<option value='" + val.dies_id + "'>" + val.dies_no + " - " + val.name1 + "</option>";
+                    if (val.model_id == model_id) {
+                        items += "<option value='" + val.dies_id + "'>" + val.dies_no + " - " + val.name1 + "</option>";
+                    }
                 });
 
                 $("#dies_id").html(items);

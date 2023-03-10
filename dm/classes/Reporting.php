@@ -119,18 +119,18 @@ class Reporting
                 LEFT JOIN t_dm_pc_i c on c.pchid = a.pchid
                 LEFT JOIN m_dm_dies_part d on d.part_id = c.part_id
                 LEFT JOIN t_dm_pc_core e on e.pchid = a.pchid AND e.part_id = d.part_id
-                WHERE 1=1 ";
+                WHERE d.name1 = 'Core Pin' ";
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.crt_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
         }
         if (!empty($group_id)) {
-            $sql .= " AND d.group_id = '$group_id' ";
+            $sql .= " AND b.group_id = '$group_id' ";
         }
         if (!empty($model_id)) {
-            $sql .= " AND d.model_id = '$model_id' ";
+            $sql .= " AND b.model_id = '$model_id' ";
         }
         if (!empty($dies_no)) {
-            $sql .= " AND d.dies_id = '$dies_no' ";
+            $sql .= " AND b.dies_id = '$dies_no' ";
         }
         $sql .= " ORDER by a.dies_id ASC ";
         $stmt = $conn->prepare($sql);
