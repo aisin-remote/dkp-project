@@ -88,16 +88,16 @@ and open the template in the editor.
                                                   <td class="align-middle px-3 table-item">
                                                     <select name="zona1" id="zona1" class="form-control select2" disabled>
                                                       <?php
-                                                      foreach ($list_zona as $zona) {                                
-                                                        if ($zona["zona_type"] == "M") {
-                                                          $selected = "";
-                                                          if($zona["zona_id"] == $data["data"]["zona1"]){
-                                                            $selected = "selected";
+                                                      foreach ($list_zona as $zona) {
+                                                          if ($zona["zona_type"] == "M") {
+                                                              $selected = "";
+                                                              if ($zona["zona_id"] == $data["data"]["zona1"]) {
+                                                                  $selected = "selected";
+                                                              }
+                                                              ?>
+                                                                  <option value="<?php echo $zona["zona_id"]; ?>"  <?= $selected ?>><?php echo $zona["desc"]; ?></option>
+                                                                  <?php
                                                           }
-                                                          ?>
-                                                          <option value="<?php echo $zona["zona_id"]; ?>"  <?=$selected?>><?php echo $zona["desc"]; ?></option>
-                                                          <?php
-                                                        }
                                                       }
                                                       ?>
                                                     </select>
@@ -110,16 +110,16 @@ and open the template in the editor.
                                                     <select name="zona_id" id="zona_id" class="form-control select2" disabled>
                                                       <option value="">Pilih Zona Parkir</option>
                                                       <?php
-                                                      foreach ($list_zona as $zona) {                                
-                                                        if ($zona["zona_type"] == "P") {
-                                                          $selected = "";
-                                                          if($zona["zona_id"] == $data["data"]["zona2"]){
-                                                            $selected = "selected";
+                                                      foreach ($list_zona as $zona) {
+                                                          if ($zona["zona_type"] == "P") {
+                                                              $selected = "";
+                                                              if ($zona["zona_id"] == $data["data"]["zona2"]) {
+                                                                  $selected = "selected";
+                                                              }
+                                                              ?>
+                                                                  <option value="<?php echo $zona["zona_id"]; ?>"  <?= $selected ?>><?php echo $zona["desc"]; ?></option>
+                                                                  <?php
                                                           }
-                                                          ?>
-                                                          <option value="<?php echo $zona["zona_id"]; ?>"  <?=$selected?>><?php echo $zona["desc"]; ?></option>
-                                                          <?php
-                                                        }
                                                       }
                                                       ?>
                                                     </select>
@@ -155,7 +155,11 @@ and open the template in the editor.
                                                     <td class="align-middle px-3 table-item">1.1.1.1</td>
                                                     <td class="align-middle px-3 table-item">Chemical Line Cooling Fix</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11110" <?php echo (($data["data"]["c11110"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11110" <?php echo (($data["data"]["c11110"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["pmtype"] != "6K") {
+                                                                      echo "disabled";
+                                                                  } else {
+                                                                      echo "";
+                                                                  } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -171,7 +175,11 @@ and open the template in the editor.
                                                     <td class="align-middle px-3 table-item">1.1.1.2</td>
                                                     <td class="align-middle px-3 table-item">Chemical Line Cooling Move</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11120" <?= (($data["data"]["c11120"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11120" <?= (($data["data"]["c11120"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["pmtype"] != "6K") {
+                                                                     echo "disabled";
+                                                                 } else {
+                                                                     echo "";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -242,11 +250,17 @@ and open the template in the editor.
                                                             <label class="checkbox-table"><span></span>C1</label>
                                                             <input type="checkbox" name="c11213_c2" <?= (($data["data"]["c11213_c2"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C2</label>
-                                                            <input type="checkbox" name="c11213_c3" <?= (($data["data"]["c11213_c3"] == "1")) ? "checked" : ''; ?>>
+                                                            <input type="checkbox" name="c11213_c3" <?php if ($data["data"]["group"] == "CSH") {
+                                                                echo "disabled";
+                                                            } ?> <?= (($data["data"]["c11213_c3"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C3</label>
-                                                            <input type="checkbox" name="c11213_c4" <?= (($data["data"]["c11213_c4"] == "1")) ? "checked" : ''; ?>>
+                                                            <input type="checkbox" name="c11213_c4" <?php if ($data["data"]["group"] == "CSH") {
+                                                                echo "disabled";
+                                                            } ?> <?= (($data["data"]["c11213_c4"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C4</label>
-                                                            <input type="checkbox" name="c11213_c5" <?= (($data["data"]["c11213_c5"] == "1")) ? "checked" : ''; ?>>
+                                                            <input type="checkbox" name="c11213_c5" <?php if ($data["data"]["group"] == "CSH" || $data["data"]["group"] == "OPN") {
+                                                                echo "disabled";
+                                                            } ?> <?= (($data["data"]["c11213_c5"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C5</label>
                                                         </div>
                                                     </td>
@@ -380,11 +394,17 @@ and open the template in the editor.
                                                             <label class="checkbox-table"><span></span>C1</label>
                                                             <input type="checkbox" name="c11243_c2" <?= (($data["data"]["c11243_c2"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C2</label>
-                                                            <input type="checkbox" name="c11243_c3" <?= (($data["data"]["c11243_c3"] == "1")) ? "checked" : ''; ?>>
+                                                            <input type="checkbox" name="c11243_c3" <?php if ($data["data"]["group"] == "CSH") {
+                                                                echo "disabled";
+                                                            } ?> <?= (($data["data"]["c11243_c3"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C3</label>
-                                                            <input type="checkbox" name="c11243_c4" <?= (($data["data"]["c11243_c4"] == "1")) ? "checked" : ''; ?>>
+                                                            <input type="checkbox" name="c11243_c4" <?php if ($data["data"]["group"] == "CSH") {
+                                                                echo "disabled";
+                                                            } ?> <?= (($data["data"]["c11243_c4"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C4</label>
-                                                            <input type="checkbox" name="c11243_c5" <?= (($data["data"]["c11243_c5"] == "1")) ? "checked" : ''; ?>>
+                                                            <input type="checkbox" name="c11243_c5" <?php if ($data["data"]["group"] == "CSH" || $data["data"]["group"] == "OPN") {
+                                                                echo "disabled";
+                                                            } ?> <?= (($data["data"]["c11243_c5"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C5</label>
                                                         </div>
                                                     </td>
@@ -444,19 +464,14 @@ and open the template in the editor.
                                                 </tr>
                                             </thead>
 
-                                            <?php
-
-                                            $display = "";
-                                            if ($data["data"]["group_id"] == "CSH") {
-                                                $display = "hidden";
-                                            }
-                                            ?>
                                             <tbody>
                                                 <tr>
                                                     <td class="align-middle px-4 table-item">1.1.3.1.1</td>
                                                     <td class="align-middle px-3 table-item">Cleaning Block Vacuum</td>
                                                     <td class="align-middle px-3 table-item <?= $display ?>">
-                                                        <input class="" name="c11311" <?= (($data["data"]["c11311"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11311" <?= (($data["data"]["c11311"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["group"] == "CSH") {
+                                                                     echo "disabled";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -465,7 +480,9 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.3.1.2</td>
                                                     <td class="align-middle px-3 table-item">Cleaning Piston Vacuum</td>
                                                     <td class="align-middle px-3 table-item <?= $display ?>">
-                                                        <input class="" name="c11312" <?= (($data["data"]["c11312"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11312" <?= (($data["data"]["c11312"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["group"] == "CSH") {
+                                                                     echo "disabled";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -474,7 +491,9 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.3.1.3</td>
                                                     <td class="align-middle px-3 table-item">Cleaning Pipa Vacuum</td>
                                                     <td class="align-middle px-3 table-item <?= $display ?>">
-                                                        <input class="" name="c11313" <?= (($data["data"]["c11313"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11313" <?= (($data["data"]["c11313"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["group"] == "CSH") {
+                                                                     echo "disabled";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -483,7 +502,9 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.3.1.4</td>
                                                     <td class="align-middle px-3 table-item">Fitting Check Piston Vacuum</td>
                                                     <td class="align-middle px-3 table-item <?= $display ?>">
-                                                        <input class="" name="c11314" <?= (($data["data"]["c11314"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11314" <?= (($data["data"]["c11314"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["group"] == "CSH") {
+                                                                     echo "disabled";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -492,7 +513,9 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.3.1.5</td>
                                                     <td class="align-middle px-3 table-item">Ganti O-Ring Piston Vacuum</td>
                                                     <td class="align-middle px-3 table-item <?= $display ?>">
-                                                        <input class="" name="c11315" <?= (($data["data"]["c11315"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11315" <?= (($data["data"]["c11315"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["group"] == "CSH") {
+                                                                     echo "disabled";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -501,7 +524,9 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.3.1.6</td>
                                                     <td class="align-middle px-3 table-item">Ganti Hose Vacuum</td>
                                                     <td class="align-middle px-3 table-item <?= $display ?>">
-                                                        <input class="" name="c11316" <?= (($data["data"]["c11316"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11316" <?= (($data["data"]["c11316"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["group"] == "CSH") {
+                                                                     echo "disabled";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -533,7 +558,9 @@ and open the template in the editor.
                                                     <td class="align-middle px-5 table-item">1.1.3.2.1.1</td>
                                                     <td class="align-middle px-3 table-item">Valve Open</td>
                                                     <td class="align-middle px-3 table-item <?= $display ?>">
-                                                        <input class="" name="c113211" <?= (($data["data"]["c113211"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c113211" <?= (($data["data"]["c113211"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["group"] == "CSH") {
+                                                                     echo "disabled";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -542,7 +569,9 @@ and open the template in the editor.
                                                     <td class="align-middle px-5 table-item">1.1.3.2.1.2</td>
                                                     <td class="align-middle px-3 table-item">Valve Close</td>
                                                     <td class="align-middle px-3 table-item <?= $display ?>">
-                                                        <input class="" name="c113212" <?= (($data["data"]["c113212"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c113212" <?= (($data["data"]["c113212"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["group"] == "CSH") {
+                                                                     echo "disabled";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -551,7 +580,9 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.3.2.2</td>
                                                     <td class="align-middle px-3 table-item">Valve Operation Time</td>
                                                     <td class="align-middle px-3 table-item <?= $display ?>">
-                                                        <input class="" name="c11322" <?= (($data["data"]["c11322"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11322" <?= (($data["data"]["c11322"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["group"] == "CSH") {
+                                                                     echo "disabled";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -560,7 +591,9 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.3.2.3</td>
                                                     <td class="align-middle px-3 table-item">Valve Stroke</td>
                                                     <td class="align-middle px-3 table-item <?= $display ?>">
-                                                        <input class="" name="c11323" <?= (($data["data"]["c11323"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11323" <?= (($data["data"]["c11323"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["group"] == "CSH") {
+                                                                     echo "disabled";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -614,11 +647,17 @@ and open the template in the editor.
                                                             <label class="checkbox-table"><span></span>C1</label>
                                                             <input type="checkbox" name="c1143_c2" <?= (($data["data"]["c1143_c2"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C2</label>
-                                                            <input type="checkbox" name="c1143_c3" <?= (($data["data"]["c1143_c3"] == "1")) ? "checked" : ''; ?>>
+                                                            <input type="checkbox" name="c1143_c3" <?php if ($data["data"]["group"] == "CSH") {
+                                                                echo "disabled";
+                                                            } ?> <?= (($data["data"]["c1143_c3"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C3</label>
-                                                            <input type="checkbox" name="c1143_c4" <?= (($data["data"]["c1143_c4"] == "1")) ? "checked" : ''; ?>>
+                                                            <input type="checkbox" name="c1143_c4" <?php if ($data["data"]["group"] == "CSH") {
+                                                                echo "disabled";
+                                                            } ?> <?= (($data["data"]["c1143_c4"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C4</label>
-                                                            <input type="checkbox" name="c1143_c5" <?= (($data["data"]["c1143_c5"] == "1")) ? "checked" : ''; ?>>
+                                                            <input type="checkbox" name="c1143_c5" <?php if ($data["data"]["group"] == "CSH" || $data["data"]["group"] == "OPN") {
+                                                                echo "disabled";
+                                                            } ?> <?= (($data["data"]["c1143_c5"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C5</label>
                                                         </div>
                                                     </td>
@@ -665,11 +704,17 @@ and open the template in the editor.
                                                             <label class="checkbox-table"><span></span>C1</label>
                                                             <input type="checkbox" name="c1152_c2" <?= (($data["data"]["c1152_c2"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C2</label>
-                                                            <input type="checkbox" name="c1152_c3" <?= (($data["data"]["c1152_c3"] == "1")) ? "checked" : ''; ?>>
+                                                            <input type="checkbox" name="c1152_c3" <?php if ($data["data"]["group"] == "CSH") {
+                                                                echo "disabled";
+                                                            } ?> <?= (($data["data"]["c1152_c3"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C3</label>
-                                                            <input type="checkbox" name="c1152_c4" <?= (($data["data"]["c1152_c4"] == "1")) ? "checked" : ''; ?>>
+                                                            <input type="checkbox" name="c1152_c4" <?php if ($data["data"]["group"] == "CSH") {
+                                                                echo "disabled";
+                                                            } ?> <?= (($data["data"]["c1152_c4"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C4</label>
-                                                            <input type="checkbox" name="c1152_c5" <?= (($data["data"]["c1152_c5"] == "1")) ? "checked" : ''; ?>>
+                                                            <input type="checkbox" name="c1152_c5" <?php if ($data["data"]["group"] == "CSH" || $data["data"]["group"] == "OPN") {
+                                                                echo "disabled";
+                                                            } ?> <?= (($data["data"]["c1152_c5"] == "1")) ? "checked" : ''; ?>>
                                                             <label class="checkbox-table"><span></span>C5</label>
                                                         </div>
                                                     </td>
@@ -724,7 +769,7 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.6.1.2</td>
                                                     <td class="align-middle px-3 table-item">Move</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11612" <?= (($data["data"]["c11612"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11612" <?= (($data["data"]["c11612"] == "1")) ? "checked" : ''; ?>  type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -736,7 +781,11 @@ and open the template in the editor.
                                                     <th class="align-middle px-3 table-header" scope="col">1.1.6.2</th>
                                                     <th class="align-middle px-3 table-header" scope="col">Check Flow Main Cool</th>
                                                     <th class="align-middle px-3 table-header" scope="col">
-                                                        <input type="file" accept="image/png,image/jpg" name="c1162" id="upload-image" />
+                                                        <input type="file" accept="image/png,image/jpg" <?php if ($data["data"]["pmtype"] != "6K") {
+                                                            echo "disabled";
+                                                        } else {
+                                                            echo "";
+                                                        } ?> name="c1162" id="upload-image" />
                                                         <input type="hidden" name="c1162_x" value="<?= $data["data"]["c1162"]; ?>">
                                                     </th>
                                                     <th class="align-middle px-3 table-header" scope="col"><?= (!empty($data["data"]["c1162"])) ? "<a class='view-image btn btn-outline-primary btn-sm' href='data:image/jpg;base64," . $data["data"]["c1162"] . "'>View Image</a>" : "" ?></th>
@@ -749,7 +798,11 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.6.2.1</td>
                                                     <td class="align-middle px-3 table-item">Fix</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11621" <?= (($data["data"]["c11621"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11621" <?= (($data["data"]["c11621"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["pmtype"] != "6K") {
+                                                                     echo "disabled";
+                                                                 } else {
+                                                                     echo "";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -758,7 +811,11 @@ and open the template in the editor.
                                                     <td class="align-middle px-4 table-item">1.1.6.2.2</td>
                                                     <td class="align-middle px-3 table-item">Move</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c11622" <?= (($data["data"]["c11622"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c11622" <?= (($data["data"]["c11622"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["pmtype"] != "6K") {
+                                                                     echo "disabled";
+                                                                 } else {
+                                                                     echo "";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -810,7 +867,9 @@ and open the template in the editor.
                                                     <td class="align-middle px-3 table-item">1.1.8.3</td>
                                                     <td class="align-middle px-3 table-item">Slider C3</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c1183" <?= (($data["data"]["c1183"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c1183" <?= (($data["data"]["c1183"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["group"] == "CSH") {
+                                                                     echo "disabled";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -819,7 +878,9 @@ and open the template in the editor.
                                                     <td class="align-middle px-3 table-item">1.1.8.4</td>
                                                     <td class="align-middle px-3 table-item">Slider C4</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c1184" <?= (($data["data"]["c1184"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c1184" <?= (($data["data"]["c1184"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["group"] == "CSH") {
+                                                                     echo "disabled";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>
@@ -828,7 +889,9 @@ and open the template in the editor.
                                                     <td class="align-middle px-3 table-item">1.1.8.5</td>
                                                     <td class="align-middle px-3 table-item">Slider C5</td>
                                                     <td class="align-middle px-3 table-item">
-                                                        <input class="" name="c1185" <?= (($data["data"]["c1185"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
+                                                        <input class="" name="c1185" <?= (($data["data"]["c1185"] == "1")) ? "checked" : ''; ?> <?php if ($data["data"]["group"] == "CSH" || $data["data"]["group"] == "OPN") {
+                                                                     echo "disabled";
+                                                                 } ?> type="checkbox" data-toggle="toggle" data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger" data-size="mini" data-width="120">
                                                     </td>
                                                     <td class="align-middle px-3 table-item"></td>
                                                     <td class="align-middle px-3 table-item"></td>

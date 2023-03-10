@@ -56,44 +56,35 @@ and open the template in the editor.
                                         <table class="table table-striped table-sm" id="data-table-x">
                                             <thead>
                                                 <tr>
-                                                    <th class="">Preventive No.</th>
-                                                    <th class="">Preventive Date</th>
-                                                    <th class="">Completed Date</th>
+                                                    <th class="">Date</th>
+                                                    <th class="">Time</th>
                                                     <th class="">Group</th>
                                                     <th class="">Model</th>
                                                     <th class="">Dies No.</th>
-                                                    <th class="">Preventive Type</th>
-                                                    <th class="">Status</th>
-                                                    <th class="">Stroke</th>
-                                                    <th class="">Zona Maintenance</th>
-                                                    <th class="">Zona Parkir</th>
-                                                    <th class="text-center">View</th>
+                                                    <th class="">Part Type</th>
+                                                    <th class="">Part</th>
+                                                    <th class="">Core Pin No.</th>
+                                                    <th class="">Posisi</th>
+                                                    <th class="">Remarks</th>
+                                                    <th class="">Created By</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                 if (!empty($data["list"])) {
                                                     foreach ($data["list"] as $list) {
-                                                        if (!empty($list["cdate"])) {
-                                                            $new_date = date("Y-m-d", strtotime($list["cdate"]));
-                                                        } else {
-                                                            $new_date = null;
-                                                        }
                                                         echo "<tr>"
-                                                            . "<td class=''>" . $list["pmtid"] . "</td>"
-                                                            . "<td class=''>" . $list["pmtdt"] . "</td>"
-                                                            . "<td class=''>" . $new_date . "</td>"
+                                                            . "<td class=''>" . $list["date"] . "</td>"
+                                                            . "<td class=''>" . $list["time"] . "</td>"
                                                             . "<td class=''>" . $list["group_id"] . "</td>"
                                                             . "<td class=''>" . $list["model_id"] . "</td>"
                                                             . "<td class=''>" . $list["dies_no"] . "</td>"
-                                                            . "<td class=''>" . $list["pmtype"] . "</td>"
-                                                            . "<td class=''>" . $list["pmstat"] . "</td>"
-                                                            . "<td class=''>" . $formatted_number = number_format($list["pmtstk"], 0, '.', ',') . "</td>"
-                                                            . "<td class=''>" . $list["zona1"] . "</td>"
-                                                            . "<td class=''>" . $list["zona2"] . "</td>"
-                                                            . "<td class='text-center pr-3'>"
-                                                            . "<a href='?action=$action&id=" . $list["pmtid"] . "&step=2' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>visibility</i></a>"
-                                                            . "</td>"
+                                                            . "<td class=''>" . $list["part_grp"] . "</td>"
+                                                            . "<td class=''>" . $list["name1"] . "</td>"
+                                                            . "<td class=''>" . $list["text1"] . "</td>"
+                                                            . "<td class=''>" . $list["text2"] . "</td>"
+                                                            . "<td class=''>" . $list["desc1"] . "</td>"
+                                                            . "<td class=''>" . $list["crt_by"] . "</td>"
                                                             . "</tr>";
                                                     }
                                                 }
@@ -129,12 +120,7 @@ and open the template in the editor.
                     </div>
                     <div class="modal-body">
                         <div class="row my-2">
-                            <div class="col-4"><label class="col-form-label">Preventive No.</label></div>
-                            <div class="col"><input type="text" name="pmtid" class="form-control"
-                                    value="<?php echo $pmtid; ?>"></div>
-                        </div>
-                        <div class="row my-2">
-                            <div class="col-4"><label class="col-form-label">Preventive Date</label></div>
+                            <div class="col-4"><label class="col-form-label">Start Date</label></div>
                             <div class="col"><input type="text" name="date_from" class="form-control datepicker"
                                     value="<?php echo $date_from; ?>"></div>
                             <label class="col-form-label px-3">to</label>
@@ -143,7 +129,7 @@ and open the template in the editor.
                         </div>
                         <div class="row my-2">
                             <div class="col-4"><label class="col-form-label">Group</label></div>
-                            <div class="col"><select name="group_id" onchange="getDiesModel(value)" id="group_id" class="form-control select2"
+                            <div class="col"><select name="group_id" id="group_id" class="form-control select2"
                                     style="width: 300px">
                                     <?php
                                     foreach ($group_list as $group) {
@@ -186,25 +172,6 @@ and open the template in the editor.
                                     ?>
                                 </select></div>
                         </div>
-                        <div class="row my-2">
-                            <div class="col-4"><label class="col-form-label">Preventive Type</label></div>
-                            <div class="col"><select name="pmtype" id="pmtype" class="form-control select2"
-                                    style="width: 300px">
-                                    <option value="">None</option>
-                                    <option value="2K">Preventive Stroke 2000</option>
-                                    <option value="6K">Preventive Stroke 6000</option>
-                                </select></div>
-                        </div>
-                        <div class="row my-2">
-                            <div class="col-4"><label class="col-form-label">Status</label></div>
-                            <div class="col">
-                                <select name="pmstat" class="form-control select2" style="width: 300px">
-                                    <option value="">None</option>
-                                    <option value="C">Completed</option>
-                                    <option value="N">On Progress</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
@@ -229,7 +196,7 @@ and open the template in the editor.
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
                 buttons: [{
                     extend: 'excel',
-                    title: "Report Checksheet Preventive",
+                    title: "Report Pergantian Part",
                     className: 'btn btn-dark-blue btn-sm',
                     text: '<i class="material-icons">download</i>Download Excel',
                     exportOptions: {
@@ -251,25 +218,6 @@ and open the template in the editor.
                 altInput: true,
                 altFormat: "d-m-Y",
                 dateFormat: "Ymd"
-            });
-
-            $('td').each(function () {
-                if ($(this).html() == 'Completed') {
-                    $(this).css('color', 'green');
-                } else if ($(this).html() == 'On Progress') {
-                    $(this).css('color', 'red');
-                }
-            });
-
-            var table = $('#data-table-x').DataTable();
-            table.on('draw.dt', function () {
-                $('td').each(function () {
-                    if ($(this).html() == 'Completed') {
-                        $(this).css('color', 'green');
-                    } else if ($(this).html() == 'On Progress') {
-                        $(this).css('color', 'red');
-                    }
-                });
             });
         });
 

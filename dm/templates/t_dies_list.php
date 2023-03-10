@@ -74,6 +74,7 @@ and open the template in the editor.
                         <thead>
                           <tr>
                             <th class="align-middle pl-2"><input id='checkAll' type='checkbox' style='height: 18px; width: 18px;' /></th>
+                            <th class="">ID</th>
                             <th class="">Group</th>
                             <th class="">Model</th>
                             <th class="">Dies No</th>
@@ -91,6 +92,7 @@ and open the template in the editor.
                             foreach ($data["list"] as $list) {
                               echo "<tr>"
                                 . "<td class='align-middle chkbox pl-2'><input name='chk_id[]' type='checkbox' value='" . $list["dies_id"] . "' style='height: 18px; width: 18px;' /></td>"
+                                . "<td class=''>" . $list["dies_id"] . "</td>"
                                 . "<td class=''>" . $list["group_id"] . "</td>"
                                 . "<td class=''>" . $list["model_id"] . "</td>"
                                 . "<td class=''>" . $list["dies_no"] . "</td>"

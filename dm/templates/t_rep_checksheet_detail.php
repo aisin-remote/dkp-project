@@ -60,7 +60,7 @@ and open the template in the editor.
                                                     <th class="">Preventive Date</th>
                                                     <th class="">Completed Date</th>
                                                     <th class="">Group</th>
-                                                    <th class="">Dies</th>
+                                                    <th class="">Model</th>
                                                     <th class="">Dies No.</th>
                                                     <th class="">Preventive Type</th>
                                                     <th class="">Status</th>

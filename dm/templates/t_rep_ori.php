@@ -60,9 +60,11 @@ and open the template in the editor.
                                                     <th class="">Start Date</th>
                                                     <th class="">Time</th>
                                                     <th class="">Group</th>
-                                                    <th class="">Dies</th>
+                                                    <th class="">Model</th>
                                                     <th class="">Dies No.</th>
                                                     <th class="">Order Type</th>
+                                                    <th class="">Order Repair</th>
+                                                    <th class="">A3 Report</th>
                                                     <th class="">Created By</th>
                                                 </tr>
                                             </thead>
@@ -78,6 +80,8 @@ and open the template in the editor.
                                                             . "<td class=''>" . $list["model_id"] . "</td>"
                                                             . "<td class=''>" . $list["dies_no"] . "</td>"
                                                             . "<td class=''>" . $list["ori_typ"] . "</td>"
+                                                            . "<td class=''><a id='ori_doc' class='view-image btn btn-outline-primary btn-sm' target='_blank' href='data:image/jpg;base64," . $list["ori_doc"] . "'>View Image</a></td>"
+                                                            . "<td class=''><a id='ori_a3' class='view-image btn btn-outline-primary btn-sm' target='_blank' href='data:image/jpg;base64," . $list["ori_a3"] . "'>View Image</a></td>"
                                                             . "<td class=''>" . $list["crt_by"] . "</td>"
                                                             . "</tr>";
                                                     }
@@ -190,6 +194,7 @@ and open the template in the editor.
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
+            $(".view-image").EZView();
             $("#data-table-x").DataTable({
                 stateSave: true,
                 order: [

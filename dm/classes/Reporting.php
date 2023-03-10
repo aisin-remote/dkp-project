@@ -109,11 +109,51 @@ class Reporting
         return $return;
     }
 
+    public function getListPergantianPartDetail($date_from = "*", $date_to = "*", $group_id = null, $model_id = null, $dies_no = null)
+    {
+        $return = array();
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "SELECT TO_CHAR(a.crt_dt, 'YYYY-MM-DD') as date, TO_CHAR(a.crt_dt, 'HH24:MI:SS') as time, b.group_id, b.model_id, b.dies_no, d.part_grp, d.name1, a.desc1, e.text3, e.text1, e.text2, a.crt_by
+                FROM t_dm_pc_h a
+                LEFT JOIN m_dm_dies_asset b on b.dies_id = CAST(a.dies_id as bigint)
+                LEFT JOIN t_dm_pc_i c on c.pchid = a.pchid
+                LEFT JOIN m_dm_dies_part d on d.part_id = c.part_id
+                LEFT JOIN t_dm_pc_core e on e.pchid = a.pchid AND e.part_id = d.part_id
+                WHERE 1=1 ";
+        if ($date_from !== "*" && $date_to !== "*") {
+            $sql .= " AND TO_CHAR(a.crt_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
+        }
+        if (!empty($group_id)) {
+            $sql .= " AND d.group_id = '$group_id' ";
+        }
+        if (!empty($model_id)) {
+            $sql .= " AND d.model_id = '$model_id' ";
+        }
+        if (!empty($dies_no)) {
+            $sql .= " AND d.dies_id = '$dies_no' ";
+        }
+        $sql .= " ORDER by a.dies_id ASC ";
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                if ($row['part_grp'] == 'F') {
+                    $row['part_grp'] = 'Fix';
+                } elseif ($row['part_grp'] == 'M') {
+                    $row['part_grp'] = 'Move';
+                }
+                $return[] = $row;
+            }
+        }
+        $stmt = null;
+        $conn = null;
+        return $return;
+    }
+
     public function getListOri($date_from = "*", $date_to = "*", $group_id = null, $model_id = null, $dies_no = null, $ori_type = null)
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.ori_id, a.ori_dt, TO_CHAR(a.crt_dt, 'HH24:MI:SS') as ori_time, b.group_id, b.model_id, b.dies_no, a.ori_typ, a.crt_by "
+        $sql = "SELECT a.ori_id, a.ori_dt, TO_CHAR(a.crt_dt, 'HH24:MI:SS') as ori_time, b.group_id, b.model_id, b.dies_no, a.ori_typ, a.ori_doc, a.ori_a3, a.crt_by "
             . "FROM t_dm_ori a, m_dm_dies_asset b "
             . "WHERE a.dies_id = b.dies_id ";
         if ($date_from !== "*" && $date_to !== "*") {

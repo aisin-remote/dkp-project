@@ -59,7 +59,7 @@ and open the template in the editor.
                                                     <th class="">Date</th>
                                                     <th class="">Time</th>
                                                     <th class="">Group</th>
-                                                    <th class="">Dies</th>
+                                                    <th class="">Model</th>
                                                     <th class="">Dies No.</th>
                                                     <th class="">Part Type</th>
                                                     <th class="">Part</th>

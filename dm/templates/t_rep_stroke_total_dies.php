@@ -57,7 +57,7 @@ and open the template in the editor.
                                             <thead>
                                                 <tr>
                                                     <th class="">Group</th>
-                                                    <th class="">Dies</th>
+                                                    <th class="">Model</th>
                                                     <th class="">Dies No #</th>
                                                     <th class="">Total Running Stroke</th>
                                                     <th class="">Total OK</th>
