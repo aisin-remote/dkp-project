@@ -196,12 +196,9 @@ and open the template in the editor.
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
                 buttons: [{
                     extend: 'excel',
-                    title: "Report Pergantian Part",
+                    title: "Report Pergantian Part Detail",
                     className: 'btn btn-dark-blue btn-sm',
                     text: '<i class="material-icons">download</i>Download Excel',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
-                    }
                 },
                 {
                     className: 'btn btn-dark-blue-outlined btn-sm',

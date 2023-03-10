@@ -209,7 +209,7 @@ and open the template in the editor.
                     className: 'btn btn-dark-blue btn-sm',
                     text: '<i class="material-icons">download</i>Download Excel',
                     exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
+                        columns: [0, 1, 2, 3, 4, 5, 6]
                     }
                 },
                 {
