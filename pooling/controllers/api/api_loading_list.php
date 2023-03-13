@@ -19,7 +19,7 @@ if($action == "api_get_ldlist") {
     $master_barcode = $c_barc->getById($data_hdr["lifnr"]);
     $matnr = [];
     foreach($data_itm as $itm) {
-      $matnr[] = $itm["matnr"];
+      $matnr[] = trim($itm["matnr"]);
     }
     $filtered_matnr = array_unique($matnr);
     $master_rfid = $c_rfid->getRfidList($filtered_matnr);
@@ -38,23 +38,24 @@ if($action == "api_get_ldlist") {
       } else {
         //insert customer
         $param_cust = [];
-        $param_cust["lifnr"] = $data[0]["customer_code"];
-        $param_cust["name1"] = $data[0]["customer_name"];
+        $param_cust["lifnr"] = trim($data[0]["customer_code"]);
+        $param_cust["name1"] = trim($data[0]["customer_name"]);
         $param_cust["crt_by"] = $crt_by;
         $c_cust->insert($param_cust);
       }
       //cek material apakah sudah ada
-      $cek_mat = $c_mara->isExist($data[0]["i_matnr"]);
-      if($cek_mat > 0) {
-
-      } else {
-        //insert material
-        $param_mat = [];
-        $param_mat["matnr"] = $data[0]["i_matnr"];
-        $param_mat["matn1"] = $data[0]["e_matnr"];
-        $param_mat["name1"] = $data[0]["maktx"];
-        $param_mat["crt_by"] = $crt_by;
-        $c_mara->insert($param_mat);
+      foreach($data as $row) {
+        $cek_mat = $c_mara->isExist($row["i_matnr"]);
+        if($cek_mat == 0) {
+          $param_mat = [];
+          $param_mat["matnr"] = trim($row["i_matnr"]);
+          $param_mat["matn1"] = trim($row["e_matnr"]);
+          $param_mat["name1"] = trim($row["maktx"]);
+          $param_mat["crt_by"] = $crt_by;
+          $c_mara->insert($param_mat);
+        } else {
+          
+        }
       }
       
       //insert loading list header and item
@@ -89,7 +90,7 @@ if($action == "api_get_ldlist") {
       $master_barcode = $c_barc->getById($data_hdr["lifnr"]);
       $matnr = [];
       foreach($data_itm as $itm) {
-        $matnr[] = $itm["matnr"];
+        $matnr[] = trim($itm["matnr"]);
       }
       $filtered_matnr = array_unique($matnr);
       $master_rfid = $c_rfid->getRfidList($filtered_matnr);

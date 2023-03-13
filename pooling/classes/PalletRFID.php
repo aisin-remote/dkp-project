@@ -78,7 +78,7 @@ class PalletRFID {
       
       foreach ($rfid_pallet as $row) {
         $insertQuery[] = "(?,?,CURRENT_TIMESTAMP)";
-        $insertData[] = $row;
+        $insertData[] = trim($row);
         $insertData[] = $crt_by;
       }
       

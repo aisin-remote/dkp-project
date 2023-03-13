@@ -82,7 +82,7 @@ class KanbanRFID {
       
       foreach ($rfid_kanban as $row) {
         $insertQuery[] = "(?,?,?,?,CURRENT_TIMESTAMP)";
-        $insertData[] = $row;
+        $insertData[] = trim($row);
         $insertData[] = $lifnr;
         $insertData[] = $matnr;
         $insertData[] = $crt_by;

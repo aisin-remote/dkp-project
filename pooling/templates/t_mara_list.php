@@ -48,6 +48,7 @@ and open the template in the editor.
                     <table class="table table-sm" id="data-table">
                       <thead>
                         <tr>
+                          <th class="text-center">Qr Code</th>
                           <th>Internal Material No.</th>
                           <th>Customer Material No.</th>
                           <th>Material Description</th>
@@ -59,10 +60,11 @@ and open the template in the editor.
                         if(!empty($data["list"])) {
                           foreach($data["list"] as $list) {
                             echo "<tr>"
+                            . "<td class='text-center'><a href='qrcode.php?code=".$list["matnr"]."' target='_blank' class='btn btn-outline-primary btn-sm'><i class='material-icons'>qr_code_2</i></a></td>"
                             . "<td>".$list["matnr"]."</td>"
                             . "<td>".$list["matn1"]."</td>"
                             . "<td>".$list["name1"]."</td>"
-                            . "<td class='text-center'><a href='?action=$action&id=".$list["matnr"]."' class='btn btn-outline-primary btn-xs'><i class='material-icons'>edit</i> edit</a></td>"
+                            . "<td class='text-center'><a href='?action=$action&id=".$list["matnr"]."' class='btn btn-outline-primary btn-sm'><i class='material-icons'>edit</i> edit</a></td>"
                             . "</tr>";
                           }
                         }

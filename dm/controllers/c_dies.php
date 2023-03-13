@@ -93,11 +93,15 @@ if ($action == "dies") {
         }
       }
       //cek zona
-      $zone_used = $zona->isUsed($param["zona_id"], $param["dies_id"]);
-      if($zone_used["count"] > 0) {
-        header("Location: ?action=" . $action . "&id=" . $id . "&error=Zona Maintenance [".$zone_used["desc"]."] Sedang Dipakai!");
-        die();
+      $data_zona = $zona->getById($param["zona_id"]);
+      if($data_zona["zona_type"] == "M") {
+        $zone_used = $zona->isUsed($param["zona_id"], $param["dies_id"]);
+        if($zone_used["count"] > 0) {
+          header("Location: ?action=" . $action . "&id=" . $id . "&error=Zona Maintenance [".$zone_used["desc"]."] Sedang Dipakai!");
+          die();
+        }
       }
+        
       $save = array();
       if ($id == "0") {
         $save = $class->insertDies($param);
