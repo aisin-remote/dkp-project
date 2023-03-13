@@ -17,37 +17,43 @@ if ($action == "checksheet_preventive") {
         $param["pmtby"] = $_SESSION[LOGIN_SESSION];
         //cek apakah zona maintenance sedang dipakai
         $zone_used = $zona->isUsed($param["zona_id"], $param["dies_id"]);
-        if($zone_used["count"] > 0) {
-          header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&error=Zona Maintenance [".$zone_used["desc"]."] Sedang Dipakai!");
+        if ($zone_used["count"] > 0) {
+          header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&error=Zona Maintenance [" . $zone_used["desc"] . "] Sedang Dipakai!");
           die();
         }
         //cek dulu apakah dies sudah saatnya maintenance
         $cek_dies = $dies->getDiesById($param["dies_id"]);
         //pengecekan jika belum 2000
         /*if(floatval($cek_dies["stk2k"]) <= 2000) {
-          $error = "Dies [".$cek_dies["group_id"]." | ".$cek_dies["model_id"]." | ".$cek_dies["dies_no"]." | ".str_replace("#"," ",$cek_dies["name1"])."] masih belum saatnya untuk dilakukan Preventive Maintenance";
-          header("Location: " . $action . "?id=" . $id . "&step=1" . "&error=" . $error);
-          die();
+        $error = "Dies [".$cek_dies["group_id"]." | ".$cek_dies["model_id"]." | ".$cek_dies["dies_no"]." | ".str_replace("#"," ",$cek_dies["name1"])."] masih belum saatnya untuk dilakukan Preventive Maintenance";
+        header("Location: " . $action . "?id=" . $id . "&step=1" . "&error=" . $error);
+        die();
         }*/
 
         /*if(floatval($cek_dies["stk6k"]) >= 6000) {
-          $param["pmtype"] = "6K";
+        $param["pmtype"] = "6K";
         } else {
-          $param["pmtype"] = "2K";
+        $param["pmtype"] = "2K";
         }*/
 
+        $save = array();
         //cek apakah dies masih di preventive
         if ($cek_dies["gstat"] == "P") {
           header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&error=Dies Masih Dalam Preventive Maintenance!");
           die();
         } else {
-          //update status dies menjadi P
-          $dies->updateDiesGStat($param["dies_id"], "P");
-        }
-        $save = array();
-        $param["pmtid"] = $class->generateID();
+          $param["pmtid"] = $class->generateID();
 
-        $save = $class->insert($param);
+          if ($cek_dies["gstat"] == "R") {
+            header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&error=Dies Masih Dalam Repair!");
+            die();
+          } else {
+            //update status dies menjadi P
+            $dies->updateDiesGStat($param["dies_id"], "P");
+            $save = $class->insert($param);
+          }
+        }
+
 
         if ($save["status"] == true) {
           header("Location: ?action=" . $action . "&id=" . $param["pmtid"] . "&step=2" . "&success=Data%20Saved");
@@ -91,7 +97,7 @@ if ($action == "checksheet_preventive") {
           if (file_exists($outputImage)) {
             unlink($outputImage);
           }
-          if ($photo["type"] == "image/jpeg" || $photo["type"] == "image/jpg" || $photo["type"] == "image/png") {            
+          if ($photo["type"] == "image/jpeg" || $photo["type"] == "image/jpg" || $photo["type"] == "image/png") {
             $img64 = "";
             $file_name = $photo["tmp_name"];
 
@@ -399,8 +405,8 @@ if ($action == "checksheet_preventive") {
         // echo $param["group_id"] . " - " . $param["jml_total"];
         //cek apakah zona maintenance dipakai
         $zone_used = $zona->isUsed($param["zona1"], $param["dies_id"]);
-        if($zone_used["count"] > 0) {
-          header("Location: ?action=" . $action . "&id=" . $id . "&step=2" . "&error=Zona Maintenance [".$zone_used["desc"]."] Sedang Dipakai!");
+        if ($zone_used["count"] > 0) {
+          header("Location: ?action=" . $action . "&id=" . $id . "&step=2" . "&error=Zona Maintenance [" . $zone_used["desc"] . "] Sedang Dipakai!");
           die();
         }
         $save = array();

@@ -149,13 +149,16 @@ class Reporting
         return $return;
     }
 
-    public function getListOri($date_from = "*", $date_to = "*", $group_id = null, $model_id = null, $dies_no = null, $ori_type = null)
+    public function getListOri($date_from = "*", $date_to = "*", $group_id = null, $model_id = null, $dies_no = null, $ori_type = null, $stat = null)
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.ori_id, a.ori_dt, TO_CHAR(a.crt_dt, 'HH24:MI:SS') as ori_time, b.group_id, b.model_id, b.dies_no, a.ori_typ, a.ori_doc, a.ori_a3, a.crt_by "
-            . "FROM t_dm_ori a, m_dm_dies_asset b "
-            . "WHERE a.dies_id = b.dies_id ";
+        $sql = "SELECT a.ori_id, a.ori_dt, TO_CHAR(a.crt_dt, 'HH24:MI:SS') as ori_time, b.group_id, b.model_id, b.dies_no, a.ori_typ, c.desc as zona1, d.desc as zona2, a.ori_doc, a.stats, a.ori_a3, a.crt_by
+                FROM t_dm_ori a
+                INNER JOIN m_dm_dies_asset b ON b.dies_id = a.dies_id
+                LEFT JOIN m_zona c ON c.zona_id = a.zona1
+                LEFT JOIN m_zona d ON d.zona_id = a.zona2
+                where 1=1 ";
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.ori_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
         }
@@ -170,6 +173,9 @@ class Reporting
         }
         if (!empty($ori_type)) {
             $sql .= " AND a.ori_typ = '$ori_type' ";
+        }
+        if (!empty($stat)) {
+            $sql .= " AND a.stats = '$stat' ";
         }
 
         // echo $sql;
