@@ -107,73 +107,11 @@ and open the template in the editor.
     <?php include 'common/t_js.php'; ?>
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
-        // setInterval(updateDashboard, 5000);
         setInterval(mapping, 3000);
 
         $(document).ready(function () {
             // closeFullscreen();
         });
-
-        function updateDashboard() {
-            $.getJSON(
-                "?action=api_dashboard_dm", {},
-                function (data) {
-                    var data_dies = data.data_dies;
-                    var data_group = data.data_group;
-                    var data_model = data.data_model
-
-                    var append_data = "";
-                    if (data_group.length !== 0) {
-                        var i = 0;
-                        $.each(data_group, function (row, grp) {
-                            append_data += "<div class='col-lg-4 col-md-6 col-sm-12 px-1'><div class='card'>";
-                            append_data += "<div class='card-header text-center'><h4 class='card-title mb-0 text-uli-blue font-weight-bold'>" + data_group[i].pval1 + "</h4></div>";
-                            append_data += "<div class='card-body p-1 rounded'><div class='container-fluid'>";
-                            if (data_model.length !== 0) {
-                                var j = 0;
-                                $.each(data_model, function (row, mdl) {
-                                    if (data_model[j].group_id == data_group[i].pval1) {
-                                        append_data += "<div class='row mb-1'>";
-                                        append_data += "<div class='col-lg-3 p-1'>";
-                                        append_data += "<div class='card'>";
-                                        append_data += "<div class='px-2 py-2 card-body rounded' style=' background-color: " + data_model[j].colour + "; '>";
-                                        append_data += "<h4 class='card-title text-center text-white mb-0 font-weight-bold " + data_model[j].font_colour + "'>" + data_model[j].model_id + "</h4>";
-                                        append_data += "</div>";
-                                        append_data += "</div>";
-                                        append_data += "</div>";
-                                        append_data += "<div class='col-lg-9 p-1'><div class='container-fluid'>";
-                                        append_data += "<div class='row'>";
-                                        var x = 0;
-                                        $.each(data_dies, function (row, dies) {
-                                            if (data_dies[x].group_id == data_model[j].group_id && data_dies[x].model_id == data_model[j].model_id) {
-                                                // console.log(data_dies[x].bg_color);
-                                                append_data += "<div class='col-lg-3 p-0'>";
-                                                append_data += "<div class='card'>";
-                                                append_data += "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" + data_dies[x].group_id + "&model_id=" + data_dies[x].model_id + "&dies_id=" + data_dies[x].dies_id + "' class='card-body rounded p-1  " + data_dies[x].bg_color + "'>";
-                                                append_data += "<h4 class='card-title text-center mb-0 text-dark font-weight-bold'>" + data_dies[x].dies_no + "</h4>"
-                                                append_data += "<p class='m-0 text-center text-dark small text-nowrap font-weight-bold' >Stroke</p>"
-                                                append_data += "<p class='m-0 text-dark small text-nowrap font-weight-bold '>" + "Prev " + "<span>: " + data_dies[x].stkrun + "</span></p>";
-                                                append_data += "<p class='m-0 text-dark small text-nowrap font-weight-bold '>" + "Act " + "<span>: " + data_dies[x].stk6k + "</span></p>";
-                                                append_data += "</a>";
-                                                append_data += "</div>";
-                                                append_data += "</div>";
-                                            }
-                                            x++;
-                                        });
-                                        append_data += "</div></div></div></div>";
-                                    }
-                                    j++;
-                                });
-                            }
-                            append_data += "</div></div></div></div>";
-                            i++;
-                        });
-                        $("#dashboard").html(append_data);
-                    }
-                    // console.log(append_data);
-                }
-            );
-        }
 
         function mapping() {
             $.getJSON("?action=api_mapping_dm", {},
