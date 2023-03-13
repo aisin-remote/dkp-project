@@ -8,6 +8,7 @@ if ($action == "daily_production_entry") {
   $dies = new Dies();
   $stop = new Stop();
   $user = new User();
+  $zona = new Zona();
   if (isset($_GET["line"])) {
     $line = $_GET["line"];
     $date = $_GET["date"];
@@ -101,6 +102,9 @@ if ($action == "daily_production_entry") {
         if (isset($_POST["save"])) {
           //mulai generate data
           $param = $_POST;
+          // print_r($param);
+          // die();
+          $dies->updateZonaByLine($param["line_id"]);
           $save_header = $class->insertHeader($param);
           if ($save_header["status"] == true) {
             //insert item
