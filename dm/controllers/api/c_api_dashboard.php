@@ -12,7 +12,7 @@ if ($action == "api_dashboard_dm") {
     if (!empty($data_dies)) {
         $i = 0;
         foreach ($data_dies as $row) {
-            $data_dies[$i]["bg_color"] = "table-ivory";
+            $data_dies[$i]["bg_color"] = "bg-light";
             if (floatval($row["stkrun"]) >= floatval($row["ewstk"])) {
                 $data_dies[$i]["bg_color"] = "bg-yellow";
             }
@@ -22,6 +22,14 @@ if ($action == "api_dashboard_dm") {
             }
 
             if ($row["gstat"] == 'P') {
+                $data_dies[$i]["bg_color"] = "bg-blink";
+                foreach ($dies_prod as $dies) {
+                    if ($dies["dies_id"] == $row["dies_id"]) {
+                        $data_dies[$i]["bg_color"] = "bg-red-blink";
+                    }
+                }
+            }
+            if ($row["gstat"] == 'R') {
                 $data_dies[$i]["bg_color"] = "bg-blink";
                 foreach ($dies_prod as $dies) {
                     if ($dies["dies_id"] == $row["dies_id"]) {

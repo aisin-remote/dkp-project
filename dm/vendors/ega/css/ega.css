@@ -40,11 +40,11 @@
 }
 
 @keyframes ripple {
-  0%   {background-color:ivory;}
+  0%   {background-color:#F8F9FA;}
   25%  {background-color:#66ccff;}
-  50%  {background-color:ivory;}
+  50%  {background-color:#F8F9FA;}
   75%  {background-color:#66ccff;}
-  100% {background-color:ivory;}
+  100% {background-color:#F8F9FA;}
 }
 
 .bg-blink {
@@ -54,11 +54,11 @@
 }
 
 @keyframes ripple2 {
-  0%   {background-color:ivory;}
+  0%   {background-color:#F8F9FA;}
   25%  {background-color:#d9534f;}
-  50%  {background-color:ivory;}
+  50%  {background-color:#F8F9FA;}
   75%  {background-color:#d9534f;}
-  100% {background-color:ivory;}
+  100% {background-color:#F8F9FA;}
 }
 
 .bg-red-blink {

@@ -63,6 +63,8 @@ and open the template in the editor.
                                                     <th class="">Model</th>
                                                     <th class="">Dies No.</th>
                                                     <th class="">Order Type</th>
+                                                    <th class="">Zona Maintenance</th>
+                                                    <th class="">Zona Parkir</th>
                                                     <th class="">Order Repair</th>
                                                     <th class="">A3 Report</th>
                                                     <th class="">Created By</th>
@@ -80,6 +82,8 @@ and open the template in the editor.
                                                             . "<td class=''>" . $list["model_id"] . "</td>"
                                                             . "<td class=''>" . $list["dies_no"] . "</td>"
                                                             . "<td class=''>" . $list["ori_typ"] . "</td>"
+                                                            . "<td class=''>" . $list["zona1"] . "</td>"
+                                                            . "<td class=''>" . $list["zona2"] . "</td>"
                                                             . "<td class=''><a id='ori_doc' class='view-image btn btn-outline-primary btn-sm' target='_blank' href='data:image/jpg;base64," . $list["ori_doc"] . "'>View Image</a></td>"
                                                             . "<td class=''><a id='ori_a3' class='view-image btn btn-outline-primary btn-sm' target='_blank' href='data:image/jpg;base64," . $list["ori_a3"] . "'>View Image</a></td>"
                                                             . "<td class=''>" . $list["crt_by"] . "</td>"
@@ -129,7 +133,7 @@ and open the template in the editor.
                             <div class="col-4"><label class="col-form-label">Group</label></div>
                             <div class="col"><select name="group_id" id="group_id" class="form-control select2"
                                     style="width: 300px">
-                                    <option selected>Pilih Group</option>
+                                    <option value="" selected>Pilih Group</option>
                                     <?php
                                     foreach ($group_list as $group) {
                                         ?>
@@ -145,7 +149,7 @@ and open the template in the editor.
                             <div class="col-4"><label class="col-form-label">Model</label></div>
                             <div class="col"><select name="model_id" id="model_id" class="form-control select2"
                                     style="width: 300px">
-                                    <option selected>Pilih Model</option>
+                                    <option value="" selected>Pilih Model</option>
                                     <?php
                                     foreach ($model_list as $model) {
                                         ?>
@@ -161,7 +165,7 @@ and open the template in the editor.
                             <div class="col-4"><label class="col-form-label">Dies No #</label></div>
                             <div class="col"><select name="dies_id" id="dies_id" class="form-control select2"
                                     style="width: 300px">
-                                    <option selected>Pilih Dies</option>
+                                    <option value="" selected>Pilih Dies</option>
                                     <?php
                                     foreach ($diesid_list as $dies) {
                                         ?>

@@ -289,7 +289,7 @@ and open the template in the editor.
                             <div class="col-4"><label class="col-form-label">Group</label></div>
                             <div class="col"><select name="group_id" id="group_id" class="form-control select2"
                                     style="width: 300px">
-                                    <option selected>Pilih Group</option>
+                                    <option value="" selected>Pilih Group</option>
                                     <?php
                                     foreach ($group_list as $group) {
                                         ?>
@@ -305,7 +305,7 @@ and open the template in the editor.
                             <div class="col-4"><label class="col-form-label">Model</label></div>
                             <div class="col"><select name="model_id" id="model_id" class="form-control select2"
                                     style="width: 300px">
-                                    <option selected>Pilih Model</option>
+                                    <option value="" selected>Pilih Model</option>
                                     <?php
                                     foreach ($model_list as $model) {
                                         ?>
@@ -321,7 +321,7 @@ and open the template in the editor.
                             <div class="col-4"><label class="col-form-label">Dies No #</label></div>
                             <div class="col"><select name="dies_id" id="dies_id" class="form-control select2"
                                     style="width: 300px">
-                                    <option selected>Pilih Dies</option>
+                                    <option value="" selected>Pilih Dies</option>
                                     <?php
                                     foreach ($diesid_list as $dies) {
                                         ?>
