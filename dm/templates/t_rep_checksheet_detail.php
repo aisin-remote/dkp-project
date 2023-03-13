@@ -53,7 +53,7 @@ and open the template in the editor.
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <!-- Edit Here -->
-                                        <table class="table table-striped table-sm" id="data-table-x">
+                                        <table class="table table-striped table-sm text-nowrap" id="data-table-x">
                                             <thead>
                                                 <tr>
                                                     <th class="">Preventive No.</th>
