@@ -192,15 +192,21 @@ and open the template in the editor.
                                                 <td>Dies under repair to maker</td>
                                             </tr>
                                             <tr>
+                                                <td style="width: 100px;" class="bg-red-blink">Red (Blinking)</td>
+                                                <td>Dies not yet finish preventive</td>
+                                            </tr>
+                                            <tr>
                                                 <td style="width: 100px;" class="text-center font-weight-bold">#999</td>
                                                 <td>Dies Number</td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 100px;color: #10A19D" class="text-center font-weight-bold">9999</td>
+                                                <td style="width: 100px;color: #10A19D"
+                                                    class="text-center font-weight-bold">9999</td>
                                                 <td>Prev. Stroke</td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 100px;color: #1746A2" class="text-center font-weight-bold">9999</td>
+                                                <td style="width: 100px;color: #1746A2"
+                                                    class="text-center font-weight-bold">9999</td>
                                                 <td>Act. Stroke</td>
                                             </tr>
                                         </tbody>
@@ -242,7 +248,7 @@ and open the template in the editor.
                                 var j = 0;
                                 $.each(data_model, function (row, mdl) {
                                     if (data_model[j].group_id == data_group[i].pval1) {
-                                        append_dataTCC += "<div class='card rounded-0 mb-2' style='border-color: " +data_model[j].colour+ ";'>";
+                                        append_dataTCC += "<div class='card rounded-0 mb-2' style='border-color: " + data_model[j].colour + ";'>";
                                         append_dataTCC += "<div class='card-header p-1 rounded-0 " + data_model[j].font_colour + " font-weight-bold' style='background-color: " + data_model[j].colour + ";'>" + data_group[i].pval1 + " " + data_model[j].model_id + "</div>";
                                         append_dataTCC += "<div class='card-body p-2'><div class='container-fluid'>";
                                         append_dataTCC += "<div class='row'>";
@@ -278,7 +284,7 @@ and open the template in the editor.
                                 var j = 0;
                                 $.each(data_model, function (row, mdl) {
                                     if (data_model[j].group_id == data_group[i].pval1) {
-                                        append_dataOPN += "<div class='card rounded-0 mb-2' style='border-color: " +data_model[j].colour+ ";'>";
+                                        append_dataOPN += "<div class='card rounded-0 mb-2' style='border-color: " + data_model[j].colour + ";'>";
                                         append_dataOPN += "<div class='card-header p-1 rounded-0 " + data_model[j].font_colour + " font-weight-bold' style='background-color: " + data_model[j].colour + ";'>" + data_group[i].pval1 + " " + data_model[j].model_id + "</div>";
                                         append_dataOPN += "<div class='card-body p-2'><div class='container-fluid'>";
                                         append_dataOPN += "<div class='row'>";
@@ -314,7 +320,7 @@ and open the template in the editor.
                                 var j = 0;
                                 $.each(data_model, function (row, mdl) {
                                     if (data_model[j].group_id == data_group[i].pval1) {
-                                        append_dataCSH += "<div class='card rounded-0 mb-2' style='border-color: " +data_model[j].colour+ ";'>";
+                                        append_dataCSH += "<div class='card rounded-0 mb-2' style='border-color: " + data_model[j].colour + ";'>";
                                         append_dataCSH += "<div class='card-header p-1 rounded-0 " + data_model[j].font_colour + " font-weight-bold' style='background-color: " + data_model[j].colour + ";'>" + data_group[i].pval1 + " " + data_model[j].model_id + "</div>";
                                         append_dataCSH += "<div class='card-body p-2'><div class='container-fluid'>";
                                         append_dataCSH += "<div class='row'>";
