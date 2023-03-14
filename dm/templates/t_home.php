@@ -59,8 +59,15 @@ and open the template in the editor.
                                                         echo "<div class='col-4 p-1'>"
                                                             . "<div class='card rounded-0'>"
                                                             . "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" . $dies["group_id"] . "&model_id=" . $dies["model_id"] . "&dies_id=" . $dies["dies_id"] . "' class='card-body rounded-0 p-1  " . $dies["bg_color"] . "'>"
-                                                            . "<h6 class='text-center text-dark m-0 font-weight-bold'>" . $dies["dies_no"] . "</h6>"
-                                                            . "<p class='m-0 text-dark text-center text-nowrap font-weight-bold'><span style='color: #10A19D'>" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span> / <span style='color: #1746A2'>" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</p>"
+                                                            . "<div class='row align-items-center'>"
+                                                            . "<div class='col-6 pr-1 pl-3'>"
+                                                            . "<h5 class='text-left text-dark m-0 font-weight-bold'>" . $dies["dies_no"] . "</h5>"
+                                                            . "</div>"
+                                                            . "<div class='col-6 pl-1 pr-3'>"
+                                                            . "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #10A19D'>" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span></p>"
+                                                            . "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #1746A2'>" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</span></p>"
+                                                            . "</div>"
+                                                            . "</div>"
                                                             . "</a>"
                                                             . "</div>"
                                                             . "</div>";
@@ -92,8 +99,15 @@ and open the template in the editor.
                                                         echo "<div class='col-4 p-1'>"
                                                             . "<div class='card rounded-0'>"
                                                             . "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" . $dies["group_id"] . "&model_id=" . $dies["model_id"] . "&dies_id=" . $dies["dies_id"] . "' class='card-body rounded-0 p-1  " . $dies["bg_color"] . "'>"
-                                                            . "<h6 class='text-center text-dark m-0 font-weight-bold'>" . $dies["dies_no"] . "</h6>"
-                                                            . "<p class='m-0 text-dark text-center text-nowrap font-weight-bold' ><span style='color: #10A19D'>" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span> / <span style='color: #1746A2'>" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</p>"
+                                                            . "<div class='row align-items-center'>"
+                                                            . "<div class='col-6 pr-1 pl-3'>"
+                                                            . "<h5 class='text-left text-dark m-0 font-weight-bold'>" . $dies["dies_no"] . "</h5>"
+                                                            . "</div>"
+                                                            . "<div class='col-6 pl-1 pr-3'>"
+                                                            . "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #10A19D'>" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span></p>"
+                                                            . "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #1746A2'>" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</span></p>"
+                                                            . "</div>"
+                                                            . "</div>"
                                                             . "</a>"
                                                             . "</div>"
                                                             . "</div>";
@@ -125,8 +139,15 @@ and open the template in the editor.
                                                         echo "<div class='col-4 p-1'>"
                                                             . "<div class='card rounded-0'>"
                                                             . "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" . $dies["group_id"] . "&model_id=" . $dies["model_id"] . "&dies_id=" . $dies["dies_id"] . "' class='card-body rounded-0 p-1  " . $dies["bg_color"] . "'>"
-                                                            . "<h6 class='text-center text-dark m-0 font-weight-bold'>" . $dies["dies_no"] . "</h6>"
-                                                            . "<p class='m-0 text-dark text-center text-nowrap font-weight-bold' ><span style='color: #10A19D'>" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span> / <span style='color: #1746A2'>" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</p>"
+                                                            . "<div class='row align-items-center'>"
+                                                            . "<div class='col-6 pr-1 pl-3'>"
+                                                            . "<h5 class='text-left text-dark m-0 font-weight-bold'>" . $dies["dies_no"] . "</h5>"
+                                                            . "</div>"
+                                                            . "<div class='col-6 pl-1 pr-3'>"
+                                                            . "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #10A19D'>" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span></p>"
+                                                            . "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #1746A2'>" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</span></p>"
+                                                            . "</div>"
+                                                            . "</div>"
                                                             . "</a>"
                                                             . "</div>"
                                                             . "</div>";
@@ -197,7 +218,7 @@ and open the template in the editor.
     <?php include 'common/t_js.php'; ?>
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
-        setInterval(updateDashboard, 5000);
+        // setInterval(updateDashboard, 5000);
 
         $(document).ready(function () {
             // closeFullscreen();
