@@ -49,7 +49,7 @@ if($action == "api_get_ldlist") {
         if($cek_mat == 0) {
           $param_mat = [];
           $param_mat["matnr"] = trim($row["i_matnr"]);
-          $param_mat["matn1"] = trim($row["e_matnr"]);
+          $param_mat["matn1"] = trim($row["c_matnr"]);
           $param_mat["name1"] = trim($row["maktx"]);
           $param_mat["crt_by"] = $crt_by;
           $c_mara->insert($param_mat);
