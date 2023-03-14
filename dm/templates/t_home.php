@@ -60,7 +60,7 @@ and open the template in the editor.
                                                             . "<div class='card rounded-0'>"
                                                             . "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" . $dies["group_id"] . "&model_id=" . $dies["model_id"] . "&dies_id=" . $dies["dies_id"] . "' class='card-body rounded-0 p-1  " . $dies["bg_color"] . "'>"
                                                             . "<h6 class='text-center text-dark m-0 font-weight-bold'>" . $dies["dies_no"] . "</h6>"
-                                                            . "<p class='m-0 text-dark text-center text-nowrap' ><span>" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . " / <span>" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</p>"
+                                                            . "<p class='m-0 text-dark text-center text-nowrap font-weight-bold'><span style='color: #10A19D'>" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span> / <span style='color: #1746A2'>" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</p>"
                                                             . "</a>"
                                                             . "</div>"
                                                             . "</div>";
@@ -93,7 +93,7 @@ and open the template in the editor.
                                                             . "<div class='card rounded-0'>"
                                                             . "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" . $dies["group_id"] . "&model_id=" . $dies["model_id"] . "&dies_id=" . $dies["dies_id"] . "' class='card-body rounded-0 p-1  " . $dies["bg_color"] . "'>"
                                                             . "<h6 class='text-center text-dark m-0 font-weight-bold'>" . $dies["dies_no"] . "</h6>"
-                                                            . "<p class='m-0 text-dark text-center text-nowrap ' ><span>" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . " / <span>" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</p>"
+                                                            . "<p class='m-0 text-dark text-center text-nowrap font-weight-bold' ><span style='color: #10A19D'>" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span> / <span style='color: #1746A2'>" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</p>"
                                                             . "</a>"
                                                             . "</div>"
                                                             . "</div>";
@@ -126,7 +126,7 @@ and open the template in the editor.
                                                             . "<div class='card rounded-0'>"
                                                             . "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" . $dies["group_id"] . "&model_id=" . $dies["model_id"] . "&dies_id=" . $dies["dies_id"] . "' class='card-body rounded-0 p-1  " . $dies["bg_color"] . "'>"
                                                             . "<h6 class='text-center text-dark m-0 font-weight-bold'>" . $dies["dies_no"] . "</h6>"
-                                                            . "<p class='m-0 text-dark text-center text-nowrap ' ><span>" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . " / <span>" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</p>"
+                                                            . "<p class='m-0 text-dark text-center text-nowrap font-weight-bold' ><span style='color: #10A19D'>" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span> / <span style='color: #1746A2'>" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</p>"
                                                             . "</a>"
                                                             . "</div>"
                                                             . "</div>";
@@ -147,33 +147,40 @@ and open the template in the editor.
                                     </h6>
                                 </div>
                                 <div class="card-body p-1 ">
-                                    <table class="table table-borderless table-sm mb-0">
+                                    <table class="table table-bordered table-sm mb-0">
                                         <tbody>
                                             <tr>
-                                                <td style="width: 100px;" class="bg-light">White</td>
+                                                <td style="width: 100px;" class="bg-light text-center">White</td>
                                                 <td>Dies stroke < 1,600</td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 100px;" class="bg-yellow">Yellow</td>
+                                                <td style="width: 100px;" class="bg-yellow text-center">Yellow</td>
                                                 <td>Dies stroke >= 1,600</td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 100px;" class="bg-danger">Red</td>
+                                                <td style="width: 100px;" class="bg-danger text-center">Red</td>
                                                 <td>Dies stroke > 2,000</td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 100px;" class="bg-blink">Blue
+                                                <td style="width: 100px;" class="bg-blink text-center">Blue
                                                     (Blinking)</td>
                                                 <td>Dies under preventive maintenance/repair</td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 100px;" class="bg-amber">Orange</td>
+                                                <td style="width: 100px;" class="bg-amber text-center">Orange</td>
                                                 <td>Dies under repair to maker</td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 100px;" class="bg-red-blink">Red
-                                                    (Blinking)</td>
-                                                <td>Dies not yet finish preventive</td>
+                                                <td style="width: 100px;" class="text-center font-weight-bold">#999</td>
+                                                <td>Dies Number</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 100px;color: #10A19D" class="text-center font-weight-bold">9999</td>
+                                                <td>Prev. Stroke</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 100px;color: #1746A2" class="text-center font-weight-bold">9999</td>
+                                                <td>Act. Stroke</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -226,7 +233,7 @@ and open the template in the editor.
                                                 append_dataTCC += "<div class='card rounded-0'>";
                                                 append_dataTCC += "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" + data_dies[x].group_id + "&model_id=" + data_dies[x].model_id + "&dies_id=" + data_dies[x].dies_id + "' class='card-body rounded-0 p-1  " + data_dies[x].bg_color + "'>";
                                                 append_dataTCC += "<h6 class='text-center text-dark m-0 font-weight-bold'>" + data_dies[x].dies_no + "</h6>";
-                                                append_dataTCC += "<p class='m-0 text-dark text-center text-nowrap ' ><span>" + data_dies[x].stkrun + " / <span>" + data_dies[x].stk6k + "</p>";
+                                                append_dataTCC += "<p class='m-0 text-dark text-center text-nowrap font-weight-bold'><span style='color: #10A19D'>" + data_dies[x].stkrun + "</span> / <span style='color: #1746A2'>" + data_dies[x].stk6k + "</p>";
                                                 append_dataTCC += "</a>";
                                                 append_dataTCC += "</div>";
                                                 append_dataTCC += "</div>";
@@ -255,7 +262,7 @@ and open the template in the editor.
                                                 append_dataOPN += "<div class='card rounded-0'>";
                                                 append_dataOPN += "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" + data_dies[x].group_id + "&model_id=" + data_dies[x].model_id + "&dies_id=" + data_dies[x].dies_id + "' class='card-body rounded-0 p-1  " + data_dies[x].bg_color + "'>";
                                                 append_dataOPN += "<h6 class='text-center text-dark m-0 font-weight-bold'>" + data_dies[x].dies_no + "</h6>";
-                                                append_dataOPN += "<p class='m-0 text-dark text-center text-nowrap ' ><span>" + data_dies[x].stkrun + " / <span>" + data_dies[x].stk6k + "</p>";
+                                                append_dataOPN += "<p class='m-0 text-dark text-center text-nowrap font-weight-bold'><span style='color: #10A19D'>" + data_dies[x].stkrun + "</span> / <span style='color: #1746A2'>" + data_dies[x].stk6k + "</p>";
                                                 append_dataOPN += "</a>";
                                                 append_dataOPN += "</div>";
                                                 append_dataOPN += "</div>";
@@ -284,7 +291,7 @@ and open the template in the editor.
                                                 append_dataCSH += "<div class='card rounded-0'>";
                                                 append_dataCSH += "<a id='dies_data' href='?action=CHECKSHEET_PREVENTIVE&id=0&step=1&group_id=" + data_dies[x].group_id + "&model_id=" + data_dies[x].model_id + "&dies_id=" + data_dies[x].dies_id + "' class='card-body rounded-0 p-1  " + data_dies[x].bg_color + "'>";
                                                 append_dataCSH += "<h6 class='text-center text-dark m-0 font-weight-bold'>" + data_dies[x].dies_no + "</h6>";
-                                                append_dataCSH += "<p class='m-0 text-dark text-center text-nowrap ' ><span>" + data_dies[x].stkrun + " / <span>" + data_dies[x].stk6k + "</p>";
+                                                append_dataCSH += "<p class='m-0 text-dark text-center text-nowrap font-weight-bold'><span style='color: #10A19D'>" + data_dies[x].stkrun + "</span> / <span style='color: #1746A2'>" + data_dies[x].stk6k + "</p>";
                                                 append_dataCSH += "</a>";
                                                 append_dataCSH += "</div>";
                                                 append_dataCSH += "</div>";
