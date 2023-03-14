@@ -218,7 +218,7 @@ and open the template in the editor.
     <?php include 'common/t_js.php'; ?>
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
-        // setInterval(updateDashboard, 5000);
+        setInterval(updateDashboard, 5000);
 
         $(document).ready(function () {
             // closeFullscreen();
