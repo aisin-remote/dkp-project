@@ -33,7 +33,7 @@ if ($action == "plant") {
       }
 
       if ($save["status"] == true) {
-        header("Location: ?action=" . $action . "&success=Menu%20Deleted");
+        header("Location: ?action=" . $action . "&success=Plant%20Deleted");
       } else {
         header("Location: ?action=" . $action . "&error=" . $save["message"]);
       }

@@ -137,13 +137,21 @@ class Plant {
   public function isUsed($id) {
     $return = 0;
     $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-    $sql = "SELECT count(*) as cnt FROM wms.t_mseg "
-            . "WHERE werks = :id ";
+    $sql = "SELECT  ( 
+        SELECT COUNT(*) 
+        FROM   wms.t_mseg 
+			WHERE werks = '$id' 
+        ) AS count1, 
+        (
+        SELECT COUNT(*) 
+        FROM   wms.m_lgort 
+			where werks = '$id' 
+        ) AS count2 ";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":id", strtoupper($id), PDO::PARAM_STR);
     if($stmt->execute()) {
       while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
-        $return = floatval($row["cnt"]);
+        $return = floatval($row["count1"]) + floatval($row["count2"]);
       }
     }
     $stmt = null;
