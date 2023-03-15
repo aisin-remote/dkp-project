@@ -54,7 +54,7 @@ class MaterialDocument {
     $return = [];
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "INSERT INTO wms.t_mkpf (mblnr,mjahr,budat,crt_by,crt_dt,xblnr) "
-            . "VALUES (:mblnr,:mjahr,:budat,:crt_by,CURRENT_TIMESTAMP,xblnr)";
+            . "VALUES (:mblnr,:mjahr,:budat,:crt_by,CURRENT_TIMESTAMP,:xblnr)";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":mblnr", $param["mblnr"], PDO::PARAM_STR);
     $stmt->bindValue(":mjahr", $param["mjahr"], PDO::PARAM_STR);
@@ -144,6 +144,21 @@ class MaterialDocument {
     $return["mseg"] = $mseg;
     unset($mkpf);
     unset($mseg);
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+  
+  public function isReversed($mblnr,$mjahr) {
+    $return = 0;
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT count(*) as cnt FROM wms.t_mkpf WHERE xblnr = '$mblnr' AND mjahr = '$mjahr'";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return = $row["cnt"];
+      }
+    }
     $stmt = null;
     $conn = null;
     return $return;
