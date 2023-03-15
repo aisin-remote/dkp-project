@@ -253,7 +253,7 @@ if ($action == "dashboard_line") {
               FROM m_prd_line 
               WHERE line_ty = 'DM' 
             ) g ON a.line_id = g.line_id 
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A' a.line_id = g.line_id ";
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A' AND a.line_id = g.line_id ";
   $stmt = $conn->prepare($query);
   $eff = 0;
   $ril = 0;
