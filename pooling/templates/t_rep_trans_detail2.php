@@ -83,6 +83,7 @@ and open the template in the editor.
                       <table class="table table-sm" id="data-table-x">
                         <thead>
                           <tr>
+                            <th class=''>No</th>
                             <th class=''>Loading List Number</th>
                             <th class=''>PDS Number</th>
                             <th class=''>Customer</th>
@@ -91,8 +92,17 @@ and open the template in the editor.
                             <th class=''>Cycle</th>
                             <th class=''>Delivery Date</th>
                             <th class=''>Delivery Time</th>
-                            <th class=''>Status</th>
-                            <th class='text-center'>Action</th>
+                            <th class=''>Parts No.</th>
+                            <th class=''>Cust. Parts No.</th>
+                            <th class=''>Cust. Parts ID</th>
+                            <th class=''>Internal Parts ID</th>
+                            <th class=''>Kanban Qty</th>
+                            <th class=''>Check</th>
+                            <th class=''>Qty/Pack</th>
+                            <th class=''>Qty</th>
+                            <th class=''>Kanban Barcode</th>
+                            <th class=''>Kanban RFID</th>
+                            <th class=''>Part Name</th>
                             <!-- <th class='text-center'>Device Antenna</th> -->
                           </tr>
                         </thead>
@@ -102,6 +112,7 @@ and open the template in the editor.
                             foreach ($list as $row) {
                               echo
                               "<tr>"
+                                . "<td class='align-middle'>" . $row["ldseq"] . "</td>"
                                 . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
                                 . "<td class='align-middle'>" . $row["pdsno"] . "</td>"
                                 . "<td class='align-middle'>" . $row["customer"] . "</td>"
@@ -110,9 +121,17 @@ and open the template in the editor.
                                 . "<td class='align-middle'>" . $row["cycle1"] . "</td>"
                                 . "<td class='align-middle'>" . $row["date_only"] . "</td>"
                                 . "<td class='align-middle'>" . $row["time_only"] . "</td>"
-                                . "<td class='align-middle'>" . $row["stats"] . "</td>"
-                                . "<td class='pr-3 align-middle text-center'><a href='?action=$action&id=" . $row["ldnum"] . "' class='btn btn-outline-primary btn-xs'><i class='material-icons'>visibility
-                                                                </i> </a></td>"
+                                . "<td class='align-middle'>" . $row["matnr"] . "</td>"
+                                . "<td class='align-middle'>" . $row["custpart"] . "</td>"
+                                . "<td class='align-middle'></td>"
+                                . "<td class='align-middle'></td>"
+                                . "<td class='align-middle'>" . $row["menge"] . "</td>"
+                                . "<td class='align-middle'></td>"
+                                . "<td class='align-middle'>" . $row["perpack"] . "</td>"
+                                . "<td class='align-middle'>" . $row["totqty"] . "</td>"
+                                . "<td class='align-middle'>" . $row["kanban_i"] . "</td>"
+                                . "<td class='align-middle'>" . $row["kanban_e"] . "</td>"
+                                . "<td class='align-middle'>" . $row["name1"] . "</td>"
                                 . "</tr>";
                             }
                           }
@@ -207,13 +226,13 @@ and open the template in the editor.
           },
           {
             extend: 'csv',
-            title: "Loading List",
+            title: "Detail Kanban Loading List",
             className: 'btn btn-success btn-sm',
             text: '<i class="material-icons">text_snippet</i> CSV',
           },
           {
             extend: 'excel',
-            title: "Loading List",
+            title: "Detail Kanban Loading List",
             className: 'btn btn-outline-success btn-sm',
             text: '<i class="material-icons">download</i> Excel',
           }

@@ -91,6 +91,71 @@ class Report
         return $return;
     }
 
+    public function getListDetail($lddat_from = "*", $lddat_to = "*")
+    {
+        $return = array();
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "SELECT a.*, a.matn1 as custpart, b.*, c.*, c.ldnum, c.pdsno, c.cycle1, to_char(c.lddat, 'MM-DD-YYYY') as date_only,
+                to_char(c.lddat, 'HH24:MI') as time_only, d.name1 as customer FROM t_io_ldlist_i a
+                LEFT JOIN m_io_mara b on b.matnr = a.matnr
+                LEFT JOIN t_io_ldlist_h c on c.ldnum = a.ldnum
+                LEFT JOIN m_io_lfa1 d on d.lifnr = c.lifnr
+                where 1=1 ";
+        // echo $sql;
+        // die();
+        if ($lddat_from !== "*" && $lddat_to !== "*") {
+            $sql .= " AND TO_CHAR(c.lddat, 'YYYYMMDD') between '$lddat_from' AND '$lddat_to' ";
+        }
+        $sql .= " ORDER by a.ldseq ASC ";
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                if ($row["dstat"] == "D") {
+                    $row["dstat"] = "Delivered";
+                } else {
+                    $row["dstat"] = "Not Delivered";
+                }
+                $return[] = $row;
+            }
+        }
+        $stmt = null;
+        $conn = null;
+        return $return;
+    }
+
+    public function getListDetail2($lddat_from = "*", $lddat_to = "*")
+    {
+        $return = array();
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "SELECT a.*, a.matn1 as custpart, b.*, c.*, c.ldnum, c.pdsno, c.cycle1, to_char(c.lddat, 'MM-DD-YYYY') as date_only,
+                to_char(c.lddat, 'HH24:MI') as time_only, d.name1 as customer, e.kanban_i, e.kanban_e FROM t_io_ldlist_i a
+                LEFT JOIN m_io_mara b on b.matnr = a.matnr
+                LEFT JOIN t_io_ldlist_h c on c.ldnum = a.ldnum
+                LEFT JOIN m_io_lfa1 d on d.lifnr = c.lifnr
+                LEFT JOIN t_io_ldlist_dtl e on e.ldnum = a.ldnum AND e.ldseq = a.ldseq
+                where 1=1 ";
+        // echo $sql;
+        // die();
+        if ($lddat_from !== "*" && $lddat_to !== "*") {
+            $sql .= " AND TO_CHAR(c.lddat, 'YYYYMMDD') between '$lddat_from' AND '$lddat_to' ";
+        }
+        $sql .= " ORDER by a.ldseq ASC ";
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                if ($row["dstat"] == "D") {
+                    $row["dstat"] = "Delivered";
+                } else {
+                    $row["dstat"] = "Not Delivered";
+                }
+                $return[] = $row;
+            }
+        }
+        $stmt = null;
+        $conn = null;
+        return $return;
+    }
+
     public function getCustomer()
     {
         $return = array();
