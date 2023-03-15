@@ -69,8 +69,8 @@ and open the template in the editor.
                         <thead>
                           <tr>
                             <th class="text-nowrap">Material Document</th>
-                            <th class="text-nowrap">Posting Date</th>
                             <th class="text-nowrap">Year</th>
+                            <th class="text-nowrap">Posting Date</th>
                             <th class="text-nowrap">Item No</th>
                             <th class="text-nowrap">Plant</th>
                             <th class="text-nowrap">Storage Location</th>
@@ -89,8 +89,8 @@ and open the template in the editor.
                             foreach($data["list"] as $list) {
                               echo "<tr>"
                               . "<td class='text-center text-nowrap'>".$list["mblnr"]."</td>"
-                              . "<td class='text-center text-nowrap'>".$list["posting_date"]."</td>"
                               . "<td class='text-center text-nowrap'>".$list["mjahr"]."</td>"
+                              . "<td class='text-center text-nowrap'>".$list["posting_date"]."</td>"
                               . "<td class='text-center text-nowrap'>".$list["mblpo"]."</td>"
                               . "<td class='text-nowrap'>".$list["werks"]." - ".$list["plant_name"]."</td>"   
                               . "<td class='text-nowrap'>".$list["lgort"]." - ".$list["sloc_name"]."</td>"

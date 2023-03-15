@@ -209,7 +209,7 @@ if ($action == "dashboard_line") {
   $lines = [];
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
   $line_name = "???";
-  $query_line = "SELECT * FROM m_prd_line ORDER BY line_id asc";
+  $query_line = "SELECT * FROM m_prd_line WHERE line_ty = 'DM' ORDER BY line_id asc";
   $stmt = $conn->prepare($query_line);
   if ($stmt->execute()) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -247,7 +247,7 @@ if ($action == "dashboard_line") {
             (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') 
             from t_prd_daily_i a 
-            inner join m_prd_line b ON b.line_id = a.line_id
+            inner join m_prd_line b ON b.line_id = a.line_id 
             LEFT JOIN ( 
               SELECT line_id, line_ty 
               FROM m_prd_line 

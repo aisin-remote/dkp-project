@@ -53,13 +53,14 @@ class MaterialDocument {
   public function insertHeader($param = array()) {
     $return = [];
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "INSERT INTO wms.t_mkpf (mblnr,mjahr,budat,crt_by,crt_dt) "
-            . "VALUES (:mblnr,:mjahr,:budat,:crt_by,CURRENT_TIMESTAMP)";
+    $sql = "INSERT INTO wms.t_mkpf (mblnr,mjahr,budat,crt_by,crt_dt,xblnr) "
+            . "VALUES (:mblnr,:mjahr,:budat,:crt_by,CURRENT_TIMESTAMP,xblnr)";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":mblnr", $param["mblnr"], PDO::PARAM_STR);
     $stmt->bindValue(":mjahr", $param["mjahr"], PDO::PARAM_STR);
     $stmt->bindValue(":budat", $param["budat"], PDO::PARAM_STR);
     $stmt->bindValue(":crt_by", $param["crt_by"], PDO::PARAM_STR);
+    $stmt->bindValue(":xblnr", $param["xblnr"], PDO::PARAM_STR);
     if($stmt->execute()) {
       $return["status"] = true;
     } else {
@@ -111,6 +112,41 @@ class MaterialDocument {
     $sql = "DELETE FROM wms.t_mkpf WHERE mblnr = '$mblnr' AND mjahr = '$mjahr'; "
             . "DELETE FROM wms.t_mseg WHERE mblnr = '$mblnr' AND mjahr = '$mjahr'; ";
     $conn->exec($sql);
+  }
+  
+  public function getById($mblnr, $mjahr) {
+    //select header
+    $return = [];
+    $mkpf = [];
+    $mseg = [];
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT * FROM wms.t_mkpf WHERE mblnr = '$mblnr' AND mjahr = '$mjahr'";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $mkpf = $row;
+      }
+    }
+    
+    $sql = "SELECT a.*, b.name1 as maktx, c.name1 as plant_name, d.name1 as sloc_name FROM wms.t_mseg a "
+            . "INNER JOIN wms.m_mara b ON b.matnr = a.matnr "
+            . "INNER JOIN wms.m_werks c ON c.werks = a.werks "
+            . "INNER JOIN wms.m_lgort d ON d.werks = a.werks AND d.lgort = a.lgort "
+            . "WHERE a.mblnr = '$mblnr' AND a.mjahr = '$mjahr'";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $mseg[] = $row;
+      }
+    }
+    
+    $return["mkpf"] = $mkpf;
+    $return["mseg"] = $mseg;
+    unset($mkpf);
+    unset($mseg);
+    $stmt = null;
+    $conn = null;
+    return $return;
   }
 }
 

@@ -143,7 +143,7 @@
     
       function updateDashboard() {
         $.getJSON(
-          "?action=api_dashboard_prd_single", 
+          "?action=api_dashboard_adn_single", 
           {line_id:$("#line_id").val()}, 
           function(data) {  
 

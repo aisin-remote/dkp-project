@@ -28,13 +28,13 @@ if ($action == "sloc") {
       $cek = $class->isUsed($id);
       if ($cek > 0) {
         $save["status"] = false;
-        $save["message"] = "Plant sudah dipakai transaksi!";
+        $save["message"] = "Store Location sudah dipakai transaksi!";
       } else {
         $save = $class->delete($id);
       }
 
       if ($save["status"] == true) {
-        header("Location: ?action=" . $action . "&success=Menu%20Deleted");
+        header("Location: ?action=" . $action . "&success=Store Location%20Deleted");
       } else {
         header("Location: ?action=" . $action . "&error=" . $save["message"]);
       }

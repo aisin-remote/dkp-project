@@ -3,3 +3,9 @@
 [28-Feb-2023 12:00:21 Asia/Jakarta] Call to a member function getLine() on null
 [28-Feb-2023 15:37:06 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_shift_stop_pkey"
 DETAIL:  Key (shift_id, time_id, srna_id)=(2, 2, 3002) already exists.
+[15-Mar-2023 15:38:27 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
