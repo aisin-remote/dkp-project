@@ -87,8 +87,8 @@ and open the template in the editor.
                                                     foreach ($data["list"] as $list) {
                                                         echo "<tr>"
                                                             . "<td class='align-middle'>" . $list["shift_id"] . "</td>"
-                                                            . "<td class='align-middle'>" . $list["srna_id"] . " - " . $list["name1"] . "</td>"
-                                                            . "<td class='align-middle'>" . $list["time_id"] . " (" . $list["time_start"] . " - " . $list["time_end"] . ")" . "</td>"
+                                                            . "<td class='align-middle'>" . $list["srna_id"] . " - " . $list["srna_name"] . "</td>"
+                                                            . "<td class='align-middle'>" . $list["time_id"] . " (" . $list["start1"] . " - " . $list["end1"] . ")" . "</td>"
                                                             . "<td class='align-middle'>" . $list["start_time"] . "</td>"
                                                             . "<td class='align-middle'>" . $list["end_time"] . "</td>"
                                                             . "<td class='align-middle'>" . $list["stop_time"] . "</td>"

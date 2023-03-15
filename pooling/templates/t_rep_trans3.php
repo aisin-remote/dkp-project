@@ -61,16 +61,9 @@ and open the template in the editor.
                                                     <tr>
                                                         <th class=''>No.</th>
                                                         <th class=''>Loading List Number</th>
-                                                        <th class=''>Parts No.</th>
-                                                        <th class=''>Cust. Parts No.</th>
-                                                        <th class=''>Cust. Parts ID</th>
-                                                        <th class=''>Internal Parts ID</th>
-                                                        <th class=''>Kanban Qty</th>
-                                                        <th class=''>Check</th>
-                                                        <th class=''>Qty/Pack</th>
-                                                        <th class=''>Qty</th>
-                                                        <th class=''>Status</th>
-                                                        <th class=''>Action</th>
+                                                        <th class=''>Kanban Barcode</th>
+                                                        <th class=''>Kanban RFID</th>
+                                                        <th class=''>Part Name</th>
                                                         <!-- <th class=''>Delivery Date</th>
                                                         <th class=''>Status</th>
                                                         <th class='text-center'>Action</th> -->
@@ -85,17 +78,9 @@ and open the template in the editor.
                                                                 "<tr>"
                                                                 . "<td class='align-middle'>" . $row["ldseq"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
-                                                                . "<td class='align-middle'>" . $row["matnr"] . "</td>"
-                                                                . "<td class='align-middle'>" . $row["custpart"] . "</td>"
-                                                                . "<td class='align-middle'></td>"
-                                                                . "<td class='align-middle'></td>"
-                                                                . "<td class='align-middle'>" . $row["menge"] . "</td>"
-                                                                . "<td class='align-middle'></td>"
-                                                                . "<td class='align-middle'>" . $row["perpack"] . "</td>"
-                                                                . "<td class='align-middle'>" . $row["totqty"] . "</td>"
-                                                                . "<td class='align-middle'>" . $row["dstat"] . "</td>"
-                                                                . "<td class='pr-3 align-middle text-center'><a href='?action=$action&id=" . $row["ldnum"] . "&seq=" . $row["ldseq"] . "' class='btn btn-outline-primary btn-xs'><i class='material-icons'>visibility
-                                                                </i></a></td>"
+                                                                . "<td class='align-middle'>" . $row["kanban_i"] . "</td>"
+                                                                . "<td class='align-middle'>" . $row["kanban_e"] . "</td>"
+                                                                . "<td class='align-middle'>" . $row["name1"] . "</td>"
                                                                 . "</tr>";
                                                         }
                                                     }

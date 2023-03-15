@@ -9,7 +9,7 @@ define("CLIENT", "001");
 define("APP", "AISIN_ADN");
 define("MACHINE", gethostname());
 define("LOGIN_SESSION", "aisin-id");
-define("PAGE_TITLE", "ANDON SYSTEM");
+define("PAGE_TITLE", "ELECTRIC LINE PRODUCTION");
 define("FOOTER", "2022 &copy; PT. Aisin Indonesia Automotive");
 define("APP_DIR", "andon");
 

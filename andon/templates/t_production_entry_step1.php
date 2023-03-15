@@ -248,7 +248,7 @@ and open the template in the editor.
         maxDate: "today"
       });
 
-      // getDefaultCycleTime();
+      getDefaultCycleTime();
     });
 
     $("#my-form").submit(function(event) {
@@ -256,39 +256,39 @@ and open the template in the editor.
       $("#btn_save").attr("disabled", "disabled");
     });
 
-    // $("#cctime").change(calculateTarget);
+    $("#cctime").change(calculateTarget);
 
-    // function calculateTarget() {
-    //   var cctime = parseInt($("#cctime").val());
-    //   var shift_count = parseInt($("#shift_count").val());
-    //   var total_target = Math.ceil((3600 / cctime) * shift_count);
-    //   $("#total_target").val(total_target);
-    // }
+    function calculateTarget() {
+      var cctime = parseInt($("#cctime").val());
+      var shift_count = parseInt($("#shift_count").val());
+      var total_target = Math.ceil((3600 / cctime) * shift_count);
+      $("#total_target").val(total_target);
+    }
 
 
 
     $("#dies_id").change(getDefaultCycleTime);
     $("#dies_id").change(getPreventive);
 
-    // function getDefaultCycleTime() {
-    //   $.ajax({
-    //     type: 'POST',
-    //     url: '?action=api_get_default_cctime',
-    //     data: {
-    //       dies_id: $("#dies_id").val()
-    //     },
-    //     success: function(response) {
-    //       // handle the response here
-    //       $("#cctime").val(response.cctime);
-    //       calculateTarget();
-    //     },
-    //     error: function(error) {
-    //       // handle the error here
-    //       alert(error);
-    //     },
-    //     dataType: 'json'
-    //   });
-    // }
+    function getDefaultCycleTime() {
+      $.ajax({
+        type: 'POST',
+        url: '?action=api_get_default_cctime',
+        data: {
+          dies_id: $("#dies_id").val()
+        },
+        success: function(response) {
+          // handle the response here
+          $("#cctime").val(response.cctime);
+          calculateTarget();
+        },
+        error: function(error) {
+          // handle the error here
+          alert(error);
+        },
+        dataType: 'json'
+      });
+    }
 
     function getPreventive() {
       var dies_id = $("#dies_id").val();

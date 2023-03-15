@@ -26,7 +26,7 @@
           <h4 class="link"><i class="material-icons-outlined">tools_wrench</i> DIES MAINTENANCE</h4>
         </a>
         <a href="pooling">
-          <h4 class="link"><i class="material-icons-outlined">pallet</i> DELIVERY POOLING SYSTEM</h4>
+          <h4 class="link"><i class="material-icons-outlined">pallet</i> DELIVERY PULLING SYSTEM</h4>
         </a>
       </div>
       <div class="col">

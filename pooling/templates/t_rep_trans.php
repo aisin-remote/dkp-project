@@ -86,6 +86,8 @@ and open the template in the editor.
                             <th class=''>Loading List Number</th>
                             <th class=''>PDS Number</th>
                             <th class=''>Customer</th>
+                            <th class=''>P. Code</th>
+                            <th class=''>Receive Area</th>
                             <th class=''>Cycle</th>
                             <th class=''>Delivery Date</th>
                             <th class=''>Delivery Time</th>
@@ -103,12 +105,14 @@ and open the template in the editor.
                                 . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
                                 . "<td class='align-middle'>" . $row["pdsno"] . "</td>"
                                 . "<td class='align-middle'>" . $row["customer"] . "</td>"
+                                . "<td class='align-middle'>" . $row["werks"] . "</td>"
+                                . "<td class='align-middle'>" . $row["rcvar"] . "</td>"
                                 . "<td class='align-middle'>" . $row["cycle1"] . "</td>"
                                 . "<td class='align-middle'>" . $row["date_only"] . "</td>"
                                 . "<td class='align-middle'>" . $row["time_only"] . "</td>"
                                 . "<td class='align-middle'>" . $row["stats"] . "</td>"
-                                . "<td class='pr-3 align-middle text-center'><a href='?action=$action&id=" . $row["ldnum"] . "' class='p-2 btn btn-outline-primary btn-xs'><i class='material-icons'>info
-                                                                </i> detail</a></td>"
+                                . "<td class='pr-3 align-middle text-center'><a href='?action=$action&id=" . $row["ldnum"] . "' class='btn btn-outline-primary btn-xs'><i class='material-icons'>visibility
+                                                                </i> </a></td>"
                                 . "</tr>";
                             }
                           }

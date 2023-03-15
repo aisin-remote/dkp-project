@@ -9,7 +9,7 @@ define("CLIENT", "001");
 define("APP", "AISIN_PRD");
 define("MACHINE", gethostname());
 define("LOGIN_SESSION", "aisin-id");
-define("PAGE_TITLE", "PRODUCTION DIGITALIZATION");
+define("PAGE_TITLE", "DC PRODUCTION");
 define("FOOTER", "2022 &copy; PT. Aisin Indonesia Automotive");
 define("APP_DIR", "prd");
 

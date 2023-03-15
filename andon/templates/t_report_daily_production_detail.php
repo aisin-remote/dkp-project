@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -31,12 +31,12 @@ and open the template in the editor.
             <li class="breadcrumb-item active">Edit</li>
             <li class="breadcrumb-item active">Detail</li>
             <li class="breadcrumb-item active"><a
-                href="?action=<?php echo $action; ?>&line=<?php echo $data_item_dtl["line_id"]; ?>&date=<?php echo $data_item_dtl["xdate"]; ?>&shift=<?php echo $data_item_dtl["shift"]; ?>">back
+                href="?action=<?php echo $action; ?>&id=<?php echo $data_item_dtl["line_id"]; ?>&id2=<?php echo $data_item_dtl["xdate"]; ?>&id3=<?php echo $data_item_dtl["shift"]; ?>&step=2">back
                 <i class="material-icons">arrow_back</i></a></li>
           </ol>
           <?php
           if (isset($_GET["error"])) {
-            echo '<div class="mt-1 mb-0 alert alert-danger alert-dismissible fade show" role="alert">
+              echo '<div class="mt-1 mb-0 alert alert-danger alert-dismissible fade show" role="alert">
                       Error : ' . $_GET["error"] . '
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -47,7 +47,7 @@ and open the template in the editor.
 
           <?php
           if (isset($_GET["success"])) {
-            echo '<div class="mt-1 mb-0 alert alert-success alert-dismissible fade show" role="alert">
+              echo '<div class="mt-1 mb-0 alert alert-success alert-dismissible fade show" role="alert">
                       Success : ' . $_GET["success"] . '
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -139,14 +139,14 @@ and open the template in the editor.
                     <div class="row">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Material</div>
                       <div class="col-xl-4 col-lg-4 col-md-5 col-sm-6">
-                        <select name="dies_id" id="dies_id" class="form-control select2" data-live-search="true">
+                        <select name="dies_id" id="dies_id" class="form-control select2" data-live-search="true" disabled>
                           <?php
                           foreach ($matlist as $row) {
-                            ?>
-                            <option value="<?php echo $row["matnr"]; ?>" <?php if ($row["matnr"] == $data_item_dtl["matnr"]) {
-                                 echo "selected";
-                               } ?>><?php echo $row["matnr"] . " - " . $row["mtart"] . " - " . $row["name1"]; ?></option>
-                            <?php
+                              ?>
+                                                                    <option value="<?php echo $row["matnr"]; ?>" <?php if ($row["matnr"] == $data_item_dtl["dies_id"]) {
+                                                                           echo "selected";
+                                                                       } ?>><?php echo $row["mtart"] .  " - " . $row["name1"]; ?></option>
+                                                                    <?php
                           }
                           ?>
                         </select>
@@ -156,48 +156,48 @@ and open the template in the editor.
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Cycle Time</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
                         <input class="form-control form-control-sm" type="number" name="cctime" id="cctime"
-                          value="<?php echo $data_item_dtl["cctime"]; ?>" />
+                          value="<?php echo $data_item_dtl["cctime"]; ?>" readonly />
                       </div>
                     </div>
                     <div class="row mt-1">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Planning Qty</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
                         <input class="form-control form-control-sm" type="number" name="pln_qty" id="pln_qty"
-                          value="<?php echo $data_item_dtl["pln_qty"]; ?>" />
+                          value="<?php echo $data_item_dtl["pln_qty"]; ?>" readonly />
                       </div>
                     </div>
-                    <!-- <div class="row mt-1">
+                    <div class="row mt-1">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Scan Qty OK</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
                         <input class="form-control form-control-sm" type="number" id="scn_qty_ok" name="scn_qty_ok"
-                          value="<?php echo $data_item_dtl["scn_qty_ok"]; ?>" />
+                          value="<?php echo $data_item_dtl["scn_qty_ok"]; ?>" readonly />
                       </div>
                     </div>
                     <div class="row mt-1">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Scan Qty NG</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
                         <input class="form-control form-control-sm" type="number" id="scn_qty_ng" name="scn_qty_ng"
-                          value="<?php echo $data_item_dtl["scn_qty_ng"]; ?>" />
+                          value="<?php echo $data_item_dtl["scn_qty_ng"]; ?>" readonly />
                       </div>
-                    </div> -->
+                    </div>
                     <div class="row mt-1">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Production Qty</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
                         <input class="form-control form-control-sm" type="number" name="prd_qty" id="prd_qty"
-                          value="<?php echo $data_item_dtl["prd_qty"]; ?>" />
+                          value="<?php echo $data_item_dtl["prd_qty"]; ?>" disabled />
                       </div>
                     </div>
                     <div class="row mt-1">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Production Time</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
                         <input class="form-control form-control-sm" type="number" name="prd_time" id="prd_time"
-                          value="<?php echo $data_item_dtl["prd_time"]; ?>" />
+                          value="<?php echo $data_item_dtl["prd_time"]; ?>" readonly />
                       </div>
                       <div class="col-xl-2 col-lg-3 col-md-9 col-sm-12">
                         <input type="hidden" name="save" value="true">
-                        <button type="submit" name="btn_save" id="btn_save" value="save"
+                        <!-- <button type="submit" name="btn_save" id="btn_save" value="save"
                           class="btn btn-pale-green btn-block mt-sm-2 mt-xs-2 mt-md-0"><i
-                            class="material-icons">save</i> Save</button>
+                            class="material-icons">save</i> Save</button> -->
                       </div>
                     </div>
 
@@ -213,21 +213,21 @@ and open the template in the editor.
                     <div class="row">
                       <div class="col-12 mb-2">
                         <textarea name="detail_text" rows="3"
-                          class="form-control"><?php echo $data_item_dtl["detail_text"]; ?></textarea>
+                          class="form-control" disabled><?php echo $data_item_dtl["detail_text"]; ?></textarea>
                       </div>
                       <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12">
                         <label class="col-form-label">DC Quality Check Part</label>
                       </div>
                       <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12">
                         <input type="number" name="dcqcp" class="form-control"
-                          value="<?php echo $data_item_dtl["dcqcp"]; ?>">
+                          value="<?php echo $data_item_dtl["dcqcp"]; ?>" disabled>
                       </div>
                       <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12">
                         <label class="col-form-label">QA Quality Check Part</label>
                       </div>
                       <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12">
                         <input type="number" name="qaqcp" class="form-control"
-                          value="<?php echo $data_item_dtl["qaqcp"]; ?>">
+                          value="<?php echo $data_item_dtl["qaqcp"]; ?>" disabled>
                       </div>
                     </div>
                   </div>
@@ -235,8 +235,8 @@ and open the template in the editor.
               </div>
             </form>
             <div class="col-12 mt-1">
-              <button type="button" id="add_content_stop_btn" class="btn btn-magenta" onclick="openModal01()">Add
-                Content Stop</button>
+              <!-- <button type="button" id="add_content_stop_btn" class="btn btn-magenta" onclick="openModal01()">Add
+                Content Stop</button> -->
             </div>
             <div class="col-12 mt-1">
               <div class="table-responsive">
@@ -251,29 +251,29 @@ and open the template in the editor.
                       <th>Konten Penanganan (Action)</th>
                       <th>Remarks</th>
                       <th>Eksekutor</th>
-                      <th class='text-center'>Action</th>
+                      <!-- <th class='text-center'>Action</th> -->
                     </tr>
                   </thead>
                   <tbody id="data_stop">
                     <?php
                     if (!empty($data_stop)) {
-                      foreach ($data_stop as $row) {
-                        $button_del = "";
-                        //if ($row["stop_type"] == "U") {
-                        $button_del = "<button type='button' class='btn btn-xs btn-outline-dark' onclick='delStop(\"" . $row["line_id"] . "\",\"" . $row["prd_dt"] . "\",\"" . $row["shift"] . "\",\"" . $row["prd_seq"] . "\",\"" . $row["stop_seq"] . "\")'><i class='material-icons'>delete</i></button>";
-                        //}
-                        echo "<tr>"
-                          . "<td>" . $row["start_time"] . "</td>"
-                          . "<td>" . $row["end_time"] . "</td>"
-                          . "<td class='text-center'>" . $row["stop_time"] . "</td>"
-                          . "<td class='text-center'>" . $row["qty_stc"] . "</td>"
-                          . "<td>" . $row["stop_name"] . "</td>"
-                          . "<td>" . $row["action_name"] . "</td>"
-                          . "<td>" . $row["remarks"] . "</td>"
-                          . "<td>" . $row["exe_name"] . "</td>"
-                          . "<td class='text-center'>$button_del</td>"
-                          . "</tr>";
-                      }
+                        foreach ($data_stop as $row) {
+                            $button_del = "";
+                            //if ($row["stop_type"] == "U") {
+                            $button_del = "<button type='button' class='btn btn-xs btn-outline-dark' onclick='delStop(\"" . $row["line_id"] . "\",\"" . $row["prd_dt"] . "\",\"" . $row["shift"] . "\",\"" . $row["prd_seq"] . "\",\"" . $row["stop_seq"] . "\")'><i class='material-icons'>delete</i></button>";
+                            //}
+                            echo "<tr>"
+                                . "<td>" . $row["start_time"] . "</td>"
+                                . "<td>" . $row["end_time"] . "</td>"
+                                . "<td class='text-center'>" . $row["stop_time"] . "</td>"
+                                . "<td class='text-center'>" . $row["qty_stc"] . "</td>"
+                                . "<td>" . $row["stop_name"] . "</td>"
+                                . "<td>" . $row["action_name"] . "</td>"
+                                . "<td>" . $row["remarks"] . "</td>"
+                                . "<td>" . $row["exe_name"] . "</td>"
+                                // . "<td class='text-center'>$button_del</td>"
+                                . "</tr>";
+                        }
                     }
                     ?>
                   </tbody>
@@ -281,8 +281,8 @@ and open the template in the editor.
               </div>
             </div>
             <div class="col-12 mt-1">
-              <button type="button" id="add_ng" class="btn btn-magenta" onclick="openModal02()">Add NG &
-                Visualization</button>
+              <!-- <button type="button" id="add_ng" class="btn btn-magenta" onclick="openModal02()">Add NG &
+                Visualization</button> -->
             </div>
             <div class="col-12 mt-1">
               <div class="table-responsive">
@@ -294,24 +294,24 @@ and open the template in the editor.
                       <th class='text-center'>NG Visualization</th>
                       <th class='text-center'>Quantity</th>
                       <th>Created By</th>
-                      <th class='text-center'>Action</th>
+                      <!-- <th class='text-center'>Action</th> -->
                     </tr>
                   </thead>
                   <tbody id="data_ng">
                     <?php
                     if (!empty($data_ng)) {
-                      foreach ($data_ng as $row) {
-                        $button_del = "";
-                        $button_del = "<button type='button' class='btn btn-xs btn-outline-dark' onclick='delNG(\"" . $row["line_id"] . "\",\"" . $row["prd_dt"] . "\",\"" . $row["shift"] . "\",\"" . $row["prd_seq"] . "\",\"" . $row["ng_seq"] . "\")'><i class='material-icons'>delete</i></button>";
-                        echo "<tr>"
-                          . "<td>" . $row["ng_seq"] . "</td>"
-                          . "<td>" . $row["ng_type_text"] . "</td>"
-                          . "<td class='text-center'>" . $row["loc_x"] . "," . $row["loc_y"] . "</td>"
-                          . "<td class='text-center'>" . $row["ng_qty"] . "</td>"
-                          . "<td>" . $row["crt_by_name"] . "</td>"
-                          . "<td class='text-center'>$button_del</td>"
-                          . "</tr>";
-                      }
+                        foreach ($data_ng as $row) {
+                            $button_del = "";
+                            $button_del = "<button type='button' class='btn btn-xs btn-outline-dark' onclick='delNG(\"" . $row["line_id"] . "\",\"" . $row["prd_dt"] . "\",\"" . $row["shift"] . "\",\"" . $row["prd_seq"] . "\",\"" . $row["ng_seq"] . "\")'><i class='material-icons'>delete</i></button>";
+                            echo "<tr>"
+                                . "<td>" . $row["ng_seq"] . "</td>"
+                                . "<td>" . $row["ng_type_text"] . "</td>"
+                                . "<td class='text-center'>" . $row["loc_x"] . "," . $row["loc_y"] . "</td>"
+                                . "<td class='text-center'>" . $row["ng_qty"] . "</td>"
+                                . "<td>" . $row["crt_by_name"] . "</td>"
+                                // . "<td class='text-center'>$button_del</td>"
+                                . "</tr>";
+                        }
                     }
                     ?>
                   </tbody>
@@ -342,12 +342,12 @@ and open the template in the editor.
                     <option value="">Select Stop</option>
                     <?php
                     if (!empty($list_stop)) {
-                      foreach ($list_stop as $row) {
-                        ?>
-                        <option value="<?php echo $row["srna_id"]; ?>"><?php echo $row["type2_text"] . " - " . $row["name1"]; ?>
-                        </option>
-                        <?php
-                      }
+                        foreach ($list_stop as $row) {
+                            ?>
+                                                                                                        <option value="<?php echo $row["srna_id"]; ?>"><?php echo $row["type2_text"] . " - " . $row["name1"]; ?>
+                                                                                                        </option>
+                                                                                                        <?php
+                        }
                     }
                     ?>
                   </select>
@@ -360,20 +360,14 @@ and open the template in the editor.
                     <option value="">Select Action</option>
                     <?php
                     if (!empty($list_action)) {
-                      foreach ($list_action as $row) {
-                        ?>
-                        <option value="<?php echo $row["srna_id"]; ?>"><?php echo $row["name1"]; ?></option>
-                        <?php
-                      }
+                        foreach ($list_action as $row) {
+                            ?>
+                                                                                                        <option value="<?php echo $row["srna_id"]; ?>"><?php echo $row["name1"]; ?></option>
+                                                                                                        <?php
+                        }
                     }
                     ?>
                   </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="remarks" class="col-sm-3 col-form-label">Remarks</label>
-                <div class="col-sm-9">
-                  <input type="text" class="form-control" id="remarks">
                 </div>
               </div>
               <div class="form-group row">
@@ -383,11 +377,11 @@ and open the template in the editor.
                     <option value="">Select Eksekutor</option>
                     <?php
                     if (!empty($list_person)) {
-                      foreach ($list_person as $row) {
-                        ?>
-                        <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
-                        <?php
-                      }
+                        foreach ($list_person as $row) {
+                            ?>
+                                                                                                        <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                                                                                                        <?php
+                        }
                     }
                     ?>
                   </select>
@@ -443,11 +437,11 @@ and open the template in the editor.
                     <option value="">Select NG Type</option>
                     <?php
                     if (!empty($list_ng_type)) {
-                      foreach ($list_ng_type as $row) {
-                        ?>
-                        <option value="<?php echo $row["ng_type"]; ?>"><?php echo $row["ng_group"] . " - " . $row["name1"]; ?></option>
-                        <?php
-                      }
+                        foreach ($list_ng_type as $row) {
+                            ?>
+                                                                                                        <option value="<?php echo $row["ng_type"]; ?>"><?php echo $row["ng_group"] . " - " . $row["name1"]; ?></option>
+                                                                                                        <?php
+                        }
                     }
                     ?>
                   </select>
@@ -622,7 +616,7 @@ and open the template in the editor.
         },
         error: function (error) {
           // handle the error here
-          alert(error)
+          alert(error);
         },
         dataType: 'json'
       });
@@ -649,7 +643,7 @@ and open the template in the editor.
         },
         error: function (error) {
           // handle the error here
-          alert(error.status);
+          alert(error);
         },
         dataType: 'json'
       });
@@ -731,41 +725,41 @@ and open the template in the editor.
       });
     }
 
-    // $("#dies_id").change(function () {
-    //   getDefaultCycleTime();
-    // });
+    $("#dies_id").change(function () {
+      getDefaultCycleTime();
+    });
 
-    // $("#cctime").change(function () {
-    //   calculateTarget();
-    // });
+    $("#cctime").change(function () {
+      calculateTarget();
+    });
 
-    // function getDefaultCycleTime() {
-    //   $.ajax({
-    //     type: 'POST',
-    //     url: '?action=api_get_default_cctime',
-    //     data: {
-    //       dies_id: $("#dies_id").val()
-    //     },
-    //     success: function (response) {
-    //       // handle the response here
-    //       $("#cctime").removeAttr("readonly");
-    //       $("#cctime").val(response.cctime);
-    //       calculateTarget();
-    //     },
-    //     error: function (error) {
-    //       // handle the error here
-    //       alert(error);
-    //     },
-    //     dataType: 'json'
-    //   });
-    // }
+    function getDefaultCycleTime() {
+      $.ajax({
+        type: 'POST',
+        url: '?action=api_get_default_cctime',
+        data: {
+          dies_id: $("#dies_id").val()
+        },
+        success: function (response) {
+          // handle the response here
+          $("#cctime").removeAttr("readonly");
+          $("#cctime").val(response.cctime);
+          calculateTarget();
+        },
+        error: function (error) {
+          // handle the error here
+          alert(error);
+        },
+        dataType: 'json'
+      });
+    }
 
-    // function calculateTarget() {
-    //   var cctime = parseInt($("#cctime").val());
-    //   var prd_time = parseInt($("#prd_time").val());
-    //   var total_target = Math.ceil((prd_time * 60) / cctime);
-    //   $("#pln_qty").val(total_target);
-    // }
+    function calculateTarget() {
+      var cctime = parseInt($("#cctime").val());
+      var prd_time = parseInt($("#prd_time").val());
+      var total_target = Math.ceil((prd_time * 60) / cctime);
+      $("#pln_qty").val(total_target);
+    }
   </script>
 </body>
 

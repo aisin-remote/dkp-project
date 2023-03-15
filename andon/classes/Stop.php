@@ -79,20 +79,23 @@ class Stop {
     return $return;
   }
 
-  public function insert($param = array()) {
+  public function insert($param = array())
+  {
     $return = array();
     if (empty($param)) {
       $return["status"] = false;
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO m_prd_stop_reason_action (srna_id, type1, type2, name1, app_id) "
-              . "values (:srna_id, :type1, :type2, :name1, '".APP."') ";
+      $sql = "INSERT INTO m_prd_stop_reason_action (srna_id, type1, type2, name1, app_id, type3, type4) "
+        . "values (:srna_id, :type1, :type2, :name1, '" . APP . "',:type3, :type4) ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":srna_id", strtoupper(trim($param["srna_id"])), PDO::PARAM_STR);
       $stmt->bindValue(":type1", $param["type1"], PDO::PARAM_STR);
       $stmt->bindValue(":type2", $param["type2"], PDO::PARAM_STR);
       $stmt->bindValue(":name1", $param["name1"], PDO::PARAM_STR);
+      $stmt->bindValue(":type3", $param["type3"], PDO::PARAM_STR);
+      $stmt->bindValue(":type4", $param["type4"], PDO::PARAM_STR);
       /*$stmt->bindValue(":time1", $param["time1"], PDO::PARAM_STR);
       $stmt->bindValue(":time2", $param["time2"], PDO::PARAM_STR);
       $stmt->bindValue(":time3", $param["time3"], PDO::PARAM_STR);
@@ -114,20 +117,23 @@ class Stop {
     return $return;
   }
 
-  public function update($param = array()) {
+  public function update($param = array())
+  {
     $return = array();
     if (empty($param)) {
       $return["status"] = false;
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "UPDATE m_prd_stop_reason_action SET type1 = :type1, type2 = :type2, name1 = :name1 "
-              . "WHERE srna_id = :srna_id";
+      $sql = "UPDATE m_prd_stop_reason_action SET type1 = :type1, type2 = :type2, type3 = :type3, type4 = :type4, name1 = :name1, app_id = '" . APP . "' "
+        . "WHERE srna_id = :srna_id AND app_id = '" . APP . "'";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":srna_id", $param["srna_id"], PDO::PARAM_STR);
       $stmt->bindValue(":type1", $param["type1"], PDO::PARAM_STR);
       $stmt->bindValue(":type2", $param["type2"], PDO::PARAM_STR);
       $stmt->bindValue(":name1", $param["name1"], PDO::PARAM_STR);
+      $stmt->bindValue(":type3", $param["type3"], PDO::PARAM_STR);
+      $stmt->bindValue(":type4", $param["type4"], PDO::PARAM_STR);
       /*$stmt->bindValue(":time1", $param["time1"], PDO::PARAM_STR);
       $stmt->bindValue(":time2", $param["time2"], PDO::PARAM_STR);
       $stmt->bindValue(":time3", $param["time3"], PDO::PARAM_STR);

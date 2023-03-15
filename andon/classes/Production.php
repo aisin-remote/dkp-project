@@ -61,7 +61,7 @@ class Production
     $return = 0;
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT count(*) as cnt FROM m_prd_shift "
-      . "WHERE shift_id = '$shift' AND app_id = '".APP."' ";
+      . "WHERE shift_id = '$shift' AND app_id = '" . APP . "' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -339,7 +339,7 @@ class Production
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT * from m_prd_shift where shift_id = '$shift' AND app_id = '".APP."' order by shift_id asc, time_id asc ";
+    $sql = "SELECT * from m_prd_shift where shift_id = '$shift' AND app_id = '" . APP . "' order by shift_id asc, time_id asc ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -356,8 +356,8 @@ class Production
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.name1 as stop_name, c.name1 as action_name, d.name1 as exe_name, b.type2 as stop_type "
       . "FROM t_prd_daily_stop a "
-      . "LEFT JOIN m_prd_stop_reason_action b ON b.srna_id = a.stop_id AND b.app_id = '".APP."' "
-      . "LEFT JOIN m_prd_stop_reason_action c ON c.srna_id = a.action_id AND c.app_id = '".APP."' "
+      . "LEFT JOIN m_prd_stop_reason_action b ON b.srna_id = a.stop_id AND b.app_id = '" . APP . "' "
+      . "LEFT JOIN m_prd_stop_reason_action c ON c.srna_id = a.action_id AND c.app_id = '" . APP . "' "
       . "LEFT JOIN m_prd_operator d ON d.empid = a.exe_empid "
       . "WHERE a.line_id = '$line_id' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$prd_dt' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq'";
     $stmt = $conn->prepare($sql);
@@ -437,7 +437,7 @@ class Production
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.type1, b.type2 FROM t_prd_daily_stop a "
-      . "INNER JOIN m_prd_stop_reason_action b ON b.srna_id = a.stop_id AND b.app_id = '".APP."' "
+      . "INNER JOIN m_prd_stop_reason_action b ON b.srna_id = a.stop_id AND b.app_id = '" . APP . "' "
       . "WHERE a.line_id = '$line' AND a.prd_dt = '$date' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq' AND a.stop_seq = '$stop_seq' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {

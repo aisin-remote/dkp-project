@@ -226,12 +226,9 @@ and open the template in the editor.
             "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
           buttons: [{
             extend: 'excel',
-            title: "Report Stock",
+            title: "Material Document List",
             className: 'btn btn-pale-green btn-sm',
             text: '<i class="material-icons">download</i>Download Excel',
-            exportOptions: {
-              columns: [0, 1, 2, 3, 4]
-            }
           },{
             className: 'btn btn-outline-success btn-sm',
             text: '<i class="material-icons">filter_alt</i> Filter',

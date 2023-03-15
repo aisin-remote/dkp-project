@@ -20,8 +20,14 @@ if ($action == "r_transaksi_scanner") {
     if (isset($_GET["id"])) {
         $id = $_GET["id"];
 
-        $list = $class->getList2($id);
-        require(TEMPLATE_PATH . "/t_rep_trans2.php");
+        if (isset($_GET["seq"])) {
+            $seq = $_GET["seq"];
+            $list = $class->getList3($id);
+            require(TEMPLATE_PATH . "/t_rep_trans3.php");
+        } else {
+            $list = $class->getList2($id);
+            require(TEMPLATE_PATH . "/t_rep_trans2.php");
+        }
     } else {
 
         $customer = $class->getCustomer();

@@ -74,7 +74,7 @@ class Reporting
                 LEFT JOIN (
                     SELECT line_id, line_ty
                     FROM m_prd_line
-                    WHERE line_ty = 'DM'
+                    WHERE line_ty = 'ECU'
                 ) g ON a.line_id = g.line_id
                 LEFT JOIN m_prd_line h ON h.line_id = a.line_id 
                 WHERE a.line_id = g.line_id ";
@@ -141,7 +141,7 @@ class Reporting
             . "c.name1, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time "
             . "FROM t_prd_daily_i a "
             . "LEFT JOIN m_user b ON a.apr_by = b.usrid "
-            . "LEFT JOIN m_dm_dies_asset c ON a.dies_id::integer = c.dies_id "
+            . "LEFT JOIN wms.m_mara c ON a.dies_id = c.matnr "
             . "LEFT JOIN (
                 SELECT line_id, prd_dt, shift, prd_seq, COALESCE(SUM(ng_qty), 0) as ng_qty
                 FROM t_prd_daily_ng
@@ -158,7 +158,7 @@ class Reporting
                 LEFT JOIN (
                     SELECT line_id, line_ty, name1 AS line_name
                     FROM m_prd_line
-                    WHERE line_ty = 'DM'
+                    WHERE line_ty = 'ECU'
                 ) b ON a.line_id = b.line_id
                 WHERE a.line_id = b.line_id
                 GROUP BY a.line_id, a.prd_dt, a.shift
@@ -209,10 +209,10 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, b.group_id, b.model_id, b.dies_no, c.loss_time_p, coalesce(d.loss_time, 0) as loss_time, e.tot_ng, 
+        $sql = "SELECT a.*, b.mtart, b.name1, c.loss_time_p, coalesce(d.loss_time, 0) as loss_time, e.tot_ng, 
         COALESCE(f.ng_qty, 0) as ril, coalesce(g.ng_qty, 0) as rol1, coalesce(h.ng_qty, 0) as rol2, coalesce(i.ng_qty, 0) as rol3, coalesce(j.ng_qty, 0) as rol4, coalesce(k.ng_qty, 0) as rol5, coalesce(l.ng_qty, 0) as rol6, coalesce(m.ng_qty, 0) as rol7, coalesce(n.ng_qty, 0) as rol8, coalesce(o.ng_qty, 0) as rol9, coalesce(p.ng_qty, 0) as rol10
                 FROM t_prd_daily_i a 
-                INNER JOIN m_dm_dies_asset b ON b.dies_id::character varying = a.dies_id
+                INNER JOIN wms.m_mara b ON b.matnr = a.dies_id
                 LEFT JOIN (
                     SELECT a.line_id, a.prd_dt, a.shift, SUM(a.stop_time) AS loss_time_p 
                     FROM t_prd_daily_stop a 
@@ -341,8 +341,8 @@ class Reporting
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT a.prd_dt, a.prd_time, a.shift, c.name1 AS line_name, e.name1 AS operator, b.name1 AS dies_name, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, coalesce(f.ng_qty, 0) as tot_ng, COALESCE(g.stop_time, 0) as loss_time, h.name1 AS apr_name 
                 FROM t_prd_daily_i a
-                INNER JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint)
-                INNER JOIN m_prd_line c ON c.line_id = a.line_id AND c.line_ty = 'DM'
+                LEFT JOIN wms.m_mara b ON b.matnr = a.dies_id
+                INNER JOIN m_prd_line c ON c.line_id = a.line_id AND c.line_ty = 'ECU'
                 INNER JOIN t_prd_daily_h d ON d.prd_dt = a.prd_dt AND d.shift = a.shift AND d.line_id = a.line_id
                 INNER JOIN m_prd_operator e ON e.empid = d.jpid
                 LEFT JOIN t_prd_daily_ng f ON f.prd_dt = a.prd_dt AND f.shift = a.shift AND f.line_id = a.line_id
@@ -410,15 +410,15 @@ class Reporting
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT a.prd_dt, a.shift, c.name1 AS line_name, e.name1 AS operator, b.name1 AS dies_name, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, a.apr_by, f.start_time, f.end_time, f.stop_time, f.qty_stc, g.type3, g.type4, g.name1 AS stop, h.name1 AS action, f.remarks, i.name1 AS eksekutor 
                 FROM t_prd_daily_i a
-                LEFT JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint)
-                INNER JOIN m_prd_line c ON c.line_id = a.line_id
+                LEFT JOIN wms.m_mara b ON b.matnr = a.dies_id
+                INNER JOIN m_prd_line c ON c.line_id = a.line_id AND c.line_ty = 'ECU'
                 INNER JOIN t_prd_daily_h d ON d.prd_dt = a.prd_dt AND d.shift = a.shift AND d.line_id = a.line_id
                 INNER JOIN m_prd_operator e ON e.empid = d.jpid
                 LEFT JOIN t_prd_daily_stop f ON f.prd_dt = a.prd_dt AND f.shift = a.shift AND f.line_id = a.line_id
                 LEFT JOIN m_prd_stop_reason_action g ON g.srna_id = f.stop_id
                 LEFT JOIN m_prd_stop_reason_action h ON h.srna_id = f.action_id
                 LEFT JOIN m_prd_operator i ON i.empid = f.exe_empid	
-                WHERE 1=1 AND c.line_ty = 'DM' ";
+                WHERE 1=1 ";
         
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";

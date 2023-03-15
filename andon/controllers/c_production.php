@@ -9,6 +9,7 @@ if ($action == "daily_production_entry") {
   $stop = new Stop();
   $user = new User();
   $material = new Material();
+  // $zona = new Zona();
   if (isset($_GET["line"])) {
     $line = $_GET["line"];
     $date = $_GET["date"];
@@ -52,30 +53,29 @@ if ($action == "daily_production_entry") {
       $list_stop = $stop->getList('S', null);
       $list_action = $stop->getList('A');
       //$list_person = $class->getPersonById($line, $date, $shift);
-      $list_person = $member->getList("OP", "A");
+      $list_person = $member->getList(null, "A");
       $data_item_dtl = $class->getItemById($line, $date, $shift, $seq);
       $data_stop = $class->getStopList($line, $date, $shift, $seq);
       $line_name = $data_item_dtl["line_name"];
-      $date_time_start = $data_item_dtl["prd_dt"]."%20".$data_item_dtl["time_start"];
-      $date_time_end = $data_item_dtl["prd_dt"]."%20".$data_item_dtl["time_end"];
+      $date_time_start = $data_item_dtl["prd_dt"] . "%20" . $data_item_dtl["time_start"];
+      $date_time_end = $data_item_dtl["prd_dt"] . "%20" . $data_item_dtl["time_end"];
       $data_scn = $class->getDataScan($line_name, $date_time_start, $date_time_end);
-      
+
       $data_item_dtl["scn_qty_ok"] = 0;
       $data_item_dtl["scn_qty_ng"] = 0;
-      if(!empty($data_scn["dcQty"])) {
+      if (!empty($data_scn["dcQty"])) {
         $data_item_dtl["scn_qty_ok"] = $data_scn["dcQty"];
       }
-      if(!empty($data_scn["ngQty"])) {
+      if (!empty($data_scn["ngQty"])) {
         $data_item_dtl["scn_qty_ng"] = $data_scn["ngQty"];
       }
-        
+
       $list_ng_type = $class->getNGType();
       $data_ng = $class->getNGList($line, $date, $shift, $seq);
       $template["submenu"] = $data_item_dtl["line_name"];
-      
+
       $dies_list = $dies->getListDies($line, "A");
       $matlist = $material->getListMaterial();
-
       require(TEMPLATE_PATH . "/t_production_entry_step3.php");
     } else {
       //check if data already created
@@ -103,12 +103,16 @@ if ($action == "daily_production_entry") {
         if (isset($_POST["save"])) {
           //mulai generate data
           $param = $_POST;
+          // print_r($param);
+          // die();
+          // $dies->updateZonaByLine($param["line_id"]);
           $save_header = $class->insertHeader($param);
           if ($save_header["status"] == true) {
             //insert item
             $cctime = $param["cctime"];
             $dies_id = $param["dies_id"];
-
+            //update zona dies sesuai line id
+            // $dies->updateZonaId($param["dies_id"], $param["line_id"]);
             $get_item = $class->getItemTemplateByShift($shift);
             $jml_item = count($get_item);
             $planned_stops = $stop->getPlannedStopByShift($shift);
