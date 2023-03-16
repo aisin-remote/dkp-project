@@ -6,7 +6,7 @@ class Report
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, a.ldnum, a.pdsno, a.cycle1, to_char(a.lddat, 'MM-DD-YYYY') as date_only, "
+        $sql = "SELECT a.*, a.ldnum, a.pdsno, a.cycle1, to_char(a.lddat, 'DD-MM-YYYY') as date_only, "
             . " to_char(a.lddat, 'HH24:MI') as time_only, a.stats, "
             . " (select name1 from m_io_lfa1 where lifnr = a.lifnr) as customer "
             . " FROM t_io_ldlist_h a  "
@@ -67,7 +67,7 @@ class Report
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, to_char(a.dstat_dats, 'MM-DD-YYYY') as date_only, to_char(a.dstat_dats, 'HH24:MI') as time_only, b.*, c.name1
+        $sql = "SELECT a.*, to_char(a.dstat_dats, 'DD-MM-YYYY') as date_only, to_char(a.dstat_dats, 'HH24:MI') as time_only, to_char(a.crt_dt, 'DD-MM-YYYY') as scan_date, b.*, c.name1
                 from t_io_ldlist_dtl a
                 left join t_io_ldlist_i b on b.ldnum = a.ldnum AND b.ldseq = a.ldseq
                 left join m_io_mara c on c.matnr = b.matnr
@@ -95,7 +95,7 @@ class Report
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, a.matn1 as custpart, b.*, c.*, c.ldnum, c.pdsno, c.cycle1, to_char(c.lddat, 'MM-DD-YYYY') as date_only,
+        $sql = "SELECT a.*, a.matn1 as custpart, b.*, c.*, c.ldnum, c.pdsno, c.cycle1, to_char(c.lddat, 'DD-MM-YYYY') as date_only,
                 to_char(c.lddat, 'HH24:MI') as time_only, d.name1 as customer FROM t_io_ldlist_i a
                 LEFT JOIN m_io_mara b on b.matnr = a.matnr
                 LEFT JOIN t_io_ldlist_h c on c.ldnum = a.ldnum
@@ -127,7 +127,7 @@ class Report
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, a.matn1 as custpart, b.*, c.*, c.ldnum, c.pdsno, c.cycle1, to_char(c.lddat, 'MM-DD-YYYY') as date_only,
+        $sql = "SELECT a.*, a.matn1 as custpart, b.*, c.*, c.ldnum, c.pdsno, c.cycle1, to_char(c.lddat, 'DD-MM-YYYY') as date_only, to_char(e.crt_dt, 'DD-MM-YYYY') as scan_date,
                 to_char(c.lddat, 'HH24:MI') as time_only, d.name1 as customer, e.kanban_i, e.kanban_e FROM t_io_ldlist_i a
                 LEFT JOIN m_io_mara b on b.matnr = a.matnr
                 LEFT JOIN t_io_ldlist_h c on c.ldnum = a.ldnum
