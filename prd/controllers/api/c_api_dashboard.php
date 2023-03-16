@@ -172,16 +172,30 @@ if ($action == "api_dashboard_prd_single") {
             (select coalesce(sum(ng_qty),0) as ril_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'RIL'), 
             (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
-            WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') 
+            WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL'),
+            (select sum(b.stop_time)
+            from t_prd_daily_i a
+            inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
+            inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'MESIN'
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
+            AND a.stats = 'A' and app_id = '".APP."') as stop_mesin,
+            (select sum(b.stop_time)
+            from t_prd_daily_i a
+            inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
+            inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'DIES'
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
+            AND a.stats = 'A' and app_id = '".APP."') as stop_dies
             from t_prd_daily_i a 
-            inner join m_prd_line b ON b.line_id = a.line_id
-            LEFT JOIN ( 
-              SELECT line_id, line_ty 
-              FROM m_prd_line 
-              WHERE line_ty = 'DM' 
-            ) g ON a.line_id = g.line_id 
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A' AND a.line_id = g.line_id ";
+            inner join m_prd_line b ON b.line_id = a.line_id AND b.line_ty = 'DM'
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A' ";
   $stmt = $conn->prepare($query);
+  $pln_qty = 0;
+  $prd_qty = 0;
+  $balance = 0;
+  $achieve = 0;
+  $cctime = 0;
+  $stop_dies = 0;
+  $stop_mesin = 0;
   $eff = 0;
   $ril = 0;
   $rol = 0;
@@ -189,6 +203,13 @@ if ($action == "api_dashboard_prd_single") {
   if ($stmt->execute() or die($stmt->errorInfo()[2])) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       //$line_name = $row["line_name"];
+      $pln_qty = $row["pln_qty"];
+      $prd_qty = $row["prd_qty"];
+      $balance = $row["pln_qty"] - $row["prd_qty"];
+      $achieve = round($row["prd_qty"] / $row["pln_qty"] * 100, 2);
+      $cctime = $row["cctime"];
+      $stop_dies = $row["stop_dies"];
+      $stop_mesin = $row["stop_mesin"];
       $eff = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
       $ril = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
       $rol = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
@@ -196,6 +217,13 @@ if ($action == "api_dashboard_prd_single") {
   }
   $return = [];
   $return["line_name"] = $line_name;
+  $return["pln_qty"] = $pln_qty;
+  $return["prd_qty"] = $prd_qty;
+  $return["balance"] = $balance;
+  $return["achieve"] = $achieve;
+  $return["cctime"] = $cctime;
+  $return["stop_dies"] = $stop_dies;
+  $return["stop_mesin"] = $stop_mesin;
   $return["eff"] = $eff;
   $return["ril"] = $ril;
   $return["rol"] = $rol;
@@ -245,16 +273,30 @@ if ($action == "dashboard_line") {
             (select coalesce(sum(ng_qty),0) as ril_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'RIL'), 
             (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
-            WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') 
+            WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL'),
+            (select sum(b.stop_time)
+            from t_prd_daily_i a
+            inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
+            inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'MESIN'
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
+            AND a.stats = 'A' and app_id = '".APP."') as stop_mesin,
+            (select sum(b.stop_time)
+            from t_prd_daily_i a
+            inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
+            inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'DIES'
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
+            AND a.stats = 'A' and app_id = '".APP."') as stop_dies
             from t_prd_daily_i a 
-            inner join m_prd_line b ON b.line_id = a.line_id 
-            LEFT JOIN ( 
-              SELECT line_id, line_ty 
-              FROM m_prd_line 
-              WHERE line_ty = 'DM' 
-            ) g ON a.line_id = g.line_id 
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A' AND a.line_id = g.line_id ";
+            inner join m_prd_line b ON b.line_id = a.line_id AND b.line_ty = 'DM'
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A'";
   $stmt = $conn->prepare($query);
+  $pln_qty = 0;
+  $prd_qty = 0;
+  $balance = 0;
+  $achieve = 0;
+  $cctime = 0;
+  $stop_dies = 0;
+  $stop_mesin = 0;
   $eff = 0;
   $ril = 0;
   $rol = 0;
@@ -262,6 +304,13 @@ if ($action == "dashboard_line") {
   if ($stmt->execute() or die($stmt->errorInfo()[2])) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       //$line_name = $row["line_name"];
+      $pln_qty = $row["pln_qty"];
+      $prd_qty = $row["prd_qty"];
+      $balance = $row["pln_qty"] - $row["prd_qty"];
+      $achieve = round($row["prd_qty"] / $row["pln_qty"] * 100, 2);
+      $cctime = $row["cctime"];
+      $stop_dies = $row["stop_dies"];
+      $stop_mesin = $row["stop_mesin"];
       $eff = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
       $ril = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
       $rol = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
