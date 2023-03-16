@@ -19,8 +19,12 @@ and open the template in the editor.
       <main>
         <div class="container-fluid mt-2">
           <ol class="breadcrumb mb-1">
-            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
+            <li class="breadcrumb-item">
+              <?php echo $template["group"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["menu"]; ?>
+            </li>
           </ol>
 
           <?php
@@ -83,26 +87,23 @@ and open the template in the editor.
                       <table class="table table-sm" id="data-table-x">
                         <thead>
                           <tr>
-                            <th class=''>No</th>
-                            <th class=''>Loading List Number</th>
-                            <th class=''>PDS Number</th>
-                            <th class=''>Customer</th>
-                            <th class=''>P. Code</th>
-                            <th class=''>Receive Area</th>
-                            <th class=''>Cycle</th>
-                            <th class=''>Delivery Date</th>
-                            <th class=''>Delivery Time</th>
-                            <th class=''>Parts No.</th>
-                            <th class=''>Cust. Parts No.</th>
-                            <th class=''>Cust. Parts ID</th>
-                            <th class=''>Internal Parts ID</th>
-                            <th class=''>Kanban Qty</th>
-                            <th class=''>Check</th>
-                            <th class=''>Qty/Pack</th>
-                            <th class=''>Qty</th>
-                            <th class=''>Kanban Barcode</th>
-                            <th class=''>Kanban RFID</th>
-                            <th class=''>Part Name</th>
+                            <th class='text-nowrap'>Loading List Number</th>
+                            <th class='text-nowrap'>No</th>
+                            <th class='text-nowrap'>PDS Number</th>
+                            <th class='text-nowrap'>Customer</th>
+                            <th class='text-nowrap'>P. Code</th>
+                            <th class='text-nowrap'>Receive Area</th>
+                            <th class='text-nowrap'>Cycle</th>
+                            <th class='text-nowrap'>Delivery Date</th>
+                            <th class='text-nowrap'>Delivery Time</th>
+                            <th class='text-nowrap'>Parts No.</th>
+                            <th class='text-nowrap'>Cust. Parts No.</th>
+                            <th class='text-nowrap'>Kanban Internal</th>
+                            <th class='text-nowrap'>Kanban External</th>
+                            <th class='text-nowrap'>Part Name</th>
+                            <th class='text-nowrap'>Scan Date</th>
+                            <th class='text-nowrap'>Delivered Date</th>
+                            <th class='text-nowrap'>Delivered Time</th>
                             <!-- <th class='text-center'>Device Antenna</th> -->
                           </tr>
                         </thead>
@@ -111,27 +112,24 @@ and open the template in the editor.
                           if (!empty($list)) {
                             foreach ($list as $row) {
                               echo
-                              "<tr>"
-                                . "<td class='align-middle'>" . $row["ldseq"] . "</td>"
+                                "<tr>"
                                 . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
-                                . "<td class='align-middle'>" . $row["pdsno"] . "</td>"
-                                . "<td class='align-middle'>" . $row["customer"] . "</td>"
+                                . "<td class='align-middle'>" . $row["ldseq"] . "</td>"
+                                . "<td class='align-middle text-nowrap'>" . $row["pdsno"] . "</td>"
+                                . "<td class='align-middle text-nowrap'>" . $row["customer"] . "</td>"
                                 . "<td class='align-middle'>" . $row["werks"] . "</td>"
                                 . "<td class='align-middle'>" . $row["rcvar"] . "</td>"
                                 . "<td class='align-middle'>" . $row["cycle1"] . "</td>"
                                 . "<td class='align-middle'>" . $row["date_only"] . "</td>"
                                 . "<td class='align-middle'>" . $row["time_only"] . "</td>"
-                                . "<td class='align-middle'>" . $row["matnr"] . "</td>"
+                                . "<td class='align-middle text-nowrap'>" . $row["matnr"] . "</td>"
                                 . "<td class='align-middle'>" . $row["custpart"] . "</td>"
-                                . "<td class='align-middle'></td>"
-                                . "<td class='align-middle'></td>"
-                                . "<td class='align-middle'>" . $row["menge"] . "</td>"
-                                . "<td class='align-middle'></td>"
-                                . "<td class='align-middle'>" . $row["perpack"] . "</td>"
-                                . "<td class='align-middle'>" . $row["totqty"] . "</td>"
-                                . "<td class='align-middle'>" . $row["kanban_i"] . "</td>"
+                                . "<td class='align-middle text-nowrap'>" . $row["kanban_i"] . "</td>"
                                 . "<td class='align-middle'>" . $row["kanban_e"] . "</td>"
-                                . "<td class='align-middle'>" . $row["name1"] . "</td>"
+                                . "<td class='align-middle text-nowrap'>" . $row["name1"] . "</td>"
+                                . "<td class='align-middle'>" . $row["scan_date"] . "</td>"
+                                . "<td class='align-middle'>" . $row["date_only"] . "</td>"
+                                . "<td class='align-middle'>" . $row["time_only"] . "</td>"
                                 . "</tr>";
                             }
                           }
@@ -151,7 +149,8 @@ and open the template in the editor.
   </div>
   <input type="hidden" id="usrid" value="<?php echo $_SESSION[LOGIN_SESSION]; ?>">
 
-  <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_filter_label" aria-hidden="true">
+  <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="modal_filter_label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <form method="get" action="#">
@@ -165,9 +164,11 @@ and open the template in the editor.
           <div class="modal-body pb-1">
             <div class="row">
               <div class="col-2"><label class="col-form-label">Date</label></div>
-              <div class="col"><input type="text" name="date_from" class="form-control datepicker" value="<?php echo $lddat_from; ?>"></div>
+              <div class="col"><input type="text" name="date_from" class="form-control datepicker"
+                  value="<?php echo $lddat_from; ?>"></div>
               <label class="col-form-label px-3">to</label>
-              <div class="col"><input type="text" name="date_to" class="form-control datepicker" value="<?php echo $lddat_to; ?>"></div>
+              <div class="col"><input type="text" name="date_to" class="form-control datepicker"
+                  value="<?php echo $lddat_to; ?>"></div>
             </div>
           </div>
           <div class="modal-body pt-1">
@@ -177,13 +178,13 @@ and open the template in the editor.
                   <option value="">None</option>
                   <?php
                   foreach ($customer as $cust) {
-                  ?>
+                    ?>
                     <option value="<?php echo $cust["name1"]; ?>" <?php
-                                                                  if ($cust['name1'] == $_GET["customer"]) {
-                                                                    echo "selected";
-                                                                  }
-                                                                  ?>><?php echo $cust["name1"]; ?></option>
-                  <?php
+                       if ($cust['name1'] == $_GET["customer"]) {
+                         echo "selected";
+                       }
+                       ?>><?php echo $cust["name1"]; ?></option>
+                    <?php
                   }
                   ?>
                 </select></div>
@@ -201,7 +202,7 @@ and open the template in the editor.
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       // $('.collapse').collapse();
       $(".datepicker").flatpickr({
         altInput: true,
@@ -217,25 +218,25 @@ and open the template in the editor.
           "<'row'<'col-sm-12'tr>>" +
           "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
         buttons: [{
-            className: 'btn btn-primary btn-sm',
-            text: '<i class="material-icons">filter_alt</i> Filter',
-            action: function() {
-              $('#modal_filter').modal("show");
+          className: 'btn btn-primary btn-sm',
+          text: '<i class="material-icons">filter_alt</i> Filter',
+          action: function () {
+            $('#modal_filter').modal("show");
 
-            }
-          },
-          {
-            extend: 'csv',
-            title: "Detail Kanban Loading List",
-            className: 'btn btn-success btn-sm',
-            text: '<i class="material-icons">text_snippet</i> CSV',
-          },
-          {
-            extend: 'excel',
-            title: "Detail Kanban Loading List",
-            className: 'btn btn-outline-success btn-sm',
-            text: '<i class="material-icons">download</i> Excel',
           }
+        },
+        {
+          extend: 'csv',
+          title: "Detail Kanban Loading List",
+          className: 'btn btn-success btn-sm',
+          text: '<i class="material-icons">text_snippet</i> CSV',
+        },
+        {
+          extend: 'excel',
+          title: "Detail Kanban Loading List",
+          className: 'btn btn-outline-success btn-sm',
+          text: '<i class="material-icons">download</i> Excel',
+        }
         ]
       });
 
@@ -245,7 +246,7 @@ and open the template in the editor.
         width: '100%'
       });
 
-      $('td').each(function() {
+      $('td').each(function () {
         if ($(this).html() == 'COMPLETED') {
           $(this).css('color', 'green');
         } else if ($(this).html() == 'UNCOMPLETED') {
@@ -254,8 +255,8 @@ and open the template in the editor.
       });
 
       var table = $('#data-table-x').DataTable();
-      table.on('draw.dt', function() {
-        $('td').each(function() {
+      table.on('draw.dt', function () {
+        $('td').each(function () {
           if ($(this).html() == 'COMPLETED') {
             $(this).css('color', 'green');
           } else if ($(this).html() == 'UNCOMPLETED') {

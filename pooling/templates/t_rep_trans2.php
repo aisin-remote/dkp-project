@@ -59,14 +59,12 @@ and open the template in the editor.
                                             <table class="table table-sm" id="data-table-x">
                                                 <thead>
                                                     <tr>
-                                                        <th class=''>No.</th>
                                                         <th class=''>Loading List Number</th>
+                                                        <th class=''>No.</th>
                                                         <th class=''>Parts No.</th>
                                                         <th class=''>Cust. Parts No.</th>
-                                                        <th class=''>Cust. Parts ID</th>
-                                                        <th class=''>Internal Parts ID</th>
                                                         <th class=''>Kanban Qty</th>
-                                                        <th class=''>Check</th>
+                                                        <th class=''>Actual Qty</th>
                                                         <th class=''>Qty/Pack</th>
                                                         <th class=''>Qty</th>
                                                         <th class=''>Status</th>
@@ -83,14 +81,12 @@ and open the template in the editor.
                                                         foreach ($list as $row) {
                                                             echo
                                                                 "<tr>"
-                                                                . "<td class='align-middle'>" . $row["ldseq"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
+                                                                . "<td class='align-middle'>" . $row["ldseq"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["matnr"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["custpart"] . "</td>"
-                                                                . "<td class='align-middle'></td>"
-                                                                . "<td class='align-middle'></td>"
                                                                 . "<td class='align-middle'>" . $row["menge"] . "</td>"
-                                                                . "<td class='align-middle'></td>"
+                                                                . "<td class='align-middle'>" . $row["wmeng"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["perpack"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["totqty"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["dstat"] . "</td>"
