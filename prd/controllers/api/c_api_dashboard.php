@@ -217,13 +217,13 @@ if ($action == "api_dashboard_prd_single") {
   }
   $return = [];
   $return["line_name"] = $line_name;
-  $return["pln_qty"] = $pln_qty;
-  $return["prd_qty"] = $prd_qty;
-  $return["balance"] = $balance;
+  $return["pln_qty"] = number_format($pln_qty);
+  $return["prd_qty"] = number_format($prd_qty);
+  $return["balance"] = number_format($balance);
   $return["achieve"] = $achieve;
-  $return["cctime"] = $cctime;
-  $return["stop_dies"] = $stop_dies;
-  $return["stop_mesin"] = $stop_mesin;
+  $return["cctime"] = number_format($cctime);
+  $return["stop_dies"] = number_format($stop_dies);
+  $return["stop_mesin"] = number_format($stop_mesin);
   $return["eff"] = $eff;
   $return["ril"] = $ril;
   $return["rol"] = $rol;

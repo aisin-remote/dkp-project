@@ -196,24 +196,24 @@ if ($action == "api_dashboard_adn_single") {
       $pln_qty = $row["pln_qty"];
       $prd_qty = $row["prd_qty"];
       $balance = $row["pln_qty"] - $row["prd_qty"];
-      $achieve = round($row["prd_qty"] / $row["pln_qty"] * 100, 2);
+      $achieve = round($row["prd_qty"] / $row["pln_qty"] * 100, 1);
       $cctime = $row["cctime"];
       $stop_dies = $row["stop_dies"];
       $stop_mesin = $row["stop_mesin"];
-      $eff = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
-      $ril = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
-      $rol = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
+      $eff = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
+      $ril = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
+      $rol = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
     }
   }
   $return = [];
   $return["line_name"] = $line_name;
-  $return["pln_qty"] = $pln_qty;
-  $return["prd_qty"] = $prd_qty;
-  $return["balance"] = $balance;
+  $return["pln_qty"] = number_format($pln_qty);
+  $return["prd_qty"] = number_format($prd_qty);
+  $return["balance"] = number_format($balance);
   $return["achieve"] = $achieve;
-  $return["cctime"] = $cctime;
-  $return["stop_dies"] = $stop_dies;
-  $return["stop_mesin"] = $stop_mesin;
+  $return["cctime"] = number_format($cctime);
+  $return["stop_dies"] = number_format($stop_dies);
+  $return["stop_mesin"] = number_format($stop_mesin);
   $return["eff"] = $eff;
   $return["ril"] = $ril;
   $return["rol"] = $rol;
@@ -301,9 +301,9 @@ if ($action == "dashboard_line") {
       $cctime = $row["cctime"];
       $stop_dies = $row["stop_dies"];
       $stop_mesin = $row["stop_mesin"];
-      $eff = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
-      $ril = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
-      $rol = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
+      $eff = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
+      $ril = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
+      $rol = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
     }
   }
 
