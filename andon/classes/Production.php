@@ -274,7 +274,7 @@ class Production
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, TO_CHAR(a.prd_dt, 'DD-MM-YYYY') as prod_date, CONCAT(x.matnr, ' ', x.mtart, ' ', x.name1) as dies_name, "
-      . "b.name1 as line_name, c.pval1 as shift_name, "
+      . "b.name1 as line_name, c.pval1 as shift_name, x.*, "
       . "ld.name1 as ld_name, jp.name1 as jp_name, op1.name1 as op1_name, op2.name1 as op2_name, op3.name1 as op3_name, op4.name1 as op4_name "
       . "FROM t_prd_daily_i a "
       . "INNER JOIN wms.m_mara x ON x.matnr = a.dies_id "

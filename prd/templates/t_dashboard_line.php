@@ -2,7 +2,7 @@
 <html lang="en">
 <?php include "common/t_css.php"; ?>
 
-<body>
+<body >
   <?php include "common/t_nav_top_dashboard.php"; ?>
   <main>
     <div class="container-fluid mt-2">
@@ -14,67 +14,67 @@
           <?php echo $template["menu"]; ?>
         </li>
       </ol> -->
-      <div class="card mb-4">
+      <div class="card mb-5">
         <div class="card-body">
           <div class="container-fluid text-center">
             <div class="row">
               <div class="col text-left pl-0">
-                <h3 style="color: #002E94">Cycle Time</h3>
-                <h2 style="color: #19A7CE" id="cctime">
-                  <?= $cctime ?>0
-                </h2>
+                <h2 style="color: #002E94">Cycle Time</h2>
+                <h1 style="color: #19A7CE" id="cctime">
+                  <?= $cctime ?>
+                </h1>
               </div>
               <div class="col">
                 <h1 style="color: #002E94">LINE EFFICIENCY</h1>
-                <span class="font-weight-bold" style="font-size: 72px; color: #19A7CE">
+                <span class="font-weight-bold" style="font-size: 96px; color: #19A7CE">
                   <?= $line_name ?>
                 </span>
               </div>
               <div class="col text-right pr-0">
-                <h4 id="date" style="color: #002E94"></h4>
-                <h4 id="time" style="color: #002E94"></h4>
+                <h3 id="date" style="color: #002E94"></h3>
+                <h3 id="time" style="color: #002E94"></h3>
               </div>
             </div>
             <div id='chart_line'></div>
           </div>
         </div>
       </div>
-      <div class="card mb-3">
-        <div class="card-body">
-          <div class="container-fluid">
+      <!-- <div class="card mb-3">
+        <div class="card-body"> -->
+          <div class="container-fluid p-0">
             <div class="table-responsive">
-              <table class="table table-bordered mx-auto">
+              <table class="table table-bordered">
                 <tbody>
                   <tr>
-                    <td class="text-center h1" style="width: 60%;color: #002E94">TARGET QTY</td>
-                    <td class="text-right align-middle h1 border-right-0" id="pln_qty" style="width: 25%;color: #002E94">
+                    <td class="text-center h1" style="width: 60%;color: #002E94;font-size:60px">TARGET QTY</td>
+                    <td class="text-right align-middle h1 border-right-0" id="pln_qty" style="width: 25%;color: #002E94;font-size:60px">
                       <?= $pln_qty ?>
                     </td>
-                    <td class="text-left align-middle h1 border-left-0" id="pln_qty" style="width: 15%;color: #002E94">
+                    <td class="text-left align-middle h1 border-left-0" id="pln_qty" style="width: 15%;color: #002E94;font-size:60px">
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-center h1" style="width: 60%;color: #19A7CE">ACTUAL QTY</td>
-                    <td class="text-right align-middle h1 border-right-0" id="prd_qty" style="width: 25%;color: #19A7CE">
+                    <td class="text-center h1" style="width: 60%;color: #19A7CE;font-size:60px">ACTUAL QTY</td>
+                    <td class="text-right align-middle h1 border-right-0" id="prd_qty" style="width: 25%;color: #19A7CE;font-size:60px">
                       <?= $prd_qty ?>
                     </td>
-                    <td class="text-left align-middle h1 border-left-0" id="prd_qty" style="width: 15%;color: #19A7CE">
+                    <td class="text-left align-middle h1 border-left-0" id="prd_qty" style="width: 15%;color: #19A7CE;font-size:60px">
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-center h1" style="width: 60%;color: #002E94">BALANCE</td>
-                    <td class="text-right align-middle h1 border-right-0" id="balance" style="width: 25%;color: #002E94">
+                    <td class="text-center h1" style="width: 60%;color: #002E94;font-size:60px">BALANCE</td>
+                    <td class="text-right align-middle h1 border-right-0" id="balance" style="width: 25%;color: #002E94;font-size:60px">
                       <?= $balance ?>
                     </td>
-                    <td class="text-left align-middle h1 border-left-0" id="balance" style="width: 15%;color: #002E94">
+                    <td class="text-left align-middle h1 border-left-0" id="balance" style="width: 15%;color: #002E94;font-size:60px">
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-center h1" style="width: 60%;color: #19A7CE">ACHIEVE (%)</td>
-                    <td class="text-right align-middle h1 border-right-0" id="achieve" style="width: 25%;color: #19A7CE">
+                    <td class="text-center h1" style="width: 60%;color: #19A7CE;font-size:60px">ACHIEVE (%)</td>
+                    <td class="text-right align-middle h1 border-right-0" id="achieve" style="width: 25%;color: #19A7CE;font-size:60px">
                       <?= $achieve ?>
                     </td>
-                    <td class="text-left align-middle h1 border-left-0" id="achieve" style="width: 15%;color: #19A7CE">
+                    <td class="text-left align-middle h1 border-left-0" id="achieve" style="width: 15%;color: #19A7CE;font-size:60px">
                       %
                     </td>
                   </tr>
@@ -85,45 +85,45 @@
                     </td>
                   </tr> -->
                   <tr>
-                    <td class="text-center h1" style="width: 60%;color: #002E94">LOSS TIME (PARTS)</td>
-                    <td class="text-right align-middle h1 border-right-0 " id="stopdies" style="width: 25%;color: #002E94">
+                    <td class="text-center h1" style="width: 60%;color: #002E94;font-size:60px">LOSS TIME (PARTS)</td>
+                    <td class="text-right align-middle h1 border-right-0 " id="stopdies" style="width: 25%;color: #002E94;font-size:60px">
                       <?= $achieve ?>
                     </td>
-                    <td class="text-left align-middle h1 border-left-0" id="stopdies" style="width: 15%;color: #002E94">
+                    <td class="text-left align-middle h1 border-left-0" id="stopdies" style="width: 15%;color: #002E94;font-size:60px">
                       s
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-center h1" style="width: 60%;color: #19A7CE">LOSS TIME (M/C)</td>
-                    <td class="text-right align-middle h1 border-right-0" id="stopmesin" style="width: 25%;color: #19A7CE">
+                    <td class="text-center h1" style="width: 60%;color: #19A7CE;font-size:60px">LOSS TIME (M/C)</td>
+                    <td class="text-right align-middle h1 border-right-0" id="stopmesin" style="width: 25%;color: #19A7CE;font-size:60px">
                       <?= $achieve ?>
                     </td>
-                    <td class="text-left align-middle h1 border-left-0" id="stopmesin" style="width: 15%;color: #19A7CE">
+                    <td class="text-left align-middle h1 border-left-0" id="stopmesin" style="width: 15%;color: #19A7CE;font-size:60px">
                       s
                     </td>
                   </tr>
                   <tr>
-                    <td class="text-center h1" style="width: 60%;color: #002E94">RIL</td>
-                    <td class="text-right h1 border-right-0"><span id="data_ril" style="width: 25%;color: #002E94">
+                    <td class="text-center h1" style="width: 60%;color: #002E94;font-size:60px">RIL</td>
+                    <td class="text-right h1 border-right-0"><span id="data_ril" style="width: 25%;color: #002E94;font-size:60px">
                         <?= $ril ?>
                       </span></td>
-                    <td class="text-left h1 border-left-0"><span id="data_ril" style="width: 15%;color: #002E94">
+                    <td class="text-left h1 border-left-0"><span id="data_ril" style="width: 15%;color: #002E94;font-size:60px">
                         %
                       </span></td>
                   </tr>
                   <tr>
-                    <td class="text-center h1" style="width: 60%;color: #19A7CE">ROL</td>
-                    <td class="text-right h1 border-right-0"><span id="data_rol" style="width: 25%;color: #19A7CE">
+                    <td class="text-center h1" style="width: 60%;color: #19A7CE;font-size:60px">ROL</td>
+                    <td class="text-right h1 border-right-0"><span id="data_rol" style="width: 25%;color: #19A7CE;font-size:60px">
                         <?= $rol ?>
                       </span></td>
-                    <td class="text-left h1 border-left-0"><span id="data_rol" style="width: 15%;color: #19A7CE">
+                    <td class="text-left h1 border-left-0"><span id="data_rol" style="width: 15%;color: #19A7CE;font-size:60px">
                         %
                       </span></td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-          </div>
+            <!-- </div>
+          </div> -->
           <!-- <div class="container-fluid">
             <div class="table-responsive">
               <table class="table table-bordered">
@@ -190,7 +190,7 @@
       chart: {
         type: 'radialBar',
         offsetY: -20,
-        width: '100%',
+        width: '150%',
         sparkline: {
           enabled: true
         }
@@ -199,10 +199,11 @@
         radialBar: {
           startAngle: -90,
           endAngle: 90,
+          offsetX: -210,
           track: {
             background: '#e7e7e7',
-            strokeWidth: '97%',
-            margin: 5, // margin is in pixels
+            strokeWidth: '100%',
+            margin: 0, // margin is in pixels
             dropShadow: {
               enabled: true,
               top: 2,
@@ -218,7 +219,7 @@
             },
             value: {
               offsetY: -2,
-              fontSize: '96px',
+              fontSize: '9em',
               fontWeight: 'bold'
             }
           }
@@ -227,18 +228,19 @@
       grid: {
         padding: {
           top: -10
-        }
+        },
+        margin: 0
       },
       fill: {
-        type: 'gradient',
-        gradient: {
-          shade: 'light',
-          shadeIntensity: 0.4,
-          inverseColors: false,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [0, 50, 53, 91]
-        },
+        colors: [function({value, seriesIndex, w}){
+          if (value < 30) {
+            return '#E21818'
+          } else if (value >= 30 && value < 70) {
+            return '#F7C04A'
+          } else {
+            return '#03C988'
+          }
+        }]
       },
       labels: ['Production Efficiency'],
     };
@@ -270,12 +272,12 @@
 
     function dateTime() {
       const now = new Date();
-      const date = now.toLocaleDateString('en-US', {
+      const date = now.toLocaleDateString('en-GB', {
         weekday: 'long',
-        year: 'numeric',
+        day: 'numeric',
         month: 'numeric',
-        day: 'numeric'
-      });
+        year: 'numeric',
+      }).replace(/\//g, '-');
       const time = now.toLocaleTimeString('id-ID', {
         hour: 'numeric',
         minute: 'numeric',

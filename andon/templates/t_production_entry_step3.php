@@ -135,11 +135,12 @@ and open the template in the editor.
                     <input type="hidden" name="prd_dt" id="prd_dt" value="<?php echo $data_item_dtl["prd_dt"]; ?>">
                     <input type="hidden" name="shift" id="shift" value="<?php echo $data_item_dtl["shift"]; ?>">
                     <input type="hidden" name="prd_seq" id="prd_seq" value="<?php echo $data_item_dtl["prd_seq"]; ?>">
+                    <input type="hidden" name="dies_id" id="dies_id" value="<?php echo $data_item_dtl["matnr"]; ?>">
 
                     <div class="row">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Material</div>
                       <div class="col-xl-4 col-lg-4 col-md-5 col-sm-6">
-                        <select name="dies_id" id="dies_id" class="form-control select2" data-live-search="true">
+                        <select name="dies_id" id="dies_id" class="form-control select2" data-live-search="true" disabled>
                           <?php
                           foreach ($matlist as $row) {
                             ?>
