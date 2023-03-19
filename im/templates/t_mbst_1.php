@@ -54,7 +54,7 @@ and open the template in the editor.
                       <div class="col-lg-6 col-sm-12">
                         <div class="d-flex justify-content-end">
                           <!-- button placement -->
-                          <button type="submit" id="btn_save" name="btn_save" value="btn_save" class="btn btn-primary"><span class="material-icons">search</span> Check</button>
+                          <button type="submit" id="btn_save" name="btn_save" value="btn_save" class="btn btn-primary"><span class="material-icons">search</span> GO</button>
                         </div>
                       </div>
                     </div>

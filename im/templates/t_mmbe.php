@@ -64,36 +64,38 @@ and open the template in the editor.
                 <div class="card mt-2">
                   <div class="card-body">
                     <!-- Edit Here -->
-                    <table class="table table-sm" id="data-table-x">
-                      <thead>
-                        <tr>
-                          <th>Material</th>
-                          <th>Batch Number</th>
-                          <th>Plant</th>
-                          <th>Storage Location</th>
-                          <th class='text-center'>Unrestricted Stock</th>
-                          <th class='text-center'>Quality Stock</th>
-                          <th class='text-center'>UoM</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php 
-                        if(!empty($data["list"])) {
-                          foreach($data["list"] as $list) {
-                            echo "<tr>"
-                            . "<td>".$list["matnr"]." - ".$list["maktx"]."</td>"
-                            . "<td>".$list["charg"]."</td>"                          
-                            . "<td>".$list["werks"]." - ".$list["plant_name"]."</td>"   
-                            . "<td>".$list["lgort"]." - ".$list["sloc_name"]."</td>"       
-                            . "<td class='text-right'>".$list["clabs"]."</td>"                                
-                            . "<td class='text-right'>".$list["cinsm"]."</td>"                                
-                            . "<td class='text-center'>".$list["meins"]."</td>"
-                            . "</tr>";
+                    <div class='table-responsive'>
+                      <table class="table table-sm" id="data-table-x">
+                        <thead>
+                          <tr>
+                            <th class='text-nowrap'>Material</th>
+                            <th class='text-nowrap'>Batch Number</th>
+                            <th class='text-nowrap'>Plant</th>
+                            <th class='text-nowrap'>Storage Location</th>
+                            <th class='text-nowrap text-center'>Unrestricted Stock</th>
+                            <th class='text-nowrap text-center'>Quality Stock</th>
+                            <th class='text-nowrap text-center'>UoM</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php 
+                          if(!empty($data["list"])) {
+                            foreach($data["list"] as $list) {
+                              echo "<tr>"
+                              . "<td class='text-nowrap'>".$list["matnr"]." - ".$list["maktx"]."</td>"
+                              . "<td class='text-nowrap'>".$list["charg"]."</td>"                          
+                              . "<td class='text-nowrap'>".$list["werks"]." - ".$list["plant_name"]."</td>"   
+                              . "<td class='text-nowrap'>".$list["lgort"]." - ".$list["sloc_name"]."</td>"       
+                              . "<td class='text-right'>".$list["clabs"]."</td>"                                
+                              . "<td class='text-right'>".$list["cinsm"]."</td>"                                
+                              . "<td class='text-center'>".$list["meins"]."</td>"
+                              . "</tr>";
+                            }
                           }
-                        }
-                        ?>
-                      </tbody>
-                    </table>
+                          ?>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>              

@@ -78,7 +78,6 @@ and open the template in the editor.
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Plant</label>
                       <div class="col-lg-4 col-md-6 col-sm-12">
                         <select name="werks" class="form-control select2" id="werks" required="required">
-                          <option value="">Please Select Plant</option>
                           <?php 
                           if(!empty($data["plants"])) {
                             foreach($data["plants"] as $grp) {

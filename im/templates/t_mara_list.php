@@ -16,7 +16,7 @@ and open the template in the editor.
       <div id="layoutSidenav_content">
         <main>
           <div class="container-fluid">
-            <ol class="breadcrumb mb-4 mt-4">
+            <ol class="breadcrumb mb-1 mt-4">
               <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
               <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
             </ol>
@@ -69,6 +69,7 @@ and open the template in the editor.
                       <thead>
                         <tr>
                           <th>Material Type</th>
+                          <th>Material Group</th>
                           <th>Material No.</th>
                           <th>External Material No.</th>
                           <th>Material Description</th>
@@ -82,7 +83,8 @@ and open the template in the editor.
                         if(!empty($data["list"])) {
                           foreach($data["list"] as $list) {
                             echo "<tr>"
-                            . "<td>".$list["mtart"]." - ".$list["mat_type"]."</td>"   
+                            . "<td>".$list["mtart"]." - ".$list["mat_type"]."</td>"
+                            . "<td>".$list["matkl"]." - ".$list["mat_group"]."</td>"
                             . "<td>".$list["matnr"]."</td>"
                             . "<td>".$list["ematn"]."</td>"
                             . "<td>".$list["name1"]."</td>"                                 
@@ -152,7 +154,7 @@ and open the template in the editor.
             className: 'btn btn-pale-green btn-sm',
             text: '<i class="material-icons">download</i>Download Excel',
             exportOptions: {
-              columns: [0, 1, 2, 3, 4]
+              columns: [0, 1, 2, 3, 4, 5]
             }
           },{
             className: 'btn btn-outline-success btn-sm',

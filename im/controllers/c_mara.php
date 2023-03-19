@@ -44,6 +44,7 @@ if ($action == "mara") {
         $data["data"] = $class->getById($id);
       }
       $data["mtarts"] = $class->getType();
+      $data["matkls"] = $class->getGroup();
       require( TEMPLATE_PATH . "/t_mara_edit.php" );
     }
   } else if (isset($_GET['upload'])) {
@@ -69,10 +70,11 @@ if ($action == "mara") {
             break;
           }
           $param["mtart"] = trim($row["A"]);
-          $param["matnr"] = trim($row["B"]);
-          $param["ematn"] = trim($row["C"]);
-          $param["name1"] = trim($row["D"]);
-          $param["meins"] = trim($row["E"]);
+          $param["matkl"] = trim($row["B"]);
+          $param["matnr"] = trim($row["C"]);
+          $param["ematn"] = trim($row["D"]);
+          $param["name1"] = trim($row["E"]);
+          $param["meins"] = trim($row["F"]);
           $param["crt_by"] = $_SESSION[LOGIN_SESSION];
           $param["chg_by"] = $_SESSION[LOGIN_SESSION];
 

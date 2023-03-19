@@ -20,6 +20,10 @@ if($action == "migo_gr_po") {
     $menge = $_POST["menge"];
     $werks = $_POST["werks"];
     $ebeln = $_POST["ebeln"];
+    if(empty($ebeln)) {
+      $ebeln = date("ymdHis");
+    }
+    $chargs = $_POST["charg"];
     //insert header    
     $save = $cMatDoc->insertHeader($mkpf);
     if($save["status"] == true){
@@ -29,7 +33,12 @@ if($action == "migo_gr_po") {
       $i = 0;
       foreach($matnr as $row) {
         //coba masukkan stok dulu
-        $charg = $cStock->generateBatchNumber(); //batch number di generate otomatis by system
+        if(empty($chargs[$i])) {
+          $charg = $cStock->generateBatchNumber(); //batch number di generate otomatis by system
+        } else {
+          $charg = $chargs[$i];
+        }
+        
         $mchb["matnr"] = $row;
         $mchb["werks"] = $_POST["werks"];
         $mchb["lgort"] = $lgort[$i];

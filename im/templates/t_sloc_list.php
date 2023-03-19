@@ -137,7 +137,7 @@ and open the template in the editor.
         $("#data-table-x").DataTable({
           stateSave: true,
           order: [
-            [0, 'desc']
+            [1, 'asc']
           ],
           dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-2'l><'col-sm-12 col-md-4'f>>" +
             "<'row'<'col-sm-12'tr>>" +
