@@ -6,7 +6,8 @@ if ($action == "checksheet_preventive") {
   $dies = new Dies();
   $class = new Checksheet();
   $zona = new Zona();
-
+  $dstk = new DiesStrokeHistory();
+  
   if (isset($_GET["id"])) {
     $id = $_GET["id"];
     $step = $_GET["step"];
@@ -51,6 +52,13 @@ if ($action == "checksheet_preventive") {
             //update status dies menjadi P
             $dies->updateDiesGStat($param["dies_id"], "P");
             $save = $class->insert($param);
+            if($save["status"] == true) {
+              $param_hist = [];
+              $param_hist["sthty"] = "P";
+              $param_hist["dies_id"] = $param["dies_id"];
+              $param_hist["crt_by"] = $_SESSION[LOGIN_SESSION];
+              $insert_hist = $dstk->insert($param_hist);
+            }
           }
         }
 
@@ -417,33 +425,51 @@ if ($action == "checksheet_preventive") {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
+            
+            //complete-kan dies stroke history
+            $dstk->setComplete($param["dies_id"]);
           }
           if ($param["jml_total"] >= 36) {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
+            
+            //complete-kan dies stroke history
+            $dstk->setComplete($param["dies_id"]);
           }
         } else if ($param["group_id"] == "OPN") {
           if ($param["pmtype"] == "2K" && $param["jml_total"] >= 44) {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
+            
+            //complete-kan dies stroke history
+            $dstk->setComplete($param["dies_id"]);
           }
           if ($param["jml_total"] >= 48) {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
+            
+            //complete-kan dies stroke history
+            $dstk->setComplete($param["dies_id"]);
           }
         } else {
           if ($param["pmtype"] == "2K" && $param["jml_total"] >= 45) {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
+            
+            //complete-kan dies stroke history
+            $dstk->setComplete($param["dies_id"]);
           }
           if ($param["jml_total"] >= 49) {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
+            
+            //complete-kan dies stroke history
+            $dstk->setComplete($param["dies_id"]);
           }
         }
         $zona_id = $_POST["zona_id"];

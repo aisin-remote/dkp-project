@@ -7,6 +7,7 @@ if ($action == "order_repair") {
   $class = new OrderRepair();
   $dies = new Dies();
   $zona = new Zona();
+  $dstk = new DiesStrokeHistory();
   if (isset($_GET["id"])) {
     $id = $_GET["id"];
     if (isset($_POST["save"])) {
@@ -132,6 +133,13 @@ if ($action == "order_repair") {
         } else {
           $dies->updateDiesGStat($param["dies_id"], "R");
           $save = $class->insert($param);
+          if($save["status"] == true) {
+            $param_hist = [];
+            $param_hist["sthty"] = "R";
+            $param_hist["dies_id"] = $param["dies_id"];
+            $param_hist["crt_by"] = $_SESSION[LOGIN_SESSION];
+            $insert_hist = $dstk->insert($param_hist);
+          }
         }
       } else {
 
