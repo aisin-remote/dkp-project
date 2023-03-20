@@ -183,14 +183,6 @@
   </main>
   <?php include 'common/t_js.php'; ?>
   <script>
-    // $(document).ready(function () {
-    //   updateDashboard();
-    //   fullscreen();
-    // });
-    document.addEventListener("DOMContentLoaded", function () {
-      var e = new KeyboardEvent("keydown", { keyCode: 122, which: 122 });
-      document.dispatchEvent(e);
-    });
 
     setInterval(updateDashboard, 5000);
     setInterval(dateTime, 1000);
