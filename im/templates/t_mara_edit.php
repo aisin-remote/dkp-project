@@ -61,9 +61,29 @@ and open the template in the editor.
                           if(!empty($data["mtarts"])) {
                             foreach($data["mtarts"] as $grp) {
                               if($grp["mtart"] == $data["data"]["mtart"]) {
-                                echo "<option value='".$grp["mtart"]."' selected>".$grp["name1"]."</option>";
+                                echo "<option value='".$grp["mtart"]."' selected>".$grp["mtart"]." - ".$grp["name1"]."</option>";
                               } else {
-                                echo "<option value='".$grp["mtart"]."'>".$grp["name1"]."</option>";
+                                echo "<option value='".$grp["mtart"]."'>".$grp["mtart"]." - ".$grp["name1"]."</option>";
+                              }
+                            }
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Group</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <select name="matkl" class="form-control">
+                          <option value='' selected>SELECT MATERIAL GROUP</option>
+                          <?php 
+                          if(!empty($data["matkls"])) {
+                            foreach($data["matkls"] as $grp) {
+                              if($grp["matkl"] == $data["data"]["matkl"]) {
+                                echo "<option value='".$grp["matkl"]."' selected>".$grp["matkl"]." - ".$grp["name1"]."</option>";
+                              } else {
+                                echo "<option value='".$grp["matkl"]."'>".$grp["matkl"]." - ".$grp["name1"]."</option>";
                               }
                             }
                           }
@@ -91,12 +111,19 @@ and open the template in the editor.
                       <div class="col-lg-5 col-md-6 col-sm-12">
                         <input type="text" name="name1" class="form-control" maxlength="255" value="<?php echo $data["data"]["name1"]; ?>">
                       </div>
-                    </div>
+                    </div>                    
                     
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Unit of Measure</label>
                       <div class="col-lg-2 col-md-4 col-sm-12">
                         <input type="text" name="meins" class="form-control" maxlength="5" value="<?php echo $data["data"]["meins"]; ?>" >
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Cycle Time (Second)</label>
+                      <div class="col-lg-2 col-md-5 col-sm-12">
+                        <input type="number" name="cctime" step="any" class="form-control" value="<?php echo $data["data"]["cctime"]; ?>">
                       </div>
                     </div>
                   </div>

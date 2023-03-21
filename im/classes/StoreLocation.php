@@ -114,16 +114,16 @@ class StoreLocation {
     return $return;
   }
   
-  public function delete($id) {
+  public function delete($lgort) {
     $return = array();
-    if(empty($id)) {
+    if(empty($lgort)) {
       $return["status"] = false;
       $return["message"] = "ID Empty";
     } else {
       $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-      $sql = "DELETE FROM wms.m_lgort WHERE werks = :id";
+      $sql = "DELETE FROM wms.m_lgort WHERE lgort = :lgort";
       $stmt = $conn->prepare($sql);
-      $stmt->bindValue(":id", strtoupper(trim($id)), PDO::PARAM_STR);
+      $stmt->bindValue(":lgort", strtoupper(trim($lgort)), PDO::PARAM_STR);
       
       if($stmt->execute()) {
         $return["status"] = true;

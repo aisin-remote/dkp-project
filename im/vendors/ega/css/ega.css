@@ -187,3 +187,7 @@
     margin-top: 0px !important;
   }
 }
+
+button {
+  align-items: center;
+}

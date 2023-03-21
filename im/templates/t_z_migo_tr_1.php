@@ -53,6 +53,7 @@ and open the template in the editor.
                       <div class="col-lg-6 col-sm-12">
                         <div class="d-flex justify-content-end">
                           <!-- button placement -->
+                          <button type="button" id="btn_scn1" name="btn_scn1" class="btn btn-warning mr-2" data-toggle="modal" data-target="#modal_01"><span class="material-icons">qr_code_scanner</span> Scan Label Kuning</button>
                           <button type="submit" id="btn_save" name="btn_save" value="btn_save" class="btn btn-primary"><span class="material-icons">send</span> Post</button>
                         </div>
                       </div>
@@ -101,7 +102,11 @@ and open the template in the editor.
                                 <?php 
                                 if(!empty($data["slocs"])) {
                                   foreach($data["slocs"] as $grp) {
-                                    echo "<option value='".$grp["lgort"]."'>".$grp["lgort"]." - ".$grp["name1"]."</option>";                              
+                                    $selected = "";
+                                    if($grp["lgort"] == "S001") {
+                                      $selected = "selected";
+                                    }
+                                    echo "<option value='".$grp["lgort"]."' $selected>".$grp["lgort"]." - ".$grp["name1"]."</option>";                              
                                   }
                                 }
                                 ?>
@@ -112,7 +117,7 @@ and open the template in the editor.
                           <div class="form-group row">
                             <label class="col-form-label col-lg-4 col-md-12 col-sm-12">Material</label>
                             <div class="col-lg-8 col-md-12 col-sm-12">
-                              <select name="matnr" class="form-control" required="required">
+                              <select name="matnr" id="matnr" class="form-control" required="required">
                                 <option value="">Please Select Material</option>
                                 <?php 
                                 if(!empty($data["materials"])) {
@@ -128,7 +133,7 @@ and open the template in the editor.
                           <div class="form-group row">
                             <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Batch Number</label>
                             <div class="col-lg-6 col-md-5 col-sm-12">
-                              <input type="text" name="charg" class="form-control" value="" required="required">
+                              <input type="text" name="charg" id="charg" class="form-control" value="" required="required">
                             </div>
                           </div>
                         </div>
@@ -158,7 +163,10 @@ and open the template in the editor.
                                 <option value=''>Please Select S.Loc</option>
                                 <?php 
                                 if(!empty($data["slocs"])) {
-                                  foreach($data["slocs"] as $grp) {
+                                  foreach($data["slocs"] as $grp) {$selected = "";
+                                    if($grp["lgort"] == "S001") {
+                                      $selected = "selected";
+                                    }
                                     echo "<option value='".$grp["lgort"]."'>".$grp["lgort"]." - ".$grp["name1"]."</option>";                              
                                   }
                                 }
@@ -169,7 +177,7 @@ and open the template in the editor.
                           <div class="form-group row">
                             <label class="col-form-label col-lg-4 col-md-12 col-sm-12">Material</label>
                             <div class="col-lg-8 col-md-12 col-sm-12">
-                              <select name="matnr2" class="form-control" required="required">
+                              <select name="matnr2" id="matnr2" class="form-control" required="required">
                                 <option value="">Please Select Material</option>
                                 <?php 
                                 if(!empty($data["materials"])) {
@@ -185,7 +193,7 @@ and open the template in the editor.
                           <div class="form-group row">
                             <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Batch Number</label>
                             <div class="col-lg-6 col-md-5 col-sm-12">
-                              <input type="text" name="charg2" class="form-control" value="" required="required">
+                              <input type="text" name="charg2" id="charg2" class="form-control" value="" required="required">
                             </div>
                           </div>
                         </div>
@@ -195,7 +203,7 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Quantity</label>
                       <div class="col-lg-2 col-md-6 col-sm-12">
-                        <input type="number" name="menge" class="form-control" value="" placeholder="0" min="0">
+                        <input type="number" name="menge" id="menge" class="form-control" value="" placeholder="0" min="0">
                       </div>
                     </div>
                         
@@ -210,6 +218,28 @@ and open the template in the editor.
           </div>
         </main>
         <?php include 'common/t_footer.php'; ?>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modal_01" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_01_label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal_01_label">Scan Label Kuning</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="col-form-label">QR Code Label Kuning</label>
+              <input type="text" name="qrcode" id="qrcode" class="form-control" value="" >
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
       </div>
     </div>
     <?php include 'common/t_js.php'; ?>
@@ -240,6 +270,35 @@ and open the template in the editor.
             $("#"+lgort_id).append("<option value='"+field.lgort+"'>"+field.lgort+" - "+field.name1+"</option>");
           });
         });
+      }
+      
+      $('#modal_01').on('shown.bs.modal', function (event) {
+        $("#qrcode").focus();
+      });
+      
+      $("#qrcode").keypress(function(e) {        
+        if(e.which == 13) {
+          validateQrCodeKuning(this.value);            
+        } else {
+          
+        }
+      });
+      
+      function validateQrCodeKuning(qrcode) {
+        var arr_code = qrcode.split(/\s+/);
+        var matnr = arr_code[1];
+        var menge = arr_code[2];
+        var charg = arr_code[5];
+        var lgort = "S001";
+        var lgort2 = "S002";
+        $("#qrcode").val("");
+        
+        $("#menge").val(menge);
+        $("#matnr, #matnr2").val(matnr);
+        $("#charg, #charg2").val(charg);
+        $("#lgort").val(lgort);
+        $("#lgort2").val(lgort2);
+        $('#modal_01').modal("hide");
       }
       
     </script>

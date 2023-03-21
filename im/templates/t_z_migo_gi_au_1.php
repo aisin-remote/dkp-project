@@ -79,7 +79,6 @@ and open the template in the editor.
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Plant</label>
                       <div class="col-lg-4 col-md-5 col-sm-12">
                         <select name="werks" class="form-control" id="werks" required="required">
-                          <!--option value="">Please Select Plant</option-->
                           <?php 
                           if(!empty($data["plants"])) {
                             foreach($data["plants"] as $grp) {
@@ -92,20 +91,20 @@ and open the template in the editor.
                     </div>                    
                     
                     <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">PO. Number</label>
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Production Order</label>
                       <div class="col-lg-4 col-md-6 col-sm-12">
-                        <input type="text" name="ebeln" class="form-control" maxlength="20" value="" >
+                        <input type="text" name="aufnr" class="form-control" maxlength="20" value="-" required="required">
                       </div>
                     </div>
                     <table class="table">
                       <thead>
                         <tr>
-                          <th colspan="5" class="text-right"><button type="button" class="btn btn-info" id="btn_add_item">Add Item</button></th>
+                          <th colspan="4" class="text-right"><button type="button" class="btn btn-info" id="btn_add_item">Add Item</button></th>
                         </tr>
                         <tr>
                           <th>Material</th>
-                          <th>Batch</th>
                           <th>Storage Location</th>
+                          <th>Batch Number</th>
                           <th>Quantity</th>
                           <th class="text-center">Del</th>
                         </tr>
@@ -124,9 +123,6 @@ and open the template in the editor.
                               ?>
                             </select>
                           </td>
-                          <td>
-                            <input type="text" name="charg[]" class="form-control menge" maxlength="20" value="" readonly>
-                          </td>
                           <td style="width: 400px!important;">
                             <select name="lgort[]" class="form-control lgort" required="required">
                               <option value=''>Please Select S.Loc</option>
@@ -138,6 +134,9 @@ and open the template in the editor.
                               }
                               ?>
                             </select>
+                          </td>
+                          <td>
+                            <input type="text" name="charg[]" class="form-control menge" value="" required="required">
                           </td>
                           <td>
                             <input type="number" name="menge[]" class="form-control menge" min="0" value="" placeholder="0" required="required">
@@ -188,39 +187,7 @@ and open the template in the editor.
     <script>
       $(document).ready(function () {
         updateLgort();
-      });      
-  
-      $('#modal_01').on('shown.bs.modal', function (event) {
-        $("#qrcode").focus();
       });
-      
-      
-      $("#qrcode").keypress(function(e) {        
-        if(e.which == 13) {
-          validateQrCodeKuning(this.value);            
-        } else {
-          
-        }
-      });
-      
-      function validateQrCodeKuning(qrcode) {
-        var arr_code = qrcode.split(/\s+/);
-        var matnr = arr_code[1];
-        var menge = arr_code[2];
-        var charg = arr_code[5];
-        var lgort = "S001";
-        $("#qrcode").val("");
-        
-        var matnrs = $("select[name='matnr[]']");
-        var menges = $("input[name='menge[]']");
-        var chargs = $("input[name='charg[]']");
-        var lgorts = $("select[name='lgort[]']");
-        matnrs[matnrs.length-1].value = matnr;
-        menges[matnrs.length-1].value = menge;
-        chargs[matnrs.length-1].value = matnr; /*charg;*/
-        lgorts[matnrs.length-1].value = lgort;
-        $('#modal_01').modal("hide");
-      }
       
       $("#my_form").submit(function(){
         $("#btn_save").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
@@ -269,6 +236,39 @@ and open the template in the editor.
         }
         
       }
+      
+      $('#modal_01').on('shown.bs.modal', function (event) {
+        $("#qrcode").focus();
+      });
+      
+      
+      $("#qrcode").keypress(function(e) {        
+        if(e.which == 13) {
+          validateQrCodeKuning(this.value);            
+        } else {
+          
+        }
+      });
+      
+      function validateQrCodeKuning(qrcode) {
+        var arr_code = qrcode.split(/\s+/);
+        var matnr = arr_code[1];
+        var menge = arr_code[2];
+        var charg = arr_code[5];
+        var lgort = "S002";
+        $("#qrcode").val("");
+        
+        var matnrs = $("select[name='matnr[]']");
+        var menges = $("input[name='menge[]']");
+        var chargs = $("input[name='charg[]']");
+        var lgorts = $("select[name='lgort[]']");
+        matnrs[matnrs.length-1].value = matnr;
+        menges[matnrs.length-1].value = menge;
+        chargs[matnrs.length-1].value = charg;
+        lgorts[matnrs.length-1].value = lgort;
+        $('#modal_01').modal("hide");
+      }
+      
     </script>
   </body>
 </html>

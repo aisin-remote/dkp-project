@@ -16,7 +16,7 @@ and open the template in the editor.
       <div id="layoutSidenav_content">
         <main>
           <div class="container-fluid">
-            <ol class="breadcrumb mb-4 mt-4">
+            <ol class="breadcrumb mb-1 mt-4">
               <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
               <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
             </ol>
@@ -69,10 +69,12 @@ and open the template in the editor.
                       <thead>
                         <tr>
                           <th>Material Type</th>
+                          <th>Material Group</th>
                           <th>Material No.</th>
                           <th>External Material No.</th>
                           <th>Material Description</th>
                           <th>UoM</th>
+                          <th>Cycle Time</th>
                           <th class="text-center">Edit</th>
                           <th class="text-center">Delete</th>
                         </tr>
@@ -82,11 +84,13 @@ and open the template in the editor.
                         if(!empty($data["list"])) {
                           foreach($data["list"] as $list) {
                             echo "<tr>"
-                            . "<td>".$list["mtart"]." - ".$list["mat_type"]."</td>"   
+                            . "<td>".$list["mtart"]." - ".$list["mat_type"]."</td>"
+                            . "<td>".$list["matkl"]." - ".$list["mat_group"]."</td>"
                             . "<td>".$list["matnr"]."</td>"
                             . "<td>".$list["ematn"]."</td>"
                             . "<td>".$list["name1"]."</td>"                                 
-                            . "<td>".$list["meins"]."</td>"
+                            . "<td>".$list["meins"]."</td>"                                
+                            . "<td class='text-center'>".$list["cctime"]."</td>"
                             . "<td class='text-center'><a href='?action=$action&id=".$list["matnr"]."' class='btn btn-outline-secondary btn-xs'><i class='material-icons'>edit</i></a></td>"
                             . "<td class='text-center'><a href='?action=$action&id=".$list["matnr"]."&delete=true' class='btn btn-outline-danger btn-xs'><i class='material-icons'>delete</i></a></td>"
                             . "</tr>";
@@ -152,7 +156,7 @@ and open the template in the editor.
             className: 'btn btn-pale-green btn-sm',
             text: '<i class="material-icons">download</i>Download Excel',
             exportOptions: {
-              columns: [0, 1, 2, 3, 4]
+              columns: [0, 1, 2, 3, 4, 5]
             }
           },{
             className: 'btn btn-outline-success btn-sm',

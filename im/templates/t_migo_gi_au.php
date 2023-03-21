@@ -78,7 +78,6 @@ and open the template in the editor.
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Plant</label>
                       <div class="col-lg-4 col-md-5 col-sm-12">
                         <select name="werks" class="form-control" id="werks" required="required">
-                          <option value="">Please Select Plant</option>
                           <?php 
                           if(!empty($data["plants"])) {
                             foreach($data["plants"] as $grp) {
@@ -99,7 +98,7 @@ and open the template in the editor.
                     <table class="table">
                       <thead>
                         <tr>
-                          <th colspan="4" class="text-right"><button type="button" class="btn btn-info" id="btn_add_item">Add Item</button></th>
+                          <th colspan="5" class="text-right"><button type="button" class="btn btn-info" id="btn_add_item">Add Item</button></th>
                         </tr>
                         <tr>
                           <th>Material</th>

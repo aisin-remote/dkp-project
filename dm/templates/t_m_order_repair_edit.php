@@ -57,7 +57,7 @@ and open the template in the editor.
           ?>
           <form method="post" id="my-form" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>"
             enctype="multipart/form-data">
-
+            <input type="hidden" id="saved_dies_id" value="<?=$data["data"]["dies_id"]?>">
             <div class="row">
               <div class="col-12">
                 <div class="card" style="background-color: #F0F0F0;">
@@ -269,6 +269,8 @@ and open the template in the editor.
         altFormat: "d-m-Y",
         dateFormat: "Y-m-d"
       });
+      
+      getDiesList($("#model_id").val(), $("#group_id").val());
     });
 
     var loadFile = function (event) {
@@ -338,6 +340,7 @@ and open the template in the editor.
     });
 
     function getDiesList(model_id, group_id) {
+      var saved_dies_id = $("#saved_dies_id").val();
       $("#dies_id").empty();
       $.getJSON("?action=api_get_dies_list", {
         model: model_id,
@@ -347,8 +350,11 @@ and open the template in the editor.
         //$("#model_id").empty();
 
         $.each(data, function (key, val) {
-          console.log(val.model_id);
-          items += "<option value='" + val.dies_id + "'>" + val.dies_no + "</option>";
+          var selected = "";
+          if(val.dies_id == saved_dies_id) {
+            selected = "selected";
+          }
+          items += "<option value='" + val.dies_id + "' "+selected+">" + val.dies_no + "</option>";
         });
 
         $("#dies_id").html(items);
