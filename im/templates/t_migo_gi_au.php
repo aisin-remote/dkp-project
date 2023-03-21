@@ -98,7 +98,7 @@ and open the template in the editor.
                     <table class="table">
                       <thead>
                         <tr>
-                          <th colspan="4" class="text-right"><button type="button" class="btn btn-info" id="btn_add_item">Add Item</button></th>
+                          <th colspan="5" class="text-right"><button type="button" class="btn btn-info" id="btn_add_item">Add Item</button></th>
                         </tr>
                         <tr>
                           <th>Material</th>

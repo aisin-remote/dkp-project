@@ -76,6 +76,34 @@
   animation-iteration-count: infinite;
 }
 
+@keyframes ripple_success {
+  0%   {background-color:transparent;}
+  25%  {background-color:#28a745;}
+  50%  {background-color:transparent;}
+  75%  {background-color:#28a745;}
+  100% {background-color:transparent;}
+}
+
+.bg-success-blink {
+  animation-name: ripple_success;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes ripple_warning {
+  0%   {background-color:transparent;}
+  25%  {background-color:#28a745;}
+  50%  {background-color:transparent;}
+  75%  {background-color:#28a745;}
+  100% {background-color:transparent;}
+}
+
+.bg-warning-blink {
+  animation-name: ripple_warning;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+
 .opacity-50 {
   opacity: 0.5;
 }

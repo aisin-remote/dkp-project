@@ -125,7 +125,7 @@ and open the template in the editor.
                             </select>
                           </td>
                           <td>
-                            <input type="text" name="charg[]" class="form-control menge" maxlength="20" value="">
+                            <input type="text" name="charg[]" class="form-control menge" maxlength="20" value="" readonly>
                           </td>
                           <td style="width: 400px!important;">
                             <select name="lgort[]" class="form-control lgort" required="required">
@@ -217,7 +217,7 @@ and open the template in the editor.
         var lgorts = $("select[name='lgort[]']");
         matnrs[matnrs.length-1].value = matnr;
         menges[matnrs.length-1].value = menge;
-        chargs[matnrs.length-1].value = charg;
+        chargs[matnrs.length-1].value = matnr; /*charg;*/
         lgorts[matnrs.length-1].value = lgort;
         $('#modal_01').modal("hide");
       }
