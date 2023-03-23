@@ -206,55 +206,67 @@
     }
 
     function handleOK() {
-      $.post("?action=api_post_ib", {
-        ib_type: "P",
-        line_id: $("#line_id").val(),
-        qty: $("#quantity").val(),
-        crt_dt: <?= date("Ymd") ?>,
-        shkzg: "C",
-        shift: $("#shift").text().trim(),
-      }, function (data) {
-        console.log(data);
-        $("quantity").val(1);
-        $("#productok").modal("hide");
-      });
+      if ($("#cctime").text().trim() == 0) {
+        alert("Please create production first")
+      } else {
+        $.post("?action=api_post_ib", {
+          ib_type: "P",
+          line_id: $("#line_id").val(),
+          qty: $("#quantity").val(),
+          crt_dt: <?= date("Ymd") ?>,
+          shkzg: "C",
+          shift: $("#shift").text().trim(),
+        }, function (data) {
+          console.log(data);
+          $("quantity").val(1);
+          $("#productok").modal("hide");
+        });
+      }
     }
 
     function handleRev(type) {
-      if (type == 'ok') {
-        $.post("?action=api_update_rev", {
-          rev: 'y',
-          type: 'P'
-        }, function (data) {
-          console.log(data)
-        })
+      if ($("#cctime").text().trim() == 0) {
+        alert("Please create production first")
       } else {
-        $.post("?action=api_update_rev", {
-          rev: 'y',
-          type: 'N'
-        }, function (data) {
-          console.log(data)
-        })
+        if (type == 'ok') {
+          $.post("?action=api_update_rev", {
+            rev: 'Y',
+            type: 'P'
+          }, function (data) {
+            console.log(data)
+          })
+        } else {
+          $.post("?action=api_update_rev", {
+            rev: 'Y',
+            type: 'N'
+          }, function (data) {
+            console.log(data)
+          })
+        }
       }
     }
 
     function handleNG(type) {
       // console.log(typeof type)
-      $.post("?action=api_post_ib", {
-        ib_type: "N",
-        line_id: $("#line_id").val(),
-        qty: 1,
-        crt_dt: <?= date("Ymd") ?>,
-        ng_type: type,
-        shkzg: "C",
-        shift: $("#shift").text().trim(),
-      }, function (data) {
-        console.log(data);
-        $("#productng").modal("hide");
-      });
+      if ($("#cctime").text().trim() == 0) {
+        alert("Please create production first")
+      } else {
+        $.post("?action=api_post_ib", {
+          ib_type: "N",
+          line_id: $("#line_id").val(),
+          qty: 1,
+          crt_dt: <?= date("Ymd") ?>,
+          ng_type: type,
+          shkzg: "C",
+          shift: $("#shift").text().trim(),
+        }, function (data) {
+          console.log(data);
+          $("#productng").modal("hide");
+        });
+      }
     }
 
-    setInterval(updateDashboard, 3000);
+    setInterval(updateDashboard, 1000);
     setInterval(updateQty, 1000);
     setInterval(dateTime, 1000);
     function cek_cb(id, machid) {
@@ -286,7 +298,8 @@
         "?action=api_mach_status",
         {
           line_id: $("#line_id").val(),
-          shift: $("#shift").text().trim()
+          shift: $("#shift").text().trim(),
+          mach: <?= $_GET["mach"] ?>
         },
         function (data) {
 
