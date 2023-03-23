@@ -77,7 +77,7 @@
       </div>
       <div class="row px-2 mt-2">
         <?php
-        // print("<pre class='text-white'>" . print_r($btns, true) . "</pre>");
+        // print("<pre class='text-white'>" . print_r($_GET["mach"], true) . "</pre>");
         foreach ($result as $mach) {
           ?>
           <div class="col p-1">
@@ -192,7 +192,6 @@
   </main>
   <?php include 'common/t_js.php'; ?>
   <script>
-
     function increment() {
       $("#quantity").val(parseInt($("#quantity").val()) + 1);
     }
@@ -247,7 +246,6 @@
     }
 
     function handleNG(type) {
-      // console.log(typeof type)
       if ($("#cctime").text().trim() == 0) {
         alert("Please create production first")
       } else {
@@ -271,7 +269,6 @@
     setInterval(dateTime, 1000);
     function cek_cb(id, machid) {
       if ($("#" + id + "_" + machid).is(":checked")) {
-        // console.log("checked" + id + "-" + machid);
         $.post("?action=api_update_stats", {
           mach_id: machid,
           andon_id: id,
@@ -281,7 +278,6 @@
           console.log(data)
         });
       } else {
-        // console.log("unchecked" + id + "-" + machid);
         $.post("?action=api_update_stats", {
           mach_id: machid,
           andon_id: id,
@@ -299,11 +295,8 @@
         {
           line_id: $("#line_id").val(),
           shift: $("#shift").text().trim(),
-          mach: <?= $_GET["mach"] ?>
         },
         function (data) {
-
-          /*update series per line*/
           $("#cctime").html(data.cctime ? data.cctime : 0);
           $("#shift").html(data.shift ? data.shift : 0);
           if (!data.cctime) {
