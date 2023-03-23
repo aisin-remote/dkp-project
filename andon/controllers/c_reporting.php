@@ -202,9 +202,9 @@ if ($action == "report_detail") {
   }
 
   $shift = $_GET["shift"];
-    $line_id = $_GET["line_id"];
-    $ldid = $_GET["ldid"];
-    $jpid = $_GET["jpid"];
+  $line_id = $_GET["line_id"];
+  $ldid = $_GET["ldid"];
+  $jpid = $_GET["jpid"];
 
   $data["list"] = $report->getReportDetail($date_from, $date_to, $shift, $line_id, $ldid, $jpid);
   require(TEMPLATE_PATH . "/t_report_detail.php");
@@ -227,10 +227,29 @@ if ($action == "report_stop") {
   }
 
   $shift = $_GET["shift"];
-    $line_id = $_GET["line_id"];
-    $ldid = $_GET["ldid"];
-    $jpid = $_GET["jpid"];
+  $line_id = $_GET["line_id"];
+  $ldid = $_GET["ldid"];
+  $jpid = $_GET["jpid"];
 
   $data["list"] = $report->getReportStop($date_from, $date_to, $shift, $line_id, $ldid, $jpid);
   require(TEMPLATE_PATH . "/t_report_stop.php");
+}
+
+if ($action == "r_losstime") {
+  $template["group"] = "Report";
+  $template["menu"] = "Losstime";
+  $report = new Reporting();
+
+  $date_from = date('Ymd');
+  if (!empty($_GET["date_from"])) {
+    $date_from = $_GET["date_from"];
+  }
+
+  $date_to = date('Ymd');
+  if (!empty($_GET["date_to"])) {
+    $date_to = $_GET["date_to"];
+  }
+
+  $data["list"] = $report->getLossTime();
+  require(TEMPLATE_PATH . "/t_report_losstime.php");
 }

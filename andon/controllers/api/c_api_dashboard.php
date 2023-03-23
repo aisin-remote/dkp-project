@@ -154,7 +154,32 @@ if ($action == "api_dashboard_adn_single") {
       $line_name = $row["name1"];
     }
   }
+  //cek shift
+  $shift1_s = strtotime(date("Y-m-d") . " 06:00");
+  $shift1_e = strtotime(date("Y-m-d") . " 13:59");
 
+  $shift2_s = strtotime(date("Y-m-d") . " 14:00");
+  $shift2_e = strtotime(date("Y-m-d") . " 21:59");
+
+  $shift3_s = strtotime(date("Y-m-d") . " 22:00");
+  $shift3_e = strtotime(date("Y-m-d") . " 23:59");
+
+  $shift4_s = strtotime(date("Y-m-d") . " 00:00");
+  $shift4_e = strtotime(date("Y-m-d") . " 05:59");
+
+  $current_time = strtotime(date("Y-m-d H:i"));
+
+  $shift = "1";
+  if ($current_time >= $shift1_s && $current_time <= $shift1_e) {
+    $shift = "1";
+  } else if ($current_time >= $shift2_s && $current_time <= $shift2_e) {
+    $shift = "2";
+  } else if ($current_time >= $shift3_s && $current_time <= $shift3_e) {
+    $shift = "3";
+  } else if ($current_time >= $shift4_s && $current_time <= $shift4_e) {
+    $shift = "3";
+    $today = date(strtotime($today . "- 1 days"), "Y-m-d");
+  }
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
   /*$jam_end = "18";*/
   $query = "select a.line_id, b.name1 as line_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
@@ -166,17 +191,17 @@ if ($action == "api_dashboard_adn_single") {
             from t_prd_daily_i a
             inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
             inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'MESIN'
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
             AND a.stats = 'A' and app_id = '".APP."') as stop_mesin,
             (select sum(b.stop_time)
             from t_prd_daily_i a
             inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
-            inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'DIES'
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
-            AND a.stats = 'A' and app_id = '".APP."') as stop_dies
+            inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'PART'
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
+            AND a.stats = 'A' and app_id = '".APP."') as stop_part
             from t_prd_daily_i a 
             inner join m_prd_line b ON b.line_id = a.line_id AND b.line_ty = 'ECU'
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A'";
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A'";
 
   $stmt = $conn->prepare($query);
   $pln_qty = 0;
@@ -198,7 +223,7 @@ if ($action == "api_dashboard_adn_single") {
       $balance = $row["pln_qty"] - $row["prd_qty"];
       $achieve = round($row["prd_qty"] / $row["pln_qty"] * 100, 1);
       $cctime = $row["cctime"];
-      $stop_dies = $row["stop_dies"];
+      $stop_dies = $row["stop_part"];
       $stop_mesin = $row["stop_mesin"];
       $eff = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
       $ril = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
@@ -256,7 +281,33 @@ if ($action == "dashboard_line") {
   /*if($min_now > 0) {
   $jam_now += 1;
   }*/
+  //cek shift
+  $shift1_s = strtotime(date("Y-m-d") . " 06:00");
+  $shift1_e = strtotime(date("Y-m-d") . " 13:59");
 
+  $shift2_s = strtotime(date("Y-m-d") . " 14:00");
+  $shift2_e = strtotime(date("Y-m-d") . " 21:59");
+
+  $shift3_s = strtotime(date("Y-m-d") . " 22:00");
+  $shift3_e = strtotime(date("Y-m-d") . " 23:59");
+
+  $shift4_s = strtotime(date("Y-m-d") . " 00:00");
+  $shift4_e = strtotime(date("Y-m-d") . " 05:59");
+
+  $current_time = strtotime(date("Y-m-d H:i"));
+
+  $shift = "1";
+  if ($current_time >= $shift1_s && $current_time <= $shift1_e) {
+    $shift = "1";
+  } else if ($current_time >= $shift2_s && $current_time <= $shift2_e) {
+    $shift = "2";
+  } else if ($current_time >= $shift3_s && $current_time <= $shift3_e) {
+    $shift = "3";
+  } else if ($current_time >= $shift4_s && $current_time <= $shift4_e) {
+    $shift = "3";
+    $today = date(strtotime($today . "- 1 days"), "Y-m-d");
+  }
+  
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
   //$jam_end = "18";
   $query = "select a.line_id, b.name1 as line_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
@@ -268,17 +319,17 @@ if ($action == "dashboard_line") {
             from t_prd_daily_i a
             inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
             inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'MESIN'
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
             AND a.stats = 'A' and app_id = '".APP."') as stop_mesin,
             (select sum(b.stop_time)
             from t_prd_daily_i a
             inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
-            inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'DIES'
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
-            AND a.stats = 'A' and app_id = '".APP."') as stop_dies
+            inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'PART'
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
+            AND a.stats = 'A' and app_id = '".APP."') as stop_part
             from t_prd_daily_i a 
             inner join m_prd_line b ON b.line_id = a.line_id AND b.line_ty = 'ECU'
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A'";
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A'";
   $stmt = $conn->prepare($query);
   $pln_qty = 0;
   $prd_qty = 0;
@@ -299,13 +350,53 @@ if ($action == "dashboard_line") {
       $balance = $row["pln_qty"] - $row["prd_qty"];
       $achieve = round($row["prd_qty"] / $row["pln_qty"] * 100, 2);
       $cctime = $row["cctime"];
-      $stop_dies = $row["stop_dies"];
+      $stop_dies = $row["stop_part"];
       $stop_mesin = $row["stop_mesin"];
       $eff = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
       $ril = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
       $rol = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
     }
   }
-
+  
+  $sql_get_andon = "SELECT a.*, b.name1 as mach_name, c.\"desc\", c.bgcolor, c.text_color FROM public.m_prd_mach_btn a 
+                    inner join public.m_prd_mach b ON b.line_id = a.line_id and b.mach_id = a.mach_id 
+                    inner join public.m_andon_status c ON c.andon_id = a.andon_id 
+                    WHERE a.line_id = '$line_id' and a.app_id = '".APP."' 
+                    ORDER by mach_id, andon_id";
+  
+  $stmt = $conn->prepare($sql_get_andon);
+  $data_andon_status = [];
+  if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $data_andon_status[] = $row;
+    }
+  }
   require(TEMPLATE_PATH . "/t_dashboard_line.php");
+}
+
+if($action == "api_get_andon_status") {
+  $line_id = $_GET["line_id"];
+  $sql = "SELECT a.*, b.name1 as mach_name, c.\"desc\" as andon_desc, c.bgcolor, c.text_color 
+          FROM public.t_stop_time a 
+          INNER JOIN public.m_prd_mach b ON b.line_id = a.line_id and b.mach_id = a.mach_id 
+          INNER JOIN public.m_andon_status c ON c.andon_id = a.andon_id 
+          WHERE a.line_id = '$line_id' AND a.status IN ('N','P')";
+  $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+  $stmt = $conn->prepare($sql);
+  $result = [];
+  $data = [];
+  if ($stmt->execute() or die(json_encode($stmt->errorInfo()))) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $data[] = $row;
+    }
+  }
+  if (!empty($data)) {
+    $result["status"] = true;
+    $result["data"] = $data;
+    $data = null;
+  } else {
+    $result["status"] = false;
+    $result["message"] = "No Data Found";
+  }
+  echo json_encode($result);
 }

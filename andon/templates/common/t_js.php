@@ -1,8 +1,9 @@
-		<script src="vendors/jquery/jquery-3.6.0.min.js" ></script>
+<script src="vendors/jquery/jquery-3.6.0.min.js" ></script>
     
 		<script src="vendors/bootstrap/js/bootstrap.bundle.min.js" ></script>
     <script src="vendors/bootstrap/js/bs-custom-file-input.min.js" type="text/javascript"></script>  
     <script src="vendors/bootstrap/js/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="vendors/bootstrap/js/bootstrap4-toggle.min.js" type="text/javascript"></script>
     
     <script src="vendors/datatable/datatables.min.js" type="text/javascript"></script>
     <script src="vendors/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
@@ -55,6 +56,5 @@
       
       $(".select2").select2({
         theme: 'bootstrap4',
-        width:'100%'
       });
     </script>

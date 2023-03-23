@@ -116,7 +116,7 @@ and open the template in the editor.
                                                     foreach ($bomdetail as $data) {
                                                         echo "<tr id='mseg_data_" . $i . "'>
                                                           <td>
-                                                          <select name='matn1[]' class='form-control' required='required'>
+                                                          <select name='matn1[]' class='form-control' id='selectmats' required='required'>
                                                           <option value=''>Please Select Sub Material</option>";
                                                         foreach ($matlistall as $mat) {
                                                             ?>
@@ -141,7 +141,7 @@ and open the template in the editor.
                                                 } else {
                                                     echo "<tr id='mseg_data_1'>
                                                           <td>
-                                                          <select name='matn1[]' class='form-control' required='required'>
+                                                          <select name='matn1[]' class='form-control select2' required='required'>
                                                           <option value=''>Please Select Sub Material</option>";
                                                     foreach ($matlistall as $mat) {
                                                         echo "<option value='" . $mat["matnr"] . "' >" . $mat["matnr"] . " - " . $mat["name1"] . "</option>";
@@ -178,7 +178,6 @@ and open the template in the editor.
     <script>
         $(document).ready(function () {
             updateLgort();
-            $("#mseg_data_1").children("select").select2();
         });
 
         $("#my_form").submit(function () {
@@ -200,13 +199,9 @@ and open the template in the editor.
         }
 
         $("#btn_add_item").click(function () {
-            // var cloneObj = $('#mseg_data_1').clone();
-            // cloneObj.find(".select2 ").remove();
-            // cloneObj.find("select").select2();
-            // $("tbody #mseg").append(cloneObj);
+            // $(".select2").select2("destroy")
             // get the last DIV which ID starts with ^= "klon"
             var $div = $('tr[id^="mseg_data_"]:last');
-            // $div.find(".select2").select2("destroy");
 
             // Read the Number from that DIV's ID (i.e: 3 from "klon3")
             // And increment that number by 1
@@ -215,16 +210,14 @@ and open the template in the editor.
 
             // Clone it and assign the new ID (i.e: from num 4 to ID "klon4")
             var $klon_id = 'mseg_data_' + num;
-            // // $("#" + $klon_id + " .select2").prop("id", $klon_id);
             var $klon = $div.clone(true).prop('id', $klon_id);
 
             // Finally insert $klon wherever you want
             $div.after($klon);
-
             $("#" + $klon_id + " #btn_del_item_" + num_before).prop("id", "btn_del_item_" + num);
             $("#btn_del_item_" + num).attr("onclick", "deleteItem('" + num + "')");
             $("#" + $klon_id + " .menge").val("");
-            // $(".select2").select2()
+            $(".select2").select2();
         });
 
         function deleteItem(num) {

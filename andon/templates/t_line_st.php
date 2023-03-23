@@ -9,7 +9,6 @@ and open the template in the editor.
 <head>
   <?php include "common/t_css.php"; ?>
   <link href="vendors/ega/css/styles.css" rel="stylesheet" type="text/css" />
-  <link href="vendors/apexchart/apexcharts.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -20,8 +19,12 @@ and open the template in the editor.
       <main>
         <div class="container-fluid mt-2">
           <ol class="breadcrumb mb-2">
-            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
+            <li class="breadcrumb-item">
+              <?php echo $template["group"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["menu"]; ?>
+            </li>
           </ol>
           <div class="card text-white my-3 bg-dark" id="fs">
             <div class="card-body">
@@ -30,7 +33,8 @@ and open the template in the editor.
                   <div class="col-12 d-none container-fluid" id="btn-exit-fullscreen">
                     <div class="row">
                       <div class="col-3">
-                        <a id="logo" class="navbar-brand mb-3" href=".."><img src="media/images/logo.svg" height="30" alt="logo" /></a>
+                        <a id="logo" class="navbar-brand mb-3" href=".."><img src="media/images/logo.svg" height="30"
+                            alt="logo" /></a>
                       </div>
                       <div class="col-6">
                         <div id="title" class="text-ega-blue text-center">
@@ -40,7 +44,8 @@ and open the template in the editor.
                       <div class="col-3">
                         <!-- DIV kosong -->
                         <div class="d-flex justify-content-end">
-                          <button type="button" class="btn btn-link" onclick="closeFullscreen()"><i class="material-icons">fullscreen_exit</i></button>
+                          <button type="button" class="btn btn-link" onclick="closeFullscreen()"><i
+                              class="material-icons">fullscreen_exit</i></button>
                         </div>
                       </div>
                     </div>
@@ -52,7 +57,7 @@ and open the template in the editor.
                         foreach ($data["line"] as $line) {
                           echo "<div class='col-3'>";
                           echo "<div class='card'>";
-                          echo '<button type="button" onclick="lineVal(\''.$line['line_id'].'\')" data-toggle="modal" data-target="#modalStatus" class="card-body ' . $line["pval4"] . ' text-center text-white border border-secondary"><h2>' . $line['name1'] . '</h2></button>';
+                          echo '<button type="button" onclick="lineVal(\'' . $line['line_id'] . '\')" data-toggle="modal" data-target="#modalStatus" class="card-body ' . $line["pval4"] . ' text-center text-white border border-secondary"><h2>' . $line['name1'] . '</h2></button>';
                           echo "</div>";
                           echo "</div>";
                         }
@@ -67,10 +72,10 @@ and open the template in the editor.
                   <tbody>
                     <tr>
                       <?php
-                        foreach ($data["param"] as $param) {
-                          echo "<td style='width: 100px;' class='" . $param["pval4"] . "'>";
-                          echo "<td class='text-white'>" . $param["pval2"] . "</td>";
-                        }
+                      foreach ($status as $sts) {
+                        echo "<td style='width: 100px;' class='" . $sts["bgcolor"] . "'>";
+                        echo "<td class='text-white'>" . $sts["desc"] . "</td>";
+                      }
                       ?>
                     </tr>
                   </tbody>
@@ -79,7 +84,8 @@ and open the template in the editor.
             </div>
           </div>
         </div>
-        <div class="modal fade" id="modalStatus" tabindex="-1" role="dialog" aria-labelledby="modalStatus" aria-hidden="true">
+        <div class="modal fade" id="modalStatus" tabindex="-1" role="dialog" aria-labelledby="modalStatus"
+          aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-dark">
               <div class="modal-header">
@@ -89,11 +95,18 @@ and open the template in the editor.
                 </button>
               </div>
               <div class="modal-body">
-                <?php
-                foreach ($data["param"] as $param) {
-                  echo "<a onclick='paramVal(".$param["pval1"].")' class='btn btn-block text-white btn-md ".$param["pval4"]."'>" . $param["pval2"] . "</a>";
-                }
-                ?>
+                <div class="row">
+                  <?php
+                  foreach ($status as $sts) {
+                    // print_r($sts);
+                    echo "<div class='col-6 mb-2'>";
+                    echo "<input onchange='paramVal(" . $sts["andon_id"] . ")' name='" . $sts["andon_id"] . "' id='" . $sts["andon_id"] . "' type='checkbox' data-toggle='toggle' 
+                    data-on='" . $sts["desc"] . "' data-off='" . $sts["desc"] . "' data-onstyle='primary' data-offstyle='secondary' data-width='200' />";
+                    echo "</div>";
+                    // echo "<a onclick='paramVal(" . $sts["andon_id"] . ")' class='btn btn-block text-white btn-md " . $sts["bgcolor"] . "'>" . $data["desc"] . "</a>";
+                  }
+                  ?>
+                </div>
               </div>
             </div>
           </div>
@@ -112,7 +125,7 @@ and open the template in the editor.
     var param
     var line
 
-    $.ready(function() {
+    $.ready(function () {
       updateDashboard();
     });
 
@@ -123,7 +136,11 @@ and open the template in the editor.
     function paramVal(param_id) {
       param = param_id;
       line = $("#line").val();
-      window.location.href = '?action=<?php echo $action; ?>&line=' + line + '&status='+ param;
+      if ($("#"+param).is(":checked")) {
+        window.location.href = '?action=<?php echo $action; ?>&line=' + line + '&status=' + param;
+      } else {
+        window.location.href = '?action=<?php echo $action; ?>&line=' + line + '&status=2';
+      }
       // console.log(param)
     }
 
@@ -166,7 +183,7 @@ and open the template in the editor.
 
     $("#fs-btn").click(fullscreen);
 
-    $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function(e) {
+    $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function (e) {
       var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
       var event = state ? 'FullscreenOn' : 'FullscreenOff';
 

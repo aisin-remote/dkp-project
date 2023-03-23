@@ -92,9 +92,9 @@
 
 @keyframes ripple_warning {
   0%   {background-color:transparent;}
-  25%  {background-color:#28a745;}
+  25%  {background-color:#FFC107;}
   50%  {background-color:transparent;}
-  75%  {background-color:#28a745;}
+  75%  {background-color:#FFC107;}
   100% {background-color:transparent;}
 }
 

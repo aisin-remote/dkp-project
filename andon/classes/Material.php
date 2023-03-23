@@ -12,6 +12,7 @@ class Material {
         $return[] = $row;
       }
     }
+    return $return;
   }
 
     public function getList()

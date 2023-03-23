@@ -1,9 +1,10 @@
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title><?php echo PAGE_TITLE; ?></title>
     <link rel="shortcut icon" href="media/images/favicon.ico" />
 		<link href="vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendors/bootstrap/css/bootstrap-select.min.css" rel="stylesheet" type="text/css"/>
+    <link href="vendors/bootstrap/css/bootstrap4-toggle.min.css" rel="stylesheet" type="text/css"/>
     <link href="vendors/select2/css/select2-bootstrap4.min.css" rel="stylesheet" type="text/css"/>
     
     <link href="vendors/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>

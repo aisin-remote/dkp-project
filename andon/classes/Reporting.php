@@ -349,7 +349,7 @@ class Reporting
                 LEFT JOIN t_prd_daily_stop g ON g.prd_dt = a.prd_dt AND g.shift = a.shift AND g.line_id = a.line_id
                 LEFT JOIN m_user h ON h.usrid = a.apr_by
                 WHERE 1=1 ";
-        
+
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
         }
@@ -419,7 +419,7 @@ class Reporting
                 LEFT JOIN m_prd_stop_reason_action h ON h.srna_id = f.action_id
                 LEFT JOIN m_prd_operator i ON i.empid = f.exe_empid	
                 WHERE 1=1 ";
-        
+
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
         }
@@ -469,6 +469,31 @@ class Reporting
 
                 $row["eff"] = $totalEff;
 
+                $return[] = $row;
+            }
+        }
+        $stmt = null;
+        $conn = null;
+        return $return;
+    }
+
+    public function getLossTime($date_from = "*", $date_to = "*")
+    {
+        $return = array();
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "SELECT a.*, TO_CHAR(a.start_time, 'YYYY-MM-DD HH24:MI') as start, TO_CHAR(a.proses_time, 'YYYY-MM-DD HH24:MI') as proses, TO_CHAR(a.end_time, 'YYYY-MM-DD HH24:MI') as end, b.*, b.name1 as line_name, c.*, c.name1 as mach_name, d.* from t_stop_time a
+                left join m_prd_line b on b.line_id = a.line_id
+                left join m_prd_mach c on c.mach_id = a.mach_id
+                left join m_andon_status d on d.andon_id = a.andon_id 
+                where 1=1 ";
+
+        if ($date_from !== "*" && $date_to !== "*") {
+            $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
+        }
+
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $return[] = $row;
             }
         }
