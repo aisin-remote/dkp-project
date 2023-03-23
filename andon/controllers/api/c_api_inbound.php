@@ -4,7 +4,7 @@ if ($action == "api_get_ib") {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $query = "SELECT SUM(qty) as total from t_prd_ib
-            where line_id = 'E11' and crt_dt = '2023-03-23' and shift = '1' and 
+            where line_id = :line_id and crt_dt = :crt_dt and shift = :shift and 
             shkzg = 'C' and rev_ind != 'y' ";
     $stmt = $conn->prepare($query);
     $stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
