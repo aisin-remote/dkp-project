@@ -78,15 +78,15 @@ if ($action == "api_prd_entry") {
                         $param_stop["exe_empid"] = null;
                         $class->insertStop($param_stop);
                     }
-                    header("Location: ?action=mach_stats&mach[0]=M1&mach[1]=M2&mach[2]=M3&mach[3]=M4&mach[4]=M5&mach[5]=M6&success=Daily Production Entry has been saved!");
+                    header("Location: ".$param["reff"]."&success=Daily Production Entry has been saved!");
                 } else {
                     $class->rollBackHeader($line, $date, $param["shift"]);
                     $error = "Item - " . $save_item["message"];
-                    header("Location: ?action=mach_stats&mach[0]=M1&mach[1]=M2&mach[2]=M3&mach[3]=M4&mach[4]=M5&mach[5]=M6&error=" . $error);
+                    header("Location: ".$param["reff"]."&error=" . $error);
                 }
             } else {
                 $error = "Header - " . $save_header["message"];
-                header("Location: ?action=mach_stats&mach[0]=M1&mach[1]=M2&mach[2]=M3&mach[3]=M4&mach[4]=M5&mach[5]=M6&error=" . $error);
+                header("Location: ".$param["reff"]."&error=" . $error);
             }
         } else {
             $ld_list = $member->getList("LD");

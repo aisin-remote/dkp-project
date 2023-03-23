@@ -3,7 +3,6 @@
 <?php include "common/t_css.php"; ?>
 
 <body class="bg-dark text-white">
-  <!-- <nav class="sb-topnav navbar navbar-expand navbar-light shadow-sm"> -->
   <div class="container-fluid">
     <div class="row">
       <div class="col">
@@ -17,26 +16,6 @@
       <div class="col"></div>
     </div>
   </div>
-
-  <!-- <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="material-icons text-24px text-uli-blue">menu</i></button> -->
-  <!-- Navbar Search-->
-  <!-- <div class="d-none d-md-inline-block form-inline mx-auto text-ega-blue text-center">
-    <h5 class='mb-0' style="font-weight: 700; "><?php echo PAGE_TITLE; ?></h5>
-  </div> -->
-  <!-- Navbar-->
-
-  <!-- <ul class="navbar-nav ml-auto ml-md-0">
-    <li class="nav-item">
-      <button class="btn btn-link my-sm-0 " id="fs-btn"><i class="material-icons">fullscreen</i></button>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="?action=profile" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="material-icons text-24px">account_circle</i></a> 
-    </li>
-    <li class="nav-item">      
-      <a class="nav-link" href="?action=logout" data-toggle="tooltip" data-placement="bottom" title="Log Out"><i class="material-icons text-24px">logout</i></a>      
-    </li>
-  </ul> -->
-  <!-- </nav> -->
   <main>
     <div class="container-fluid mt-2">
       <!-- <ol class="breadcrumb mb-2">
@@ -145,7 +124,7 @@
               class="btn btn-lg text-center bg-primary text-white border border-secondary" style="width: 20%">
               <h3>Product OK</h3>
             </button>
-            <button type="button" data-toggle="modal" data-target="#modalStatus"
+            <button type="button" onclick="handleRev('ok')"
               class="btn btn-lg text-center bg-primary text-white border border-secondary" style="width: 20%">
               <h3>OK Rev</h3>
             </button>
@@ -153,7 +132,7 @@
               class="btn btn-lg text-center bg-danger text-white border border-secondary" style="width: 20%">
               <h3>Product NG</h3>
             </button>
-            <button type="button" data-toggle="modal" data-target="#modalStatus"
+            <button type="button" onclick="handleRev('ng')"
               class="btn btn-lg text-center bg-danger text-white border border-secondary" style="width: 20%">
               <h3>NG Rev</h3>
             </button>
@@ -202,9 +181,9 @@
           </div>
           <div class="modal-body">
             <?php
-              foreach ($ng as $n) {
-                echo "<button type='button' onclick='handleNG(\"" . $n["ng_type_id"] . "\")' class='text-center btn btn-primary mx-1 text-white'>" . $n["name1"] . "</button>";
-              }
+            foreach ($ng as $n) {
+              echo "<button type='button' onclick='handleNG(\"" . $n["ng_type_id"] . "\")' class='text-center btn btn-primary mx-1 text-white'>" . $n["name1"] . "</button>";
+            }
             ?>
           </div>
         </div>
@@ -236,8 +215,27 @@
         shift: $("#shift").text().trim(),
       }, function (data) {
         console.log(data);
+        $("quantity").val(1);
         $("#productok").modal("hide");
       });
+    }
+
+    function handleRev(type) {
+      if (type == 'ok') {
+        $.post("?action=api_update_rev", {
+          rev: 'y',
+          type: 'P'
+        }, function (data) {
+          console.log(data)
+        })
+      } else {
+        $.post("?action=api_update_rev", {
+          rev: 'y',
+          type: 'N'
+        }, function (data) {
+          console.log(data)
+        })
+      }
     }
 
     function handleNG(type) {
@@ -252,7 +250,7 @@
         shift: $("#shift").text().trim(),
       }, function (data) {
         console.log(data);
-        $("#productok").modal("hide");
+        $("#productng").modal("hide");
       });
     }
 
@@ -267,7 +265,7 @@
           andon_id: id,
           btn_on: 1,
         }, function (data) {
-          // window.location.reload();
+          window.location.reload();
           console.log(data)
         });
       } else {
@@ -277,7 +275,7 @@
           andon_id: id,
           btn_on: 0,
         }, function (data) {
-          // window.location.reload();
+          window.location.reload();
           console.log(data)
         });
       }
@@ -312,8 +310,7 @@
           date: <?= date("Ymd") ?>
         },
         function (data) {
-          let total = data?.prime - data?.ng
-          $("#qty").html(total ? total : 0);
+          $("#qty").html(data.total && $("#cctime").text().trim() != 0 ? data.total : 0);
           console.log(data)
         }
       );

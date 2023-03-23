@@ -40,6 +40,7 @@ and open the template in the editor.
 
                     <input type="hidden" name="line_id" id="line_id" class="form-control" value="<?php echo $_GET["line"]; ?>">
                     <input type="hidden" name="shift" id="shift" class="form-control" value="<?php echo $_GET["shift"]; ?>">
+                    <input type="hidden" name="reff" id="reff" class="form-control" value="">
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Shift</label>
@@ -192,7 +193,7 @@ and open the template in the editor.
                       <div class="col-lg-2 col-md-3 col-sm-12 d-sm-none d-md-block"></div>
                       <div class="col-lg-5 col-md-5 col-sm-12">
                         <input type="hidden" name="save" id="save" value="true">
-                        <button type="submit" name="btn_save" id="btn_save" value="save" class="btn btn-pale-green">Save
+                        <button type="submit" name="btn_save" onclick="postReff()" id="btn_save" value="save" class="btn btn-pale-green">Save
                           & Generate Production Entry</button>
                       </div>
                     </div>
@@ -252,6 +253,8 @@ and open the template in the editor.
       getDefaultCycleTime();
 
     });
+
+    $("#reff").val(document.referrer)
 
     $("#my-form").submit(function (event) {
       $("#btn_save").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
