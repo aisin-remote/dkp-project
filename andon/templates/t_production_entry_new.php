@@ -39,13 +39,13 @@ and open the template in the editor.
                     <!-- Edit Here -->
 
                     <input type="hidden" name="line_id" id="line_id" class="form-control" value="<?php echo $_GET["line"]; ?>">
-                    <input type="hidden" name="shift" id="shift" class="form-control" value="<?php echo $_GET["shift"]; ?>">
+                    <!-- <input type="hidden" name="shift" id="shift" class="form-control" value="<?php echo $_GET["shift"]; ?>"> -->
                     <input type="hidden" name="reff" id="reff" class="form-control" value="">
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Shift</label>
                       <div class="col-lg-2 col-md-5 col-sm-12">
-                        <select name="shift" id="shift" class="form-control select2" readonly>
+                        <select name="shift" onchange="shiftCount()" id="shift" class="form-control select2" readonly>
                           <?php
                           foreach ($shift_list as $row) {
                             ?>
@@ -211,7 +211,7 @@ and open the template in the editor.
       <!-- <?php include 'common/t_footer.php'; ?> -->
     </div>
   </div>
-  <input type="hidden" id="shift_count" value="<?php echo $shift_count; ?>">
+  <input type="hidden" id="shift_count" value="">
 
   <div class="modal fade" id="modal_delete" data-backdrop="static" data-keyboard="false" tabindex="-1"
     aria-labelledby="modal_upload_label" aria-hidden="true">
@@ -251,7 +251,7 @@ and open the template in the editor.
       });
 
       getDefaultCycleTime();
-
+      shiftCount();
     });
 
     $("#reff").val(document.referrer)
@@ -268,6 +268,15 @@ and open the template in the editor.
       var shift_count = parseInt($("#shift_count").val());
       var total_target = Math.ceil((3600 / cctime) * shift_count);
       $("#total_target").val(total_target);
+    }
+
+    function shiftCount() {
+      $.post("?action=shift_count", {
+        shift: $("#shift").val()
+      }, function (data) {
+        $("#shift_count").val(data);
+        calculateTarget();
+      })
     }
 
     $("#dies_id").change(getDefaultCycleTime);

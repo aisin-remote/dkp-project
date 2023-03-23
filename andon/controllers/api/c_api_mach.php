@@ -56,12 +56,13 @@ if ($action == "mach_stats") {
       $ng[] = $row;
     }
   }
-  
+
   $status = $line->getListStatus();
   require(TEMPLATE_PATH . "/t_line_status.php");
 }
 
 if ($action == "api_mach_status") {
+  $line = new Line();
   $line_id = $_REQUEST["line_id"];
   $shift = $_REQUEST["shift"];
 
@@ -76,16 +77,61 @@ if ($action == "api_mach_status") {
   $query_ng = "";
   // $query = "SELECT * from t_prd_daily_h
   //           where line_id = '$line_id' and prd_dt = '$now' and shift = '$shift' ";
-  $query = "SELECT a.* from t_prd_daily_h a
+  $query = "SELECT a.*, c.pval1 from t_prd_daily_h a
             inner join t_prd_daily_i b ON b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift
-            where a.line_id = '$line_id' AND a.prd_dt = '$now' AND TO_CHAR(TO_TIMESTAMP(b.prd_dt||' '||b.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' ";
+            inner join m_param c ON a.shift = c.seq
+            where c.pid = 'SHIFT' AND a.line_id = '$line_id' AND a.prd_dt = '$now' AND TO_CHAR(TO_TIMESTAMP(b.prd_dt||' '||b.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' ";
   $stmt = $conn->prepare($query);
+  $header["head"] = [];
   if ($stmt->execute() or die($stmt->errorInfo()[2])) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $header = $row;
+      $header["head"] = $row;
+    }
+  }
+  $query_line = "SELECT a.*, a.name1 as mach_name, b.*, b.name1 as line_name, c.* from m_prd_mach a
+                left JOIN m_prd_line b ON b.line_id = a.line_id
+                left JOIN m_andon_status c on c.andon_id = a.stats
+                ORDER BY mach_id ASC ";
+  $stmt = $conn->prepare($query_line);
+  if ($stmt->execute()) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $lines[] = $row;
     }
   }
 
+  if (isset($_REQUEST["mach"])) {
+    $mach = $_REQUEST["mach"];
+    foreach ($lines as $row) {
+      $i = 0;
+      foreach ($mach as $url) {
+        if ($row["mach_id"] == $url) {
+          $header["mach"][$i]["machid"] = $row["mach_id"];
+          $header["mach"][$i]["machname"] = $row["mach_name"];
+          $header["mach"][$i]["lineid"] = $row["line_id"];
+          $header["mach"][$i]["linename"] = $row["line_name"];
+          $header["mach"][$i]["andonid"] = $row["andon_id"];
+          $header["mach"][$i]["bgcolor"] = $row["bgcolor"];
+        }
+        $i++;
+      }
+    }
+  } else {
+    $line_id = $lines[0]["line_id"];
+    $line_name = $lines[0]["line_name"];
+    $mach_id = $lines[0]["mach_id"];
+    $mach_name = $lines[0]["mach_name"];
+    $bgcolor = $lines[0]["bgcolor"];
+  }
+
+  $query = "SELECT * FROM m_prd_mach_btn ORDER BY mach_id, line_id, andon_id ASC ";
+  $stmt = $conn->prepare($query);
+  $btns = [];
+  if ($stmt->execute()) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $header["btn"][] = $row;
+    }
+  }
+  $header["status"] = $line->getListStatus();
   echo json_encode($header);
 }
 

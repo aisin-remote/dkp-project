@@ -481,11 +481,11 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, TO_CHAR(a.start_time, 'YYYY-MM-DD HH24:MI') as start, TO_CHAR(a.proses_time, 'YYYY-MM-DD HH24:MI') as proses, TO_CHAR(a.end_time, 'YYYY-MM-DD HH24:MI') as end, b.*, b.name1 as line_name, c.*, c.name1 as mach_name, d.* from t_stop_time a
+        $sql = "SELECT a.*, TO_CHAR(a.start_time, 'YYYY-MM-DD HH24:MI:SS') as start, TO_CHAR(a.proses_time, 'YYYY-MM-DD HH24:MI:SS') as proses, TO_CHAR(a.end_time, 'YYYY-MM-DD HH24:MI:SS') as end, b.*, b.name1 as line_name, c.*, c.name1 as mach_name, round(cast(EXTRACT(EPOCH FROM (a.end_time - a.start_time)/60::numeric) as numeric),2) AS duration, d.* from t_stop_time a
                 left join m_prd_line b on b.line_id = a.line_id
                 left join m_prd_mach c on c.mach_id = a.mach_id
                 left join m_andon_status d on d.andon_id = a.andon_id 
-                where 1=1 ";
+                where 1=1 ORDER BY a.start_time DESC ";
 
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
@@ -494,6 +494,15 @@ class Reporting
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                if ($row["status"] == "X") {
+                    $row["status"] = "Transfer";
+                } else if ($row["status"] == "C") {
+                    $row["status"] = "Complete";
+                } else if ($row["status"] == "P") {
+                    $row["status"] = "Proses";
+                } else if ($row["status"] == "N") {
+                    $row["status"] = "New";
+                }
                 $return[] = $row;
             }
         }

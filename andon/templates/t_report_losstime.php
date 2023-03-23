@@ -67,6 +67,15 @@ and open the template in the editor.
                         <?php if (!empty($data["list"])) {
                           // print("<pre>".print_r($data["list"],true)."</pre>");
                           foreach ($data["list"] as $list) {
+                            // if ($list["status"] == 'X' ) {
+                            //   $status = 'Transfer';
+                            // } else if ($data["status"] == 'C') {
+                            //   $status = 'Complete';
+                            // } else if ($data["status"] == 'P') {
+                            //   $status = 'Proses';
+                            // } else if ($data["status"] == 'N') {
+                            //   $status = 'New';
+                            // }
                             echo "<tr>" . "<td class='align-middle'>" . $list["line_name"] . "</td>"
                               . "<td class='align-middle'>" . $list["mach_name"] . "</td>"
                               . "<td class='align-middle'>" . $list["desc"] . "</td>"
@@ -74,7 +83,7 @@ and open the template in the editor.
                               . "<td class='align-middle'>" . $list["start"] . "</td>"
                               . "<td class='align-middle'>" . $list["end"] ."</td>"
                               . "<td class='align-middle'>" . $list["proses"] . "</td>"
-                              . "<td class='align-middle'>" . round(strtotime($list["end"]) - strtotime($list["start"])) / 60 . " Minute</td>"
+                              . "<td class='align-middle'>" . $list["duration"] . "</td>"
                               . "</tr>";
                           }
                         }
@@ -120,14 +129,14 @@ and open the template in the editor.
               <div class="col-4"><label class="col-form-label">Month</label></div>
               <div class="col"><input type="text" name="prd_month" class="form-control" value="<?php echo $prd_month; ?>"></div>
             </div> -->
-            <div class="row my-2">
+            <!-- <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Shift</label></div>
               <div class="col"><input type="text" name="shift" class="form-control" value="<?php echo $shift; ?>"></div>
             </div>
             <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Line DC</label></div>
               <div class="col"><input type="text" name="line_id" class="form-control" value="<?php echo $line_id; ?>"></div>
-            </div>
+            </div> -->
             <!-- <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Leader</label></div>
               <div class="col"><input type="text" name="ldid" class="form-control" value="<?php echo $ldid; ?>"></div>

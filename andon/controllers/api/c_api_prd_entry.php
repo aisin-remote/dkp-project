@@ -103,6 +103,23 @@ if ($action == "api_prd_entry") {
     }
 }
 
+if ($action == "shift_count") {
+    $shift = $_REQUEST["shift"];
+    $return = 0;
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT count(*) as cnt FROM m_prd_shift "
+      . "WHERE shift_id = '$shift' AND app_id = '" . APP . "' ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return = $row["cnt"];
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    echo $return;
+}
+
 // if ($action == "api_create_prd") {
 //     $class = new Production();
 //     $member = new Member();
