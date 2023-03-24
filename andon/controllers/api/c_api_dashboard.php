@@ -248,8 +248,8 @@ if ($action == "api_dashboard_adn_single") {
       $balance = $row["pln_qty"] - $row["prd_qty"];
       $achieve = round($row["prd_qty"] / $row["pln_qty"] * 100, 1);
       $cctime = $row["cctime"];
-      $stop_dies = $row["stop_part"];
-      $stop_mesin = $row["stop_mesin"];
+      $stop_dies = $row["stop_part"] * 60;
+      $stop_mesin = $row["stop_mesin"] * 60;
       $eff = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
       $ril = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
       $rol = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
@@ -375,8 +375,8 @@ if ($action == "dashboard_line") {
       $balance = $row["pln_qty"] - $row["prd_qty"];
       $achieve = round($row["prd_qty"] / $row["pln_qty"] * 100, 2);
       $cctime = $row["cctime"];
-      $stop_dies = $row["stop_part"];
-      $stop_mesin = $row["stop_mesin"];
+      $stop_dies = $row["stop_part"] * 60;
+      $stop_mesin = $row["stop_mesin"] * 60;
       $eff = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
       $ril = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
       $rol = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
