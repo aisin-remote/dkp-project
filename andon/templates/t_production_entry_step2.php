@@ -124,17 +124,18 @@ and open the template in the editor.
                     <table id="table" class="table table-sm table-striped">
                       <thead>
                         <tr>
-                          <th class="">Dies</th>
+                          <th class="">Material</th>
                           <th class="text-center">Hour</th>
-                          <th class="text-right">Cycle Time</th>
-                          <th class="text-right">Planning Qty</th>
-                          <th class="text-right">Prod Qty</th>
+                          <th class="text-right">CT</th>
+                          <th class="text-right">Plan Qty</th>
+                          <th class="text-right">OK Qty</th>
                           <th class="text-right">NG Qty</th>
                           <!-- <th class="text-right">Scan Qty(OK)</th>
                           <th class="text-right">Scan Qty(NG)</th> -->
-                          <th class="text-right">Stop Konten</th>
-                          <th class="text-right">Production Time</th>
-                          <th class="text-right">Efficiency</th>
+                          <th class="text-right">Stop Count</th>
+                          <th class="text-right">Loss Time (m)</th>
+                          <th class="text-right">Prd Time (m)</th>
+                          <th class="text-right">Efficiency (%)</th>
                           <th class="text-center">Action</th>
                           <?php if ($op_role == "LEADER") {
                             echo '<th class="text-center">Approve</th>';
@@ -161,6 +162,7 @@ and open the template in the editor.
                               // . "<td class='text-right'>" . $list["scn_qty_ok"] . "</td>"
                               // . "<td class='text-right'>" . $list["scn_qty_ng"] . "</td>"
                               . "<td class='text-right'>" . $list["stop_count"] . "</td>"
+                              . "<td class='text-right'>" . $list["loss_time"] . "</td>"
                               . "<td class='text-right'>" . $list["prd_time"] . "</td>"
                               . "<td class='text-right'>" . $efficiency . "</td>"
                               . "<td class='text-center'>"

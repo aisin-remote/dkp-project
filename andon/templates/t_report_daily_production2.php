@@ -132,12 +132,14 @@ and open the template in the editor.
                                             <tr>
                                                 <th>Material</th>
                                                 <th>Hour</th>
-                                                <th>Cycle Time</th>
-                                                <th>Planning Qty</th>
+                                                <th>CT</th>
+                                                <th>Plan Qty</th>
                                                 <th>Prod Qty</th>
-                                                <th>Total NG</th>
-                                                <th>Loss Time(m)</th>
-                                                <th>Efficiency</th>
+                                                <th>NG Qty</th>
+                                                <th>Stop Count</th>
+                                                <th>Loss Time (m)</th>
+                                                <th>Prd Time (m)</th>
+                                                <th>Efficiency (%)</th>
                                                 <th>Apr. By</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
@@ -153,7 +155,9 @@ and open the template in the editor.
                                                         . "<td class='align-middle'>" . $list["pln_qty"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["prd_qty"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["tot_ng"] . "</td>"
+                                                        . "<td class='align-middle'>" . $list["stop_cnt"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["loss_time"] . "</td>"
+                                                        . "<td class='align-middle'>" . $list["prd_time"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["eff"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["apr_name"] . "</td>"
                                                         . "<td class='text-center pr-3'>"

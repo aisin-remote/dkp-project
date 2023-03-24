@@ -138,7 +138,7 @@ class Reporting
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT a.line_id, a.prd_dt, a.shift, a.prd_seq, a.time_start, a.time_end, a.cctime, "
             . "a.pln_qty, coalesce(a.prd_qty, 0) as prd_qty, a.prd_time, a.apr_by, b.name1 as apr_name, "
-            . "c.name1, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time "
+            . "c.name1, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time, coalesce(e.stop_count, 0) as stop_cnt "
             . "FROM t_prd_daily_i a "
             . "LEFT JOIN m_user b ON a.apr_by = b.usrid "
             . "LEFT JOIN wms.m_mara c ON a.dies_id = c.matnr "
@@ -148,7 +148,7 @@ class Reporting
                 GROUP BY line_id, prd_dt, shift, prd_seq
             ) d ON a.line_id = d.line_id AND a.prd_dt = d.prd_dt AND a.shift = d.shift AND a.prd_seq = d.prd_seq "
             . "LEFT JOIN (
-                SELECT line_id, prd_dt, shift, prd_seq, COALESCE(SUM(stop_time), 0) as stop_time
+                SELECT line_id, prd_dt, shift, prd_seq, COALESCE(SUM(stop_time), 0) as stop_time, COALESCE(COUNT(*), 0) as stop_count
                 FROM t_prd_daily_stop
                 GROUP BY line_id, prd_dt, shift, prd_seq
             ) e ON a.line_id = e.line_id AND a.prd_dt = e.prd_dt AND a.shift = e.shift AND a.prd_seq = e.prd_seq "
@@ -339,16 +339,18 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.prd_dt, a.prd_time, a.shift, c.name1 AS line_name, e.name1 AS operator, b.name1 AS dies_name, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, coalesce(f.ng_qty, 0) as tot_ng, COALESCE(g.stop_time, 0) as loss_time, h.name1 AS apr_name 
-                FROM t_prd_daily_i a
-                LEFT JOIN wms.m_mara b ON b.matnr = a.dies_id
-                INNER JOIN m_prd_line c ON c.line_id = a.line_id AND c.line_ty = 'ECU'
-                INNER JOIN t_prd_daily_h d ON d.prd_dt = a.prd_dt AND d.shift = a.shift AND d.line_id = a.line_id
-                INNER JOIN m_prd_operator e ON e.empid = d.jpid
-                LEFT JOIN t_prd_daily_ng f ON f.prd_dt = a.prd_dt AND f.shift = a.shift AND f.line_id = a.line_id
-                LEFT JOIN t_prd_daily_stop g ON g.prd_dt = a.prd_dt AND g.shift = a.shift AND g.line_id = a.line_id
-                LEFT JOIN m_user h ON h.usrid = a.apr_by
-                WHERE 1=1 ";
+        $sql = "SELECT a.prd_dt, a.prd_time, a.shift, c.name1 AS line_name, e.name1 AS operator, b.name1 AS dies_name, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, h.name1 AS apr_name,
+                (select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
+                (select SUM(stop_time) as loss_time from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
+                (select SUM(ng_qty) as ng_count from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq)
+                        FROM t_prd_daily_i a
+                        LEFT JOIN wms.m_mara b ON b.matnr = a.dies_id
+                        INNER JOIN m_prd_line c ON c.line_id = a.line_id AND c.line_ty = 'ECU'
+                        INNER JOIN t_prd_daily_h d ON d.prd_dt = a.prd_dt AND d.shift = a.shift AND d.line_id = a.line_id
+                        INNER JOIN m_prd_operator e ON e.empid = d.jpid
+                        LEFT JOIN t_prd_daily_ng f ON f.prd_dt = a.prd_dt AND f.shift = a.shift AND f.line_id = a.line_id
+                        LEFT JOIN t_prd_daily_stop g ON g.prd_dt = a.prd_dt AND g.shift = a.shift AND g.line_id = a.line_id
+                        LEFT JOIN m_user h ON h.usrid = a.apr_by ";
 
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";

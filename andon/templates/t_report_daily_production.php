@@ -60,10 +60,10 @@ and open the template in the editor.
                           <th class="align-middle">Line DC</th>
                           <th class="align-middle">Leader</th>
                           <th class="align-middle">JP</th>
-                          <th class="text-center align-middle">Planning Qty</th>
-                          <th class="text-center align-middle">Prod. Qty</th>
+                          <th class="text-center align-middle">Plan Qty</th>
+                          <th class="text-center align-middle">Prd Qty</th>
                           <th class="text-center align-middle">NG Qty</th>
-                          <th class="text-center align-middle">Lost Time(m)</th>
+                          <th class="text-center align-middle">Lost Time (m)</th>
                           <th class="text-center align-middle">Efficiency (%)</th>
                           <th class="text-center align-middle">Details</th>
                         </tr>
@@ -167,9 +167,6 @@ and open the template in the editor.
             title: "daily_production_report",
             className: 'btn btn-pale-green btn-sm',
             text: '<i class="material-icons">download</i>Download Excel',
-            exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-            }
           },
           {
             className: 'btn btn-pale-green-outlined btn-sm',

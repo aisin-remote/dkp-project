@@ -11,15 +11,15 @@ if ($action == "home") {
   }*/
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-  $query = "select a.line_id, b.name1 as line_name, b.line_ty as type, a.dies_id, c.gstat, CONCAT(c.group_id,' ',c.model_id,' ',c.dies_no) as dies_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
+  $query = "select a.line_id, b.name1 as line_name, b.line_ty as type, a.dies_id, CONCAT(c.name1) as dies_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
             (select coalesce(sum(ng_qty),0) as ril_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'RIL'), 
             (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') 
             from t_prd_daily_i a 
             inner join m_prd_line b ON b.line_id = a.line_id AND b.line_ty = 'ECU'
-            left join m_dm_dies_asset c on c.dies_id = a.dies_id::int
-            where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' and a.stats = 'A' ";
+            left join wms.m_mara c on c.matnr = a.dies_id
+            where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' and a.stats = 'A' ";
   //$query .= "and a.stats = 'A' ";
   $query .= "ORDER BY line_name ASC";
   $stmt = $conn->prepare($query);

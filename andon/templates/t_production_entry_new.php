@@ -49,7 +49,7 @@ and open the template in the editor.
                           <?php
                           foreach ($shift_list as $row) {
                             ?>
-                            <option value="<?php echo $row["seq"]; ?>" <?= ($row["seq"] == $_GET["shift"]) ? "selected" : "" ?>><?php echo $row["pval1"]; ?></option>
+                            <option value="<?php echo $row["seq"]; ?>" <?= ($row["seq"] == $shift_ori[0]["seq"]) ? "selected" : "" ?>><?php echo $row["pval1"]; ?></option>
                             <?php
                           }
                           ?>

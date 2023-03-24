@@ -202,6 +202,7 @@ if ($action == "daily_production_entry") {
     }
     $shift_list = $class->getListShift();
     $line_list = $class->getListLine();
+    $shift_ori = $class->getShiftOri();
     //check data
     $i = 0;
     foreach ($line_list as $row) {

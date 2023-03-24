@@ -252,6 +252,7 @@ class Production
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, CONCAT(b.matnr, ' ', b.mtart, ' ', b.name1) as dies_name, "
       . "(select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), "
+      . "(select SUM(stop_time) as loss_time from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), "
       . "(select SUM(ng_qty) as ng_count from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq) "
       . "FROM t_prd_daily_i a "
       . "INNER JOIN wms.m_mara b ON b.matnr = a.dies_id "
@@ -621,6 +622,21 @@ class Production
       $return["status"] = false;
       $return["message"] = trim(str_replace("\n", " ", $error[2]));
       error_log($error[2]);
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function getShiftOri() {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT * FROM m_param WHERE pid = 'SHIFTORI' and TO_CHAR(current_timestamp, 'HH24MISS') between pval1 and pval2  ORDER BY seq";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
     }
     $stmt = null;
     $conn = null;

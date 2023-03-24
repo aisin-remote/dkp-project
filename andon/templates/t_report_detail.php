@@ -59,11 +59,13 @@ and open the template in the editor.
                           <th class="text-nowrap">JP</th>
                           <th class="text-nowrap">Material</th>
                           <th class="text-nowrap">Hour</th>
-                          <th class="text-nowrap">Cycle Time</th>
-                          <th class="text-center text-nowrap">Planning Qty</th>
-                          <th class="text-center text-nowrap">Prod. Qty</th>
-                          <th class="text-center text-nowrap">Total NG</th>
-                          <th class="text-center text-nowrap">Lost Time(m)</th>
+                          <th class="text-nowrap">CT</th>
+                          <th class="text-center text-nowrap">Plan Qty</th>
+                          <th class="text-center text-nowrap">Prd Qty</th>
+                          <th class="text-center text-nowrap">NG Qty</th>
+                          <th class="text-center text-nowrap">Stop Count</th>
+                          <th class="text-center text-nowrap">Lost Time (m)</th>
+                          <th class="text-center text-nowrap">Prd Time (m)</th>
                           <th class="text-center text-nowrap">Efficiency (%)</th>
                           <th class="text-center text-nowrap">Apr By</th>
                         </tr>
@@ -80,8 +82,10 @@ and open the template in the editor.
                               . "<td class='text-center text-nowrap'>" . $list["cctime"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["pln_qty"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["prd_qty"] . "</td>"
-                              . "<td class='text-center pr-3 text-nowrap'>" . $list["tot_ng"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["ng_count"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["stop_count"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["loss_time"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["prd_time"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["eff"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["apr_name"] . "</td>"
                               . "</tr>";

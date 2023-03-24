@@ -170,20 +170,18 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <input type="number" id="quantityok" value="1" class="form-control form-control-lg" step="1" />
+          <div class="modal-body d-flex justify-content-around">
+            <button onclick="increment('#quantityok')" class="btn btn-primary btn-lg">
+              <h5><i class="material-icons">add</i></h5>
+            </button>
+            <input type="number" id="quantityok" value="1" min="1" class="form-control form-control-lg mx-2" step="1" />
+            <button onclick="decrement('#quantityok')" class="btn btn-danger btn-lg">
+              <h5><i class="material-icons">remove</i></h5>
+            </button>
           </div>
-          <div class="modal-footer d-flex justify-content-between">
-            <div class="float-left">
-              <button onclick="increment('#quantityok')" class="btn px-5 btn-primary btn-lg">
-                <h2><i class="material-icons">add</i></h2>
-              </button>
-              <button onclick="decrement('#quantityok')" class="btn px-5 btn-danger btn-lg">
-                <h2><i class="material-icons">remove</i></h2>
-              </button>
-            </div>
-            <button type="button" onclick="handleOK()" class="btn btn-success btn-lg">
-              <h2>Submit</h2>
+          <div class="modal-footer">
+            <button type="button" onclick="handleOK()" class="btn btn-block btn-success btn-lg">
+              <h5>Submit</h5>
             </button>
           </div>
         </div>
@@ -205,7 +203,8 @@
               <button onclick="increment('#quantityng')" class="btn btn-primary btn-lg">
                 <h5><i class="material-icons">add</i></h5>
               </button>
-              <input type="number" id="quantityng" value="1" class="form-control form-control-lg mx-2" step="1" />
+              <input type="number" id="quantityng" value="1" min="1" class="form-control form-control-lg mx-2"
+                step="1" />
               <button onclick="decrement('#quantityng')" class="btn btn-danger btn-lg">
                 <h5><i class="material-icons">remove</i></h5>
               </button>
@@ -241,108 +240,124 @@
 
     function handleOK() {
       if ($("#cctime").text().trim() == 0) {
-        alert("Please create production first")
+        $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Please create production first!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
       } else {
-        $.post("?action=api_post_ib", {
-          ib_type: "P",
-          line_id: $("#line_id").val(),
-          qty: $("#quantityok").val(),
-          crt_dt: <?= date("Ymd") ?>,
-          shkzg: "C",
-          shift: $("#shift_hidden").val(),
-        }, function (data) {
-          let isJson = true
-          try {
-            let result = JSON.parse(data)
-          } catch (error) {
-            isJson = false
-          }
+        if ($("#quantityok").val() < 0) {
+          $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Quantity must be greater than 0!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+        } else {
+          $.post("?action=api_post_ib", {
+            ib_type: "P",
+            line_id: $("#line_id").val(),
+            qty: $("#quantityok").val(),
+            crt_dt: <?= date("Ymd") ?>,
+            shkzg: "C",
+            shift: $("#shift_hidden").val(),
+          }, function (data) {
+            let isJson = true
+            try {
+              let result = JSON.parse(data)
+            } catch (error) {
+              isJson = false
+            }
 
-          if (isJson === false) {
-            $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + data + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
-          } else {
-            $("#alert").html("");
-          }
+            if (isJson === false) {
+              $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + data + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+            } else {
+              $("#alert").html("");
+            }
 
-          $("quantityok").val(1);
-          $("#productok").modal("hide");
-        });
+            $("quantityok").val(1);
+            $("#productok").modal("hide");
+          });
+        }
       }
     }
 
     function handleRev(type) {
       if ($("#cctime").text().trim() == 0) {
-        alert("Please create production first")
+        $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Please create production first!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
       } else {
         if (type == 'ok') {
-          $.post("?action=api_update_rev", {
-            rev: 'Y',
-            type: 'P',
-            line_id: $("#line_id").val(),
-          }, function (data) {
-            let isJson = true
-            try {
-              let result = JSON.parse(data)
-            } catch (error) {
-              isJson = false
-            }
+          if ($("#qtyok").text().trim() == 0) {
 
-            if (isJson === false) {
-              $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + data + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
-            } else {
-              $("#alert").html("");
-            }
-          })
+          } else {
+            $.post("?action=api_update_rev", {
+              rev: 'Y',
+              type: 'P',
+              line_id: $("#line_id").val(),
+            }, function (data) {
+              let isJson = true
+              try {
+                let result = JSON.parse(data)
+              } catch (error) {
+                isJson = false
+              }
+
+              if (isJson === false) {
+                $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + data + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+              } else {
+                $("#alert").html("");
+              }
+            })
+          }
         } else {
-          $.post("?action=api_update_rev", {
-            rev: 'Y',
-            type: 'N',
-            line_id: $("#line_id").val(),
-          }, function (data) {
-            let isJson = true
-            try {
-              let result = JSON.parse(data)
-            } catch (error) {
-              isJson = false
-            }
+          if ($("#qtyng").text().trim() == 0) {
 
-            if (isJson === false) {
-              $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + data + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
-            } else {
-              $("#alert").html("");
-            }
-          })
+          } else {
+            $.post("?action=api_update_rev", {
+              rev: 'Y',
+              type: 'N',
+              line_id: $("#line_id").val(),
+            }, function (data) {
+              let isJson = true
+              try {
+                let result = JSON.parse(data)
+              } catch (error) {
+                isJson = false
+              }
+
+              if (isJson === false) {
+                $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + data + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+              } else {
+                $("#alert").html("");
+              }
+            })
+          }
         }
       }
     }
 
     function handleNG(type) {
       if ($("#cctime").text().trim() == 0) {
-        alert("Please create production first")
+        $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Please create production first!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
       } else {
-        $.post("?action=api_post_ib", {
-          ib_type: "N",
-          line_id: $("#line_id").val(),
-          qty: $("#quantityng").val(),
-          crt_dt: <?= date("Ymd") ?>,
-          ng_type: type,
-          shkzg: "C",
-          shift: $("#shift_hidden").val(),
-        }, function (data) {
-          let isJson = true
-          try {
-            let result = JSON.parse(data)
-          } catch (error) {
-            isJson = false
-          }
+        if ($("#quantityng").val() < 0) {
+          $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Quantity must be greater than 0!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+        } else {
+          $.post("?action=api_post_ib", {
+            ib_type: "N",
+            line_id: $("#line_id").val(),
+            qty: $("#quantityng").val(),
+            crt_dt: <?= date("Ymd") ?>,
+            ng_type: type,
+            shkzg: "C",
+            shift: $("#shift_hidden").val(),
+          }, function (data) {
+            let isJson = true
+            try {
+              let result = JSON.parse(data)
+            } catch (error) {
+              isJson = false
+            }
 
-          if (isJson === false) {
-            $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + data + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
-          } else {
-            $("#alert").html("");
-          }
-          $("#productng").modal("hide");
-        });
+            if (isJson === false) {
+              $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + data + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+            } else {
+              $("#alert").html("");
+            }
+            $("#productng").modal("hide");
+          });
+        }
       }
     }
 
@@ -372,6 +387,7 @@
             $("#prd-btn").html("");
           } else {
             $("#prd-btn").html("<a href='?action=api_prd_entry&line=<?= $result[0]["lineid"] ?>&shift=" + $("#shift_hidden").val() + "&date=<?= date('Ymd') ?>' class='btn btn-lg bg-red-blink text-white font-weight-bold'>Create Production</a>")
+            $("#shift").html(0)
           }
         }
       );
@@ -412,8 +428,8 @@
           date: <?= date("Ymd") ?>
         },
         function (data) {
-          $("#qtyok").html(data.totalok && $("#cctime").text().trim() != 0 ? data.totalok : 0);
-          $("#qtyng").html(data.totalng && $("#cctime").text().trim() != 0 ? data.totalng : 0);
+          $("#qtyok").html(data.totalok && $("#cctime").text().trim() != 0 ? data.totalok.toLocaleString() : 0);
+          $("#qtyng").html(data.totalng && $("#cctime").text().trim() != 0 ? data.totalng.toLocaleString() : 0);
           // console.log(data)
         }
       );

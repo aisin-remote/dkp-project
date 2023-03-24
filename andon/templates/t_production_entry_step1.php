@@ -40,7 +40,6 @@ and open the template in the editor.
                     <!-- Edit Here -->
 
                     <input type="hidden" name="line_id" class="form-control" value="<?php echo $line; ?>">
-
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Shift</label>
                       <div class="col-lg-2 col-md-5 col-sm-12">
@@ -48,10 +47,10 @@ and open the template in the editor.
                           <?php
                           foreach ($shift_list as $row) {
                           ?>
-                            <option value="<?php echo $row["seq"]; ?>" <?php if ($row["seq"] == $shift) {
+                            <option value="<?php echo $row["seq"]; ?>" <?php if ($row["seq"] == $_GET["shift"]) {
                                                                           echo "selected";
                                                                         } else {
-                                                                          echo "disabled";
+                                                                          echo "";
                                                                         } ?>><?php echo $row["pval1"]; ?></option>
                           <?php
                           }
