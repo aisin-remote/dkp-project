@@ -50,6 +50,7 @@
       <input type="hidden" id="mach" value="<?= $_GET["mach"] ?>" />
       <input type="hidden" id="line_id" value="<?= $result[0]["lineid"] ?>" />
       <input type="hidden" id="shift_hidden" value="" />
+      <div id="alert"></div>
       <div class="card px-3 bg-dark border-white">
         <div class="card-body p-2">
           <div class="my-2" id="prd-btn"></div>
@@ -181,7 +182,9 @@
                 <h2><i class="material-icons">remove</i></h2>
               </button>
             </div>
-            <button type="button" onclick="handleOK()" class="btn btn-success btn-lg"><h2>Submit</h2></button>
+            <button type="button" onclick="handleOK()" class="btn btn-success btn-lg">
+              <h2>Submit</h2>
+            </button>
           </div>
         </div>
       </div>
@@ -219,6 +222,11 @@
   </main>
   <?php include 'common/t_js.php'; ?>
   <script>
+    $(document).ready(function () {
+      updateDashboard();
+      updateQty();
+    });
+
     function increment(id) {
       $(id).val(parseInt($(id).val()) + 1);
     }
@@ -243,8 +251,20 @@
           shkzg: "C",
           shift: $("#shift_hidden").val(),
         }, function (data) {
-          console.log(data);
-          $("quantity").val(1);
+          let isJson = true
+          try {
+            let result = JSON.parse(data)
+          } catch (error) {
+            isJson = false
+          }
+
+          if (isJson === false) {
+            $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + data + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+          } else {
+            $("#alert").html("");
+          }
+
+          $("quantityok").val(1);
           $("#productok").modal("hide");
         });
       }
@@ -260,7 +280,18 @@
             type: 'P',
             line_id: $("#line_id").val(),
           }, function (data) {
-            console.log(data)
+            let isJson = true
+            try {
+              let result = JSON.parse(data)
+            } catch (error) {
+              isJson = false
+            }
+
+            if (isJson === false) {
+              $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + data + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+            } else {
+              $("#alert").html("");
+            }
           })
         } else {
           $.post("?action=api_update_rev", {
@@ -268,7 +299,18 @@
             type: 'N',
             line_id: $("#line_id").val(),
           }, function (data) {
-            console.log(data)
+            let isJson = true
+            try {
+              let result = JSON.parse(data)
+            } catch (error) {
+              isJson = false
+            }
+
+            if (isJson === false) {
+              $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + data + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+            } else {
+              $("#alert").html("");
+            }
           })
         }
       }
@@ -287,7 +329,18 @@
           shkzg: "C",
           shift: $("#shift_hidden").val(),
         }, function (data) {
-          console.log(data);
+          let isJson = true
+          try {
+            let result = JSON.parse(data)
+          } catch (error) {
+            isJson = false
+          }
+
+          if (isJson === false) {
+            $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">' + data + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+          } else {
+            $("#alert").html("");
+          }
           $("#productng").modal("hide");
         });
       }
