@@ -110,6 +110,8 @@
                           $color = "warning";
                         } else if ($sts["andon_id"] == 3) {
                           $color = "success";
+                        } else if ($sts["andon_id"] == 7) {
+                          $color = "info";
                         } else {
                           $color = "primary";
                         }
