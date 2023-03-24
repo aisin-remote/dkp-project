@@ -44,7 +44,7 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Shift</label>
                       <div class="col-lg-2 col-md-5 col-sm-12">
-                        <select name="shift" class="form-control select2" readonly>
+                        <select name="shift" class="form-control select2" >
                           <?php
                           foreach ($shift_list as $row) {
                           ?>
@@ -268,7 +268,7 @@ and open the template in the editor.
 
 
     $("#dies_id").change(getDefaultCycleTime);
-    $("#dies_id").change(getPreventive);
+    /*$("#dies_id").change(getPreventive);*/
 
     function getDefaultCycleTime() {
       $.ajax({
@@ -290,7 +290,7 @@ and open the template in the editor.
       });
     }
 
-    function getPreventive() {
+    /*function getPreventive() {
       var dies_id = $("#dies_id").val();
       $.ajax({
         url: '?action=api_get_dies_preventive',
@@ -305,7 +305,7 @@ and open the template in the editor.
           }
         })
       })
-    }
+    }*/
 
     var inputValue = $("#prd_dt").val();
     var currentDate = new Date();

@@ -140,7 +140,7 @@ and open the template in the editor.
                     <div class="row">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Material</div>
                       <div class="col-xl-4 col-lg-4 col-md-5 col-sm-6">
-                        <select name="dies_id" id="dies_id" class="form-control select2" data-live-search="true" disabled>
+                        <select name="dies_id" id="dies_id" class="form-control select2" data-live-search="true">
                           <?php
                           foreach ($matlist as $row) {
                             ?>
