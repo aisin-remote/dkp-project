@@ -240,10 +240,10 @@
 
     function handleOK() {
       if ($("#cctime").text().trim() == 0) {
-        $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Please create production first!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+        // $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Please create production first!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
       } else {
         if ($("#quantityok").val() < 0) {
-          $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Quantity must be greater than 0!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+          // $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Quantity must be greater than 0!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
         } else {
           $.post("?action=api_post_ib", {
             ib_type: "P",
@@ -275,7 +275,7 @@
 
     function handleRev(type) {
       if ($("#cctime").text().trim() == 0) {
-        $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Please create production first!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+        // $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Please create production first!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
       } else {
         if (type == 'ok') {
           if ($("#qtyok").text().trim() == 0) {
@@ -329,10 +329,10 @@
 
     function handleNG(type) {
       if ($("#cctime").text().trim() == 0) {
-        $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Please create production first!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+        // $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Please create production first!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
       } else {
         if ($("#quantityng").val() < 0) {
-          $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Quantity must be greater than 0!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
+          // $("#alert").html('<div class="alert alert-danger alert-dismissible fade show" role="alert">Quantity must be greater than 0!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>')
         } else {
           $.post("?action=api_post_ib", {
             ib_type: "N",
