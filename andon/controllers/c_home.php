@@ -11,17 +11,34 @@ if ($action == "home") {
   }*/
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-  $query = "select a.line_id, b.name1 as line_name, b.line_ty as type, a.dies_id, CONCAT(c.name1) as dies_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
+  /*$query = "select a.line_id, b.name1 as line_name, b.line_ty as type, a.dies_id, c.gstat, CONCAT(c.group_id,' ',c.model_id,' ',c.dies_no) as dies_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
             (select coalesce(sum(ng_qty),0) as ril_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'RIL'), 
             (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') 
             from t_prd_daily_i a 
             inner join m_prd_line b ON b.line_id = a.line_id AND b.line_ty = 'ECU'
-            left join wms.m_mara c on c.matnr = a.dies_id
-            where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' and a.stats = 'A' ";
+            left join m_dm_dies_asset c on c.dies_id = a.dies_id::int
+            where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' and a.stats = 'A' ";*/
+  $query = "select a.line_id, a.name1 as line_name, a.line_ty as type, 
+            coalesce(i.dies_id,'-') as dies_id, coalesce(m.name1,'-') as dies_name, 
+            coalesce(i.cctime,0) as cctime, coalesce(i.pln_qty,0) as pln_time, 
+            coalesce(i.prd_time,0) as prd_time, coalesce(i.prd_qty,0) as prd_qty, 
+            (select coalesce(sum(ng_qty),0) as ril_qty from t_prd_daily_ng 
+            WHERE line_id = a.line_id and prd_dt = i.prd_dt and shift = i.shift and prd_seq = i.prd_seq and SUBSTRING(ng_type,1,3) = 'RIL'), 
+            (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
+            WHERE line_id = a.line_id and prd_dt = i.prd_dt and shift = i.shift and prd_seq = i.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') 
+            from m_prd_line a 
+            LEFT JOIN t_prd_daily_i i 
+            ON i.line_id = a.line_id 
+            AND i.prd_dt = '$today' 
+            AND TO_CHAR(TO_TIMESTAMP(i.prd_dt||' '||i.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
+            AND i.stats = 'A' 
+            left join wms.m_mara m on m.matnr = i.dies_id 
+            where a.line_ty = 'ECU' 
+            ORDER BY line_id asc";
   //$query .= "and a.stats = 'A' ";
-  $query .= "ORDER BY line_name ASC";
+  //$query .= "ORDER BY line_name ASC";
   $stmt = $conn->prepare($query);
   $data_per_jam = [];
   $data_ril = [];
@@ -31,20 +48,26 @@ if ($action == "home") {
   $i = 0;
   if ($stmt->execute()) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $row["eff"] = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
-      $data_per_jam[] = $row;
-      $data_ril[] = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
-      $data_rol[] = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
+      $row["eff"] = 0;
+      $data_ril[$i] = 0; 
+      $data_rol[$i] = 0;
+      if($row["prd_time"] != 0) {
+        $row["eff"] = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
+        $data_ril[$i] = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
+        $data_rol[$i] = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
+      }        
+      $data_per_jam[] = $row;          
+      
       $data_line_name[$i]["line"] = $row["line_name"];
       $data_line_name[$i]["dies"] = $row["dies_name"];
       if ($row["gstat"] == 'P') {
         $data_line_name[$i]["dies_color"] = 'text-danger';
       }
-      $data_eff[] = $row["eff"];
+      $data_eff[$i] = $row["eff"];
       $i++;
     }
   }
-
+  //var_dump($data_eff); die();
   //cek shift
   $shift1_s = strtotime(date("Y-m-d") . " 06:00");
   $shift1_e = strtotime(date("Y-m-d") . " 13:59");
@@ -72,7 +95,7 @@ if ($action == "home") {
     $today = date(strtotime($today . "- 1 days"), "Y-m-d");
   }
 
-  if (empty($data_line_name)) {
+  /*if (empty($data_line_name)) {
     $query = "SELECT name1, line_ty FROM m_prd_line WHERE line_ty = 'ECU' ORDER by line_id ASC";
     $stmt = $conn->prepare($query);
     if ($stmt->execute()) {
@@ -84,7 +107,7 @@ if ($action == "home") {
         $i++;
       }
     }
-  }
+  }*/
 
   $query_sum = "select line_id, line_name, sum(cctime) as cctime, sum(pln_qty) as pln_qty, sum(prd_time) as prd_time, sum(prd_qty) as prd_qty, sum(ril_qty) as ril_qty, sum(rol_qty) as rol_qty, sum(per_jam) as per_jam from ( 
     select a.line_id, b.name1 as line_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
