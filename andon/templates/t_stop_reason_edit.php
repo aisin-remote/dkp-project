@@ -93,7 +93,8 @@ and open the template in the editor.
                         <select name="type3" class="form-control select2">
                           <option value="" selected>No Group</option>
                           <option value="MESIN" <?php if($data["data"]["type3"] == "MESIN"){echo "selected";} ?>>MESIN</option>
-                          <option value="DIES" <?php if($data["data"]["type3"] == "DIES"){echo "selected";} ?>>DIES</option>
+                          <option value="PART" <?php if($data["data"]["type3"] == "PART"){echo "selected";} ?>>PART</option>
+                          <option value="OTHER" <?php if($data["data"]["type3"] == "OTHER"){echo "selected";} ?>>OTHER</option>
                         </select>
                       </div>
                     </div>

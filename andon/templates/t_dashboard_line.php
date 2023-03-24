@@ -3,6 +3,12 @@
 <?php include "common/t_css.php"; ?>
 
 <body>
+  <style>
+    .toast-100 {
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+  </style>
   <?php include "common/t_nav_top_dashboard.php"; ?>
   <main>
     <div class="container-fluid mt-2">
@@ -14,6 +20,22 @@
           <?php echo $template["menu"]; ?>
         </li>
       </ol> -->
+      <div style="position: absolute; top: 20px; left: 0;" class="container-fluid">
+        <div id="toast_container" class="position-relative w-100" style="z-index:9999;" >
+          <?php
+          if(!empty($data_andon_status)) {
+            foreach($data_andon_status as $row) {
+          ?>
+          <div class="alert text-center <?=$row["bgcolor"].' '.$row["text_color"]?>" role="alert" id="<?=$row["line_id"]."_".$row["mach_id"]."_".$row["andon_id"]?>" style="display: none;">
+            <h1><?=$row["mach_name"]?> <?=$row["desc"]?></h1>
+          </div>
+          <?php
+            }
+          } 
+          ?>
+        </div>
+      </div>
+        
       <div class="card mb-5">
         <div class="card-body">
           <div class="container-fluid text-center">
@@ -180,12 +202,58 @@
       </div>
     </div>
     <input type="hidden" id="line_id" value="<?= $_GET["line_id"] ?>">
-  </main>
+  </main>  
+      
   <?php include 'common/t_js.php'; ?>
   <script>
+    $(document).ready(function(){
+      setInterval(updateDashboard, 5000);
+      setInterval(dateTime, 1000);
+    });
+    // Detect fullscreen support
+    /*var fullscreenEnabled = document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled;
 
-    setInterval(updateDashboard, 5000);
-    setInterval(dateTime, 1000);
+    // Request fullscreen
+    function requestFullscreen(element) {
+      if (element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+      } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+      }
+    }
+
+    // Exit fullscreen
+    function exitFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+
+    // Toggle fullscreen mode
+    function toggleFullscreen() {
+      if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+        exitFullscreen();
+      } else {
+        requestFullscreen(document.documentElement);
+      }
+    }
+
+    // Check if fullscreen mode is already active
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+      toggleFullscreen();
+    }
+    */
+      
     var options = {
       // series: [<?= $eff ?>, {
       //   color: function({value}) {
@@ -298,6 +366,46 @@
 
       $("#date").html(date);
       $("#time").html(time);
+      
+      updateAndonStatus();
+    }
+    
+    function updateAndonStatus() {
+      var className = document.getElementsByClassName('alert');
+      var classnameCount = className.length;
+      var toast_id = new Array();
+      for(var j = 0; j < classnameCount; j++){
+        toast_id.push(className[j].id);
+      }
+      
+      var line_id = $("#line_id").val();
+      if(line_id.length > 0) {
+        $.getJSON("?action=api_get_andon_status",{line_id:line_id},function(result){
+          if(result.status == true) {
+            //show alert
+            //$('.toast').toast('hide');
+            var data = result.data;
+            $.each(toast_id, function(row, value){
+              var toast_show = false;
+              $.each(data, function(row, value2){
+                toast_id_single = value2.line_id+"_"+value2.mach_id+"_"+value2.andon_id;
+                if(toast_id_single == value) {
+                  toast_show = true;
+                  return false;
+                }
+              });
+              if(toast_show === true) {
+                $("#"+value).show();
+              } else {
+                $("#"+value).hide();
+              }
+            });
+            
+          } else {
+            $('.alert').hide();
+          }
+        });
+      }
     }
   </script>
 </body>
