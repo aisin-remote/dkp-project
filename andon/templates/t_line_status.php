@@ -312,7 +312,6 @@
           var mach = data.mach
           var btn = data.btn
           var sts = data.status
-          var append_data = ""
           $("#cctime").html(head?.cctime ? head?.cctime : 0);
           $("#shift").html(head?.shift ? head?.pval1 : 0);
           $("#shift_hidden").val(head?.shift ? head?.shift : 0);
@@ -321,35 +320,6 @@
           } else {
             $("#prd-btn").html("<a href='?action=api_prd_entry&line=<?= $result[0]["lineid"] ?>&shift=" + $("#shift_hidden").val() + "&date=<?= date('Ymd') ?>' class='btn btn-lg bg-red-blink text-white font-weight-bold'>Create Production</a>")
           }
-          // console.log(head)
-
-          // $.each(mach, function (row, m) {
-          //   append_data += '<div class="col p-1">'
-          //   append_data += '<div class="card border-0 bg-dark mb-2">'
-          //   append_data += '<div class="card-body p-0">'
-          //   append_data += '<div class="container-fluid p-1 text-center">'
-          //   append_data += '<div class="card mb-3">'
-          //   append_data += '<div class="card-body bg-info text-center text-white">'
-          //   append_data += '<h4 id="mach_name">' + m.machname + '</h4>'
-          //   append_data += '</div></div>'
-          //   $.each(btn, function (row, b) {
-          //     $.each(sts, function (row, s) {
-          //       if (s.btn_on == 1 && s.andon_id == b.andon_id && m.machid == b.mach_id) {
-          //         ($mach["machid"] == $btn["mach_id"] && $sts["andon_id"] == $btn["andon_id"] && $btn["btn_sts"] == 1) ? "checked='checked'" : "";
-          //         if (m.machid == b.mach_id && s.andon_id == b.andon_id && b.btn_sts == 1) {
-          //           let checked = "checked"
-          //         } else {
-          //           let checked = ""
-          //         }
-          //         append_data += '<div class="mb-2">'
-          //         append_data += '<input onchange="cek_cb(' + s.andon_id + ', \"' + m.machid + '\")" id="' + s.andon_id + '_' + m.machid + '" type="checkbox" data-toggle="toggle" data-on="' + s.desc + '" data-off="' + s.desc + '" data-onstyle="primary" data-offstyle="secondary" data-width="100%" data-height="100%" data-size="lg" ' + checked + ' />'
-          //         append_data += '</div>'
-          //       }
-          //     })
-          //   })
-          //   append_data += '</div></div></div></div>'
-          // })
-          // $("#list").html(append_data)
         }
       );
     }
