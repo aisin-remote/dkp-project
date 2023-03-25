@@ -163,8 +163,9 @@ and open the template in the editor.
                                 <option value=''>Please Select S.Loc</option>
                                 <?php 
                                 if(!empty($data["slocs"])) {
-                                  foreach($data["slocs"] as $grp) {$selected = "";
-                                    if($grp["lgort"] == "ASMP") {
+                                  foreach($data["slocs"] as $grp) {
+                                    $selected = "";
+                                    if($grp["lgort"] == "ASAN") {
                                       $selected = "selected";
                                     }
                                     echo "<option value='".$grp["lgort"]."'>".$grp["lgort"]." - ".$grp["name1"]."</option>";                              
@@ -290,7 +291,7 @@ and open the template in the editor.
         var menge = arr_code[2];
         var charg = arr_code[5];
         var lgort = "MSTR";
-        var lgort2 = "ASMP";
+        var lgort2 = "ASAN";
         $("#qrcode").val("");
         
         $("#menge").val(menge);

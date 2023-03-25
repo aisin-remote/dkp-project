@@ -208,7 +208,7 @@ and open the template in the editor.
         var matnr = arr_code[1];
         var menge = arr_code[2];
         var charg = arr_code[5];
-        var lgort = "S001";
+        var lgort = "MSTR";
         $("#qrcode").val("");
         
         var matnrs = $("select[name='matnr[]']");
