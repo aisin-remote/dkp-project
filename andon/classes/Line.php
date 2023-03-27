@@ -5,7 +5,24 @@ class Line
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, b.pval4 FROM m_prd_line a LEFT JOIN m_param b ON b.pid = 'LINE_STATUS' AND b.pval1::int = a.line_st WHERE a.line_ty = 'ECU' ORDER BY seq ASC";
+        $sql = "SELECT a.*, b.* FROM m_prd_line a LEFT JOIN m_andon_status b ON b.andon_id = a.line_st WHERE a.line_ty = 'ECU' ORDER BY a.seq ASC";
+
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $return[] = $row;
+            }
+        }
+        $stmt = null;
+        $conn = null;
+        return $return;
+    }
+
+    public function getLineById($id)
+    {
+        $return = array();
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "SELECT a.* FROM m_prd_line a WHERE a.line_ty = 'ECU' and a.line_id = $id ";
 
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {

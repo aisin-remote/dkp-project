@@ -204,7 +204,7 @@ and open the template in the editor.
                   </div>
                 </div>
               </div>
-              <div class="col-12 mt-1">
+              <!-- <div class="col-12 mt-1">
                 <div class="card">
                   <div class="card-header" style="background-color: #E4E4E4;">
                     <h6 class="mb-0">Detailing</h6>
@@ -232,7 +232,7 @@ and open the template in the editor.
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </form>
             <div class="col-12 mt-1">
               <!-- <button type="button" id="add_content_stop_btn" class="btn btn-magenta" onclick="openModal01()">Add

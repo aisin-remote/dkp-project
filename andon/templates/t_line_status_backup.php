@@ -3,25 +3,7 @@
 <?php include "common/t_css.php"; ?>
 
 <body class="bg-dark text-white">
-    <style>
-        .toggle-on, .toggle-off {
-            white-space: nowrap;
-        }
-
-        .scrolling-wrapper {
-            overflow-x: auto;
-        }
-
-        ::-webkit-scrollbar {
-            height: 30px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background-color: #17a2b8;
-            border-radius: 10px
-        }
-    </style>
-    <header class="fixed-top">
-    <div class="container-fluid">
+  <div class="container-fluid">
     <div class="row">
       <div class="col">
         <a class="navbar-brand my-3" href="../"><img src="media/images/logo-white.png" height="30" alt="" /></a>
@@ -31,25 +13,39 @@
           <?= $result[0]["linename"] ?>
         </h1>
       </div>
-      <div class="col">
-      <div class="my-3 float-right" id="prd-btn"></div>
-      </div>
+      <div class="col"></div>
     </div>
   </div>
-  <div class="card px-3 bg-dark border-white">
+  <main>
+    <div class="container-fluid mt-2">
+      <!-- <ol class="breadcrumb mb-2">
+        <li class="breadcrumb-item">
+          <?php echo $template["group"]; ?>
+        </li>
+        <li class="breadcrumb-item active">
+          <?php echo $template["menu"]; ?>
+        </li>
+      </ol> -->
+      <input type="hidden" id="mach" value="<?= $_GET["mach"] ?>" />
+      <input type="hidden" id="line_id" value="<?= $result[0]["lineid"] ?>" />
+      <input type="hidden" id="shift_hidden" value="" />
+      <div id="alert"></div>
+      <div class="card px-3 bg-dark border-white">
         <div class="card-body p-2">
+          <div class="my-2" id="prd-btn"></div>
           <div class="row">
             <div class="col px-1">
               <h3>Date : </h3>
-              <h2 id="date"></h2>
+              <h1 id="date">
+                </h2>
             </div>
             <div class="col px-1">
               <h3>Time : </h3>
-              <h2 id="time"></h2>
+              <h1 id="time"></h1>
             </div>
             <div class="col px-1">
               <h3>Shift : </h3>
-              <h2 id="shift"></h2>
+              <h1 id="shift"></h1>
             </div>
             <div class="col px-1">
               <h3>Cycle Time : </h3>
@@ -66,39 +62,18 @@
           </div>
         </div>
       </div>
-    </header>
-  <main>
-    <div class="container-fluid mt-2">
-      <!-- <ol class="breadcrumb mb-2">
-        <li class="breadcrumb-item">
-          <?php echo $template["group"]; ?>
-        </li>
-        <li class="breadcrumb-item active">
-          <?php echo $template["menu"]; ?>
-        </li>
-      </ol> -->
-      <input type="hidden" id="mach" value="<?= $_GET["mach"] ?>" />
-      <input type="hidden" id="line_id" value="<?= $result[0]["lineid"] ?>" />
-      <input type="hidden" id="shift_hidden" value="" />
-      <div id="alert"></div>
-      
-      <div class="row flex-row flex-nowrap scrolling-wrapper px-2" id="list" style="padding-top: 15%;">
+      <div class="row px-2 mt-2" id="list">
         <?php
-        if (count($result) < 5) {
-            $col = "col";
-        } else {
-            $col = "col-2";
-        }
         // print("<pre class='text-white'>" . print_r($_GET["mach"], true) . "</pre>");
         foreach ($result as $mach) {
           ?>
-          <div class="<?= $col ?> p-1">
+          <div class="col p-1">
             <div class="card border-0 bg-dark mb-2">
               <div class="card-body p-0">
                 <div class="container-fluid p-1 text-center">
-                  <div class="card mb-2">
+                  <div class="card mb-3">
                     <!-- <div class="card-body <?= $mach["bgcolor"] ?> text-center text-white"> -->
-                    <div class="card-body py-2 bg-info text-center text-white">
+                    <div class="card-body bg-info text-center text-white">
                       <h4 id="mach_name">
                         <?= $mach["machname"] ?>
                       </h4>
@@ -120,7 +95,7 @@
                           $color = "primary";
                         }
                         ?>
-                        <div class='mb-1'>
+                        <div class='mb-2'>
                           <input onchange='cek_cb(<?= $sts["andon_id"] ?>, "<?= $mach["machid"] ?>")'
                             name='<?= $sts["andon_id"] ?>' id='<?= $sts["andon_id"] ?>_<?= $mach["machid"] ?>' type='checkbox'
                             data-toggle='toggle' data-on='<?= $sts["desc"] ?>' data-off='<?= $sts["desc"] ?>'
@@ -140,7 +115,7 @@
         }
         ?>
       </div>
-      <div class="card bg-dark border-white fixed-bottom">
+      <div class="card bg-dark border-white">
         <div class="card-body">
           <div class="d-flex justify-content-around">
             <button type="button" onclick="checkPrd('#productok')"
@@ -428,7 +403,7 @@
       $.getJSON(
         "?action=api_mach_status",
         {
-          line_id: '<?= $_GET["line_id"] ?>',
+          line_id: $("#line_id").val(),
           shift: $("#shift").text().trim(),
           mach: params.getAll("mach[]")
         },
@@ -438,13 +413,13 @@
           var btn = data.btn
           var sts = data.status
           $("#cctime").html(head?.cctime ? head?.cctime : 0);
-          $("#shift").html(head?.shift ? head?.pval1 : "");
+          $("#shift").html(head?.shift ? head?.pval1 : 0);
           $("#shift_hidden").val(head?.shift ? head?.shift : 0);
           if (head.cctime) {
             $("#prd-btn").html("");
           } else {
             $("#prd-btn").html("<a href='?action=api_prd_entry&line=<?= $result[0]["lineid"] ?>&shift=" + $("#shift_hidden").val() + "&date=<?= date('Ymd') ?>' class='btn btn-lg bg-red-blink text-white font-weight-bold'>Create Production</a>")
-            $("#shift").html("")
+            $("#shift").html(0)
           }
         }
       );

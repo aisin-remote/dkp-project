@@ -193,7 +193,7 @@ and open the template in the editor.
                       <div class="col-lg-2 col-md-3 col-sm-12 d-sm-none d-md-block"></div>
                       <div class="col-lg-5 col-md-5 col-sm-12">
                         <input type="hidden" name="save" id="save" value="true">
-                        <button type="submit" name="btn_save" onclick="postReff()" id="btn_save" value="save" class="btn btn-pale-green">Save
+                        <button type="submit" name="btn_save" id="btn_save" value="save" class="btn btn-pale-green">Save
                           & Generate Production Entry</button>
                       </div>
                     </div>

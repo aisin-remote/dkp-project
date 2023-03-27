@@ -19,8 +19,12 @@ and open the template in the editor.
       <main>
         <div class="container-fluid">
           <ol class="breadcrumb mb-2 mt-4">
-            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
+            <li class="breadcrumb-item">
+              <?php echo $template["group"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["menu"]; ?>
+            </li>
           </ol>
           <?php
           if (isset($_GET["error"])) {
@@ -43,7 +47,6 @@ and open the template in the editor.
                     </div>';
           }
           ?>
-
           <div class="row">
             <div class="col-12">
               <div class="card mt-2">
@@ -53,36 +56,36 @@ and open the template in the editor.
                     <table class="table table-sm table-striped" id="data-table-x">
                       <thead>
                         <tr>
-                          <th class="align-middle">Date</th>
-                          <th class="align-middle">Year</th>
-                          <th class="align-middle">Month</th>
-                          <th class="align-middle">Shift</th>
-                          <th class="align-middle">Line DC</th>
-                          <th class="align-middle">Leader</th>
-                          <th class="align-middle">JP</th>
-                          <th class="text-center align-middle">Plan Qty</th>
-                          <th class="text-center align-middle">Prd Qty</th>
-                          <th class="text-center align-middle">NG Qty</th>
-                          <th class="text-center align-middle">Lost Time (m)</th>
-                          <th class="text-center align-middle">Efficiency (%)</th>
-                          <th class="text-center align-middle">Details</th>
+                          <th class="text-nowrap">Date</th>
+                          <th class="text-nowrap">Year</th>
+                          <th class="text-nowrap">Month</th>
+                          <th class="text-nowrap">Shift</th>
+                          <th class="text-nowrap">Line</th>
+                          <th class="text-nowrap">Leader</th>
+                          <th class="text-nowrap">JP</th>
+                          <th class="text-center text-nowrap">Plan Qty</th>
+                          <th class="text-center text-nowrap">Prd Qty</th>
+                          <th class="text-center text-nowrap">NG Qty</th>
+                          <th class="text-center text-nowrap">Lost Time (m)</th>
+                          <th class="text-center text-nowrap">Efficiency (%)</th>
+                          <th class="text-center text-nowrap">Details</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php if (!empty($data["list"])) {
                           foreach ($data["list"] as $list) {
-                            echo "<tr>" . "<td class='align-middle'>" . $list["prd_dt"] . "</td>"
-                              . "<td class='align-middle'>" . $list["prd_year"] . "</td>"
-                              . "<td class='align-middle'>" . $list["prd_month"] . "</td>"
-                              . "<td class='align-middle'>" . $list["shift"] . "</td>"
-                              . "<td class='align-middle'>" . $list["line_name"] . "</td>"
-                              . "<td class='align-middle'>" . $list["ld_name"] . "</td>"
-                              . "<td class='align-middle'>" . $list["jp_name"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["pln_qty"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["prd_qty"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["ng_qty"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["stop_time"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["eff"] . "</td>"
+                            echo "<tr>" . "<td class='text-nowrap'>" . $list["prd_dt"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["prd_year"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["prd_month"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["pval1"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["line_name"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["ld_name"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["jp_name"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["pln_qty"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["prd_qty"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["ng_qty"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["stop_time"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["eff"] . "</td>"
                               . "<td class='text-center pr-3'>"
                               . "<a href='?action=$action&id=" . $list["line_id"] . "&id2=" . $list["prd_dt"] . "&id3=" . $list["shift"] . "&step=2" . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>visibility</i> </a>"
                               . "</td>"
@@ -105,7 +108,8 @@ and open the template in the editor.
       <?php include 'common/t_footer.php'; ?>
     </div>
   </div>
-  <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_filter_label" aria-hidden="true">
+  <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="modal_filter_label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <form method="get" action="#">
         <input type="hidden" name="action" value="<?= $action ?>">
@@ -119,19 +123,36 @@ and open the template in the editor.
           <div class="modal-body">
             <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Start Date</label></div>
-              <div class="col"><input type="text" name="date_from" class="form-control datepicker" value="<?php echo $date_from; ?>"></div>
+              <div class="col"><input type="text" name="date_from" class="form-control datepicker"
+                  value="<?php echo $date_from; ?>"></div>
               <label class="col-form-label px-3">to</label>
-              <div class="col"><input type="text" name="date_to" class="form-control datepicker" value="<?php echo $date_to; ?>"></div>
+              <div class="col"><input type="text" name="date_to" class="form-control datepicker"
+                  value="<?php echo $date_to; ?>"></div>
             </div>
             <!-- <div clas
            -->
             <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Shift</label></div>
-              <div class="col"><input type="text" name="shift" class="form-control" value="<?php echo $shift; ?>"></div>
+              <!-- <div class="col"><input type="text" name="shift" class="form-control" value="<?php echo $shift; ?>"></div> -->
+              <div class="col">
+                <select name="shift" id="shift" class="form-control select2" style="width: 300px">
+                  <option value="" selected>Select Shift</option>
+                  <?php
+                  foreach ($shiftlist as $s) {
+                    ?>
+                    <option value="<?php echo $s["seq"]; ?>" <?php if ($s["pval1"] == $_GET["shift"]) {
+                         echo "selected";
+                       } ?>><?php echo $s["pval1"]; ?></option>
+                    <?php
+                  }
+                  ?>
+                </select>
+              </div>
             </div>
             <div class="row my-2">
-              <div class="col-4"><label class="col-form-label">Line DC</label></div>
-              <div class="col"><input type="text" name="line_id" class="form-control" value="<?php echo $line_id; ?>"></div>
+              <div class="col-4"><label class="col-form-label">Line</label></div>
+              <div class="col"><input type="text" name="line_id" class="form-control" value="<?php echo $line_id; ?>">
+              </div>
             </div>
             <!-- <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Leader</label></div>
@@ -153,7 +174,7 @@ and open the template in the editor.
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       $("#data-table-x").DataTable({
         stateSave: true,
         order: [
@@ -163,19 +184,19 @@ and open the template in the editor.
           "<'row'<'col-sm-12'tr>>" +
           "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
         buttons: [{
-            extend: 'excel',
-            title: "daily_production_report",
-            className: 'btn btn-pale-green btn-sm',
-            text: '<i class="material-icons">download</i>Download Excel',
-          },
-          {
-            className: 'btn btn-pale-green-outlined btn-sm',
-            text: '<i class="material-icons">filter_alt</i> Filter',
-            action: function() {
-              $('#modal_filter').modal("show");
+          extend: 'excel',
+          title: "daily_production_report",
+          className: 'btn btn-pale-green btn-sm',
+          text: '<i class="material-icons">download</i>Download Excel',
+        },
+        {
+          className: 'btn btn-pale-green-outlined btn-sm',
+          text: '<i class="material-icons">filter_alt</i> Filter',
+          action: function () {
+            $('#modal_filter').modal("show");
 
-            }
           }
+        }
         ]
       });
 
@@ -185,7 +206,7 @@ and open the template in the editor.
         dateFormat: "Ymd"
       });
 
-      $('td').each(function() {
+      $('td').each(function () {
         if ($(this).html() == 'Completed') {
           $(this).css('color', 'green');
         } else if ($(this).html() == 'On Progress') {

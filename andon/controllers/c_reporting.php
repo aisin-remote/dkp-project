@@ -5,6 +5,7 @@ if ($action == "daily_production") {
   $template["submenu"] = "View Summary";
   $data["list"];
   $class = new Reporting();
+  $param = new Param();
   $class2 = new Production();
   $member = new Member();
   $dies = new Dies();
@@ -180,6 +181,7 @@ if ($action == "daily_production") {
     $ldid = $_GET["ldid"];
     $jpid = $_GET["jpid"];
 
+    $shiftlist = $param->getListShift(); 
     $data["list"] = $class->getList($date_from, $date_to, $prd_year, $prd_month, $shift, $line_id, $ldid, $jpid);
     require(TEMPLATE_PATH . "/t_report_daily_production.php");
   }
@@ -190,6 +192,7 @@ if ($action == "report_detail") {
   $template["menu"] = "Daily Production";
   $template["submenu"] = "View Details";
   $report = new Reporting();
+  $param = new Param();
 
   $date_from = date('Ymd');
   if (!empty($_GET["date_from"])) {
@@ -206,6 +209,7 @@ if ($action == "report_detail") {
   $ldid = $_GET["ldid"];
   $jpid = $_GET["jpid"];
 
+  $shiftlist = $param->getListShift();  
   $data["list"] = $report->getReportDetail($date_from, $date_to, $shift, $line_id, $ldid, $jpid);
   require(TEMPLATE_PATH . "/t_report_detail.php");
 }
@@ -215,6 +219,7 @@ if ($action == "report_stop") {
   $template["menu"] = "Daily Production";
   $template["submenu"] = "View Details Stop";
   $report = new Reporting();
+  $param = new Param();
 
   $date_from = date('Ymd');
   if (!empty($_GET["date_from"])) {
@@ -231,6 +236,7 @@ if ($action == "report_stop") {
   $ldid = $_GET["ldid"];
   $jpid = $_GET["jpid"];
 
+  $shiftlist = $param->getListShift(); 
   $data["list"] = $report->getReportStop($date_from, $date_to, $shift, $line_id, $ldid, $jpid);
   require(TEMPLATE_PATH . "/t_report_stop.php");
 }
@@ -250,6 +256,6 @@ if ($action == "r_losstime") {
     $date_to = $_GET["date_to"];
   }
 
-  $data["list"] = $report->getLossTime();
+  $data["list"] = $report->getLossTime($date_from, $date_to);
   require(TEMPLATE_PATH . "/t_report_losstime.php");
 }

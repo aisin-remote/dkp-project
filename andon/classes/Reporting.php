@@ -45,7 +45,7 @@ class Reporting
         $sql = "SELECT a.prd_dt, h.name1 AS line_name, TO_CHAR(a.prd_dt, 'YYYY') as prd_year, TO_CHAR(a.prd_dt, 'MM') as prd_month, 
                        a.shift, a.line_id, a.ldid, a.jpid, a.cctime, coalesce(b.ng_qty, 0) as ng_qty, 
                        coalesce(c.prd_qty,0) as prd_qty, coalesce(c.prd_time,0) as prd_time, 
-                       coalesce(c.pln_qty,0) as pln_qty, coalesce(d.stop_time, 0) as stop_time, e.ld_name, f.jp_name
+                       coalesce(c.pln_qty,0) as pln_qty, coalesce(d.stop_time, 0) as stop_time, e.ld_name, f.jp_name, i.pval1
                 FROM t_prd_daily_h a 
                 LEFT JOIN (
                     SELECT line_id, shift, prd_dt, coalesce(sum(ng_qty),0) as ng_qty 
@@ -77,6 +77,7 @@ class Reporting
                     WHERE line_ty = 'ECU'
                 ) g ON a.line_id = g.line_id
                 LEFT JOIN m_prd_line h ON h.line_id = a.line_id 
+                LEFT JOIN m_param i ON i.pid = 'SHIFT' and i.seq = a.shift
                 WHERE a.line_id = g.line_id ";
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
@@ -339,18 +340,17 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.prd_dt, a.prd_time, a.shift, c.name1 AS line_name, e.name1 AS operator, b.name1 AS dies_name, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, h.name1 AS apr_name,
-                (select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
-                (select SUM(stop_time) as loss_time from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
-                (select SUM(ng_qty) as ng_count from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq)
-                        FROM t_prd_daily_i a
-                        LEFT JOIN wms.m_mara b ON b.matnr = a.dies_id
-                        INNER JOIN m_prd_line c ON c.line_id = a.line_id AND c.line_ty = 'ECU'
-                        INNER JOIN t_prd_daily_h d ON d.prd_dt = a.prd_dt AND d.shift = a.shift AND d.line_id = a.line_id
-                        INNER JOIN m_prd_operator e ON e.empid = d.jpid
-                        LEFT JOIN t_prd_daily_ng f ON f.prd_dt = a.prd_dt AND f.shift = a.shift AND f.line_id = a.line_id
-                        LEFT JOIN t_prd_daily_stop g ON g.prd_dt = a.prd_dt AND g.shift = a.shift AND g.line_id = a.line_id
-                        LEFT JOIN m_user h ON h.usrid = a.apr_by ";
+        $sql = "SELECT a.*, b.*, c.*, c.name1 as material, d.*, e.*, e.name1 as line_name, f.name1 as operator,
+            (select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
+            (select SUM(stop_time) as loss_time from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
+            (select SUM(ng_qty) as ng_count from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq)
+            from t_prd_daily_i a
+            inner join t_prd_daily_h b on b.prd_dt = a.prd_dt and b.shift = a.shift and b.line_id = a.line_id
+            inner join wms.m_mara c on c.matnr = a.dies_id
+            inner join m_param d on d.pid = 'SHIFT' and d.seq = a.shift
+            inner join m_prd_line e on e.line_id = a.line_id and e.line_ty = 'ECU'
+            inner join m_prd_operator f on f.empid = b.jpid
+            where 1=1 ";
 
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
@@ -410,17 +410,20 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.prd_dt, a.shift, c.name1 AS line_name, e.name1 AS operator, b.name1 AS dies_name, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, a.apr_by, f.start_time, f.end_time, f.stop_time, f.qty_stc, g.type3, g.type4, g.name1 AS stop, h.name1 AS action, f.remarks, i.name1 AS eksekutor 
-                FROM t_prd_daily_i a
-                LEFT JOIN wms.m_mara b ON b.matnr = a.dies_id
-                INNER JOIN m_prd_line c ON c.line_id = a.line_id AND c.line_ty = 'ECU'
-                INNER JOIN t_prd_daily_h d ON d.prd_dt = a.prd_dt AND d.shift = a.shift AND d.line_id = a.line_id
-                INNER JOIN m_prd_operator e ON e.empid = d.jpid
-                LEFT JOIN t_prd_daily_stop f ON f.prd_dt = a.prd_dt AND f.shift = a.shift AND f.line_id = a.line_id
-                LEFT JOIN m_prd_stop_reason_action g ON g.srna_id = f.stop_id
-                LEFT JOIN m_prd_stop_reason_action h ON h.srna_id = f.action_id
-                LEFT JOIN m_prd_operator i ON i.empid = f.exe_empid	
-                WHERE 1=1 ";
+        $sql = "SELECT a.*, b.*, c.*, d.name1 as material, d.*, e.*, f.name1 as line_name, g.name1 as operator, g.*, h.*, h.name1 as stop, i.name1 as eksekutor,
+            (select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
+            (select SUM(stop_time) as loss_time from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
+            (select SUM(ng_qty) as ng_count from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq)
+            from t_prd_daily_i a
+            inner join t_prd_daily_h b on b.prd_dt = a.prd_dt and b.shift = a.shift and b.line_id = a.line_id
+            inner join t_prd_daily_stop c on c.prd_dt = a.prd_dt and c.shift = a.shift and c.line_id = a.line_id and c.prd_seq = a.prd_seq
+            inner join wms.m_mara d on d.matnr = a.dies_id
+            inner join m_param e on e.pid = 'SHIFT' and e.seq = a.shift
+            inner join m_prd_line f on f.line_id = a.line_id and f.line_ty = 'ECU'
+            inner join m_prd_operator g on g.empid = b.jpid
+            inner join m_prd_stop_reason_action h on h.srna_id = c.stop_id
+            left join m_prd_operator i on i.empid = c.exe_empid
+            where 1=1  ";
 
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
@@ -487,11 +490,13 @@ class Reporting
                 left join m_prd_line b on b.line_id = a.line_id
                 left join m_prd_mach c on c.mach_id = a.mach_id
                 left join m_andon_status d on d.andon_id = a.andon_id 
-                where 1=1 ORDER BY a.start_time DESC ";
+                where 1=1 ";
 
         if ($date_from !== "*" && $date_to !== "*") {
-            $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
+            $sql .= " AND TO_CHAR(a.start_time, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
         }
+
+        $sql .= "ORDER BY a.start_time DESC ";
 
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {

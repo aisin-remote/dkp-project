@@ -19,8 +19,12 @@ and open the template in the editor.
       <main>
         <div class="container-fluid">
           <ol class="breadcrumb mb-2 mt-4">
-            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
+            <li class="breadcrumb-item">
+              <?php echo $template["group"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["menu"]; ?>
+            </li>
           </ol>
           <?php
           if (isset($_GET["error"])) {
@@ -55,7 +59,7 @@ and open the template in the editor.
                         <tr>
                           <th class="text-nowrap">Date</th>
                           <th class="text-nowrap">Shift</th>
-                          <th class="text-nowrap">Line DC</th>
+                          <th class="text-nowrap">Line</th>
                           <th class="text-nowrap">JP</th>
                           <th class="text-nowrap">Material</th>
                           <th class="text-nowrap">Hour</th>
@@ -75,11 +79,11 @@ and open the template in the editor.
                         <?php if (!empty($data["list"])) {
                           foreach ($data["list"] as $list) {
                             echo "<tr>" . "<td class='text-nowrap'>" . $list["prd_dt"] . "</td>"
-                              . "<td class='text-nowrap'>" . $list["shift"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["pval1"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["line_name"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["operator"] . "</td>"
-                              . "<td class='text-nowrap'>" . $list["dies_name"] . "</td>"
-                              . "<td class='text-nowrap'>" . $list["time_start"] ." - ". $list["time_end"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["material"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["time_start"] . " - " . $list["time_end"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["start_time"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["end_time"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["stop_time"] . "</td>"
@@ -109,7 +113,8 @@ and open the template in the editor.
       <?php include 'common/t_footer.php'; ?>
     </div>
   </div>
-  <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_filter_label" aria-hidden="true">
+  <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="modal_filter_label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <form method="get" action="#">
         <input type="hidden" name="action" value="<?= $action ?>">
@@ -123,25 +128,36 @@ and open the template in the editor.
           <div class="modal-body">
             <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Start Date</label></div>
-              <div class="col"><input type="text" name="date_from" class="form-control datepicker" value="<?php echo $date_from; ?>"></div>
+              <div class="col"><input type="text" name="date_from" class="form-control datepicker"
+                  value="<?php echo $date_from; ?>"></div>
               <label class="col-form-label px-3">to</label>
-              <div class="col"><input type="text" name="date_to" class="form-control datepicker" value="<?php echo $date_to; ?>"></div>
+              <div class="col"><input type="text" name="date_to" class="form-control datepicker"
+                  value="<?php echo $date_to; ?>"></div>
             </div>
-            <!-- <div class="row my-2">
-              <div class="col-4"><label class="col-form-label">Year</label></div>
-              <div class="col"><input type="text" name="prd_year" class="form-control" value="<?php echo $prd_year; ?>"></div>
-            </div>
-            <div class="row my-2">
-              <div class="col-4"><label class="col-form-label">Month</label></div>
-              <div class="col"><input type="text" name="prd_month" class="form-control" value="<?php echo $prd_month; ?>"></div>
-            </div> -->
+            <!-- <div clas
+           -->
             <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Shift</label></div>
-              <div class="col"><input type="text" name="shift" class="form-control" value="<?php echo $shift; ?>"></div>
+              <!-- <div class="col"><input type="text" name="shift" class="form-control" value="<?php echo $shift; ?>"></div> -->
+              <div class="col">
+                <select name="shift" id="shift" class="form-control select2" style="width: 300px">
+                  <option value="" selected>Pilih Shift</option>
+                  <?php
+                  foreach ($shiftlist as $s) {
+                    ?>
+                    <option value="<?php echo $s["seq"]; ?>" <?php if ($s["pval1"] == $_GET["shift"]) {
+                         echo "selected";
+                       } ?>><?php echo $s["pval1"]; ?></option>
+                    <?php
+                  }
+                  ?>
+                </select>
+              </div>
             </div>
             <div class="row my-2">
-              <div class="col-4"><label class="col-form-label">Line DC</label></div>
-              <div class="col"><input type="text" name="line_id" class="form-control" value="<?php echo $line_id; ?>"></div>
+              <div class="col-4"><label class="col-form-label">Line</label></div>
+              <div class="col"><input type="text" name="line_id" class="form-control" value="<?php echo $line_id; ?>">
+              </div>
             </div>
             <!-- <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Leader</label></div>
@@ -163,7 +179,7 @@ and open the template in the editor.
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       $("#data-table-x").DataTable({
         stateSave: true,
         order: [
@@ -173,19 +189,19 @@ and open the template in the editor.
           "<'row'<'col-sm-12'tr>>" +
           "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
         buttons: [{
-            extend: 'excel',
-            title: "daily_production_report_content_stop",
-            className: 'btn btn-pale-green btn-sm',
-            text: '<i class="material-icons">download</i>Download Excel'
-          },
-          {
-            className: 'btn btn-pale-green-outlined btn-sm',
-            text: '<i class="material-icons">filter_alt</i> Filter',
-            action: function() {
-              $('#modal_filter').modal("show");
+          extend: 'excel',
+          title: "daily_production_report_content_stop",
+          className: 'btn btn-pale-green btn-sm',
+          text: '<i class="material-icons">download</i>Download Excel'
+        },
+        {
+          className: 'btn btn-pale-green-outlined btn-sm',
+          text: '<i class="material-icons">filter_alt</i> Filter',
+          action: function () {
+            $('#modal_filter').modal("show");
 
-            }
           }
+        }
         ]
       });
 
@@ -195,7 +211,7 @@ and open the template in the editor.
         dateFormat: "Ymd"
       });
 
-      $('td').each(function() {
+      $('td').each(function () {
         if ($(this).html() == 'Completed') {
           $(this).css('color', 'green');
         } else if ($(this).html() == 'On Progress') {

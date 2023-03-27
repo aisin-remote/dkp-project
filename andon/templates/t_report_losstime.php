@@ -53,37 +53,28 @@ and open the template in the editor.
                     <table class="table table-sm table-striped" id="data-table-x">
                       <thead>
                         <tr>
-                          <th class="align-middle">Line</th>
-                          <th class="align-middle">Machine</th>
-                          <th class="align-middle">Andon Status</th>
-                          <th class="align-middle">Status</th>
-                          <th class="align-middle">Start Time</th>
-                          <th class="align-middle">End Time</th>
-                          <th class="align-middle">Process Time</th>
-                          <th class="align-middle">Duration (m)</th>
+                          <th class="text-nowrap">Line</th>
+                          <th class="text-nowrap">Machine</th>
+                          <th class="text-nowrap">Andon Status</th>
+                          <th class="text-nowrap">Status</th>
+                          <th class="text-nowrap">Start Time</th>
+                          <th class="text-nowrap">End Time</th>
+                          <th class="text-nowrap">Process Time</th>
+                          <th class="text-nowrap">Duration (m)</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php if (!empty($data["list"])) {
                           // print("<pre>".print_r($data["list"],true)."</pre>");
                           foreach ($data["list"] as $list) {
-                            // if ($list["status"] == 'X' ) {
-                            //   $status = 'Transfer';
-                            // } else if ($data["status"] == 'C') {
-                            //   $status = 'Complete';
-                            // } else if ($data["status"] == 'P') {
-                            //   $status = 'Proses';
-                            // } else if ($data["status"] == 'N') {
-                            //   $status = 'New';
-                            // }
-                            echo "<tr>" . "<td class='align-middle'>" . $list["line_name"] . "</td>"
-                              . "<td class='align-middle'>" . $list["mach_name"] . "</td>"
-                              . "<td class='align-middle'>" . $list["desc"] . "</td>"
-                              . "<td class='align-middle'>" . $list["status"] . "</td>"
-                              . "<td class='align-middle'>" . $list["start"] . "</td>"
-                              . "<td class='align-middle'>" . $list["end"] ."</td>"
-                              . "<td class='align-middle'>" . $list["proses"] . "</td>"
-                              . "<td class='align-middle'>" . $list["duration"] . "</td>"
+                            echo "<tr>" . "<td class='text-nowrap'>" . $list["line_name"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["mach_name"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["desc"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["status"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["start"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["end"] ."</td>"
+                              . "<td class='text-nowrap'>" . $list["proses"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["duration"] . "</td>"
                               . "</tr>";
                           }
                         }

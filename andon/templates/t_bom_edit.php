@@ -200,13 +200,8 @@ and open the template in the editor.
         }
 
         $("#btn_add_item").click(function () {
-            // var cloneObj = $('#mseg_data_1').clone();
-            // cloneObj.find(".select2 ").remove();
-            // cloneObj.find("select").select2();
-            // $("tbody #mseg").append(cloneObj);
             // get the last DIV which ID starts with ^= "klon"
             var $div = $('tr[id^="mseg_data_"]:last');
-            // $div.find(".select2").select2("destroy");
 
             // Read the Number from that DIV's ID (i.e: 3 from "klon3")
             // And increment that number by 1
@@ -217,14 +212,12 @@ and open the template in the editor.
             var $klon_id = 'mseg_data_' + num;
             // // $("#" + $klon_id + " .select2").prop("id", $klon_id);
             var $klon = $div.clone(true).prop('id', $klon_id);
-
             // Finally insert $klon wherever you want
             $div.after($klon);
 
             $("#" + $klon_id + " #btn_del_item_" + num_before).prop("id", "btn_del_item_" + num);
             $("#btn_del_item_" + num).attr("onclick", "deleteItem('" + num + "')");
             $("#" + $klon_id + " .menge").val("");
-            // $(".select2").select2()
         });
 
         function deleteItem(num) {

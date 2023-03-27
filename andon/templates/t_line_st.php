@@ -57,7 +57,7 @@ and open the template in the editor.
                         foreach ($data["line"] as $line) {
                           echo "<div class='col-3'>";
                           echo "<div class='card'>";
-                          echo '<button type="button" onclick="lineVal(\'' . $line['line_id'] . '\')" data-toggle="modal" data-target="#modalStatus" class="card-body ' . $line["pval4"] . ' text-center text-white border border-secondary"><h2>' . $line['name1'] . '</h2></button>';
+                          echo '<button type="button" onclick="lineVal(\'' . $line['line_id'] . '\')" data-toggle="modal" data-target="#modalStatus" class="card-body ' . $line["bgcolor"] . ' text-center text-white border border-secondary"><h2>' . $line['name1'] . '</h2></button>';
                           echo "</div>";
                           echo "</div>";
                         }
@@ -68,18 +68,18 @@ and open the template in the editor.
                 </div>
               </div>
               <div class="container mt-3">
-                <table class="table table-borderless table-sm mb-0">
-                  <tbody>
-                    <tr>
-                      <?php
-                      foreach ($status as $sts) {
-                        echo "<td style='width: 100px;' class='" . $sts["bgcolor"] . "'>";
-                        echo "<td class='text-white'>" . $sts["desc"] . "</td>";
-                      }
-                      ?>
-                    </tr>
-                  </tbody>
-                </table>
+                <div class="d-flex justify-content-center">
+                  <?php
+                  foreach ($status as $sts) {
+                    if ($sts["andon_id"] == 0 || $sts["andon_id"] == 5) {
+                      echo "<div class='card border-0 mx-2'>";
+                      echo "<div class='card-body " . $sts["bgcolor"] . " p-2'>";
+                      echo "<p class='m-0'>" . $sts["desc"] . "</p>";
+                      echo "</div></div>";
+                    }
+                  }
+                  ?>
+                </div>
               </div>
             </div>
           </div>
@@ -89,23 +89,16 @@ and open the template in the editor.
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-dark">
               <div class="modal-header">
-                <h5 class="modal-title text-white" id="exampleModalLongTitle">Pilih Status</h5>
+                <h5 class="modal-title text-white" id="exampleModalLongTitle">Status</h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <div class="row">
-                  <?php
-                  foreach ($status as $sts) {
-                    // print_r($sts);
-                    echo "<div class='col-6 mb-2'>";
-                    echo "<input onchange='paramVal(" . $sts["andon_id"] . ")' name='" . $sts["andon_id"] . "' id='" . $sts["andon_id"] . "' type='checkbox' data-toggle='toggle' 
-                    data-on='" . $sts["desc"] . "' data-off='" . $sts["desc"] . "' data-onstyle='primary' data-offstyle='secondary' data-width='200' />";
-                    echo "</div>";
-                    // echo "<a onclick='paramVal(" . $sts["andon_id"] . ")' class='btn btn-block text-white btn-md " . $sts["bgcolor"] . "'>" . $data["desc"] . "</a>";
-                  }
-                  ?>
+                <div class="container my-3" id="check" style="width: 70%">
+                  <input id='machstat' onchange='cek_cb()' type='checkbox' data-toggle='toggle'
+                    data-on='Machine Running' data-off='Machine Off' data-onstyle='success' data-offstyle='secondary'
+                    data-width='100%' data-height='100%' data-size='lg' />
                 </div>
               </div>
             </div>
@@ -130,18 +123,45 @@ and open the template in the editor.
     });
 
     function lineVal(line_id) {
-      $("#line").val(line_id)
+      line = line_id;
+      getLine(line_id)
     }
 
-    function paramVal(param_id) {
-      param = param_id;
-      line = $("#line").val();
-      if ($("#"+param).is(":checked")) {
-        window.location.href = '?action=<?php echo $action; ?>&line=' + line + '&status=' + param;
+    function cek_cb() {
+      if ($("#machstat").is(":checked")) {
+        window.location.href = '?action=<?php echo $action; ?>&line=' + line + '&status=5';
       } else {
-        window.location.href = '?action=<?php echo $action; ?>&line=' + line + '&status=2';
+        window.location.href = '?action=<?php echo $action; ?>&line=' + line + '&status=0';
       }
-      // console.log(param)
+    }
+
+    // function paramVal(param_id) {
+    //   param = param_id;
+    //   line = $("#line").val();
+    //   if ($("#" + param).is(":checked")) {
+    //     window.location.href = '?action=<?php echo $action; ?>&line=' + line + '&status=' + param;
+    //   } else {
+    //     window.location.href = '?action=<?php echo $action; ?>&line=' + line + '&status=2';
+    //   }
+    //   // console.log(param)
+    // }
+
+    function getLine(line) {
+      $.getJSON("?action=api_get_line", function (data) {
+        $.each(data, function (key, val) {
+          if (val.line_id == line) {
+            if (val.line_st == 0) {
+              // $("#machstat").bootstrapToggle('off')
+              $("#check").html("<input id='machstat' onchange='cek_cb()' type='checkbox' data-toggle='toggle' data-on='Machine Running' data-off='Machine Off' data-onstyle='success' data-offstyle='secondary' data-width='100%' data-height='100%' data-size='lg' />")
+              $("#machstat").bootstrapToggle()
+            } else {
+              $("#check").html("<input id='machstat' onchange='cek_cb()' type='checkbox' data-toggle='toggle' data-on='Machine Running' data-off='Machine Off' data-onstyle='success' data-offstyle='secondary' data-width='100%' data-height='100%' data-size='lg' checked />")
+              $("#machstat").bootstrapToggle()
+              // $("#machstat").bootstrapToggle('on')
+            }
+          }
+        })
+      })
     }
 
     function updateDashboard() {

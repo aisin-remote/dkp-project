@@ -16,26 +16,38 @@
 <body class="bg-main">
   <div class="container">
     <img src="img/AISIN_CORPORATION_LOGO 1.png" alt="" />
-    <h4 class="tagline mb-5">UNIT PLANT DIGITALIZATION (Die Casting, Machining & Assy Line)</h4>
+    <h4 class="tagline mb-5">UNIT PLANT DIGITALIZATION (Die Casting, Machining, Assy Line & Electrical Line)</h4>
     <div class="row">
       <div class="col">
-        <a href="prd">
-          <h4 class="link"><i class="material-icons-outlined">settings</i> PRODUCTION</h4>
-        </a>
-        <a href="dm">
-          <h4 class="link"><i class="material-icons-outlined">tools_wrench</i> DIES MAINTENANCE</h4>
-        </a>
-        <a href="pooling">
-          <h4 class="link"><i class="material-icons-outlined">pallet</i> DELIVERY PULLING SYSTEM</h4>
-        </a>
+        <div class="card bg-transparent border-secondary">
+          <div class="card-body ">
+            <div class="card-title font-weight-bold py-0"><h3>DIE CASTING</h3></div>
+            <hr class="bg-secondary">
+            <a href="prd">
+              <h4 class="link"><i class="material-icons-outlined">settings</i> PRODUCTION</h4>
+            </a>
+            <a href="dm">
+              <h4 class="link"><i class="material-icons-outlined">tools_wrench</i> DIES MAINTENANCE</h4>
+            </a>
+            <a href="pooling">
+              <h4 class="link"><i class="material-icons-outlined">pallet</i> DELIVERY PULLING SYSTEM</h4>
+            </a>
+          </div>
+        </div>
       </div>
       <div class="col">
-        <a href="andon">
-          <h4 class="link"><i class="material-icons-outlined">bolt</i> ELECTRIC LINE</h4>
-        </a>
-        <a href="im">
-          <h4 class="link"><i class="material-icons-outlined">inventory</i> INVENTORY MANAGEMENT</h4>
-        </a>
+        <div class="card bg-transparent border-secondary">
+          <div class="card-body ">
+          <div class="card-title font-weight-bold py-0"><h3>ELECTRICAL</h3></div>
+            <hr class="bg-secondary">
+            <a href="andon">
+              <h4 class="link"><i class="material-icons-outlined">bolt</i> ELECTRICAL LINE</h4>
+            </a>
+            <a href="im">
+              <h4 class="link"><i class="material-icons-outlined">inventory</i> INVENTORY MANAGEMENT</h4>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
 

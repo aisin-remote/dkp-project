@@ -1,5 +1,6 @@
 <?php
 if ($action == "mach_stats") {
+  $line_id = $_REQUEST["line_id"];
   $line = new Line();
   $lines = [];
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
@@ -7,37 +8,46 @@ if ($action == "mach_stats") {
   $query_line = "SELECT a.*, a.name1 as mach_name, b.*, b.name1 as line_name, c.* from m_prd_mach a
                 left JOIN m_prd_line b ON b.line_id = a.line_id
                 left JOIN m_andon_status c on c.andon_id = a.stats
+                where a.line_id = '$line_id'
                 ORDER BY mach_id ASC ";
   $stmt = $conn->prepare($query_line);
   if ($stmt->execute()) {
+    $i = 0;
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $lines[] = $row;
+      $result[$i]["machid"] = $row["mach_id"];
+      $result[$i]["machname"] = $row["mach_name"];
+      $result[$i]["lineid"] = $row["line_id"];
+      $result[$i]["linename"] = $row["line_name"];
+      $result[$i]["andonid"] = $row["andon_id"];
+      $result[$i]["bgcolor"] = $row["bgcolor"];
+
+      $i++;
     }
   }
 
-  if (isset($_GET["mach"])) {
-    $mach = $_GET["mach"];
-    foreach ($lines as $row) {
-      $i = 0;
-      foreach ($mach as $url) {
-        if ($row["mach_id"] == $url) {
-          $result[$i]["machid"] = $row["mach_id"];
-          $result[$i]["machname"] = $row["mach_name"];
-          $result[$i]["lineid"] = $row["line_id"];
-          $result[$i]["linename"] = $row["line_name"];
-          $result[$i]["andonid"] = $row["andon_id"];
-          $result[$i]["bgcolor"] = $row["bgcolor"];
-        }
-        $i++;
-      }
-    }
-  } else {
-    $line_id = $lines[0]["line_id"];
-    $line_name = $lines[0]["line_name"];
-    $mach_id = $lines[0]["mach_id"];
-    $mach_name = $lines[0]["mach_name"];
-    $bgcolor = $lines[0]["bgcolor"];
-  }
+  // if (isset($_GET["mach"])) {
+  //   $mach = $_GET["mach"];
+  //   foreach ($lines as $row) {
+  //     $i = 0;
+  //     foreach ($mach as $url) {
+  //       if ($row["mach_id"] == $url) {
+  //         $result[$i]["machid"] = $row["mach_id"];
+  //         $result[$i]["machname"] = $row["mach_name"];
+  //         $result[$i]["lineid"] = $row["line_id"];
+  //         $result[$i]["linename"] = $row["line_name"];
+  //         $result[$i]["andonid"] = $row["andon_id"];
+  //         $result[$i]["bgcolor"] = $row["bgcolor"];
+  //       }
+  //       $i++;
+  //     }
+  //   }
+  // } else {
+  //   $line_id = $lines[0]["line_id"];
+  //   $line_name = $lines[0]["line_name"];
+  //   $mach_id = $lines[0]["mach_id"];
+  //   $mach_name = $lines[0]["mach_name"];
+  //   $bgcolor = $lines[0]["bgcolor"];
+  // }
 
   $query = "SELECT * FROM m_prd_mach_btn ORDER BY mach_id, line_id, andon_id ASC ";
   $stmt = $conn->prepare($query);

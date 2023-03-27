@@ -130,18 +130,18 @@ and open the template in the editor.
                                     <table class="table table-striped table-sm" id="data-table">
                                         <thead>
                                             <tr>
-                                                <th>Material</th>
-                                                <th>Hour</th>
-                                                <th>CT</th>
-                                                <th>Plan Qty</th>
-                                                <th>Prod Qty</th>
-                                                <th>NG Qty</th>
-                                                <th>Stop Count</th>
-                                                <th>Loss Time (m)</th>
-                                                <th>Prd Time (m)</th>
-                                                <th>Efficiency (%)</th>
-                                                <th>Apr. By</th>
-                                                <th class="text-center">Action</th>
+                                                <th class="text-nowrap">Material</th>
+                                                <th class="text-nowrap">Hour</th>
+                                                <th class="text-nowrap">CT</th>
+                                                <th class="text-nowrap">Plan Qty</th>
+                                                <th class="text-nowrap">Prod Qty</th>
+                                                <th class="text-nowrap">NG Qty</th>
+                                                <th class="text-nowrap">Stop Count</th>
+                                                <th class="text-nowrap">Loss Time (m)</th>
+                                                <th class="text-nowrap">Prd Time (m)</th>
+                                                <th class="text-nowrap">Efficiency (%)</th>
+                                                <th class="text-nowrap">Apr. By</th>
+                                                <th class="text-center text-nowrap">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -149,17 +149,17 @@ and open the template in the editor.
                                             if (!empty($data["list"])) {
                                                 foreach ($data["list"] as $list) {
                                                     echo "<tr>"
-                                                        . "<td class='align-middle'>" . $list["name1"] . "</td>"
-                                                        . "<td class='align-middle'>" . $list["time_start"] . " - " . $list["time_end"] . "</td>"
-                                                        . "<td class='align-middle'>" . $list["cctime"] . "</td>"
-                                                        . "<td class='align-middle'>" . $list["pln_qty"] . "</td>"
-                                                        . "<td class='align-middle'>" . $list["prd_qty"] . "</td>"
-                                                        . "<td class='align-middle'>" . $list["tot_ng"] . "</td>"
-                                                        . "<td class='align-middle'>" . $list["stop_cnt"] . "</td>"
-                                                        . "<td class='align-middle'>" . $list["loss_time"] . "</td>"
-                                                        . "<td class='align-middle'>" . $list["prd_time"] . "</td>"
-                                                        . "<td class='align-middle'>" . $list["eff"] . "</td>"
-                                                        . "<td class='align-middle'>" . $list["apr_name"] . "</td>"
+                                                        . "<td class='text-nowrap'>" . $list["name1"] . "</td>"
+                                                        . "<td class='text-nowrap'>" . $list["time_start"] . " - " . $list["time_end"] . "</td>"
+                                                        . "<td class='text-nowrap'>" . $list["cctime"] . "</td>"
+                                                        . "<td class='text-nowrap'>" . $list["pln_qty"] . "</td>"
+                                                        . "<td class='text-nowrap'>" . $list["prd_qty"] . "</td>"
+                                                        . "<td class='text-nowrap'>" . $list["tot_ng"] . "</td>"
+                                                        . "<td class='text-nowrap'>" . $list["stop_cnt"] . "</td>"
+                                                        . "<td class='text-nowrap'>" . $list["loss_time"] . "</td>"
+                                                        . "<td class='text-nowrap'>" . $list["prd_time"] . "</td>"
+                                                        . "<td class='text-nowrap'>" . $list["eff"] . "</td>"
+                                                        . "<td class='text-nowrap'>" . $list["apr_name"] . "</td>"
                                                         . "<td class='text-center pr-3'>"
                                                         . "<a href='?action=$action&id=" . $list["line_id"] . "&id2=" . $list["prd_dt"] . "&id3=" . $list["shift"] . "&id4=" . $list["prd_seq"] . "&step=detail" . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>visibility</i> </a>"
                                                         . "</td>"
