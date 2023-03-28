@@ -30,174 +30,187 @@ and open the template in the editor.
                     </div>';
           }
           ?>
-          <form method="post" id="my-form" action="?action=<?php echo $action; ?>&line=<?php echo $line; ?>&date=<?php echo $date; ?>&shift=<?php echo $shift; ?>">
+          <button class="btn mt-4 font-weight-bold" onclick="window.history.back()" style="background-color: transparent;"><span class="material-icons">
+              arrow_back_ios
+            </span>Back</button>
+          <form method="post" id="my-form"
+            action="?action=<?php echo $action; ?>&line=<?php echo $line; ?>&date=<?php echo $date; ?>&shift=<?php echo $shift; ?>">
 
-            <div class="row mt-1">
+            <div class="row">
               <div class="col-12">
-                <div class="card">
+                <div class="card border-0">
                   <div class="card-body">
                     <!-- Edit Here -->
 
-                    <input type="hidden" name="line_id" id="line_id" class="form-control" value="<?php echo $_GET["line"]; ?>">
+                    <input type="hidden" name="line_id" id="line_id" class="form-control"
+                      value="<?php echo $_GET["line"]; ?>">
                     <!-- <input type="hidden" name="shift" id="shift" class="form-control" value="<?php echo $_GET["shift"]; ?>"> -->
                     <input type="hidden" name="reff" id="reff" class="form-control" value="">
 
-                    <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Shift</label>
-                      <div class="col-lg-2 col-md-5 col-sm-12">
-                        <select name="shift" onchange="shiftCount()" id="shift" class="form-control select2" readonly>
-                          <?php
-                          foreach ($shift_list as $row) {
-                            ?>
-                            <option value="<?php echo $row["seq"]; ?>" <?= ($row["seq"] == $shift_ori[0]["seq"]) ? "selected" : "" ?>><?php echo $row["pval1"]; ?></option>
-                            <?php
-                          }
-                          ?>
-                        </select>
+                    <div class="row">
+                      <div class="col-6">
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Shift</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <select name="shift" onchange="shiftCount()" id="shift" class="form-control select2"
+                              readonly>
+                              <?php
+                              foreach ($shift_list as $row) {
+                                ?>
+                                <option value="<?php echo $row["seq"]; ?>" <?= ($row["seq"] == $shift_ori[0]["seq"]) ? "selected" : "" ?>><?php echo $row["pval1"]; ?></option>
+                                <?php
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Date</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <input type="text" id="prd_dt" name="prd_dt" class="form-control datepicker" maxlength="100"
+                              value="<?php echo $date; ?>" readonly>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Leader</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <select name="ldid" id="ldid" class="form-control select2">
+                              <?php
+                              foreach ($ld_list as $row) {
+                                ?>
+                                <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                                <?php
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">JP</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <select name="jpid" id="jpid" class="form-control select2">
+                              <?php
+                              foreach ($jp_list as $row) {
+                                ?>
+                                <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                                <?php
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Operator 1</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <select name="op1id" id="op1id" class="form-control select2">
+                              <option value="">None</option>
+                              <?php
+                              foreach ($op_list as $row) {
+                                ?>
+                                <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                                <?php
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Operator 2</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <select name="op2id" id="op2id" class="form-control select2">
+                              <option value="">None</option>
+                              <?php
+                              foreach ($op_list as $row) {
+                                ?>
+                                <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                                <?php
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Operator 3</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <select name="op3id" id="op3id" class="form-control select2">
+                              <option value="">None</option>
+                              <?php
+                              foreach ($op_list as $row) {
+                                ?>
+                                <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                                <?php
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Operator 4</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <select name="op4id" id="op4id" class="form-control select2">
+                              <option value="">None</option>
+                              <?php
+                              foreach ($op_list as $row) {
+                                ?>
+                                <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                                <?php
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-6">
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Material</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <select name="dies_id" id="dies_id" class="form-control select2">
+                              <?php
+                              foreach ($matlist as $row) {
+                                ?>
+                                <option value="<?php echo $row["matnr"]; ?>"><?php echo $row["matnr"] . " - " . $row["mtart"] . " - " . $row["name1"]; ?></option>
+                                <?php
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Cycle Time</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <input type="number" name="cctime" id="cctime" step="1" min="0" class="form-control"
+                              required>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Total Target (Est)</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <input type="number" name="total_target" id="total_target" step="1" min="0"
+                              class="form-control">
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <div class="col-lg-4 col-md-2 col-sm-12 d-sm-none d-md-block"></div>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <input type="hidden" name="save" id="save" value="true">
+                            <button type="submit" name="btn_save" id="btn_save" value="save"
+                              class="btn btn-pale-green">Save
+                              & Generate Production Entry</button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-
-                    <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Date</label>
-                      <div class="col-lg-2 col-md-5 col-sm-12">
-                        <input type="text" id="prd_dt" name="prd_dt" class="form-control datepicker" maxlength="100"
-                          value="<?php echo $date; ?>" readonly>
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Leader</label>
-                      <div class="col-lg-3 col-md-5 col-sm-12">
-                        <select name="ldid" id="ldid" class="form-control select2">
-                          <?php
-                          foreach ($ld_list as $row) {
-                            ?>
-                            <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
-                            <?php
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">JP</label>
-                      <div class="col-lg-3 col-md-5 col-sm-12">
-                        <select name="jpid" id="jpid" class="form-control select2">
-                          <?php
-                          foreach ($jp_list as $row) {
-                            ?>
-                            <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
-                            <?php
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Operator 1</label>
-                      <div class="col-lg-3 col-md-5 col-sm-12">
-                        <select name="op1id" id="op1id" class="form-control select2">
-                          <option value="">None</option>
-                          <?php
-                          foreach ($op_list as $row) {
-                            ?>
-                            <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
-                            <?php
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Operator 2</label>
-                      <div class="col-lg-3 col-md-5 col-sm-12">
-                        <select name="op2id" id="op2id" class="form-control select2">
-                          <option value="">None</option>
-                          <?php
-                          foreach ($op_list as $row) {
-                            ?>
-                            <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
-                            <?php
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Operator 3</label>
-                      <div class="col-lg-3 col-md-5 col-sm-12">
-                        <select name="op3id" id="op3id" class="form-control select2">
-                          <option value="">None</option>
-                          <?php
-                          foreach ($op_list as $row) {
-                            ?>
-                            <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
-                            <?php
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Operator 4</label>
-                      <div class="col-lg-3 col-md-5 col-sm-12">
-                        <select name="op4id" id="op4id" class="form-control select2">
-                          <option value="">None</option>
-                          <?php
-                          foreach ($op_list as $row) {
-                            ?>
-                            <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
-                            <?php
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Material</label>
-                      <div class="col-lg-3 col-md-5 col-sm-12">
-                        <select name="dies_id" id="dies_id" class="form-control select2">
-                          <?php
-                          foreach ($matlist as $row) {
-                            ?>
-                            <option value="<?php echo $row["matnr"]; ?>"><?php echo $row["matnr"] . " - " . $row["mtart"] . " - " . $row["name1"]; ?></option>
-                            <?php
-                          }
-                          ?>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Cycle Time</label>
-                      <div class="col-lg-2 col-md-5 col-sm-12">
-                        <input type="number" name="cctime" id="cctime" step="1" min="0" class="form-control" required>
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Total Target (Est)</label>
-                      <div class="col-lg-2 col-md-5 col-sm-12">
-                        <input type="number" name="total_target" id="total_target" step="1" min="0"
-                          class="form-control">
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <div class="col-lg-2 col-md-3 col-sm-12 d-sm-none d-md-block"></div>
-                      <div class="col-lg-5 col-md-5 col-sm-12">
-                        <input type="hidden" name="save" id="save" value="true">
-                        <button type="submit" name="btn_save" id="btn_save" value="save" class="btn btn-pale-green">Save
-                          & Generate Production Entry</button>
-                      </div>
-                    </div>
-
                   </div>
                 </div>
               </div>

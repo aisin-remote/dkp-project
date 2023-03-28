@@ -152,6 +152,11 @@ if ($action == "api_update_stats") {
 
   $return = array();
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+  if (isset($_REQUEST["line_id"]) && $andon_id == 4 && $isBtnOn == 1) {
+    $line_id = $_REQUEST["line_id"];
+    $conn->exec("UPDATE m_prd_mach_btn SET btn_sts = 0
+            WHERE line_id = '$line_id' AND andon_id = 8 ");
+  }
   if (($andon_id == 1 || $andon_id == 2 || $andon_id == 3) && $isBtnOn == 1) {
     $conn->exec("UPDATE m_prd_mach_btn SET btn_sts = 0
             WHERE mach_id = '$mach_id' AND andon_id = 4 ");
