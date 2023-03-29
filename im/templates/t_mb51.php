@@ -73,14 +73,17 @@ and open the template in the editor.
                             <th class="text-nowrap">Posting Date</th>
                             <th class="text-nowrap">Item No</th>
                             <th class="text-nowrap">Plant</th>
-                            <th class="text-nowrap">Storage Location</th>
-                            <th class="text-nowrap">Material</th>
+                            <th class="text-nowrap">Plant Desc</th>
+                            <th class="text-nowrap">S.Loc.</th>
+                            <th class="text-nowrap">S.Loc. Desc</th>
+                            <th class="text-nowrap">Material No</th>
+                            <th class="text-nowrap">Material Desc</th>
                             <th class="text-nowrap">Batch Number</th>
                             <th class='text-center text-nowrap'>Quantity</th>
                             <th class='text-center text-nowrap'>Mvt. Type</th>
-                            <th class='text-center text-nowrap'>Debit/Credit</th>
+                            <th class='text-center text-nowrap'>Debit/Credit Ind.</th>
                             <th class='text-center text-nowrap'>PO Number</th>                          
-                            <th class='text-center text-nowrap'>Prd. Ord Number</th>
+                            <th class='text-center text-nowrap'>Prd. Ord No.</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -92,10 +95,13 @@ and open the template in the editor.
                               . "<td class='text-center text-nowrap'>".$list["mjahr"]."</td>"
                               . "<td class='text-center text-nowrap'>".$list["posting_date"]."</td>"
                               . "<td class='text-center text-nowrap'>".$list["mblpo"]."</td>"
-                              . "<td class='text-nowrap'>".$list["werks"]." - ".$list["plant_name"]."</td>"   
-                              . "<td class='text-nowrap'>".$list["lgort"]." - ".$list["sloc_name"]."</td>"
-                              . "<td class='text-nowrap'>".$list["matnr"]." - ".$list["maktx"]."</td>"
-                              . "<td class='text-nowrap'>".$list["charg"]."</td>"                                 
+                              . "<td class='text-center text-nowrap'>".$list["werks"]."</td>"
+                              . "<td class='text-nowrap'>".$list["plant_name"]."</td>"
+                              . "<td class='text-center text-nowrap'>".$list["lgort"]."</td>"
+                              . "<td class='text-nowrap'>".$list["sloc_name"]."</td>"
+                              . "<td class='text-center text-nowrap'>".$list["matnr"]."</td>"
+                              . "<td class='text-nowrap'>".$list["maktx"]."</td>"
+                              . "<td class='text-center text-nowrap'>".$list["charg"]."</td>"                                 
                               . "<td class='text-right text-nowrap'>".$list["menge"]."</td>"                                
                               . "<td class='text-center text-nowrap'>".$list["bwart"]."</td>"
                               . "<td class='text-center text-nowrap'>".$list["shkzg"]."</td>"                                
@@ -146,7 +152,7 @@ and open the template in the editor.
                 <div class="form-group row">
                   <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Plant</label>
                   <div class="col-lg-10 col-md-9 col-sm-12">
-                    <select name="werks" class="form-control" id="werks">
+                    <select name="werks" class="form-control modal_select2" id="werks">
                       <option value="">Please Select Plant</option>
                       <?php 
                       if(!empty($data["plants"])) {
@@ -165,7 +171,7 @@ and open the template in the editor.
                 <div class="form-group row">
                   <label class="col-form-label col-lg-2 col-md-3 col-sm-12">S.Loc</label>
                   <div class="col-lg-10 col-md-9 col-sm-12">
-                    <select name="lgort" class="form-control" id="lgort">
+                    <select name="lgort" class="form-control modal_select2" id="lgort">
                       <option value="">Please Select S.Loc</option>
                       <?php 
                       if(!empty($data["lgorts"])) {
@@ -184,7 +190,7 @@ and open the template in the editor.
                 <div class="form-group row">
                   <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Material</label>
                   <div class="col-lg-10 col-md-9 col-sm-12">
-                    <select name="matnr" class="form-control" id="matnr">
+                    <select name="matnr" class="form-control modal_select2" id="matnr">
                       <option value="">Please Select Material</option>
                       <?php 
                       if(!empty($data["materials"])) {
@@ -234,9 +240,14 @@ and open the template in the editor.
             text: '<i class="material-icons">filter_alt</i> Filter',
             action: function() {
               $('#modal_upload').modal("show");
-
             }
           } ]
+        });
+        
+        $('.modal_select2').select2({
+          dropdownParent: $('#modal_upload'),
+          theme: 'bootstrap4',
+          width: '100%'
         });
       });
       

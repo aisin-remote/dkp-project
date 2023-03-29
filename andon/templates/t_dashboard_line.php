@@ -21,13 +21,13 @@
         </li>
       </ol> -->
       <div style="position: absolute; top: 20px; left: 0;" class="container-fluid">
-        <div id="toast_container" class="position-relative w-100" style="z-index:9999;" >
+        <div id="toast_container" class="position-relative w-100 bg-dark" style="z-index:9999;" >
           <?php
           if(!empty($data_andon_status)) {
             foreach($data_andon_status as $row) {
           ?>
           <div class="alert text-center <?=$row["bgcolor"].' '.$row["text_color"]?>" role="alert" id="<?=$row["line_id"]."_".$row["mach_id"]."_".$row["andon_id"]?>" style="display: none;">
-            <h1><?=$row["mach_name"]?> <?=$row["desc"]?></h1>
+            <h1 class="display-1"><?=$row["mach_id"]?> <?=$row["desc"]?></h1>
           </div>
           <?php
             }
@@ -73,7 +73,7 @@
                   style="width: 25%;color: #002E94;font-size:60px">
                   <?= $pln_qty ?>
                 </td>
-                <td class="text-left align-middle h1 border-left-0" id="pln_qty"
+                <td class="text-left align-middle h1 border-left-0" 
                   style="width: 15%;color: #002E94;font-size:60px">
                 </td>
               </tr>
@@ -83,7 +83,7 @@
                   style="width: 25%;color: #19A7CE;font-size:60px">
                   <?= $prd_qty ?>
                 </td>
-                <td class="text-left align-middle h1 border-left-0" id="prd_qty"
+                <td class="text-left align-middle h1 border-left-0" 
                   style="width: 15%;color: #19A7CE;font-size:60px">
                 </td>
               </tr>
@@ -93,7 +93,7 @@
                   style="width: 25%;color: #002E94;font-size:60px">
                   <?= $balance ?>
                 </td>
-                <td class="text-left align-middle h1 border-left-0" id="balance"
+                <td class="text-left align-middle h1 border-left-0" 
                   style="width: 15%;color: #002E94;font-size:60px">
                 </td>
               </tr>
@@ -103,24 +103,18 @@
                   style="width: 25%;color: #19A7CE;font-size:60px">
                   <?= $achieve ?>
                 </td>
-                <td class="text-left align-middle h1 border-left-0" id="achieve"
+                <td class="text-left align-middle h1 border-left-0" 
                   style="width: 15%;color: #19A7CE;font-size:60px">
                   %
                 </td>
               </tr>
-              <!-- <tr>
-                    <td class="text-center h1" style="width: 60%">CYCLE TIME</td>
-                    <td class="text-center align-middle h1" id="cctime" style="width: 60%">
-                      <?= $cctime ?>
-                    </td>
-                  </tr> -->
               <tr>
-                <td class="text-center h1" style="width: 60%;color: #002E94;font-size:60px">LOSS TIME (PARTS)</td>
+                <td class="text-center h1" style="width: 60%;color: #002E94;font-size:60px">LOSS TIME (PART)</td>
                 <td class="text-right align-middle h1 border-right-0 " id="stopdies"
                   style="width: 25%;color: #002E94;font-size:60px">
-                  <?= $achieve ?>
+                  <?= $stop_dies ?>
                 </td>
-                <td class="text-left align-middle h1 border-left-0" id="stopdies"
+                <td class="text-left align-middle h1 border-left-0" 
                   style="width: 15%;color: #002E94;font-size:60px">
                   s
                 </td>
@@ -129,31 +123,31 @@
                 <td class="text-center h1" style="width: 60%;color: #19A7CE;font-size:60px">LOSS TIME (M/C)</td>
                 <td class="text-right align-middle h1 border-right-0" id="stopmesin"
                   style="width: 25%;color: #19A7CE;font-size:60px">
-                  <?= $achieve ?>
+                  <?= $stop_mesin ?>
                 </td>
-                <td class="text-left align-middle h1 border-left-0" id="stopmesin"
+                <td class="text-left align-middle h1 border-left-0" 
                   style="width: 15%;color: #19A7CE;font-size:60px">
                   s
                 </td>
+              </tr>              
+              <tr>
+                <td class="text-center h1" style="width: 60%;color: #002E94;font-size:60px">DANDORI</td>
+                <td class="text-right h1 border-right-0"><span id="data_dandori"
+                    style="width: 25%;color: #002E94;font-size:60px">
+                    <?= $dandori ?>
+                  </span></td>
+                <td class="text-left h1 border-left-0"><span 
+                    style="width: 15%;color: #002E94;font-size:60px">
+                    s
+                  </span></td>
               </tr>
               <tr>
-                <td class="text-center h1" style="width: 60%;color: #002E94;font-size:60px">RIL</td>
+                <td class="text-center h1" style="width: 60%;color: #19A7CE;font-size:60px">RIL</td>
                 <td class="text-right h1 border-right-0"><span id="data_ril"
-                    style="width: 25%;color: #002E94;font-size:60px">
+                    style="width: 25%;color: #19A7CE;font-size:60px">
                     <?= $ril ?>
                   </span></td>
-                <td class="text-left h1 border-left-0"><span id="data_ril"
-                    style="width: 15%;color: #002E94;font-size:60px">
-                    %
-                  </span></td>
-              </tr>
-              <tr>
-                <td class="text-center h1" style="width: 60%;color: #19A7CE;font-size:60px">ROL</td>
-                <td class="text-right h1 border-right-0"><span id="data_rol"
-                    style="width: 25%;color: #19A7CE;font-size:60px">
-                    <?= $rol ?>
-                  </span></td>
-                <td class="text-left h1 border-left-0"><span id="data_rol"
+                <td class="text-left h1 border-left-0"><span 
                     style="width: 15%;color: #19A7CE;font-size:60px">
                     %
                   </span></td>
@@ -342,6 +336,7 @@
           $("#cctime").html(data.cctime);
           $("#stopdies").html(data.stop_dies ? data.stop_dies : 0);
           $("#stopmesin").html(data.stop_mesin ? data.stop_mesin : 0);
+          $("#dandori").html(data.dandori ? data.dandori : 0);
           $("#achieve").html(data.achieve);
           $("#data_eff").html(data.eff);
           $("#data_ril").html(data.ril);

@@ -217,13 +217,19 @@ if ($action == "api_dashboard_adn_single") {
             inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
             inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'MESIN'
             where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
-            AND a.stats = 'A' and app_id = '".APP."') as stop_mesin,
+            AND a.stats = 'A' and app_id = '".APP."') as stop_mesin, 
             (select sum(b.stop_time)
             from t_prd_daily_i a
             inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
             inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'PART'
             where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
-            AND a.stats = 'A' and app_id = '".APP."') as stop_part
+            AND a.stats = 'A' and app_id = '".APP."') as stop_part, 
+            (select sum(b.stop_time)
+            from t_prd_daily_i a
+            inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
+            inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2005'
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
+            AND a.stats = 'A' and app_id = 'AISIN_ADN') as stop_dandori 
             from t_prd_daily_i a 
             inner join m_prd_line b ON b.line_id = a.line_id AND b.line_ty = 'ECU'
             where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A'";
@@ -239,6 +245,7 @@ if ($action == "api_dashboard_adn_single") {
   $eff = 0;
   $ril = 0;
   $rol = 0;
+  $dandori = 0;
 
   if ($stmt->execute() or die($stmt->errorInfo()[2])) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -250,6 +257,7 @@ if ($action == "api_dashboard_adn_single") {
       $cctime = $row["cctime"];
       $stop_dies = $row["stop_part"] * 60;
       $stop_mesin = $row["stop_mesin"] * 60;
+      $dandori = $row["stop_dandori"] * 60;
       $eff = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
       $ril = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
       $rol = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
@@ -265,10 +273,10 @@ if ($action == "api_dashboard_adn_single") {
   $return["stop_dies"] = number_format($stop_dies);
   $return["stop_mesin"] = number_format($stop_mesin);
   $return["eff"] = $eff;
+  $conn->exec("UPDATE m_prd_line SET eff = '$eff' WHERE line_id = '$line_id'");
   $return["ril"] = $ril;
   $return["rol"] = $rol;
-
-  $conn->exec("UPDATE m_prd_line SET eff = $eff WHERE line_id = '$line_id' ");
+  $return["dandori"] = $dandori;
 
   echo json_encode($return);
 }
@@ -353,7 +361,13 @@ if ($action == "dashboard_line") {
             inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
             inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'PART'
             where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
-            AND a.stats = 'A' and app_id = '".APP."') as stop_part
+            AND a.stats = 'A' and app_id = '".APP."') as stop_part, 
+            (select sum(b.stop_time)
+            from t_prd_daily_i a
+            inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
+            inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2005'
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
+            AND a.stats = 'A' and app_id = 'AISIN_ADN') as stop_dandori 
             from t_prd_daily_i a 
             inner join m_prd_line b ON b.line_id = a.line_id AND b.line_ty = 'ECU'
             where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A'";
@@ -368,6 +382,7 @@ if ($action == "dashboard_line") {
   $eff = 0;
   $ril = 0;
   $rol = 0;
+  $dandori = 0;
 
   if ($stmt->execute() or die($stmt->errorInfo()[2])) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -379,13 +394,13 @@ if ($action == "dashboard_line") {
       $cctime = $row["cctime"];
       $stop_dies = $row["stop_part"] * 60;
       $stop_mesin = $row["stop_mesin"] * 60;
+      $dandori = $row["stop_dandori"] * 60;
       $eff = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
       $ril = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
       $rol = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
     }
   }
   
-
   $sql_get_andon = "SELECT a.*, b.name1 as mach_name, c.\"desc\", c.bgcolor, c.text_color FROM public.m_prd_mach_btn a 
                     inner join public.m_prd_mach b ON b.line_id = a.line_id and b.mach_id = a.mach_id 
                     inner join public.m_andon_status c ON c.andon_id = a.andon_id 

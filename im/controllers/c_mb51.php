@@ -8,7 +8,7 @@ if($action == "mb51") {
   $cMara = new Material();
   
   $data["plants"] = $cPlant->getList();
-  /*$data["lgorts"] = $cSloc->getList($data["plants"][0]["werks"]);*/
+  //$data["lgorts"] = $cSloc->getList($data["plants"][0]["werks"]);
   $data["materials"] = $cMara->getList();
   
   $budat_from = date("Y-m-d");
