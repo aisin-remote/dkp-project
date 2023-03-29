@@ -268,6 +268,8 @@ if ($action == "api_dashboard_adn_single") {
   $return["ril"] = $ril;
   $return["rol"] = $rol;
 
+  // $conn->exec("UPDATE nama_table SET eff = $return["eff"] WHERE line_id = '$line_id' ");
+
   echo json_encode($return);
 }
 
@@ -383,6 +385,7 @@ if ($action == "dashboard_line") {
     }
   }
   
+
   $sql_get_andon = "SELECT a.*, b.name1 as mach_name, c.\"desc\", c.bgcolor, c.text_color FROM public.m_prd_mach_btn a 
                     inner join public.m_prd_mach b ON b.line_id = a.line_id and b.mach_id = a.mach_id 
                     inner join public.m_andon_status c ON c.andon_id = a.andon_id 

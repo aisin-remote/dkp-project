@@ -149,11 +149,12 @@ if ($action == "api_update_stats") {
   $mach_id = $_REQUEST["mach_id"];
   $andon_id = $_REQUEST["andon_id"];
   $isBtnOn = $_REQUEST["btn_on"];
+  $line_id = $_REQUEST["line_id"];
 
   $return = array();
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+
   if (isset($_REQUEST["line_id"]) && $andon_id == 4 && $isBtnOn == 1) {
-    $line_id = $_REQUEST["line_id"];
     $conn->exec("UPDATE m_prd_mach_btn SET btn_sts = 0
             WHERE line_id = '$line_id' AND andon_id = 8 ");
   }
@@ -163,16 +164,29 @@ if ($action == "api_update_stats") {
   }
   $query = "UPDATE m_prd_mach_btn SET btn_sts = $isBtnOn
             WHERE mach_id = '$mach_id' AND andon_id = $andon_id ";
-  // echo $query;
+  // echo $sum;
   // die();
   $stmt = $conn->prepare($query);
-  if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+  if ($stmt->execute()) {
+    $sum = "SELECT sum(a.btn_sts) as cnt FROM m_prd_mach_btn a WHERE a.line_id = '$line_id' ";
+    $stmt = $conn->prepare($sum);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return["sum"] = $row["cnt"];
+      }
+    }
+
+    if ($return["sum"] == 0) {
+      $conn->exec("UPDATE m_prd_line SET line_st = 5 WHERE line_id = '$line_id' ");
+    }
+
     $return["status"] = true;
   } else {
     $return["status"] = false;
     $return["message"] = trim(str_replace("\n", " ", $error[2]));
     error_log($error[2]);
   }
+
 
   echo json_encode($return);
 }

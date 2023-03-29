@@ -28,7 +28,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
-                    <a class="navbar-brand my-3" href="../"><img src="media/images/logo-white.png" height="30"
+                    <a class="navbar-brand my-3" onclick="window.location.reload()"><img src="media/images/logo-white.png" height="30"
                             alt="" /></a>
                 </div>
                 <div class="col">
@@ -240,13 +240,13 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content bg-dark">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle" style="color: #FC2947">ERROR</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle" style="color: #FC2947">Warning!</h5>
                         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <h4 class="mx-3 mb-3" style="color: #FC2947">Please create daily production first!</h4>
+                        <h4 class="mx-3 mb-3" style="color: #FC2947">Please create production first!</h4>
                         <button type="button" class="btn float-right btn-success btn-lg" data-dismiss="modal">
                             OK
                         </button>
@@ -260,7 +260,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content bg-dark">
                     <div class="modal-header">
-                        <h5 class="modal-title " id="exampleModalLongTitle" style="color: #FC2947">ERROR</h5>
+                        <h5 class="modal-title " id="exampleModalLongTitle" style="color: #FC2947">Warning!</h5>
                         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -476,6 +476,7 @@
                 $.post("?action=api_update_stats", {
                     mach_id: machid,
                     andon_id: id,
+                    line_id: '<?= $_GET["line_id"] ?>',
                     btn_on: 1,
                 }, function (data) {
                     // window.location.reload();
@@ -489,6 +490,7 @@
                 $.post("?action=api_update_stats", {
                     mach_id: machid,
                     andon_id: id,
+                    line_id: '<?= $_GET["line_id"] ?>',
                     btn_on: 0,
                 }, function (data) {
                     // window.location.reload();
