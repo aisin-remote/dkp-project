@@ -268,7 +268,7 @@ if ($action == "api_dashboard_adn_single") {
   $return["ril"] = $ril;
   $return["rol"] = $rol;
 
-  // $conn->exec("UPDATE nama_table SET eff = $return["eff"] WHERE line_id = '$line_id' ");
+  $conn->exec("UPDATE m_prd_line SET eff = $eff WHERE line_id = '$line_id' ");
 
   echo json_encode($return);
 }
