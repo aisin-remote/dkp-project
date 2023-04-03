@@ -363,8 +363,8 @@ class Production
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.name1 as stop_name, c.name1 as action_name, d.name1 as exe_name, b.type2 as stop_type "
       . "FROM t_prd_daily_stop a "
-      . "LEFT JOIN m_prd_stop_reason_action b ON b.srna_id = a.stop_id "
-      . "LEFT JOIN m_prd_stop_reason_action c ON c.srna_id = a.action_id "
+      . "LEFT JOIN m_prd_stop_reason_action b ON b.srna_id = a.stop_id AND b.app_id = 'AISIN_PRD' "
+      . "LEFT JOIN m_prd_stop_reason_action c ON c.srna_id = a.action_id AND c.app_id = 'AISIN_PRD' "
       . "LEFT JOIN m_prd_operator d ON d.empid = a.exe_empid "
       . "WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq'";
     // echo $sql;
@@ -591,28 +591,28 @@ class Production
     $conn = null;
     return $return;
   }
-  
+
   public function getNGByID($line_id, $date, $shift, $prd_seq, $ng_seq)
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.dies_id FROM t_prd_daily_ng a, t_prd_daily_i b "
-            . "WHERE a.line_id = b.line_id "
-            . "AND a.prd_dt = b.prd_dt "
-            . "AND a.shift = b.shift "
-            . "AND a.prd_seq = b.prd_seq "
-            . "AND a.line_id = b.line_id "
-            . "AND a.prd_dt = '$date' "
-            . "AND a.shift = '$shift' "
-            . "AND a.prd_seq = '$prd_seq' "
-            . "AND a.ng_seq = '$ng_seq' ";
+      . "WHERE a.line_id = b.line_id "
+      . "AND a.prd_dt = b.prd_dt "
+      . "AND a.shift = b.shift "
+      . "AND a.prd_seq = b.prd_seq "
+      . "AND a.line_id = b.line_id "
+      . "AND a.prd_dt = '$date' "
+      . "AND a.shift = '$shift' "
+      . "AND a.prd_seq = '$prd_seq' "
+      . "AND a.ng_seq = '$ng_seq' ";
 
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $return = $row;
       }
-    } 
+    }
     $stmt = null;
     $conn = null;
     return $return;
