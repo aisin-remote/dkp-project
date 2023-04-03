@@ -85,8 +85,8 @@ and open the template in the editor.
                                                             . "<td class=''>" . $list["ori_typ"] . "</td>"
                                                             . "<td class=''>" . $list["zona1"] . "</td>"
                                                             . "<td class=''>" . $list["zona2"] . "</td>"
-                                                            . "<td class=''><a id='ori_doc' class='view-image btn btn-outline-primary btn-sm' target='_blank' href='data:image/jpg;base64," . $list["ori_doc"] . "'>View Image</a></td>"
-                                                            . "<td class=''><a id='ori_a3' class='view-image btn btn-outline-primary btn-sm' target='_blank' href='data:image/jpg;base64," . $list["ori_a3"] . "'>View Image</a></td>"
+                                                            . "<td class=''><a id='ori_doc' class='view-image1 btn btn-outline-primary btn-sm' target='_blank' href='data:image/jpg;base64," . $list["ori_doc"] . "'>View Image</a></td>"
+                                                            . "<td class=''><a id='ori_a3' class='view-image2 btn btn-outline-primary btn-sm' target='_blank' href='data:image/jpg;base64," . $list["ori_a3"] . "'>View Image</a></td>"
                                                             . "<td class=''>" . $list["stats"] . "</td>"
                                                             . "<td class=''>" . $list["crt_by"] . "</td>"
                                                             . "</tr>";
@@ -203,7 +203,8 @@ and open the template in the editor.
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
-            $(".view-image").EZView();
+            $(".view-image1").EZView();
+            $(".view-image2").EZView();
             $("#data-table-x").DataTable({
                 stateSave: true,
                 order: [

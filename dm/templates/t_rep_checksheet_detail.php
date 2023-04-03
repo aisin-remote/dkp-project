@@ -325,7 +325,7 @@ and open the template in the editor.
                                     <?php
                                     foreach ($diesid_list as $dies) {
                                         ?>
-                                        <option value="<?php echo $dies["dies_id"]; ?>" <?php if ($dies["dies_id"] == $dies_id) {
+                                        <option value="<?php echo $dies["dies_id"]; ?>" <?php if ($dies["dies_id"] == $dies_no) {
                                                echo "selected";
                                            } ?>><?php echo $dies["dies_no"] . " - " . $dies["name1"]; ?></option>
                                         <?php

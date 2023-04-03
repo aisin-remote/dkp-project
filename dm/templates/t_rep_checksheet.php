@@ -143,8 +143,8 @@ and open the template in the editor.
                         </div>
                         <div class="row my-2">
                             <div class="col-4"><label class="col-form-label">Group</label></div>
-                            <div class="col"><select name="group_id" onchange="getDiesModel(value)" id="group_id" class="form-control select2"
-                                    style="width: 300px">
+                            <div class="col"><select name="group_id" onchange="getDiesModel(value)" id="group_id"
+                                    class="form-control select2" style="width: 300px">
                                     <option value="" selected>Pilih Group</option>
                                     <?php
                                     foreach ($group_list as $group) {
@@ -181,9 +181,10 @@ and open the template in the editor.
                                     <?php
                                     foreach ($diesid_list as $dies) {
                                         ?>
-                                        <option value="<?php echo $dies["dies_id"]; ?>" <?php if ($dies["dies_id"] == $dies_id) {
+                                        <option value="<?php echo $dies["dies_id"]; ?>" <?php if ($dies["dies_id"] == $dies_no) {
                                                echo "selected";
-                                           } ?>><?php echo $dies["dies_no"] . " - " . $dies["name1"]; ?></option>
+                                           } ?>><?php echo $dies["dies_no"] . " - " . $dies["name1"]; ?>
+                                        </option>
                                         <?php
                                     }
                                     ?>

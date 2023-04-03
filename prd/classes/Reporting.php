@@ -217,14 +217,14 @@ class Reporting
                     SELECT a.line_id, a.prd_dt, a.shift, SUM(a.stop_time) AS loss_time_p 
                     FROM t_prd_daily_stop a 
                     INNER JOIN m_prd_stop_reason_action b ON a.stop_id = b.srna_id
-                    WHERE b.type2 = 'P' 
+                    WHERE b.type2 = 'P' AND b.app_id = 'AISIN_PRD'
                     GROUP BY a.line_id, a.prd_dt, a.shift
                 ) c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift
                 LEFT JOIN (
                     SELECT a.line_id, a.prd_dt, a.shift, SUM(a.stop_time) AS loss_time 
                     FROM t_prd_daily_stop a 
                     INNER JOIN m_prd_stop_reason_action b ON a.stop_id = b.srna_id
-                    WHERE b.type2 = 'U' 
+                    WHERE b.type2 = 'U' AND b.app_id = 'AISIN_PRD'
                     GROUP BY a.line_id, a.prd_dt, a.shift
                 ) d ON a.line_id = d.line_id AND a.prd_dt = d.prd_dt AND a.shift = d.shift
                 LEFT JOIN (
@@ -349,7 +349,7 @@ class Reporting
                 LEFT JOIN t_prd_daily_stop g ON g.prd_dt = a.prd_dt AND g.shift = a.shift AND g.line_id = a.line_id
                 LEFT JOIN m_user h ON h.usrid = a.apr_by
                 WHERE 1=1 ";
-        
+
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
         }
@@ -419,7 +419,7 @@ class Reporting
                 LEFT JOIN m_prd_stop_reason_action h ON h.srna_id = f.action_id
                 LEFT JOIN m_prd_operator i ON i.empid = f.exe_empid	
                 WHERE 1=1 AND c.line_ty = 'DM' ";
-        
+
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
         }
