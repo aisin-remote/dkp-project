@@ -45,7 +45,7 @@ if ($action == "r_checksheet_preventive") {
     $data["list"] = $class->getListChecksheet($date_from, $date_to, $pmtid, $group_id, $model_id, $dies_no, $pmtype, 'C');
     $group_list = $dies->getDiesGroup();
     $model_list = $dies->getDiesModel(null, $group_list[0]["pval1"]);
-    $diesid_list = $dies->getListDies(null, "A", $group_list[0]["pval1"], $model_list[0]["model_id"]);
+    $diesid_list = $dies->getListDies(null, "A", $group_id, $model_id);
     require(TEMPLATE_PATH . "/t_rep_checksheet.php");
   }
 }
@@ -68,9 +68,16 @@ if ($action == "r_checksheet_prev_detail") {
     $date_to = $_GET["date_to"];
   }
 
+  $pmtid = $_GET["pmtid"];
+  $group_id = $_GET["group_id"];
+  $model_id = $_GET["model_id"];
+  $dies_no = $_GET["dies_id"];
+  $pmtype = $_GET["pmtype"];
+  $pmstat = $_GET["pmstat"];
+
   $data["list"] = $class->getListChecksheet($date_from, $date_to, $pmtid, $group_id, $model_id, $dies_no, $pmtype, 'C');
   $group_list = $dies->getDiesGroup();
   $model_list = $dies->getDiesModel(null, $group_list[0]["pval1"]);
-  $diesid_list = $dies->getListDies(null, "A", $group_list[0]["pval1"], $model_list[0]["model_id"]);
+  $diesid_list = $dies->getListDies(null, "A", $group_id, $model_id);
   require(TEMPLATE_PATH . "/t_rep_checksheet_detail.php");
 }
