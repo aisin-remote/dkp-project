@@ -37,6 +37,14 @@ if ($action == "api_dashboard_dm") {
                     }
                 }
             }
+            if ($row["gstat"] == 'PC') {
+                $data_dies[$i]["bg_color"] = "bg-blink";
+                foreach ($dies_prod as $dies) {
+                    if ($dies["dies_id"] == $row["dies_id"]) {
+                        $data_dies[$i]["bg_color"] = "bg-red-blink";
+                    }
+                }
+            }
 
             if ($row["iostat"] == 'Maker') {
                 $data_dies[$i]["bg_color"] = "bg-amber";

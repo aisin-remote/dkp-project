@@ -326,6 +326,7 @@
         "?action=api_dashboard_adn_single",
         { line_id: $("#line_id").val() },
         function (data) {
+          console.log(typeof data.prd_qty)
 
           /*update series per line*/
           chart_line.updateSeries([data.eff]);

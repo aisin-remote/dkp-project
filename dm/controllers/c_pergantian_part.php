@@ -10,6 +10,8 @@ if ($action == "pergantian_part") {
     $id = $_GET["id"];
     if (isset($_POST["save"])) {
       $param = $_POST;
+      // print_r($param);
+      // die();
       $param["pchid"] = $id;
       $param["crt_by"] = $_SESSION[LOGIN_SESSION];
       $param["chg_by"] = $_SESSION[LOGIN_SESSION];
@@ -37,10 +39,15 @@ if ($action == "pergantian_part") {
       }
 
       $param["item"] = $data_item;
+      $param["stats"] = (isset($_POST["status"])) ? 1 : 0;
 
       if ($id == "0") {
+        $dies->updateDiesGStat($param["dies_id"], 'PC');
         $save = $class->insert($param);
       } else {
+        if ($param["stats"] == 1) {
+          $dies->updateDiesGStat($param["dies_id"], 'N');
+        }
         $save = $class->update($param);
       }
 

@@ -82,6 +82,7 @@ and open the template in the editor.
                             <th>Dies No</th>
                             <th>Order Date</th>
                             <th>Order Type</th>
+                            <th>Status</th>
                             <th class="text-center">Action</th>
                           </tr>
                         </thead>
@@ -97,6 +98,7 @@ and open the template in the editor.
                                 <td><?php echo $row["dies_no"]; ?></td>
                                 <td><?php echo $row["ori_date"]; ?></td>
                                 <td><?php echo $row["ori_type"]; ?></td>
+                                <td><?php echo $row["stats"]; ?></td>
                                 <td class="text-center"><a class="btn btn-xs btn-outline-dark" href="?action=<?php echo $action ?>&id=<?php echo $row["ori_id"]; ?>"><i class="material-icons">edit_square</i></a></td>
                               </tr>
                           <?php

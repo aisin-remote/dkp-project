@@ -24,6 +24,6 @@ if ($action == "r_order_repair_and_improvement") {
     $group_list = $dies->getDiesGroup();
     $model_list = $dies->getDiesModel(null, $group_list[0]["pval1"]);
     $diesid_list = $dies->getListDies(null, "A", $group_list[0]["pval1"], $model_list[0]["model_id"]);
-    $data["list"] = $class->getListOri($date_from, $date_to, $group_id, $model_id, $dies_no, $ori_type, "1");
+    $data["list"] = $class->getListOri($date_from, $date_to, $group_id, $model_id, $dies_no, $ori_type, null);
     require(TEMPLATE_PATH . "/t_rep_ori.php");
 }

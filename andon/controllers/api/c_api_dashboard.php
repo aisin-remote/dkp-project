@@ -251,8 +251,8 @@ if ($action == "api_dashboard_adn_single") {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       //$line_name = $row["line_name"];
       $pln_qty = $row["pln_qty"];
-      $prd_qty = $row["prd_qty"];
-      $balance = $row["pln_qty"] - $row["prd_qty"];
+      $prd_qty = $row["prd_qty"] + $row["ril_qty"];
+      $balance = $row["pln_qty"] - ($row["prd_qty"] + $row["ril_qty"]);
       $achieve = round($row["prd_qty"] / $row["pln_qty"] * 100, 1);
       $cctime = $row["cctime"];
       $stop_dies = $row["stop_part"] * 60;

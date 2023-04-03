@@ -19,9 +19,15 @@ and open the template in the editor.
       <main>
         <div class="container-fluid">
           <ol class="breadcrumb mb-2 mt-4">
-            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-            <li class="breadcrumb-item"><?php echo $template["menu"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["submenu"]; ?></li>
+            <li class="breadcrumb-item">
+              <?php echo $template["group"]; ?>
+            </li>
+            <li class="breadcrumb-item">
+              <?php echo $template["menu"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["submenu"]; ?>
+            </li>
           </ol>
           <?php
           if (isset($_GET["error"])) {
@@ -58,7 +64,8 @@ and open the template in the editor.
                       <div class="col-lg-6 col-sm-12">
                         <div class="d-flex justify-content-end">
                           <!-- button placement -->
-                          <button type="submit" type="button" name="btn_save" class="btn btn-dark-blue btn-sm px-5 mx-2" id="btn_save">Save</button>
+                          <button type="submit" type="button" name="btn_save" class="btn btn-dark-blue btn-sm px-5 mx-2"
+                            id="btn_save">Save</button>
                         </div>
                       </div>
                     </div>
@@ -79,11 +86,11 @@ and open the template in the editor.
                         <select name="group_id" id="group_id" class="form-control select2">
                           <?php
                           foreach ($group_list as $group) {
-                          ?>
+                            ?>
                             <option value="<?php echo $group["pval1"]; ?>" <?php if ($data["data"]["group_id"] == $group["pval1"]) {
-                                                                              echo "selected";
-                                                                            } ?>><?php echo $group["pval1"]; ?></option>
-                          <?php
+                                 echo "selected";
+                               } ?>><?php echo $group["pval1"]; ?></option>
+                            <?php
                           }
                           ?>
                         </select>
@@ -96,11 +103,11 @@ and open the template in the editor.
                         <select name="model_id" id="model_id" class="form-control select2">
                           <?php
                           foreach ($model_list as $model) {
-                          ?>
+                            ?>
                             <option value="<?php echo $model["model_id"]; ?>" <?php if ($data["data"]["model_id"] == $model["model_id"]) {
-                                                                                echo "selected";
-                                                                              } ?>><?php echo $model["model_id"]; ?></option>
-                          <?php
+                                 echo "selected";
+                               } ?>><?php echo $model["model_id"]; ?></option>
+                            <?php
                           }
                           ?>
                         </select>
@@ -113,11 +120,11 @@ and open the template in the editor.
                         <select name="dies_id" id="dies_id" class="form-control select2" required>
                           <?php
                           foreach ($dies_list as $diesid) {
-                          ?>
+                            ?>
                             <option value="<?php echo $diesid["dies_id"]; ?>" <?php if ($data["data"]["dies_id"] == $diesid["dies_id"]) {
-                                                                                echo "selected";
-                                                                              } ?>><?php echo $diesid["dies_no"]; ?></option>
-                          <?php
+                                 echo "selected";
+                               } ?>><?php echo $diesid["dies_no"]; ?></option>
+                            <?php
                           }
                           ?>
                         </select>
@@ -127,14 +134,25 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Part Change Date</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
-                        <input type="text" name="pcdat" class="form-control datepicker" maxlength="100" value="<?php echo $data["data"]["pcdat"]; ?>" required>
+                        <input type="text" name="pcdat" class="form-control datepicker" maxlength="100"
+                          value="<?php echo $data["data"]["pcdat"]; ?>" required>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Remarks</label>
                       <div class="col-lg-5 col-md-5 col-sm-12">
-                        <input type="text" name="desc1" class="form-control" maxlength="100" value="<?php echo $data["data"]["desc1"]; ?>">
+                        <input type="text" name="desc1" class="form-control" maxlength="100"
+                          value="<?php echo $data["data"]["desc1"]; ?>">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Status</label>
+                      <div class="col-lg-5 col-md-5 col-sm-12">
+                        <input class="" name="status" id="status" onchange="cekStats()"
+                          <?= (($data["data"]["status"] == "1")) ? "checked" : ''; ?> type="checkbox" data-toggle="toggle"
+                          data-on="Completed" data-off="On Progress" data-onstyle="success" data-offstyle="danger"
+                          data-size="mini" data-width="120">
                       </div>
                     </div>
                   </div>
@@ -161,43 +179,52 @@ and open the template in the editor.
                         if (!empty($part_list)) {
                           foreach ($part_list as $row) {
                             if ($row["part_grp"] == "F") {
-                        ?>
+                              ?>
                               <tr>
-                                <td class="align-middle"><?php echo $row["part_id"]; ?></td>
-                                <td class="align-middle"><?php echo $row["name1"]; ?></td>
+                                <td class="align-middle">
+                                  <?php echo $row["part_id"]; ?>
+                                </td>
+                                <td class="align-middle">
+                                  <?php echo $row["name1"]; ?>
+                                </td>
                                 <td class="align-middle"><input type="<?php echo $row["input_type"]; ?>" class="<?php if ($row["input_type"] == "checkbox") {
-                                                                                                                  echo "";
-                                                                                                                } else {
-                                                                                                                  echo "form-control";
-                                                                                                                } ?>" name="item[<?php echo $row["part_id"]; ?>]" <?php if ($row["input_type"] == "checkbox") {
-                                                                                                                                                                    if (!empty($data["item"])) {
-                                                                                                                                                                      foreach ($data["item"] as $itm) {
-                                                                                                                                                                        if ($itm["part_id"] == $row["part_id"]) {
-                                                                                                                                                                          echo "checked";
-                                                                                                                                                                          break;
-                                                                                                                                                                        }
-                                                                                                                                                                      }
-                                                                                                                                                                    }
-                                                                                                                                                                  } else {
-                                                                                                                                                                    if (!empty($data["item"])) {
-                                                                                                                                                                      foreach ($data["item"] as $itm) {
-                                                                                                                                                                        if ($itm["part_id"] == $row["part_id"]) {
-                                                                                                                                                                          echo "value='" . $itm["part_text"] . "'";
-                                                                                                                                                                          break;
-                                                                                                                                                                        }
-                                                                                                                                                                      }
-                                                                                                                                                                    }
-                                                                                                                                                                  } ?>></td>
-                                <td class="align-middle"><?php if ($row["part_id"] == "1.3.1.1") { ?> <button type="button" class="btn btn-sm btn-info" onclick="addCorePinDetail('1.3.1.1')">Add Detail</button> <?php } else { ?><input type="text" name="remarks[<?= $row["part_id"] ?>]" class="form-control" value="<?php if (!empty($data["item"])) {
-                                                                                                                                                                                                                                                                                                                            foreach ($data["item"] as $itm) {
-                                                                                                                                                                                                                                                                                                                              if ($itm["part_id"] == $row["part_id"]) {
-                                                                                                                                                                                                                                                                                                                                echo $itm["remarks"];
-                                                                                                                                                                                                                                                                                                                                break;
-                                                                                                                                                                                                                                                                                                                              }
-                                                                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                                                          } ?>"><?php } ?></td>
+                                     echo "";
+                                   } else {
+                                     echo "form-control";
+                                   } ?>" name="item[<?php echo $row["part_id"]; ?>]" <?php if ($row["input_type"] == "checkbox") {
+                                         if (!empty($data["item"])) {
+                                           foreach ($data["item"] as $itm) {
+                                             if ($itm["part_id"] == $row["part_id"]) {
+                                               echo "checked";
+                                               break;
+                                             }
+                                           }
+                                         }
+                                       } else {
+                                         if (!empty($data["item"])) {
+                                           foreach ($data["item"] as $itm) {
+                                             if ($itm["part_id"] == $row["part_id"]) {
+                                               echo "value='" . $itm["part_text"] . "'";
+                                               break;
+                                             }
+                                           }
+                                         }
+                                       } ?>></td>
+                                <td class="align-middle">
+                                  <?php if ($row["part_id"] == "1.3.1.1") { ?> <button type="button"
+                                      class="btn btn-sm btn-info" onclick="addCorePinDetail('1.3.1.1')">Add Detail</button>
+                                  <?php } else { ?><input type="text" name="remarks[<?= $row["part_id"] ?>]"
+                                      class="form-control" value="<?php if (!empty($data["item"])) {
+                                        foreach ($data["item"] as $itm) {
+                                          if ($itm["part_id"] == $row["part_id"]) {
+                                            echo $itm["remarks"];
+                                            break;
+                                          }
+                                        }
+                                      } ?>"><?php } ?>
+                                </td>
                               </tr>
-                        <?php
+                              <?php
                               if ($row["part_id"] == "1.3.1.1") {
                                 echo "<tr><td></td><td colspan='3' id='core_pin_dtl_f'>";
                                 echo "<div class='input-group input-group-sm mb-1' >
@@ -235,43 +262,52 @@ and open the template in the editor.
                         if (!empty($part_list)) {
                           foreach ($part_list as $row) {
                             if ($row["part_grp"] == "M") {
-                        ?>
+                              ?>
                               <tr>
-                                <td class="align-middle"><?php echo $row["part_id"]; ?></td>
-                                <td class="align-middle"><?php echo $row["name1"]; ?></td>
+                                <td class="align-middle">
+                                  <?php echo $row["part_id"]; ?>
+                                </td>
+                                <td class="align-middle">
+                                  <?php echo $row["name1"]; ?>
+                                </td>
                                 <td class="align-middle"><input type="<?php echo $row["input_type"]; ?>" class="<?php if ($row["input_type"] == "checkbox") {
-                                                                                                                  echo "";
-                                                                                                                } else {
-                                                                                                                  echo "form-control";
-                                                                                                                } ?>" name="item[<?php echo $row["part_id"]; ?>]" <?php if ($row["input_type"] == "checkbox") {
-                                                                                                                                                                    if (!empty($data["item"])) {
-                                                                                                                                                                      foreach ($data["item"] as $itm) {
-                                                                                                                                                                        if ($itm["part_id"] == $row["part_id"]) {
-                                                                                                                                                                          echo "checked";
-                                                                                                                                                                          break;
-                                                                                                                                                                        }
-                                                                                                                                                                      }
-                                                                                                                                                                    }
-                                                                                                                                                                  } else {
-                                                                                                                                                                    if (!empty($data["item"])) {
-                                                                                                                                                                      foreach ($data["item"] as $itm) {
-                                                                                                                                                                        if ($itm["part_id"] == $row["part_id"]) {
-                                                                                                                                                                          echo "value='" . $itm["part_text"] . "'";
-                                                                                                                                                                          break;
-                                                                                                                                                                        }
-                                                                                                                                                                      }
-                                                                                                                                                                    }
-                                                                                                                                                                  } ?>></td>
-                                <td class="align-middle"><?php if ($row["part_id"] == "1.3.2.1") { ?> <button type="button" class="btn btn-sm btn-info" onclick="addCorePinDetail('1.3.2.1')">Add Detail</button> <?php } else { ?><input type="text" name="remarks[<?= $row["part_id"] ?>]" class="form-control" value="<?php if (!empty($data["item"])) {
-                                                                                                                                                                                                                                                                                                                            foreach ($data["item"] as $itm) {
-                                                                                                                                                                                                                                                                                                                              if ($itm["part_id"] == $row["part_id"]) {
-                                                                                                                                                                                                                                                                                                                                echo $itm["remarks"];
-                                                                                                                                                                                                                                                                                                                                break;
-                                                                                                                                                                                                                                                                                                                              }
-                                                                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                                                          } ?>"><?php } ?></td>
+                                     echo "";
+                                   } else {
+                                     echo "form-control";
+                                   } ?>" name="item[<?php echo $row["part_id"]; ?>]" <?php if ($row["input_type"] == "checkbox") {
+                                         if (!empty($data["item"])) {
+                                           foreach ($data["item"] as $itm) {
+                                             if ($itm["part_id"] == $row["part_id"]) {
+                                               echo "checked";
+                                               break;
+                                             }
+                                           }
+                                         }
+                                       } else {
+                                         if (!empty($data["item"])) {
+                                           foreach ($data["item"] as $itm) {
+                                             if ($itm["part_id"] == $row["part_id"]) {
+                                               echo "value='" . $itm["part_text"] . "'";
+                                               break;
+                                             }
+                                           }
+                                         }
+                                       } ?>></td>
+                                <td class="align-middle">
+                                  <?php if ($row["part_id"] == "1.3.2.1") { ?> <button type="button"
+                                      class="btn btn-sm btn-info" onclick="addCorePinDetail('1.3.2.1')">Add Detail</button>
+                                  <?php } else { ?><input type="text" name="remarks[<?= $row["part_id"] ?>]"
+                                      class="form-control" value="<?php if (!empty($data["item"])) {
+                                        foreach ($data["item"] as $itm) {
+                                          if ($itm["part_id"] == $row["part_id"]) {
+                                            echo $itm["remarks"];
+                                            break;
+                                          }
+                                        }
+                                      } ?>"><?php } ?>
+                                </td>
                               </tr>
-                        <?php
+                              <?php
                               if ($row["part_id"] == "1.3.2.1") {
                                 echo "<tr><td></td><td colspan='3' id='core_pin_dtl_m'>";
                                 echo "<div class='input-group input-group-sm mb-1' >
@@ -314,7 +350,8 @@ and open the template in the editor.
     </div>
   </div>
   <!-- Modal Section -->
-  <div class="modal fade" id="myModal1" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="myModal1_label" aria-hidden="true">
+  <div class="modal fade" id="myModal1" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="myModal1_label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -340,7 +377,8 @@ and open the template in the editor.
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-dark-blue-outlined" name="filter" value="filter" onclick="appendCorePinDetail()">Submit</button>
+          <button type="button" class="btn btn-dark-blue-outlined" name="filter" value="filter"
+            onclick="appendCorePinDetail()">Submit</button>
         </div>
       </div>
     </div>
@@ -348,10 +386,11 @@ and open the template in the editor.
   <input type="hidden" id="counter_f" value="<?= $count_f ?>">
   <input type="hidden" id="counter_m" value="<?= $count_m ?>">
   <input type="hidden" id="trans_type" value="<?= $template["submenu"] ?>">
+  <input type="hidden" id="diesId" value="">
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       $(".datepicker").flatpickr({
         altInput: true,
         altFormat: "d-m-Y",
@@ -365,7 +404,7 @@ and open the template in the editor.
       }
     });
 
-    $("#my_form").submit(function(event) {
+    $("#my_form").submit(function (event) {
       // event.preventDefault();
       $("#group_id").removeAttr("disabled");
       $("#model_id").removeAttr("disabled");
@@ -374,7 +413,7 @@ and open the template in the editor.
       $("#btn_save").attr("disabled", "disabled");
     });
 
-    $("#group_id").change(function() {
+    $("#group_id").change(function () {
       getDiesModel($("#group_id").val());
     });
 
@@ -383,11 +422,11 @@ and open the template in the editor.
       var first_model = "";
       $.getJSON("?action=api_get_dies_model", {
         group: group_id
-      }, function(data) {
+      }, function (data) {
         var items = "";
         //$("#model_id").empty();
         var $i = 0
-        $.each(data, function(key, val) {
+        $.each(data, function (key, val) {
           if ($i == 0) {
             first_model = val.model_id;
             if (first_model.length > 0) {
@@ -403,7 +442,7 @@ and open the template in the editor.
       });
     }
 
-    $("#model_id").change(function() {
+    $("#model_id").change(function () {
       getDiesList($("#group_id").val(), $("#model_id").val());
     });
 
@@ -412,11 +451,11 @@ and open the template in the editor.
       $.getJSON("?action=api_get_dies_list", {
         group_id: group_id,
         model: model_id
-      }, function(data) {
+      }, function (data) {
         var items = "";
         //$("#model_id").empty();
 
-        $.each(data, function(key, val) {
+        $.each(data, function (key, val) {
           console.log(val.model_id);
           items += "<option value='" + val.dies_id + "'>" + val.dies_no + "</option>";
         });
@@ -424,6 +463,10 @@ and open the template in the editor.
         $("#dies_id").html(items);
       });
     }
+
+    $("#dies_id").change(function () {
+      $("#diesId").val($("#dies_id").val());
+    });
 
     function addCorePinDetail(part_id) {
       $("#x_part_id").val(part_id);

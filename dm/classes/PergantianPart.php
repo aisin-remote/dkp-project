@@ -15,6 +15,11 @@ class PergantianPart
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        if ($row["status"] == "1") {
+          $row["stats"] = "Completed";
+        } else {
+          $row["stats"] = "Uncompleted";
+        }
         $return[] = $row;
       }
     }
@@ -90,8 +95,8 @@ class PergantianPart
       // print_r($param["item"]);
       // die();
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO t_dm_pc_h (dies_id, desc1, pcdat, crt_by, crt_dt) "
-        . "values (:dies_id, :desc1, :pcdat, :crt_by, CURRENT_TIMESTAMP )";
+      $sql = "INSERT INTO t_dm_pc_h (dies_id, desc1, pcdat, crt_by, crt_dt, status) "
+        . "values (:dies_id, :desc1, :pcdat, :crt_by, CURRENT_TIMESTAMP, '0' )";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":dies_id", $param["dies_id"], PDO::PARAM_STR);
       $stmt->bindValue(":desc1", $param["desc1"], PDO::PARAM_STR);
@@ -123,7 +128,7 @@ class PergantianPart
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "UPDATE t_dm_pc_h SET dies_id = :dies_id, desc1 = :desc1, pcdat = :pcdat, chg_by = :chg_by, chg_dt = CURRENT_TIMESTAMP "
+      $sql = "UPDATE t_dm_pc_h SET dies_id = :dies_id, desc1 = :desc1, pcdat = :pcdat, chg_by = :chg_by, chg_dt = CURRENT_TIMESTAMP, status = :stats "
         . "WHERE pchid = :pchid ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":pchid", $param["pchid"], PDO::PARAM_STR);
@@ -131,6 +136,7 @@ class PergantianPart
       $stmt->bindValue(":desc1", $param["desc1"], PDO::PARAM_STR);
       $stmt->bindValue(":pcdat", $param["pcdat"], PDO::PARAM_STR);
       $stmt->bindValue(":chg_by", $param["chg_by"], PDO::PARAM_STR);
+      $stmt->bindValue(":stats", $param["stats"], PDO::PARAM_STR);
 
       if ($stmt->execute()) {
         $pchid = $param["pchid"];

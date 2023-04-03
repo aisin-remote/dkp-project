@@ -22,14 +22,13 @@
             background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
             border-radius: 10px;
         }
-
     </style>
     <header class="fixed-top">
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
-                    <a class="navbar-brand my-3" onclick="window.location.reload()"><img src="media/images/logo-white.png" height="30"
-                            alt="" /></a>
+                    <a class="navbar-brand my-3" onclick="window.location.reload()"><img
+                            src="media/images/logo-white.png" height="30" alt="" /></a>
                 </div>
                 <div class="col">
                     <h1 class="text-center my-3 mx-auto font-weight-bold mb-3">
@@ -95,55 +94,14 @@
                     $col = "col-2";
                 }
                 // print("<pre class='text-white'>" . print_r($_GET["mach"], true) . "</pre>");
+                ?>
+                <?php
                 foreach ($result as $mach) {
-                    ?>
-                    <div class="<?= $col ?> p-1">
-                        <div class="card border-0 bg-dark mb-2">
-                            <div class="card-body p-0">
-                                <div class="container-fluid p-1 text-center">
-                                    <div class="card border-0 mb-2">
-                                        <!-- <div class="card-body <?= $mach["bgcolor"] ?> text-center text-white"> -->
-                                        <div class="card-body py-1 bg-info text-center text-white">
-                                            <h4 id="mach_name">
-                                                <?= $mach["machname"] ?>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                    <?php
-                                    foreach ($btns as $btn) {
-                                        foreach ($status as $sts) {
-                                            if ($sts["btn_on"] == 1 && $sts["andon_id"] == $btn["andon_id"] && $mach["machid"] == $btn["mach_id"]) {
-                                                if ($sts["andon_id"] == 1) {
-                                                    $color = "danger";
-                                                } else if ($sts["andon_id"] == 2) {
-                                                    $color = "warning";
-                                                } else if ($sts["andon_id"] == 3) {
-                                                    $color = "success";
-                                                } else if ($sts["andon_id"] == 7) {
-                                                    $color = "info";
-                                                } else {
-                                                    $color = "primary";
-                                                }
-                                                ?>
-                                                <div class='mb-1'>
-                                                    <input onchange='cek_cb(<?= $sts["andon_id"] ?>, "<?= $mach["machid"] ?>")'
-                                                        name='<?= $sts["andon_id"] ?>'
-                                                        id='<?= $sts["andon_id"] ?>_<?= $mach["machid"] ?>' type='checkbox'
-                                                        data-toggle='toggle' data-on='<?= $sts["desc"] ?>'
-                                                        data-off='<?= $sts["desc"] ?>'
-                                                data-onstyle='<?= $color ?>' data-offstyle='secondary' data-width='100%' data-height='100%' data-size='lg'
-                                                        <?= ($mach["machid"] == $btn["mach_id"] && $sts["andon_id"] == $btn["andon_id"] && $btn["btn_sts"] == 1) ? "checked='checked'" : ""; ?> />
-                                                </div>
-                                                <?php
-                                            }
-                                        }
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php
+                    echo "<div class='col-3'>";
+                    echo "<div class='card'>";
+                    echo '<button type="button" onclick="lineVal(\'' . $line['line_id'] . '\')" data-toggle="modal" data-target="#modalStatus" class="card-body ' . $line["bgcolor"] . ' text-center text-white border border-secondary"><h2>' . $line['name1'] . '</h2></button>';
+                    echo "</div>";
+                    echo "</div>";
                 }
                 ?>
             </div>

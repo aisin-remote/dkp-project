@@ -153,7 +153,7 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.ori_id, a.ori_dt, TO_CHAR(a.crt_dt, 'HH24:MI:SS') as ori_time, b.group_id, b.model_id, b.dies_no, a.ori_typ, c.desc as zona1, d.desc as zona2, a.ori_doc, a.stats, a.ori_a3, a.crt_by
+        $sql = "SELECT a.*, a.ori_id, a.ori_dt, TO_CHAR(a.crt_dt, 'HH24:MI:SS') as ori_time, b.group_id, b.model_id, b.dies_no, a.ori_typ, c.desc as zona1, d.desc as zona2, a.ori_doc, a.stats, a.ori_a3, a.crt_by
                 FROM t_dm_ori a
                 INNER JOIN m_dm_dies_asset b ON b.dies_id = a.dies_id
                 LEFT JOIN m_zona c ON c.zona_id = a.zona1
@@ -191,6 +191,12 @@ class Reporting
                 } elseif ($row["ori_typ"] == "I") {
                     $row["ori_typ"] = "Improvement";
                 }
+
+                if ($row["stats"] == '1') {
+                    $row["stats"] = "Completed";
+                  } else {
+                    $row["stats"] = "Uncompleted";
+                  }
                 $return[] = $row;
             }
         }

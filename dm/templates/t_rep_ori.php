@@ -67,6 +67,7 @@ and open the template in the editor.
                                                     <th class="">Zona Parkir</th>
                                                     <th class="">Order Repair</th>
                                                     <th class="">A3 Report</th>
+                                                    <th class="">Status</th>
                                                     <th class="">Created By</th>
                                                 </tr>
                                             </thead>
@@ -86,6 +87,7 @@ and open the template in the editor.
                                                             . "<td class=''>" . $list["zona2"] . "</td>"
                                                             . "<td class=''><a id='ori_doc' class='view-image btn btn-outline-primary btn-sm' target='_blank' href='data:image/jpg;base64," . $list["ori_doc"] . "'>View Image</a></td>"
                                                             . "<td class=''><a id='ori_a3' class='view-image btn btn-outline-primary btn-sm' target='_blank' href='data:image/jpg;base64," . $list["ori_a3"] . "'>View Image</a></td>"
+                                                            . "<td class=''>" . $list["stats"] . "</td>"
                                                             . "<td class=''>" . $list["crt_by"] . "</td>"
                                                             . "</tr>";
                                                     }
