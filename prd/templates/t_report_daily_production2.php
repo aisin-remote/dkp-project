@@ -327,9 +327,7 @@ and open the template in the editor.
         $(document).ready(function () {
             $("#data-table-x").DataTable({
                 stateSave: true,
-                order: [
-                    [0, 'desc']
-                ],
+                order: [[3, 'asc']],
                 dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-2'l><'col-sm-12 col-md-4'f>>" +
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
