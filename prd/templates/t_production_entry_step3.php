@@ -409,12 +409,12 @@ and open the template in the editor.
                   <input type="number" class="form-control" id="stop_time" readonly>
                 </div>
               </div>
-              <div class="form-group row">
+              <!-- <div class="form-group row">
                 <label for="qty_stc" class="col-sm-3 col-form-label">Qty Steuchi</label>
                 <div class="col-sm-3">
                   <input type="number" class="form-control" id="qty_stc">
                 </div>
-              </div>
+              </div> -->
 
             </div>
             <div class="modal-footer">
