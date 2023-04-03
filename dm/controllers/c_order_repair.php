@@ -130,6 +130,9 @@ if ($action == "order_repair") {
         if ($diesGstat["gstat"] == "P") {
           header("Location: ?action=" . $action . "&error=Dies%20sedang%20dipreventive%20maintenance!");
           die();
+        } else if ($diesGstat["gstat"] == "PC") {
+          header("Location: ?action=" . $action . "&error=Dies%20sedang%20pergantian%20part!");
+          die();
         } else {
           $dies->updateDiesGStat($param["dies_id"], "R");
           $save = $class->insert($param);

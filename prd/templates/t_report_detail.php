@@ -53,37 +53,37 @@ and open the template in the editor.
                     <table class="table table-sm table-striped" id="data-table-x">
                       <thead>
                         <tr>
-                          <th class="align-middle">Date</th>
-                          <th class="align-middle">Shift</th>
-                          <th class="align-middle">Line DC</th>
-                          <th class="align-middle">JP</th>
-                          <th class="align-middle">Dies</th>
-                          <th class="align-middle">Hour</th>
-                          <th class="align-middle">Cycle Time</th>
-                          <th class="text-center align-middle">Planning Qty</th>
-                          <th class="text-center align-middle">Prod. Qty</th>
-                          <th class="text-center align-middle">Total NG</th>
-                          <th class="text-center align-middle">Lost Time(m)</th>
-                          <th class="text-center align-middle">Efficiency (%)</th>
-                          <th class="text-center align-middle">Apr By</th>
+                          <th class="text-nowrap">Date</th>
+                          <th class="text-nowrap">Shift</th>
+                          <th class="text-nowrap">Line DC</th>
+                          <th class="text-nowrap">JP</th>
+                          <th class="text-nowrap">Dies</th>
+                          <th class="text-nowrap">Hour</th>
+                          <th class="text-nowrap">CT</th>
+                          <th class="text-center text-nowrap">Plan Qty</th>
+                          <th class="text-center text-nowrap">Prod. Qty</th>
+                          <th class="text-center text-nowrap">Total NG</th>
+                          <th class="text-center text-nowrap">Lost Time(m)</th>
+                          <th class="text-center text-nowrap">Efficiency (%)</th>
+                          <th class="text-center text-nowrap">Apr By</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php if (!empty($data["list"])) {
                           foreach ($data["list"] as $list) {
-                            echo "<tr>" . "<td class='align-middle'>" . $list["prd_dt"] . "</td>"
-                              . "<td class='align-middle'>" . $list["shift"] . "</td>"
-                              . "<td class='align-middle'>" . $list["line_name"] . "</td>"
-                              . "<td class='align-middle'>" . $list["operator"] . "</td>"
-                              . "<td class='align-middle'>" . $list["dies_name"] . "</td>"
-                              . "<td class='align-middle'>" . $list["time_start"] ." - ". $list["time_end"] . "</td>"
-                              . "<td class='text-center align-middle'>" . $list["cctime"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["pln_qty"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["prd_qty"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["tot_ng"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["loss_time"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["eff"] . "</td>"
-                              . "<td class='text-center pr-3 align-middle'>" . $list["apr_name"] . "</td>"
+                            echo "<tr>" . "<td class='text-nowrap'>" . $list["prd_dt"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["shift"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["line_name"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["operator"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["dies_name"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["time_start"] ." - ". $list["time_end"] . "</td>"
+                              . "<td class='text-center text-nowrap'>" . $list["cctime"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["pln_qty"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["prd_qty"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["tot_ng"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["loss_time"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["eff"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["apr_name"] . "</td>"
                               . "</tr>";
                           }
                         }
@@ -160,9 +160,6 @@ and open the template in the editor.
     $(document).ready(function() {
       $("#data-table-x").DataTable({
         stateSave: true,
-        order: [
-          [0, 'desc']
-        ],
         dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-2'l><'col-sm-12 col-md-4'f>>" +
           "<'row'<'col-sm-12'tr>>" +
           "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",

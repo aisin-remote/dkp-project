@@ -75,7 +75,7 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT TO_CHAR(a.crt_dt, 'YYYY-MM-DD') as pc_date, 
+        $sql = "SELECT a.*, TO_CHAR(a.crt_dt, 'YYYY-MM-DD') as pc_date, 
         TO_CHAR(a.crt_dt, 'HH24:MI:SS') as pc_time, 
         d.group_id, d.model_id, d.dies_no, c.part_grp, c.name1, a.desc1, a.crt_by "
             . "FROM t_dm_pc_h a, t_dm_pc_i b, m_dm_dies_part c, m_dm_dies_asset d "

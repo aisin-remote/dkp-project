@@ -6,6 +6,7 @@ if ($action == "pergantian_part") {
   $data["list"];
   $class = new PergantianPart();
   $dies = new Dies();
+  $zona = new Zona();
   if (isset($_GET["id"])) {
     $id = $_GET["id"];
     if (isset($_POST["save"])) {
@@ -40,10 +41,25 @@ if ($action == "pergantian_part") {
 
       $param["item"] = $data_item;
       $param["stats"] = (isset($_POST["status"])) ? 1 : 0;
+      $diesGstat = $dies->getDiesById($param["dies_id"]);
+
+      $zone_used = $zona->isUsed($param["zona1"], $param["dies_id"]);
+      if ($zone_used["count"] > 0) {
+        header("Location: ?action=" . $action . "&id=" . $id . "&error=Zona Maintenance [" . $zone_used["desc"] . "] Sedang Dipakai!");
+        die();
+      }
 
       if ($id == "0") {
-        $dies->updateDiesGStat($param["dies_id"], 'PC');
-        $save = $class->insert($param);
+        if ($diesGstat["gstat"] == "P") {
+          header("Location: ?action=" . $action . "&error=Dies%20sedang%20dipreventive%20maintenance!");
+          die();
+        } else if ($diesGstat["gstat"] == "R") {
+          header("Location: ?action=" . $action . "&error=Dies%20sedang%20direpair!");
+          die();
+        } else {
+          $dies->updateDiesGStat($param["dies_id"], 'PC');
+          $save = $class->insert($param);
+        }
       } else {
         if ($param["stats"] == 1) {
           $dies->updateDiesGStat($param["dies_id"], 'N');
@@ -82,6 +98,7 @@ if ($action == "pergantian_part") {
         $count_m = $class->countCorePin($id, '1.3.2.1') + 1;
         $data_core_pin = $class->getCorePin($id);
       }
+      $list_zona = $zona->getList();
       $part_list = $class->getPartList();
       require(TEMPLATE_PATH . "/t_m_pergantian_part_edit.php");
     }

@@ -64,6 +64,8 @@ and open the template in the editor.
                                                     <th class="">Part Type</th>
                                                     <th class="">Part</th>
                                                     <th class="">Remarks</th>
+                                                    <th class="">Zona Maintenance</th>
+                                                    <th class="">Zona Parkir</th>
                                                     <th class="">Created By</th>
                                                 </tr>
                                             </thead>
@@ -80,6 +82,8 @@ and open the template in the editor.
                                                             . "<td class=''>" . $list["part_grp"] . "</td>"
                                                             . "<td class=''>" . $list["name1"] . "</td>"
                                                             . "<td class=''>" . $list["desc1"] . "</td>"
+                                                            . "<td class=''>" . $list["zona1"] . "</td>"
+                                                            . "<td class=''>" . $list["zona2"] . "</td>"
                                                             . "<td class=''>" . $list["crt_by"] . "</td>"
                                                             . "</tr>";
                                                     }
