@@ -44,8 +44,9 @@ if ($action == "daily_production") {
     $nett_opr = $data3["list"][0]["nett_opr"];
     $tot_prd = $data["list"][7]["tot_prd_qty"];
     $tot_ng = $data["list"][7]["tot_ng2"];
-    $qty_lastman = $tot_prd - $tot_ng;
+    $qty_lastman = $tot_prd + $tot_ng;
     $loss_time = $data2["list"][0]["loss_time"];
+    $loss_timep = $data2["list"][0]["loss_time_p"];
     $cctime = $data2["list"][0]["cctime"];
 
     $prd_time = array();
@@ -58,6 +59,7 @@ if ($action == "daily_production") {
     $totalEff2 = $roundEff2 * 100;
     $losstime_persen = $loss_time / $nett_opr * 100;
     $roundloss = round($losstime_persen, 2);
+
 
     $ril = $data2["list"][0]["ril"];
     $persen_ril = $ril * $cctime / 60 / $nett_opr * 100;
@@ -201,9 +203,9 @@ if ($action == "report_detail") {
   }
 
   $shift = $_GET["shift"];
-    $line_id = $_GET["line_id"];
-    $ldid = $_GET["ldid"];
-    $jpid = $_GET["jpid"];
+  $line_id = $_GET["line_id"];
+  $ldid = $_GET["ldid"];
+  $jpid = $_GET["jpid"];
 
   $data["list"] = $report->getReportDetail($date_from, $date_to, $shift, $line_id, $ldid, $jpid);
   require(TEMPLATE_PATH . "/t_report_detail.php");
@@ -226,9 +228,9 @@ if ($action == "report_stop") {
   }
 
   $shift = $_GET["shift"];
-    $line_id = $_GET["line_id"];
-    $ldid = $_GET["ldid"];
-    $jpid = $_GET["jpid"];
+  $line_id = $_GET["line_id"];
+  $ldid = $_GET["ldid"];
+  $jpid = $_GET["jpid"];
 
   $data["list"] = $report->getReportStop($date_from, $date_to, $shift, $line_id, $ldid, $jpid);
   require(TEMPLATE_PATH . "/t_report_stop.php");
