@@ -241,9 +241,7 @@ and open the template in the editor.
                             echo "data:image/jpeg;base64," . $data["data"]["ori_a3"];
                           } ?>">
                           <div class="custom-file mt-2">
-                            <input type="file" name="ori_a3" accept="image/*" onchange="loadFile2(event)" <?php if (empty($data["data"]["ori_a3"])) {
-                              echo "required";
-                            } ?>>
+                            <input type="file" name="ori_a3" accept="image/*" onchange="loadFile2(event)">
                             <input type="hidden" name="ori_a3x" value="<?php echo $data["data"]["ori_a3"]; ?>">
                           </div>
                         </div>
