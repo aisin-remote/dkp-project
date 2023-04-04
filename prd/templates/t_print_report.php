@@ -385,9 +385,9 @@
               echo '</td>
               <td class="text-center align-middle">';
               $seq = $i;
-              $data_stop = $class2->getStopList($line_id, $prd_dt, $shift, $seq);
-              foreach ($data_stop as $data) {
-                echo '<small>' . $data["qty_stc"] . '</small>
+              $data_steuchi = $class->getSteuchiList($line_id, $prd_dt, $shift, $seq);
+              foreach ($data_steuchi as $data) {
+                echo '<small>' . $data["steuchi"] . '</small>
                 <br>';
               }
               echo '</td>
@@ -548,7 +548,7 @@
               </td>
               <td>
                 <small>
-                  <?= $diff_in_minutes ?>
+                  <?= $list["waktu_shift"] ?>
                 </small>
               </td>
               <td>
@@ -558,7 +558,7 @@
               </td>
               <td>
                 <small>
-                  <?= $nett_opr ?>
+                  <?= $list["nett_opr"] ?>
                 </small>
               </td>
               <td>
@@ -568,12 +568,12 @@
               </td>
               <td>
                 <small>
-                  <?= $tot_prd ?>
+                  <?= $list["tot_prd"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $qty_lastman ?>
+                  <?= $list["prd_qty"] ?>
                 </small>
               </td>
               <td>
@@ -636,27 +636,27 @@
               </td>
               <td>
                 <small>
-                  <?= $totalEff2 ?>
+                  <?= $list["eff"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $roundloss ?>
+                  <?= $list["loss%"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $roundril ?>
+                  <?= $list["ril%"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $roundrol ?>
+                  <?= $list["rol%"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $total ?>
+                  <?= $list["total%"] ?>
                 </small>
               </td>
             </tr>
