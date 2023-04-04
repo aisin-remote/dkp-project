@@ -138,7 +138,7 @@ class Reporting
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT a.line_id, a.prd_dt, a.shift, a.prd_seq, a.time_start, a.time_end, a.cctime, "
             . "a.pln_qty, coalesce(a.prd_qty, 0) as prd_qty, a.prd_time, a.apr_by, b.name1 as apr_name, "
-            . "c.name1, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time "
+            . "c.name1, c.model_id, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time, coalesce(SUM(x.ng_qty), 0) as steuchi "
             . "FROM t_prd_daily_i a "
             . "LEFT JOIN m_user b ON a.apr_by = b.usrid "
             . "LEFT JOIN m_dm_dies_asset c ON a.dies_id::integer = c.dies_id "
@@ -163,17 +163,25 @@ class Reporting
                 WHERE a.line_id = b.line_id
                 GROUP BY a.line_id, a.prd_dt, a.shift
             ) f ON a.line_id = f.line_id AND a.prd_dt = f.prd_dt AND a.shift = f.shift "
+            . "LEFT JOIN ( 
+                SELECT e.pval2, d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol, SUM(a.ng_qty) as ng_qty 
+                FROM t_prd_daily_ng a 
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                INNER JOIN m_param e ON a.ng_type = e.pval1
+                WHERE a.ng_type LIKE 'ROL%' AND a.line_id SIMILAR TO '[0-9]+' AND e.pval2 LIKE '%STEUCHI%'
+                GROUP BY 1,2,3,4,5
+            ) x ON a.line_id = x.line_id AND a.prd_dt = x.prd_dt AND a.shift = x.shift AND c.model_id = x.model_id "
             . "WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' ";
+        $sql .= " GROUP BY 1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17 ";
         $sql .= " ORDER BY  a.prd_seq";
-
-        // echo $sql;
-        // die();
 
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
             $tot_pln_qty = 0;
             $tot_prd_qty = 0;
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
                 $prd_qty = floatval($row["prd_qty"]);
                 $ng_qty = floatval($row["ng_qty"]);
                 $cctime = floatval($row["cctime"]);
@@ -209,107 +217,169 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, b.group_id, b.model_id, b.dies_no, c.loss_time_p, coalesce(d.loss_time, 0) as loss_time, e.tot_ng, 
-        COALESCE(f.ng_qty, 0) as ril, coalesce(g.ng_qty, 0) as rol1, coalesce(h.ng_qty, 0) as rol2, coalesce(i.ng_qty, 0) as rol3, coalesce(j.ng_qty, 0) as rol4, coalesce(k.ng_qty, 0) as rol5, coalesce(l.ng_qty, 0) as rol6, coalesce(m.ng_qty, 0) as rol7, coalesce(n.ng_qty, 0) as rol8, coalesce(o.ng_qty, 0) as rol9, coalesce(p.ng_qty, 0) as rol10
-                FROM t_prd_daily_i a 
-                INNER JOIN m_dm_dies_asset b ON b.dies_id::character varying = a.dies_id
-                LEFT JOIN (
-                    SELECT a.line_id, a.prd_dt, a.shift, SUM(a.stop_time) AS loss_time_p 
-                    FROM t_prd_daily_stop a 
-                    INNER JOIN m_prd_stop_reason_action b ON a.stop_id = b.srna_id
-                    WHERE b.type2 = 'P' AND b.app_id = 'AISIN_PRD'
-                    GROUP BY a.line_id, a.prd_dt, a.shift
-                ) c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift
-                LEFT JOIN (
-                    SELECT a.line_id, a.prd_dt, a.shift, SUM(a.stop_time) AS loss_time 
-                    FROM t_prd_daily_stop a 
-                    INNER JOIN m_prd_stop_reason_action b ON a.stop_id = b.srna_id
-                    WHERE b.type2 = 'U' AND b.app_id = 'AISIN_PRD'
-                    GROUP BY a.line_id, a.prd_dt, a.shift
-                ) d ON a.line_id = d.line_id AND a.prd_dt = d.prd_dt AND a.shift = d.shift
-                LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, SUM(ng_qty) as tot_ng
-                    FROM t_prd_daily_ng
-                    GROUP BY line_id, prd_dt, shift
-                ) e ON a.line_id = e.line_id AND a.prd_dt = e.prd_dt AND a.shift = e.shift
-                LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as ril, SUM(ng_qty) as ng_qty
-                    FROM t_prd_daily_ng
-                    WHERE ng_type LIKE 'RIL%'
-                    GROUP BY line_id, prd_dt, shift
-                ) f ON a.line_id = f.line_id AND a.prd_dt = f.prd_dt AND a.shift = f.shift
-                LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol1, SUM(ng_qty) as ng_qty
-                    FROM t_prd_daily_ng
-                    WHERE ng_type LIKE 'ROL1'
-                    GROUP BY line_id, prd_dt, shift
-                ) g ON a.line_id = g.line_id AND a.prd_dt = g.prd_dt AND a.shift = g.shift
-                LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol2, SUM(ng_qty) as ng_qty
-                    FROM t_prd_daily_ng
-                    WHERE ng_type LIKE 'ROL2'
-                    GROUP BY line_id, prd_dt, shift
-                ) h ON a.line_id = h.line_id AND a.prd_dt = h.prd_dt AND a.shift = h.shift
-                LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol3, SUM(ng_qty) as ng_qty
-                    FROM t_prd_daily_ng
-                    WHERE ng_type LIKE 'ROL3'
-                    GROUP BY line_id, prd_dt, shift
-                ) i ON a.line_id = i.line_id AND a.prd_dt = i.prd_dt AND a.shift = i.shift
-                LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol4, SUM(ng_qty) as ng_qty
-                    FROM t_prd_daily_ng
-                    WHERE ng_type LIKE 'ROL4'
-                    GROUP BY line_id, prd_dt, shift
-                ) j ON a.line_id = j.line_id AND a.prd_dt = j.prd_dt AND a.shift = j.shift
-                LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol5, SUM(ng_qty) as ng_qty
-                    FROM t_prd_daily_ng
-                    WHERE ng_type LIKE 'ROL5'
-                    GROUP BY line_id, prd_dt, shift
-                ) k ON a.line_id = k.line_id AND a.prd_dt = k.prd_dt AND a.shift = k.shift
-                LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol6, SUM(ng_qty) as ng_qty
-                    FROM t_prd_daily_ng
-                    WHERE ng_type LIKE 'ROL6'
-                    GROUP BY line_id, prd_dt, shift
-                ) l ON a.line_id = l.line_id AND a.prd_dt = l.prd_dt AND a.shift = l.shift
-                LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol7, SUM(ng_qty) as ng_qty
-                    FROM t_prd_daily_ng
-                    WHERE ng_type LIKE 'ROL7'
-                    GROUP BY line_id, prd_dt, shift
-                ) m ON a.line_id = m.line_id AND a.prd_dt = m.prd_dt AND a.shift = m.shift
-                LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol8, SUM(ng_qty) as ng_qty
-                    FROM t_prd_daily_ng
-                    WHERE ng_type LIKE 'ROL8'
-                    GROUP BY line_id, prd_dt, shift
-                ) n ON a.line_id = n.line_id AND a.prd_dt = n.prd_dt AND a.shift = n.shift
-                LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol9, SUM(ng_qty) as ng_qty
-                    FROM t_prd_daily_ng
-                    WHERE ng_type LIKE 'ROL9'
-                    GROUP BY line_id, prd_dt, shift
-                ) o ON a.line_id = o.line_id AND a.prd_dt = o.prd_dt AND a.shift = o.shift
-                LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, COUNT(ng_type) as rol10, SUM(ng_qty) as ng_qty
-                    FROM t_prd_daily_ng
-                    WHERE ng_type LIKE 'ROL10'
-                    GROUP BY line_id, prd_dt, shift
-                ) p ON a.line_id = p.line_id AND a.prd_dt = p.prd_dt AND a.shift = p.shift "
-            . "WHERE  a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' ";
-
-        // echo $sql;
-        // die();
-        // echo $sql;
-        // die();
+        $sql = "SELECT SUM(a.prd_qty) as prd_qty, SUM(a.prd_time) as nett_opr, a.cctime, b.group_id, b.group_id, b.model_id, b.dies_no, coalesce(c.loss_time_p, 0) as loss_time_p, coalesce(d.loss_time, 0) as loss_time, e.tot_ng, COALESCE(f.ng_qty, 0) as ril, COALESCE(z.ng_qty, 0) as rol, 
+                    coalesce(g.ng_qty, 0) as rol1, coalesce(h.ng_qty, 0) as rol2, coalesce(i.ng_qty, 0) as rol3, coalesce(j.ng_qty, 0) as rol4, 
+                    coalesce(k.ng_qty, 0) as rol5, coalesce(l.ng_qty, 0) as rol6, coalesce(m.ng_qty, 0) as rol7, coalesce(n.ng_qty, 0) as rol8, 
+                    coalesce(o.ng_qty, 0) as rol9, coalesce(p.ng_qty, 0) as rol10 
+            FROM t_prd_daily_i a 
+            INNER JOIN m_dm_dies_asset b ON b.dies_id::character varying = a.dies_id 
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, SUM(a.stop_time) AS loss_time_p 
+                FROM t_prd_daily_stop a 
+                INNER JOIN m_prd_stop_reason_action b ON a.stop_id = b.srna_id
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id::bigint = d.dies_id
+                WHERE b.type2 = 'P' AND b.app_id = 'AISIN_PRD' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4
+            ) c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND b.model_id = c.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, SUM(a.stop_time) AS loss_time 
+                FROM t_prd_daily_stop a 
+                INNER JOIN m_prd_stop_reason_action b ON a.stop_id = b.srna_id 
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id::bigint = d.dies_id
+                WHERE b.type2 = 'U' AND b.app_id = 'AISIN_PRD' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4
+            ) d ON a.line_id = d.line_id AND a.prd_dt = d.prd_dt AND a.shift = d.shift AND b.model_id = d.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, SUM(a.ng_qty) as tot_ng 
+                FROM t_prd_daily_ng a
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id::bigint = d.dies_id
+                WHERE a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4
+            ) e ON a.line_id = e.line_id AND a.prd_dt = e.prd_dt AND a.shift = e.shift AND b.model_id = e.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as ril, SUM(a.ng_qty) as ng_qty 
+                FROM t_prd_daily_ng a
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                WHERE a.ng_type LIKE 'RIL%' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4
+            ) f ON a.line_id = f.line_id AND a.prd_dt = f.prd_dt AND a.shift = f.shift AND b.model_id = f.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol, SUM(a.ng_qty) as ng_qty 
+                FROM t_prd_daily_ng a 
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                WHERE a.ng_type LIKE 'ROL%' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4 
+            ) z ON a.line_id = z.line_id AND a.prd_dt = z.prd_dt AND a.shift = z.shift AND b.model_id = z.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol1, SUM(a.ng_qty) as ng_qty 
+                FROM t_prd_daily_ng a 
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                WHERE a.ng_type LIKE 'ROL1' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4 
+            ) g ON a.line_id = g.line_id AND a.prd_dt = g.prd_dt AND a.shift = g.shift AND b.model_id = g.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol2, SUM(a.ng_qty) as ng_qty 
+                FROM t_prd_daily_ng a
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                WHERE a.ng_type LIKE 'ROL2' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4 
+            ) h ON a.line_id = h.line_id AND a.prd_dt = h.prd_dt AND a.shift = h.shift AND b.model_id = h.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol3, SUM(a.ng_qty) as ng_qty 
+                FROM t_prd_daily_ng a
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                WHERE a.ng_type LIKE 'ROL3' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4
+            ) i ON a.line_id = i.line_id AND a.prd_dt = i.prd_dt AND a.shift = i.shift AND b.model_id = i.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol4, SUM(a.ng_qty) as ng_qty 
+                FROM t_prd_daily_ng a 
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                WHERE a.ng_type LIKE 'ROL4' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4 
+            ) j ON a.line_id = j.line_id AND a.prd_dt = j.prd_dt AND a.shift = j.shift AND b.model_id = j.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol5, SUM(a.ng_qty) as ng_qty 
+                FROM t_prd_daily_ng a
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                WHERE a.ng_type LIKE 'ROL5' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4 
+            ) k ON a.line_id = k.line_id AND a.prd_dt = k.prd_dt AND a.shift = k.shift AND b.model_id = k.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol6, SUM(a.ng_qty) as ng_qty 
+                FROM t_prd_daily_ng a
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                WHERE a.ng_type LIKE 'ROL6' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4
+            ) l ON a.line_id = l.line_id AND a.prd_dt = l.prd_dt AND a.shift = l.shift AND b.model_id = l.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol7, SUM(a.ng_qty) as ng_qty 
+                FROM t_prd_daily_ng a
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                WHERE a.ng_type LIKE 'ROL7' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4
+            ) m ON a.line_id = m.line_id AND a.prd_dt = m.prd_dt AND a.shift = m.shift AND b.model_id = m.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol8, SUM(a.ng_qty) as ng_qty 
+                FROM t_prd_daily_ng a
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                WHERE a.ng_type LIKE 'ROL8' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4 
+            ) n ON a.line_id = n.line_id AND a.prd_dt = n.prd_dt AND a.shift = n.shift AND b.model_id = m.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol9, SUM(a.ng_qty) as ng_qty 
+                FROM t_prd_daily_ng a
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                WHERE a.ng_type LIKE 'ROL9' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4
+            ) o ON a.line_id = o.line_id AND a.prd_dt = o.prd_dt AND a.shift = o.shift AND b.model_id = m.model_id
+            LEFT JOIN ( 
+                SELECT d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol10, SUM(a.ng_qty) as ng_qty 
+                FROM t_prd_daily_ng a
+                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                WHERE a.ng_type LIKE 'ROL10' AND a.line_id SIMILAR TO '[0-9]+'
+                GROUP BY 1,2,3,4 
+            ) p ON a.line_id = p.line_id AND a.prd_dt = p.prd_dt AND a.shift = p.shift 
+            WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' "
+            . "GROUP BY 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22 ";
 
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
-            if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $rol = $row["rol1"] + $row["rol2"] + $row["rol3"] + $row["rol4"] + $row["rol5"] + $row["rol6"] + $row["rol7"] + $row["rol8"] + $row["rol9"] + $row["rol10"];
-                $row["rol"] = $rol;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $nett_opr = $row["nett_opr"];
+                $tot_ng = $row["tot_ng"];
+                $prd_qty = $row["prd_qty"];
+                $cctime = $row["cctime"];
+                $losstime = $row["loss_time"];
+                $ril = $row["ril"];
+                $rol = $row["rol"];
+
+                $tot_qty = $prd_qty + $tot_ng;
+                $waktu_shift = $nett_opr + $row["loss_time_p"];
+                $efficiency = (($prd_qty * $cctime) / 60) / $nett_opr;
+                $roundEff2 = round($efficiency, 3);
+                $totalEff2 = $roundEff2 * 100;
+                $loss_persen = $losstime / $nett_opr * 100;
+                $roundloss = round($loss_persen, 3);
+                $persen_ril = $ril * $cctime / 60 / $nett_opr * 100;
+                $roundril = round($persen_ril, 2);
+                $persen_rol = $rol * $cctime / 60 / $nett_opr * 100;
+                $roundrol = round($persen_rol, 2);
+                $total = $totalEff2 + $roundloss + $roundril + $roundrol;
+
+                $row["total%"] = $total;
+                $row["ril%"] = $roundril;
+                $row["rol%"] = $roundrol;
+                $row["loss%"] = $roundloss;
+                $row["eff"] = $totalEff2;
+                $row["tot_qty"] = $tot_qty;
+                $row["nett_opr"] = $nett_opr;
+                $row["waktu_shift"] = $waktu_shift;
                 $return[] = $row;
             }
         }
@@ -469,6 +539,29 @@ class Reporting
 
                 $row["eff"] = $totalEff;
 
+                $return[] = $row;
+            }
+        }
+        $stmt = null;
+        $conn = null;
+        return $return;
+    }
+
+    public function getSteuchiList($line_id, $prd_dt, $shift, $prd_seq)
+    {
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "SELECT a.prd_seq, e.pval2, d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol, SUM(a.ng_qty) as steuchi
+        FROM t_prd_daily_ng a 
+        INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq 
+        INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying 
+        INNER JOIN m_param e ON a.ng_type = e.pval1 
+        WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq' AND a.ng_type LIKE 'ROL%' AND a.line_id SIMILAR TO '[0-9]+' AND e.pval2 LIKE '%STEUCHI%' 
+        GROUP BY 1,2,3,4,5,6 ";
+        // echo $sql;
+        // die();
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $return[] = $row;
             }
         }
