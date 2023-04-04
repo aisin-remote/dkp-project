@@ -147,6 +147,48 @@ and open the template in the editor.
                       </div>
                     </div>
                     <div class="form-group row">
+                          <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Zona Maintenance</label>
+                          <div class="col-lg-3 col-md-5 col-sm-12">
+                            <select name="zona1" id="zona1" class="form-control select2">
+                              <option value="" selected>Pilih Zona Maintenance</option>
+                              <?php
+                              foreach ($list_zona as $zona) {
+                                if ($zona["zona_type"] == "M") {
+                                  $selected = "";
+                                  if ($zona["zona_id"] == $data["data"]["zona1"]) {
+                                    $selected = "selected";
+                                  }
+                                  ?>
+                                  <option value="<?php echo $zona["zona_id"]; ?>" <?= $selected ?>><?php echo $zona["desc"]; ?></option>
+                                  <?php
+                                }
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Zona Parkir</label>
+                          <div class="col-lg-3 col-md-5 col-sm-12">
+                            <select name="zona2" id="zona2" class="form-control select2" <?php if($data["data"]["stats"] == '0' || empty($data["data"]["stats"])) {echo "disabled";} ?>>
+                              <option value="" selected>Pilih Zona Parkir</option>
+                              <?php
+                              foreach ($list_zona as $zona) {
+                                if ($zona["zona_type"] == "P") {
+                                  $selected = "";
+                                  if ($zona["zona_id"] == $data["data"]["zona2"]) {
+                                    $selected = "selected";
+                                  }
+                                  ?>
+                                  <option value="<?php echo $zona["zona_id"]; ?>" <?= $selected ?>><?php echo $zona["desc"]; ?></option>
+                                  <?php
+                                }
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+                    <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Status</label>
                       <div class="col-lg-5 col-md-5 col-sm-12">
                         <input class="" name="status" id="status" onchange="cekStats()"
@@ -403,6 +445,18 @@ and open the template in the editor.
         $("#dies_id").attr("disabled", "disabled");
       }
     });
+
+    function cekStats() {
+      if ($("#status").is(":checked")) {
+        console.log("checked")
+        $("#zona2").attr("required", "required")
+        $("#zona2").removeAttr("disabled")
+      } else {
+        console.log("unchecked")
+        $("#zona2").attr("disabled", "disabled")
+        $("#zona2").removeAttr("required")
+      }
+    }
 
     $("#my_form").submit(function (event) {
       // event.preventDefault();

@@ -95,15 +95,23 @@ class PergantianPart
       // print_r($param["item"]);
       // die();
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO t_dm_pc_h (dies_id, desc1, pcdat, crt_by, crt_dt, status) "
-        . "values (:dies_id, :desc1, :pcdat, :crt_by, CURRENT_TIMESTAMP, '0' )";
+      if ($param["stats"] == 1) {
+        $sql2 = "UPDATE m_dm_dies_asset SET zona_id = '" . $param["zona2"] . "' WHERE dies_id = " . $param["dies_id"] . " ";
+      } else {
+        $sql2 = "UPDATE m_dm_dies_asset SET zona_id = '" . $param["zona1"] . "' WHERE dies_id = " . $param["dies_id"] . " ";
+      }
+      $sql = "INSERT INTO t_dm_pc_h (dies_id, desc1, pcdat, crt_by, crt_dt, status, zona1, zona2) "
+        . "values (:dies_id, :desc1, :pcdat, :crt_by, CURRENT_TIMESTAMP, '0', :zona1, :zona2 )";
       $stmt = $conn->prepare($sql);
+      $stmt2 = $conn->prepare($sql2);
       $stmt->bindValue(":dies_id", $param["dies_id"], PDO::PARAM_STR);
       $stmt->bindValue(":desc1", $param["desc1"], PDO::PARAM_STR);
       $stmt->bindValue(":pcdat", $param["pcdat"], PDO::PARAM_STR);
       $stmt->bindValue(":crt_by", $param["crt_by"], PDO::PARAM_STR);
+      $stmt->bindValue(":zona1", $param["zona1"], PDO::PARAM_STR);
+      $stmt->bindValue(":zona2", $param["zona2"], PDO::PARAM_STR);
 
-      if ($stmt->execute()) {
+      if ($stmt->execute() && $stmt2->execute()) {
         $pchid = $conn->lastInsertId();
         $this->insertItem($pchid, $param["item"]);
         $return["status"] = true;
@@ -128,17 +136,25 @@ class PergantianPart
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "UPDATE t_dm_pc_h SET dies_id = :dies_id, desc1 = :desc1, pcdat = :pcdat, chg_by = :chg_by, chg_dt = CURRENT_TIMESTAMP, status = :stats "
+      if ($param["stats"] == 1) {
+        $sql2 = "UPDATE m_dm_dies_asset SET zona_id = '" . $param["zona2"] . "' WHERE dies_id = " . $param["dies_id"] . " ";
+      } else {
+        $sql2 = "UPDATE m_dm_dies_asset SET zona_id = '" . $param["zona1"] . "' WHERE dies_id = " . $param["dies_id"] . " ";
+      }
+      $sql = "UPDATE t_dm_pc_h SET dies_id = :dies_id, desc1 = :desc1, pcdat = :pcdat, chg_by = :chg_by, chg_dt = CURRENT_TIMESTAMP, status = :stats, zona1 = :zona1, zona2 = :zona2 "
         . "WHERE pchid = :pchid ";
       $stmt = $conn->prepare($sql);
+      $stmt2 = $conn->prepare($sql2);
       $stmt->bindValue(":pchid", $param["pchid"], PDO::PARAM_STR);
       $stmt->bindValue(":dies_id", $param["dies_id"], PDO::PARAM_STR);
       $stmt->bindValue(":desc1", $param["desc1"], PDO::PARAM_STR);
       $stmt->bindValue(":pcdat", $param["pcdat"], PDO::PARAM_STR);
       $stmt->bindValue(":chg_by", $param["chg_by"], PDO::PARAM_STR);
       $stmt->bindValue(":stats", $param["stats"], PDO::PARAM_STR);
+      $stmt->bindValue(":zona1", $param["zona1"], PDO::PARAM_STR);
+      $stmt->bindValue(":zona2", $param["zona2"], PDO::PARAM_STR);
 
-      if ($stmt->execute()) {
+      if ($stmt->execute() && $stmt2->execute()) {
         $pchid = $param["pchid"];
         $this->insertItem($pchid, $param["item"]);
         $return["status"] = true;

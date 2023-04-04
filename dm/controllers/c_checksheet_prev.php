@@ -48,6 +48,9 @@ if ($action == "checksheet_preventive") {
           if ($cek_dies["gstat"] == "R") {
             header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&error=Dies Masih Dalam Repair!");
             die();
+          } else if ($diesGstat["gstat"] == "PC") {
+            header("Location: ?action=" . $action . "&error=Dies%20sedang%20pergantian%20part!");
+            die();
           } else {
             //update status dies menjadi P
             $dies->updateDiesGStat($param["dies_id"], "P");
