@@ -117,7 +117,7 @@ class Reporting
                 if ($prd_time == 0) {
                     $efficiency = 0;
                 } else {
-                    $efficiency = (($prd_qty - $ng_qty) * $cctime / 60) / $prd_time;
+                    $efficiency = ($prd_qty * ($cctime / 60)) / $prd_time;
                 }
 
                 $roundEff = round($efficiency, 3);
