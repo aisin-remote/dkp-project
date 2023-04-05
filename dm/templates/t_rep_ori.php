@@ -203,8 +203,6 @@ and open the template in the editor.
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
-            $(".view-image1").EZView();
-            $(".view-image2").EZView();
             $("#data-table-x").DataTable({
                 stateSave: true,
                 order: [
@@ -218,9 +216,6 @@ and open the template in the editor.
                     title: "Report Order Repair & Improvement",
                     className: 'btn btn-dark-blue btn-sm',
                     text: '<i class="material-icons">download</i>Download Excel',
-                    exportOptions: {
-                        columns: [0, 1, 2, 3, 4, 5, 6]
-                    }
                 },
                 {
                     className: 'btn btn-dark-blue-outlined btn-sm',
@@ -232,6 +227,9 @@ and open the template in the editor.
                 }
                 ]
             });
+
+            $(".view-image1").EZView();
+            $(".view-image2").EZView();
 
             $('td').each(function () {
                 if ($(this).text() == 'I') {
@@ -249,13 +247,13 @@ and open the template in the editor.
                 }
             });
 
-            $(".datepicker").flatpickr({
-                altInput: true,
-                altFormat: "d-m-Y",
-                dateFormat: "Ymd"
-            });
         });
-
+        $(".datepicker").flatpickr({
+            altInput: true,
+            altFormat: "d-m-Y",
+            dateFormat: "Ymd"
+        });
+        
         $("#group_id").change(function () {
             getDiesModel($("#group_id").val());
         });

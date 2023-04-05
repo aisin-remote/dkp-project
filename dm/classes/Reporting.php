@@ -75,11 +75,14 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, TO_CHAR(a.crt_dt, 'YYYY-MM-DD') as pc_date, 
-        TO_CHAR(a.crt_dt, 'HH24:MI:SS') as pc_time, 
-        d.group_id, d.model_id, d.dies_no, c.part_grp, c.name1, a.desc1, a.crt_by "
-            . "FROM t_dm_pc_h a, t_dm_pc_i b, m_dm_dies_part c, m_dm_dies_asset d "
-            . "WHERE a.dies_id = CAST(d.dies_id AS varchar(20)) AND b.part_id = c.part_id AND a.pchid = b.pchid ";
+        $sql = "SELECT a.*, TO_CHAR(a.crt_dt, 'YYYY-MM-DD') as pc_date, TO_CHAR(a.crt_dt, 'HH24:MI:SS') as pc_time, d.group_id, d.model_id, d.dies_no, c.part_grp, c.name1, a.desc1, a.crt_by, e.desc as zona_mt, f.desc as zona_park 
+                FROM t_dm_pc_h a
+                left join t_dm_pc_i b ON b.pchid = a.pchid
+                inner join m_dm_dies_part c ON c.part_id = b.part_id
+                left join m_dm_dies_asset d ON d.dies_id = CAST(a.dies_id as bigint)
+                left join m_zona e ON e.zona_id = a.zona1
+                left join m_zona f ON f.zona_id = a.zona2
+                WHERE 1=1 ";
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.crt_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
         }

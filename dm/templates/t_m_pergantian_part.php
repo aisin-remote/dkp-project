@@ -99,8 +99,8 @@ and open the template in the editor.
                                 <td><?php echo $row["dies_no"]; ?></td>
                                 <td><?php echo $row["pcdate"]; ?></td>
                                 <td><?php echo $row["stats"]; ?></td>
-                                <td><?php echo $row["zona1"]; ?></td>
-                                <td><?php echo $row["zona2"]; ?></td>
+                                <td><?php echo $row["zona_mt"]; ?></td>
+                                <td><?php echo $row["zona_park"]; ?></td>
                                 <td><a class="btn btn-xs btn-outline-dark" href="?action=<?php echo $action ?>&id=<?php echo $row["pchid"]; ?>"><i class="material-icons">edit_square</i></a></td>
                               </tr>
                           <?php
