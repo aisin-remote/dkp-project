@@ -7,9 +7,11 @@ class PergantianPart
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.*, b.model_id, b.group_id, b.dies_no, TO_CHAR(a.pcdat, 'DD-MM-YYYY') as pcdate FROM t_dm_pc_h a "
-      . "INNER JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint) "
-      . "WHERE 1=1 ";
+    $sql = "SELECT a.*, c.desc as zona_mt, d.desc as zona_park, b.model_id, b.group_id, b.dies_no, TO_CHAR(a.pcdat, 'DD-MM-YYYY') as pcdate FROM t_dm_pc_h a 
+            INNER JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint)
+            left JOIN m_zona c ON c.zona_id = a.zona1
+            left JOIN m_zona d ON d.zona_id = a.zona2
+            WHERE 1=1 ";
 
     $sql .= " ORDER by pchid ASC ";
     $stmt = $conn->prepare($sql);

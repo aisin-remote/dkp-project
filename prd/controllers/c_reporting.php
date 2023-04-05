@@ -69,8 +69,12 @@ if ($action == "daily_production") {
     $persen_rol = $rol * $cctime / 60 / $nett_opr * 100;
     $roundrol = round($persen_rol, 2);
 
+    $wip = $data2["list"][0]["wip"];
+    $persen_wip = $wip * $cctime / 60 / $nett_opr * 100;
+    $roundwip = round($persen_wip, 2);
 
-    $total = $totalEff2 + $roundloss + $roundril + $roundrol;
+
+    $total = $totalEff2 + $roundloss + $roundril + $roundrol + $roundwip;
 
     require(TEMPLATE_PATH . "/t_print_report.php");
   } elseif (isset($_GET["id"])) {
@@ -148,7 +152,11 @@ if ($action == "daily_production") {
         $roundEff2 = round($efficiency, 3);
         $totalEff2 = $roundEff2 * 100;
 
-        $total = $totalEff2 + $roundloss + $roundril + $roundrol;
+        $wip = $data2["list"][0]["wip"];
+        $persen_wip = $wip * $cctime / 60 / $nett_opr * 100;
+        $roundwip = round($persen_wip, 2);
+
+        $total = $totalEff2 + $roundloss + $roundril + $roundrol + $roundwip;
         require(TEMPLATE_PATH . "/t_report_daily_production2.php");
       } elseif ($step == "detail") {
         $line = $_GET["id"];

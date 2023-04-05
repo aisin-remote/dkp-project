@@ -479,6 +479,9 @@
               <small class="text-bold">ROL</small>
             </th>
             <th class="text-center align-middle" rowspan="2">
+              <small class="text-bold">WIP</small>
+            </th>
+            <th class="text-center align-middle" rowspan="2">
               <small class="text-bold">EFFICIENCY (A)</small>
             </th>
             <th class="text-center align-middle" rowspan="2">
@@ -491,7 +494,10 @@
               <small class="text-bold">ROL (D)</small>
             </th>
             <th class="text-center align-middle" rowspan="2">
-              <small class="text-bold">TOTAL (A+B+C+D) = 100 -+ 1%</small>
+              <small class="text-bold">WIP (E)</small>
+            </th>
+            <th class="text-center align-middle" rowspan="2">
+              <small class="text-bold">TOTAL (A+B+C+D+E) = 100 -+ 1%</small>
             </th>
           </tr>
           <tr>
@@ -568,7 +574,7 @@
               </td>
               <td>
                 <small>
-                  <?= $list["tot_prd"] ?>
+                  <?= $list["tot_qty"] ?>
                 </small>
               </td>
               <td>
@@ -636,6 +642,11 @@
               </td>
               <td>
                 <small>
+                  <?= $list["wip"] ?>
+                </small>
+              </td>
+              <td>
+                <small>
                   <?= $list["eff"] ?>
                 </small>
               </td>
@@ -652,6 +663,11 @@
               <td>
                 <small>
                   <?= $list["rol%"] ?>
+                </small>
+              </td>
+              <td>
+                <small>
+                  <?= $list["wip%"] ?>
                 </small>
               </td>
               <td>

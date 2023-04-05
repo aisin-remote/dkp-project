@@ -24,6 +24,10 @@ if ($action == "daily_production_entry") {
           $param["prd_qty"] = 0;
         }
 
+        if (empty($param["wip"])) {
+          $param["wip"] = 0;
+        }
+
         if (empty($param["dcqcp"])) {
           $param["dcqcp"] = 0;
         }
