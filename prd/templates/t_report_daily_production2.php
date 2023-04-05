@@ -135,6 +135,7 @@ and open the template in the editor.
                                                 <th>Cycle Time</th>
                                                 <th>Planning Qty</th>
                                                 <th>Prod Qty</th>
+                                                <th>WIP</th>
                                                 <th>Total NG</th>
                                                 <th>Loss Time(m)</th>
                                                 <th>Efficiency</th>
@@ -152,6 +153,7 @@ and open the template in the editor.
                                                         . "<td class='align-middle'>" . $list["cctime"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["pln_qty"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["prd_qty"] . "</td>"
+                                                        . "<td class='align-middle'>" . $list["wip"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["tot_ng"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["loss_time"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["eff"] . "</td>"
@@ -198,24 +200,20 @@ and open the template in the editor.
                                                     <th class="pl-4 text-dark align-middle text-center">CMM</th>
                                                     <th class="pl-4 text-dark align-middle text-center">TRIAL
                                                         MANUFACTURING</th>
-                                                    <th class="pl-4 text-dark align-middle text-center">STEUCHI SETUP
-                                                    </th>
-                                                    <th class="pl-4 text-dark align-middle text-center">STEUCHI PROBLEM
-                                                    </th>
-                                                    <th class="pl-4 text-dark align-middle text-center">STEUCHI DANDORI
-                                                    </th>
+                                                    <th class="pl-4 text-dark align-middle text-center">STEUCHI SETUP</th>
+                                                    <th class="pl-4 text-dark align-middle text-center">STEUCHI PROBLEM</th>
+                                                    <th class="pl-4 text-dark align-middle text-center">STEUCHI DANDORI</th>
                                                     <th class="pl-4 text-dark align-middle text-center">LOT OUT</th>
-                                                    <th class="pl-4 text-dark align-middle text-center">PRODUK JATUH
-                                                    </th>
-                                                    <th class="pl-4 text-dark align-middle text-center">PRODUK NUMPUK
-                                                    </th>
+                                                    <th class="pl-4 text-dark align-middle text-center">PRODUK JATUH</th>
+                                                    <th class="pl-4 text-dark align-middle text-center">PRODUK NUMPUK</th>
                                                     <th class="pl-4 text-dark align-middle text-center">SAMPLE QC</th>
-                                                    <th class="pl-4 text-dark align-middle text-center">KEKOTANSO
-                                                    </th>
+                                                    <th class="pl-4 text-dark align-middle text-center">KEKOTANSO</th>
+                                                    <th class="pl-4 text-dark align-middle">WIP</th>
                                                     <th class="pl-4 text-dark align-middle">Efficiency</th>
                                                     <th class="pl-4 text-dark align-middle">Losstime</th>
                                                     <th class="pl-4 text-dark align-middle">RIL</th>
                                                     <th class="pl-4 text-dark align-middle">ROL</th>
+                                                    <th class="pl-4 text-dark align-middle">WIP (%)</th>
                                                     <th class="pl-4 text-dark align-middle">Total</th>
                                                 </tr>
                                             </thead>
@@ -243,10 +241,12 @@ and open the template in the editor.
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol8"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol9"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol10"] . "</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["wip"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["eff"] . "%</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["loss%"] . "%</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["ril%"] . "%</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol%"] . "%</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["wip%"] . "%</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["total%"] . "%</td>"
                                                             . "</tr>";
                                                     }

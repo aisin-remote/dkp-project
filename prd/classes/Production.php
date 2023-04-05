@@ -191,7 +191,7 @@ class Production
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
       $sql = "UPDATE t_prd_daily_i SET dies_id = :dies_id, prd_qty = :prd_qty, prd_time = :prd_time, "
         . "detail_text = :detail_text, dcqcp = :dcqcp, qaqcp = :qaqcp, scn_qty_ok = :scn_qty_ok, scn_qty_ng = :scn_qty_ng,"
-        . " cctime = :cctime, pln_qty = :pln_qty "
+        . " cctime = :cctime, pln_qty = :pln_qty, wip = :wip "
         . "WHERE line_id = :line_id AND prd_dt = :prd_dt AND shift = :shift AND prd_seq = :prd_seq ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":dies_id", $param["dies_id"], PDO::PARAM_STR);
@@ -208,6 +208,7 @@ class Production
       $stmt->bindValue(":scn_qty_ng", $param["scn_qty_ng"], PDO::PARAM_STR);
       $stmt->bindValue(":cctime", $param["cctime"], PDO::PARAM_STR);
       $stmt->bindValue(":pln_qty", $param["pln_qty"], PDO::PARAM_STR);
+      $stmt->bindValue(":wip", $param["wip"], PDO::PARAM_STR);
       if ($stmt->execute($insertData)) {
         $return["status"] = true;
       } else {

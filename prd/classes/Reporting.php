@@ -138,7 +138,7 @@ class Reporting
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT a.line_id, a.prd_dt, a.shift, a.prd_seq, a.time_start, a.time_end, a.cctime, "
             . "a.pln_qty, coalesce(a.prd_qty, 0) as prd_qty, a.prd_time, a.apr_by, b.name1 as apr_name, "
-            . "c.name1, c.model_id, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time, coalesce(SUM(x.ng_qty), 0) as steuchi "
+            . "c.name1, c.model_id, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time, coalesce(SUM(x.ng_qty), 0) as steuchi, coalesce(a.wip, 0) as wip "
             . "FROM t_prd_daily_i a "
             . "LEFT JOIN m_user b ON a.apr_by = b.usrid "
             . "LEFT JOIN m_dm_dies_asset c ON a.dies_id::integer = c.dies_id "
@@ -217,7 +217,7 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT SUM(a.prd_qty) as prd_qty, SUM(a.prd_time) as nett_opr, a.cctime, b.group_id, b.group_id, b.model_id, b.dies_no, coalesce(c.loss_time_p, 0) as loss_time_p, coalesce(d.loss_time, 0) as loss_time, e.tot_ng, COALESCE(f.ng_qty, 0) as ril, COALESCE(z.ng_qty, 0) as rol, 
+        $sql = "SELECT SUM(a.prd_qty) as prd_qty, SUM(a.prd_time) as nett_opr, SUM(a.wip) as wip, a.cctime, b.group_id, b.group_id, b.model_id, b.dies_no, coalesce(c.loss_time_p, 0) as loss_time_p, coalesce(d.loss_time, 0) as loss_time, e.tot_ng, COALESCE(f.ng_qty, 0) as ril, COALESCE(z.ng_qty, 0) as rol, 
                     coalesce(g.ng_qty, 0) as rol1, coalesce(h.ng_qty, 0) as rol2, coalesce(i.ng_qty, 0) as rol3, coalesce(j.ng_qty, 0) as rol4, 
                     coalesce(k.ng_qty, 0) as rol5, coalesce(l.ng_qty, 0) as rol6, coalesce(m.ng_qty, 0) as rol7, coalesce(n.ng_qty, 0) as rol8, 
                     coalesce(o.ng_qty, 0) as rol9, coalesce(p.ng_qty, 0) as rol10 
@@ -346,7 +346,7 @@ class Reporting
                 GROUP BY 1,2,3,4 
             ) p ON a.line_id = p.line_id AND a.prd_dt = p.prd_dt AND a.shift = p.shift 
             WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' "
-            . "GROUP BY 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22 ";
+            . "GROUP BY 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 ";
 
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
@@ -358,6 +358,7 @@ class Reporting
                 $losstime = $row["loss_time"];
                 $ril = $row["ril"];
                 $rol = $row["rol"];
+                $wip = $row["wip"];
 
                 $tot_qty = $prd_qty + $tot_ng;
                 $waktu_shift = $nett_opr + $row["loss_time_p"];
@@ -370,12 +371,15 @@ class Reporting
                 $roundril = round($persen_ril, 2);
                 $persen_rol = $rol * $cctime / 60 / $nett_opr * 100;
                 $roundrol = round($persen_rol, 2);
-                $total = $totalEff2 + $roundloss + $roundril + $roundrol;
+                $persen_wip = $wip * $cctime / 60 / $nett_opr * 100;
+                $roundwip = round($persen_wip, 2);
+                $total = $totalEff2 + $roundloss + $roundril + $roundrol + $roundwip;
 
                 $row["total%"] = $total;
                 $row["ril%"] = $roundril;
                 $row["rol%"] = $roundrol;
                 $row["loss%"] = $roundloss;
+                $row["wip%"] = $roundwip;
                 $row["eff"] = $totalEff2;
                 $row["tot_qty"] = $tot_qty;
                 $row["nett_opr"] = $nett_opr;
