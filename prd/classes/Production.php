@@ -259,6 +259,7 @@ class Production
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, CONCAT(b.model_id, ' ', b.group_id, ' ', b.name1) as dies_name, "
       . "(select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), "
+      . "(select SUM(ng_qty) as ng_qty from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), "
       . "(select name1 from m_user where usrid = a.apr_by) as apr_name "
       . "FROM t_prd_daily_i a "
       . "INNER JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint) "
