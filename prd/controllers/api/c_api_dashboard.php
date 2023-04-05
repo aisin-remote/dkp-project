@@ -11,7 +11,7 @@ if ($action == "api_dashboard_prd") {
   //$jam_end = "16";
   $message = [];
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-  $query = "select a.line_id, b.name1 as line_name, c.gstat, CONCAT(c.group_id,' ',c.model_id,' ',c.dies_no) as dies_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
+  /*$query = "select a.line_id, b.name1 as line_name, c.gstat, CONCAT(c.group_id,' ',c.model_id,' ',c.dies_no) as dies_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
             (select coalesce(sum(ng_qty),0) as ril_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'RIL'), 
             (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
@@ -26,7 +26,24 @@ if ($action == "api_dashboard_prd") {
             ) g ON a.line_id = g.line_id 
             where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A' AND a.line_id = g.line_id ";
   //$query .= "and a.stats = 'A' ";
-  $query .= "ORDER BY line_name ASC";
+  $query .= "ORDER BY line_name ASC";*/
+  $query = "select a.line_id, a.name1 as line_name, a.line_ty as type, 
+            coalesce(i.dies_id,'-') as dies_id, coalesce(CONCAT(c.group_id,' ',c.model_id,' ',c.dies_no),'-') as dies_name, c.gstat, 
+            coalesce(i.cctime,0) as cctime, coalesce(i.pln_qty,0) as pln_time, 
+            coalesce(i.prd_time,0) as prd_time, coalesce(i.prd_qty,0) as prd_qty, 
+            (select coalesce(sum(ng_qty),0) as ril_qty from t_prd_daily_ng 
+            WHERE line_id = a.line_id and prd_dt = i.prd_dt and shift = i.shift and prd_seq = i.prd_seq and SUBSTRING(ng_type,1,3) = 'RIL'), 
+            (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
+            WHERE line_id = a.line_id and prd_dt = i.prd_dt and shift = i.shift and prd_seq = i.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL') 
+            from m_prd_line a 
+            LEFT JOIN t_prd_daily_i i 
+            ON i.line_id = a.line_id 
+            AND i.prd_dt = '$today' 
+            AND TO_CHAR(TO_TIMESTAMP(i.prd_dt||' '||i.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
+            AND i.stats = 'A' 
+            left join m_dm_dies_asset c on c.dies_id = i.dies_id::int 
+            where a.line_ty = 'DM' 
+            ORDER BY line_id asc";
   $stmt = $conn->prepare($query);
   $return = [];
   $data_per_jam = [];
@@ -37,16 +54,25 @@ if ($action == "api_dashboard_prd") {
   if ($stmt->execute()) {
     $i = 0;
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $row["eff"] = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
-      //$data_per_jam[] = $row;
-      $data_ril[] = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
-      $data_rol[] = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
+      $row["eff"] = 0;
+      $data_ril[$i] = 0; 
+      $data_rol[$i] = 0;
+      if($row["prd_time"] != 0) {
+        $row["eff"] = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
+        $data_ril[$i] = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
+        $data_rol[$i] = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
+      }        
+      $data_per_jam[] = $row;          
+      
       $data_line_name[$i]["line"] = $row["line_name"];
       $data_line_name[$i]["dies"] = $row["dies_name"];
+      if(empty(trim($data_line_name[$i]["dies"]))) {
+        $data_line_name[$i]["dies"] = "-";
+      }
       if ($row["gstat"] == 'P') {
         $data_line_name[$i]["dies_color"] = 'text-danger';
       }
-      $data_eff[] = $row["eff"];
+      $data_eff[$i] = $row["eff"];
       $i++;
     }
   } else {
