@@ -19,9 +19,15 @@ and open the template in the editor.
       <main>
         <div class="container-fluid">
           <ol class="breadcrumb mb-2 mt-4">
-            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-            <li class="breadcrumb-item"><?php echo $template["menu"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["submenu"]; ?></li>
+            <li class="breadcrumb-item">
+              <?php echo $template["group"]; ?>
+            </li>
+            <li class="breadcrumb-item">
+              <?php echo $template["menu"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["submenu"]; ?>
+            </li>
           </ol>
           <?php
           if (isset($_GET["error"])) {
@@ -58,7 +64,8 @@ and open the template in the editor.
                       <div class="col-lg-6 col-sm-12">
                         <div class="d-flex justify-content-end">
                           <!-- button placement -->
-                          <a class="btn btn-dark-blue btn-sm mx-2" href="?action=<?php echo $action; ?>&id=0"><i class="material-icons">add</i> New</a>
+                          <a class="btn btn-dark-blue btn-sm mx-2" href="?action=<?php echo $action; ?>&id=0"><i
+                              class="material-icons">add</i> New</a>
                         </div>
                       </div>
                     </div>
@@ -73,7 +80,7 @@ and open the template in the editor.
                   <div class="card-body">
                     <!-- Edit Here -->
                     <div class="table-responsive">
-                      <table class="table table-striped table-sm" id="data-table">
+                      <table class="table table-striped table-sm" id="data-table-x">
                         <thead>
                           <tr>
                             <th>#</th>
@@ -91,19 +98,37 @@ and open the template in the editor.
                           <?php
                           if (!empty($data["list"])) {
                             foreach ($data["list"] as $row) {
-                          ?>
+                              ?>
                               <tr>
-                                <td><?php echo $row["pchid"]; ?></td>
-                                <td><?php echo $row["group_id"]; ?></td>
-                                <td><?php echo $row["model_id"]; ?></td>
-                                <td><?php echo $row["dies_no"]; ?></td>
-                                <td><?php echo $row["pcdate"]; ?></td>
-                                <td><?php echo $row["stats"]; ?></td>
-                                <td><?php echo $row["zona_mt"]; ?></td>
-                                <td><?php echo $row["zona_park"]; ?></td>
-                                <td><a class="btn btn-xs btn-outline-dark" href="?action=<?php echo $action ?>&id=<?php echo $row["pchid"]; ?>"><i class="material-icons">edit_square</i></a></td>
+                                <td>
+                                  <?php echo $row["pchid"]; ?>
+                                </td>
+                                <td>
+                                  <?php echo $row["group_id"]; ?>
+                                </td>
+                                <td>
+                                  <?php echo $row["model_id"]; ?>
+                                </td>
+                                <td>
+                                  <?php echo $row["dies_no"]; ?>
+                                </td>
+                                <td>
+                                  <?php echo $row["pcdate"]; ?>
+                                </td>
+                                <td>
+                                  <?php echo $row["stats"]; ?>
+                                </td>
+                                <td>
+                                  <?php echo $row["zona_mt"]; ?>
+                                </td>
+                                <td>
+                                  <?php echo $row["zona_park"]; ?>
+                                </td>
+                                <td><a class="btn btn-xs btn-outline-dark"
+                                    href="?action=<?php echo $action ?>&id=<?php echo $row["pchid"]; ?>"><i
+                                      class="material-icons">edit_square</i></a></td>
                               </tr>
-                          <?php
+                              <?php
                             }
                           }
                           ?>
@@ -124,8 +149,10 @@ and open the template in the editor.
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    $(document).ready(function() {
-
+    $(document).ready(function () {
+      $('#data-table-x').DataTable({
+        order: [[0, 'desc']],
+      });
     });
   </script>
 </body>
