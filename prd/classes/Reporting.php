@@ -102,7 +102,7 @@ class Reporting
                 $roundEff = round($efficiency, 3);
                 $totalEff = $roundEff * 100;
 
-                $row["eff"] = $totalEff;
+                // $row["eff"] = $totalEff;
                 $return[] = $row;
             }
         }
