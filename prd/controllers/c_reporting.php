@@ -148,9 +148,9 @@ if ($action == "daily_production") {
           $prd_time[] = $list["prd_time"];
         }
         $prdtime = array_sum($prd_time);
-        $efficiency = (($tot_prd - $tot_ng) * $cctime / 60) / $prdtime;
-        $roundEff2 = round($efficiency, 3);
-        $totalEff2 = $roundEff2 * 100;
+        $efficiency = (($tot_prd - $tot_ng) * $cctime / 60) / $prdtime * 100;
+        $roundEff2 = round($efficiency, 2);
+        // $totalEff2 = $roundEff2 * 100;
 
         $wip = $data2["list"][0]["wip"];
         $persen_wip = $wip * $cctime / 60 / $nett_opr * 100;
@@ -190,6 +190,8 @@ if ($action == "daily_production") {
     $jpid = $_GET["jpid"];
 
     $data["list"] = $class->getList($date_from, $date_to, $prd_year, $prd_month, $shift, $line_id, $ldid, $jpid);
+    $line = $dies->getLineByType();
+    $shiftlist = $class->getListShift();
     require(TEMPLATE_PATH . "/t_report_daily_production.php");
   }
 }
@@ -199,6 +201,7 @@ if ($action == "report_detail") {
   $template["menu"] = "Daily Production";
   $template["submenu"] = "View Details";
   $report = new Reporting();
+  $dies = new Dies();
 
   $date_from = date('Ymd');
   if (!empty($_GET["date_from"])) {
@@ -216,6 +219,8 @@ if ($action == "report_detail") {
   $jpid = $_GET["jpid"];
 
   $data["list"] = $report->getReportDetail($date_from, $date_to, $shift, $line_id, $ldid, $jpid);
+  $line = $dies->getLineByType();
+  $shiftlist = $report->getListShift();
   require(TEMPLATE_PATH . "/t_report_detail.php");
 }
 
@@ -224,6 +229,7 @@ if ($action == "report_stop") {
   $template["menu"] = "Daily Production";
   $template["submenu"] = "View Details Stop";
   $report = new Reporting();
+  $dies = new Dies();
 
   $date_from = date('Ymd');
   if (!empty($_GET["date_from"])) {
@@ -241,5 +247,7 @@ if ($action == "report_stop") {
   $jpid = $_GET["jpid"];
 
   $data["list"] = $report->getReportStop($date_from, $date_to, $shift, $line_id, $ldid, $jpid);
+  $line = $dies->getLineByType();
+  $shiftlist = $report->getListShift();
   require(TEMPLATE_PATH . "/t_report_stop.php");
 }

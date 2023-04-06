@@ -147,7 +147,8 @@ and open the template in the editor.
                         <?php
                         if (!empty($data_item)) {
                           foreach ($data_item as $list) {
-                            $efficiency = round(($list["prd_qty"] / $list["pln_qty"]) * 100, 2);
+                            // $efficiency = round(($list["prd_qty"] / $list["pln_qty"]) * 100, 2);
+                            $efficiency =  round(($list["prd_qty"] * $list["cctime"] / 60) / $list["prd_time"] * 100, 2);
                             $btn_approve = "";
                             if ($list["stats"] == "N") {
                               $btn_approve = "<button type='button' class='btn btn-sm btn-success' onclick='approveDailyI(\"" . $list["line_id"] . "\",\"" . $list["shift"] . "\",\"" . $list["prd_dt"] . "\",\"" . $list["prd_seq"] . "\")'><i class='material-icons'>done_outline</i></button>";

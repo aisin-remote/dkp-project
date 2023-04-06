@@ -103,7 +103,8 @@ and open the template in the editor.
       <?php include 'common/t_footer.php'; ?>
     </div>
   </div>
-  <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_filter_label" aria-hidden="true">
+  <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="modal_filter_label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <form method="get" action="#">
         <input type="hidden" name="action" value="<?= $action ?>">
@@ -117,25 +118,45 @@ and open the template in the editor.
           <div class="modal-body">
             <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Start Date</label></div>
-              <div class="col"><input type="text" name="date_from" class="form-control datepicker" value="<?php echo $date_from; ?>"></div>
+              <div class="col"><input type="text" name="date_from" class="form-control datepicker"
+                  value="<?php echo $date_from; ?>"></div>
               <label class="col-form-label px-3">to</label>
-              <div class="col"><input type="text" name="date_to" class="form-control datepicker" value="<?php echo $date_to; ?>"></div>
+              <div class="col"><input type="text" name="date_to" class="form-control datepicker"
+                  value="<?php echo $date_to; ?>"></div>
             </div>
-            <!-- <div class="row my-2">
-              <div class="col-4"><label class="col-form-label">Year</label></div>
-              <div class="col"><input type="text" name="prd_year" class="form-control" value="<?php echo $prd_year; ?>"></div>
-            </div>
-            <div class="row my-2">
-              <div class="col-4"><label class="col-form-label">Month</label></div>
-              <div class="col"><input type="text" name="prd_month" class="form-control" value="<?php echo $prd_month; ?>"></div>
-            </div> -->
-            <div class="row my-2">
+            <!-- <div clas
+           -->
+           <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Shift</label></div>
-              <div class="col"><input type="text" name="shift" class="form-control" value="<?php echo $shift; ?>"></div>
+              <!-- <div class="col"><input type="text" name="shift" class="form-control" value="<?php echo $shift; ?>"></div> -->
+              <div class="col">
+                <select name="shift" id="shift" class="form-control select2" style="width: 300px">
+                  <option value="" selected>Select Shift</option>
+                  <?php
+                  foreach ($shiftlist as $s) {
+                    ?>
+                    <option value="<?php echo $s["seq"]; ?>" <?php if ($s["pval1"] == $_GET["shift"]) {
+                         echo "selected";
+                       } ?>><?php echo $s["pval1"]; ?></option>
+                    <?php
+                  }
+                  ?>
+                </select>
+              </div>
             </div>
             <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Line DC</label></div>
-              <div class="col"><input type="text" name="line_id" class="form-control" value="<?php echo $line_id; ?>"></div>
+              <div class="col"><select name="line_id" id="line_id"
+                  class="form-control select2" style="width: 300px">
+                  <option value="" selected>Pilih Line</option>
+                  <?php
+                  foreach ($line as $group) {
+                    ?>
+                    <option value="<?php echo $group["line_id"]; ?>" ><?php echo $group["name1"]; ?></option>
+                    <?php
+                  }
+                  ?>
+                </select></div>
             </div>
             <!-- <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Leader</label></div>
