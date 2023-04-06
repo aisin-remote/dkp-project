@@ -78,8 +78,8 @@ class ContentStopShift
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT a.*, b.name1 as srna_name, c.time_Start as start1, c.time_end as end1 "
             . "FROM m_prd_shift_stop a "
-            . "LEFT JOIN m_prd_stop_reason_action b ON a.srna_id = b.srna_id "
-            . "LEFT JOIN m_prd_shift c ON a.shift_id = c.shift_id and a.time_id = c.time_id "
+            . "LEFT JOIN m_prd_stop_reason_action b ON a.srna_id = b.srna_id AND b.app_id = '" . APP . "' "
+            . "LEFT JOIN m_prd_shift c ON a.shift_id = c.shift_id and a.time_id = c.time_id AND c.app_id = '" . APP . "' "
             . "WHERE a.app_id = '" . APP . "'  "
             . "ORDER BY a.shift_id ASC, a.srna_id ASC, a.time_id ASC ";
 
