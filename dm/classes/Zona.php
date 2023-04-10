@@ -15,6 +15,20 @@ class Zona {
     $conn = null;
     return $return;
   }
+
+  public function getList2() {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT * FROM m_zona ORDER BY seq2 ASC";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
+    }
+    $conn = null;
+    return $return;
+  }
   
   public function isUsed($zona_id, $dies_id) {
     $return = [];

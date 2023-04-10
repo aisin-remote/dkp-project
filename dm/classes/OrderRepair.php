@@ -16,7 +16,7 @@ class OrderRepair
     if ($stat != null) {
       $sql .= "AND a.stats = '$stat' ";
     }
-    $sql .= " ORDER by ori_id ASC ";
+    $sql .= " ORDER by a.ori_id DESC ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

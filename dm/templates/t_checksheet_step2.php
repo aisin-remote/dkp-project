@@ -141,7 +141,7 @@ and open the template in the editor.
                         <tr>
                           <td class="align-middle px-3 table-item">Zona Maintenance</td>
                           <td class="align-middle px-3 table-item">
-                            <select name="zona1" id="zona1" class="form-control select2">
+                            <select name="zona1" id="zona1" class="form-control select2" disabled>
                               <?php
                               foreach ($list_zona as $zona) {                                
                                 if ($zona["zona_type"] == "M") {

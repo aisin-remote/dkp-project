@@ -13,7 +13,7 @@ class PergantianPart
             left JOIN m_zona d ON d.zona_id = a.zona2
             WHERE 1=1 ";
 
-    $sql .= " ORDER by pchid ASC ";
+    $sql .= " ORDER by a.pchid DESC ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

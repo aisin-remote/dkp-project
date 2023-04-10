@@ -98,7 +98,7 @@ if ($action == "pergantian_part") {
         $count_m = $class->countCorePin($id, '1.3.2.1') + 1;
         $data_core_pin = $class->getCorePin($id);
       }
-      $list_zona = $zona->getList();
+      $list_zona = $zona->getList2();
       $part_list = $class->getPartList();
       require(TEMPLATE_PATH . "/t_m_pergantian_part_edit.php");
     }

@@ -168,7 +168,7 @@ if ($action == "order_repair") {
         $template["submenu"] = "New";
         $model_list = $dies->getDiesModel(null, $group_list[0]["pval1"]);
         $dies_list = $dies->getListDies(null, $model_list[0]["model_id"]);
-        $list_zona = $zona->getList();
+        $list_zona = $zona->getList2();
         require(TEMPLATE_PATH . "/t_m_order_repair_edit.php");
       } else {
         $template["submenu"] = "Edit";
@@ -176,7 +176,7 @@ if ($action == "order_repair") {
 
         $model_list = $dies->getDiesModel(null, $data["data"]["group_id"]);
         $dies_list = $dies->getListDies(null, null, $data["data"]["group_id"], $data["data"]["model_id"]);
-        $list_zona = $zona->getList();
+        $list_zona = $zona->getList2();
         require(TEMPLATE_PATH . "/t_m_order_repair_edit.php");
       }
 
