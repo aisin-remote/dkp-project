@@ -40,6 +40,9 @@
     </div>
     <div class="col-4"></div>
   </div>
+  <?php
+    print_r($exe_stop);
+  ?>
   <div class="row">
     <div class="col-3">
       <table class="table table-sm table-borderless table-condensed mx-2">
@@ -402,9 +405,14 @@
               <td class="text-center align-middle">';
               $seq = $i;
               $data_stop = $class2->getStopList($line_id, $prd_dt, $shift, $seq);
+              $stop_exe = $class2->getStopExe($line_id, $prd_dt, $shift, $seq);
               foreach ($data_stop as $data) {
-                echo '<small>' . $data["exe_name"] . '</small>
-                <br>';
+                foreach ($stop_exe as $exe) {
+                  if ($exe["stop_seq"] == $data["stop_seq"] && $exe["prd_seq"] == $data["prd_seq"]) {
+                    echo '<small>' . $exe["name1"] . '</small>
+                    <br>';
+                  }
+                }
               }
               echo '</td>
               <td class="text-center align-middle">
@@ -564,7 +572,7 @@
               </td>
               <td>
                 <small>
-                  <?= $list["nett_opr"] ?>
+                  <?= $list["prd_time"] ?>
                 </small>
               </td>
               <td>
