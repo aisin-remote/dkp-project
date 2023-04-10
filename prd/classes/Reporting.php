@@ -372,7 +372,7 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, b.*, c.*, d.name1 as dies_name, d.*, e.*, f.name1 as line_name, g.name1 as operator, g.*, h.*, h.name1 as stop, i.name1 as eksekutor,
+        $sql = "SELECT a.*, b.*, c.*, d.name1 as dies_name, d.*, e.*, f.name1 as line_name, g.name1 as operator, g.*, h.*, h.name1 as stop, k.name1 as action, j.name1 as eksekutor,
                 (select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
                 (select SUM(stop_time) as loss_time from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
                 (select SUM(ng_qty) as ng_count from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq)
@@ -384,7 +384,9 @@ class Reporting
                 inner join m_prd_line f on f.line_id = a.line_id and f.line_ty = 'DM'
                 inner join m_prd_operator g on g.empid = b.jpid
                 inner join m_prd_stop_reason_action h on h.srna_id = c.stop_id and h.app_id = 'AISIN_PRD'
-                left join m_prd_operator i on i.empid = c.exe_empid
+                left join m_eksekutor i on i.line_id = a.line_id and i.prd_dt = a.prd_dt and i.shift = a.shift and i.prd_seq = c.prd_seq and i.stop_seq = c.stop_seq
+                left join m_prd_operator j on j.empid = i.empid
+                left join m_prd_stop_reason_action k on k.srna_id = c.action_id and k.app_id =  'AISIN_PRD'
                 where 1=1 ";
 
         if ($date_from !== "*" && $date_to !== "*") {

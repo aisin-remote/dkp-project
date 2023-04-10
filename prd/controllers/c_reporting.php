@@ -33,14 +33,14 @@ if ($action == "daily_production") {
     $time_start = $data["list"][0]["time_start"];
     $time_end = $data["list"][7]["time_end"];
 
-    $start = DateTime::createFromFormat('H:i', $time_start);
-    $end = DateTime::createFromFormat('H:i', $time_end);
+    // $start = DateTime::createFromFormat('H:i', $time_start);
+    // $end = DateTime::createFromFormat('H:i', $time_end);
 
-    if ($end < $start) {
-      $end->modify('+1 day');
-    }
+    // if ($end < $start) {
+    //   $end->modify('+1 day');
+    // }
 
-    $diff_in_minutes = ($end->getTimestamp() - $start->getTimestamp()) / 60;
+    // $diff_in_minutes = ($end->getTimestamp() - $start->getTimestamp()) / 60;
     $nett_opr = $data3["list"][0]["nett_opr"];
     $tot_prd = $data["list"][7]["tot_prd_qty"];
     $tot_ng = $data["list"][7]["tot_ng2"];
@@ -102,15 +102,15 @@ if ($action == "daily_production") {
         $time_start = $data["list"][0]["time_start"];
         $time_end = $data["list"][7]["time_end"];
 
-        $start = DateTime::createFromFormat('H:i', $time_start);
-        $end = DateTime::createFromFormat('H:i', $time_end);
+        // $start = DateTime::createFromFormat('H:i', $time_start);
+        // $end = DateTime::createFromFormat('H:i', $time_end);
 
-        if ($end < $start) {
-          $end->modify('+1 day');
-        }
+        // if ($end < $start) {
+        //   $end->modify('+1 day');
+        // }
 
-        $diff_in_minutes = ($end->getTimestamp() - $start->getTimestamp()) / 60;
-        $diff_in_hours = $diff_in_minutes / 60;
+        // $diff_in_minutes = ($end->getTimestamp() - $start->getTimestamp()) / 60;
+        // $diff_in_hours = $diff_in_minutes / 60;
 
         $loss_time = $data2["list"][0]["loss_time"];
         $loss_tpln = ($total_waktu - floatval($loss_time));
@@ -177,6 +177,7 @@ if ($action == "daily_production") {
         $template["submenu"] = $data_item_dtl["line_name"];
 
         $dies_list = $dies->getListDies($line);
+        $exe_stop = $class2->getStopExe($line, $date, $shift, $seq);
 
         require(TEMPLATE_PATH . "/t_report_daily_production_detail.php");
       }
@@ -230,6 +231,7 @@ if ($action == "report_stop") {
   $template["submenu"] = "View Details Stop";
   $report = new Reporting();
   $dies = new Dies();
+  $class = new Production();
 
   $date_from = date('Ymd');
   if (!empty($_GET["date_from"])) {

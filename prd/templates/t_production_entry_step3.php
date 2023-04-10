@@ -257,7 +257,7 @@ and open the template in the editor.
                       <th>Konten Stop</th>
                       <th>Konten Penanganan (Action)</th>
                       <th>Remarks</th>
-                      <th>Eksekutor</th>
+                      <th style="width: 20%;">Eksekutor</th>
                       <th class='text-center'>Action</th>
                     </tr>
                   </thead>
@@ -277,7 +277,13 @@ and open the template in the editor.
                           . "<td>" . $row["stop_name"] . "</td>"
                           . "<td>" . $row["action_name"] . "</td>"
                           . "<td>" . $row["remarks"] . "</td>"
-                          . "<td>" . $row["exe_name"] . "</td>"
+                          . "<td>" ;
+                          foreach ($exe_stop as $exe) {
+                            if ($exe["stop_seq"] == $row["stop_seq"] && $exe["prd_seq"] == $row["prd_seq"]) {
+                              echo $exe["name1"] . ", ";
+                            }
+                          }
+                          echo "</td>"
                           . "<td class='text-center'>$button_del</td>"
                           . "</tr>";
                       }
@@ -386,7 +392,7 @@ and open the template in the editor.
               <div class="form-group row">
                 <label for="action_id" class="col-sm-3 col-form-label">Eksekutor</label>
                 <div class="col-sm-9">
-                  <select id="exe_empid" class="form-control modalSelect01" data-live-search="true">
+                  <select id="exe_empid" name="exe_empid[]" class="form-control modalSelect01" multiple="" data-live-search="true">
                     <option value="">Select Eksekutor</option>
                     <?php
                     if (!empty($list_person)) {
@@ -594,7 +600,7 @@ and open the template in the editor.
           },
           error: function (error) {
             // handle the error here
-            alert(error);
+            console.log(error.responseText);
           },
           dataType: 'json'
         });

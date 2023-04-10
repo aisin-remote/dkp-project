@@ -56,12 +56,14 @@ if ($action == "api_delete_daily_stop") {
     $del = $class->updateTargetDailyI($line_id, $prd_dt, $shift, $prd_seq, $prd_time, $pln_qty);
     if ($del["status"] == true) {
       $del = $class->deleteStop($line_id, $prd_dt, $shift, $prd_seq, $stop_seq);
+      $del = $class->deleteExeStop($line_id, $prd_dt, $shift, $prd_seq, $stop_seq);
     } else {
       echo json_encode($del);
       die();
     }
   } else {
     $del = $class->deleteStop($line_id, $prd_dt, $shift, $prd_seq, $stop_seq);
+    $del = $class->deleteExeStop($line_id, $prd_dt, $shift, $prd_seq, $stop_seq);
   }
 
   echo json_encode($del);

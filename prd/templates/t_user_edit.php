@@ -19,8 +19,12 @@ and open the template in the editor.
       <main>
         <div class="container-fluid">
           <ol class="breadcrumb mb-4 mt-4">
-            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
+            <li class="breadcrumb-item">
+              <?php echo $template["group"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["menu"]; ?>
+            </li>
           </ol>
           <?php
           if (isset($_GET["error"])) {
@@ -42,7 +46,8 @@ and open the template in the editor.
                       <div class="col-lg-6 col-sm-12">
                         <div class="d-flex justify-content-end">
                           <!-- button placement -->
-                          <button type="submit" name="save" value="save" class="btn btn-primary"><span class="material-icons">save</span> Save</button>
+                          <button type="submit" name="save" value="save" class="btn btn-primary"><span
+                              class="material-icons">save</span> Save</button>
                         </div>
                       </div>
                     </div>
@@ -60,23 +65,26 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">User ID</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
-                        <input type="text" name="usrid" class="form-control" maxlength="100" value="<?php echo $data["data"]["usrid"]; ?>" <?php if (!empty($data["data"]["usrid"])) {
-                                                                                                                                              echo "readonly";
-                                                                                                                                            } ?>>
+                        <input type="text" name="usrid" class="form-control" maxlength="100"
+                          value="<?php echo $data["data"]["usrid"]; ?>" <?php if (!empty($data["data"]["usrid"])) {
+                               echo "readonly";
+                             } ?>>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">User Name</label>
                       <div class="col-lg-4 col-md-6 col-sm-12">
-                        <input type="text" name="name1" class="form-control" maxlength="255" value="<?php echo $data["data"]["name1"]; ?>">
+                        <input type="text" name="name1" class="form-control" maxlength="255"
+                          value="<?php echo $data["data"]["name1"]; ?>">
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Phone</label>
                       <div class="col-lg-4 col-md-6 col-sm-12">
-                        <input type="text" name="phone" class="form-control" maxlength="255" value="<?php echo $data["data"]["phone"]; ?>">
+                        <input type="text" name="phone" class="form-control" maxlength="255"
+                          value="<?php echo $data["data"]["phone"]; ?>">
                       </div>
                     </div>
 
@@ -86,18 +94,18 @@ and open the template in the editor.
                         <select name="roles[]" class="form-control select2" multiple="">
                           <?php
                           foreach ($data["role"] as $val) {
-                          ?>
+                            ?>
                             <option value="<?php echo $val["roleid"]; ?>" <?php
-                                                                          if (!empty($data["user_role"])) {
-                                                                            foreach ($data["user_role"] as $val2) {
-                                                                              if ($val2 == $val["roleid"]) {
-                                                                                echo "selected";
-                                                                                break;
-                                                                              }
-                                                                            }
-                                                                          }
-                                                                          ?>><?php echo $val["roleid"] . " - " . $val["name1"]; ?></option>
-                          <?php
+                               if (!empty($data["user_role"])) {
+                                 foreach ($data["user_role"] as $val2) {
+                                   if ($val2 == $val["roleid"]) {
+                                     echo "selected";
+                                     break;
+                                   }
+                                 }
+                               }
+                               ?>><?php echo $val["roleid"] . " - " . $val["name1"]; ?></option>
+                            <?php
                           }
                           ?>
                         </select>
@@ -113,11 +121,11 @@ and open the template in the editor.
                           /*foreach($data["vendor"] as $val) {
                           ?>
                           <option value="<?php echo $val["lifnr"]; ?>" 
-                            <?php 
-                            if($data["data"]["lifnr"] == $val["lifnr"]){
-                              echo "selected";                                                           
-                            } 
-                            ?>><?php echo $val["lifnr"]." - ".$val["name1"]; ?></option>
+                          <?php 
+                          if($data["data"]["lifnr"] == $val["lifnr"]){
+                          echo "selected";                                                           
+                          } 
+                          ?>><?php echo $val["lifnr"]." - ".$val["name1"]; ?></option>
                           <?php
                           }*/
                           ?>
@@ -130,8 +138,8 @@ and open the template in the editor.
                       <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="custom-control custom-switch">
                           <input type="checkbox" name="stats" class="custom-control-input" id="stats" <?php if ($data["data"]["stats"] == "A") {
-                                                                                                        echo "checked";
-                                                                                                      } ?>>
+                            echo "checked";
+                          } ?>>
                           <label class="custom-control-label" for="stats" id="fl-stats"></label>
                         </div>
                       </div>
@@ -170,11 +178,11 @@ and open the template in the editor.
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       checklabel("stats");
     });
 
-    $('#stats').on("change", function() {
+    $('#stats').on("change", function () {
       checklabel("stats");
     });
 

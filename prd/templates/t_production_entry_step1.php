@@ -19,9 +19,15 @@ and open the template in the editor.
       <main>
         <div class="container-fluid">
           <ol class="breadcrumb mb-0 mt-2">
-            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["submenu"]; ?></li>
+            <li class="breadcrumb-item">
+              <?php echo $template["group"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["menu"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["submenu"]; ?>
+            </li>
             <li class="breadcrumb-item active">New</li>
           </ol>
           <?php
@@ -31,7 +37,8 @@ and open the template in the editor.
                     </div>';
           }
           ?>
-          <form method="post" id="my-form" action="?action=<?php echo $action; ?>&line=<?php echo $line; ?>&date=<?php echo $date; ?>&shift=<?php echo $shift; ?>">
+          <form method="post" id="my-form"
+            action="?action=<?php echo $action; ?>&line=<?php echo $line; ?>&date=<?php echo $date; ?>&shift=<?php echo $shift; ?>">
 
             <div class="row mt-1">
               <div class="col-12">
@@ -47,13 +54,11 @@ and open the template in the editor.
                         <select name="shift" class="form-control select2" readonly>
                           <?php
                           foreach ($shift_list as $row) {
-                          ?>
+                            ?>
                             <option value="<?php echo $row["seq"]; ?>" <?php if ($row["seq"] == $shift) {
-                                                                          echo "selected";
-                                                                        } else {
-                                                                          echo "disabled";
-                                                                        } ?>><?php echo $row["pval1"]; ?></option>
-                          <?php
+                                 echo "selected";
+                               } ?>><?php echo $row["pval1"]; ?></option>
+                            <?php
                           }
                           ?>
                         </select>
@@ -63,7 +68,8 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Date</label>
                       <div class="col-lg-2 col-md-5 col-sm-12">
-                        <input type="text" id="prd_dt" name="prd_dt" class="form-control datepicker" maxlength="100" value="<?php echo $date; ?>" readonly>
+                        <input type="text" id="prd_dt" name="prd_dt" class="form-control datepicker" maxlength="100"
+                          value="<?php echo $date; ?>" readonly>
                       </div>
                     </div>
 
@@ -73,9 +79,9 @@ and open the template in the editor.
                         <select name="ldid" class="form-control select2">
                           <?php
                           foreach ($ld_list as $row) {
-                          ?>
+                            ?>
                             <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
-                          <?php
+                            <?php
                           }
                           ?>
                         </select>
@@ -88,9 +94,9 @@ and open the template in the editor.
                         <select name="jpid" class="form-control select2">
                           <?php
                           foreach ($jp_list as $row) {
-                          ?>
+                            ?>
                             <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
-                          <?php
+                            <?php
                           }
                           ?>
                         </select>
@@ -104,9 +110,9 @@ and open the template in the editor.
                           <option value="">None</option>
                           <?php
                           foreach ($op_list as $row) {
-                          ?>
+                            ?>
                             <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
-                          <?php
+                            <?php
                           }
                           ?>
                         </select>
@@ -120,9 +126,9 @@ and open the template in the editor.
                           <option value="">None</option>
                           <?php
                           foreach ($op_list as $row) {
-                          ?>
+                            ?>
                             <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
-                          <?php
+                            <?php
                           }
                           ?>
                         </select>
@@ -136,9 +142,9 @@ and open the template in the editor.
                           <option value="">None</option>
                           <?php
                           foreach ($op_list as $row) {
-                          ?>
+                            ?>
                             <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
-                          <?php
+                            <?php
                           }
                           ?>
                         </select>
@@ -152,9 +158,9 @@ and open the template in the editor.
                           <option value="">None</option>
                           <?php
                           foreach ($op_list as $row) {
-                          ?>
+                            ?>
                             <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
-                          <?php
+                            <?php
                           }
                           ?>
                         </select>
@@ -167,9 +173,9 @@ and open the template in the editor.
                         <select name="dies_id" id="dies_id" class="form-control select2">
                           <?php
                           foreach ($dies_list as $row) {
-                          ?>
+                            ?>
                             <option value="<?php echo $row["dies_id"]; ?>"><?php echo $row["group_id"] . " - " . $row["model_id"] . " - " . $row["name1"]; ?></option>
-                          <?php
+                            <?php
                           }
                           ?>
                         </select>
@@ -186,7 +192,8 @@ and open the template in the editor.
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Total Target (Est)</label>
                       <div class="col-lg-2 col-md-5 col-sm-12">
-                        <input type="number" name="total_target" id="total_target" step="1" min="0" class="form-control" readonly>
+                        <input type="number" name="total_target" id="total_target" step="1" min="0" class="form-control"
+                          readonly>
                       </div>
                     </div>
 
@@ -194,7 +201,8 @@ and open the template in the editor.
                       <div class="col-lg-2 col-md-3 col-sm-12 d-sm-none d-md-block"></div>
                       <div class="col-lg-5 col-md-5 col-sm-12">
                         <input type="hidden" name="save" value="true">
-                        <button type="submit" name="btn_save" id="btn_save" value="save" class="btn btn-pale-green">Save & Generate Production Entry</button>
+                        <button type="submit" name="btn_save" id="btn_save" value="save" class="btn btn-pale-green">Save
+                          & Generate Production Entry</button>
                       </div>
                     </div>
 
@@ -213,12 +221,14 @@ and open the template in the editor.
   </div>
   <input type="hidden" id="shift_count" value="<?php echo $shift_count; ?>">
 
-  <div class="modal fade" id="modal_delete" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_upload_label" aria-hidden="true">
+  <div class="modal fade" id="modal_delete" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="modal_upload_label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <form method="GET" action="" enctype="multipart/form-data">
           <div class="modal-header">
-            <h5 class="modal-title" id="modal_upload_label"><span class="material-icons">warning</span> Dies Sedang Dalam Maintenance</h5>
+            <h5 class="modal-title" id="modal_upload_label"><span class="material-icons">warning</span> Dies Sedang
+              Dalam Maintenance</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -239,7 +249,7 @@ and open the template in the editor.
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       $(".datepicker").flatpickr({
         altInput: true,
         altFormat: 'd-m-Y',
@@ -251,7 +261,7 @@ and open the template in the editor.
       getDefaultCycleTime();
     });
 
-    $("#my-form").submit(function(event) {
+    $("#my-form").submit(function (event) {
       $("#btn_save").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
       $("#btn_save").attr("disabled", "disabled");
     });
@@ -277,12 +287,12 @@ and open the template in the editor.
         data: {
           dies_id: $("#dies_id").val()
         },
-        success: function(response) {
+        success: function (response) {
           // handle the response here
           $("#cctime").val(response.cctime);
           calculateTarget();
         },
-        error: function(error) {
+        error: function (error) {
           // handle the error here
           alert(error);
         },
@@ -295,7 +305,7 @@ and open the template in the editor.
       $.ajax({
         url: '?action=api_get_dies_preventive',
         data: 'dies_id=' + dies_id,
-        success: (function(data) {
+        success: (function (data) {
           var json = data,
             obj = JSON.parse(json);
           if (obj.gstat === "P" && inputValue == formattedDate) {

@@ -78,6 +78,7 @@ if ($action == "daily_production_entry") {
       $template["submenu"] = $data_item_dtl["line_name"];
 
       $dies_list = $dies->getListDies($line, "A");
+      $exe_stop = $class->getStopExe($line, $date, $shift, $seq);
 
       require(TEMPLATE_PATH . "/t_production_entry_step3.php");
     } else {

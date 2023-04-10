@@ -412,6 +412,7 @@ class Production
 
       if ($stmt->execute()) {
         $return["status"] = true;
+        $this->insertStopExe($param["line_id"], $param["prd_dt"], $param["shift"], $param["prd_seq"], $param["exe_empid"]);
       } else {
         $error = $stmt->errorInfo();
         $return["status"] = false;
@@ -664,6 +665,65 @@ class Production
     $conn = null;
     return $return;
   }
+  
+  public function getStopExe($line, $prd_dt, $shift, $prd_seq) {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT a.*, b.name1 FROM m_eksekutor a
+        left join m_prd_operator b on b.empid = a.empid
+        WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt, 'YYYYMMDD') = '$prd_dt' OR a.prd_dt = '$prd_dt' AND a.shift = '$shift' 
+        AND a.prd_seq = '$prd_seq' AND a.app_id = '".APP."' ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function insertStopExe($line, $prd_dt, $shift, $prd_seq, $empid = array()) {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "INSERT INTO m_eksekutor (line_id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES ";
+    $arr_insert = array();
+    foreach ($empid as $emp) {
+      $arr_insert[] = "('$line', '$prd_dt', '$shift', '$prd_seq', '$emp', '".APP."', (select coalesce(max(stop_seq),0) as stop_seq FROM t_prd_daily_stop where line_id = '".$line."' AND prd_dt = '".$prd_dt."' AND shift = '".$shift."' AND prd_seq = '".$prd_seq."'))";
+    }
+    $sql .= implode(",", $arr_insert);
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function deleteExeStop($line, $prd_dt, $shift, $prd_seq, $stop_seq) {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "DELETE FROM m_eksekutor WHERE line_id = '$line' AND prd_dt = '$prd_dt' AND shift = '$shift' AND prd_seq = '$prd_seq' AND stop_seq = '$stop_seq' AND app_id = '".APP."' ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
 
   public function getDataScan($line_name, $date_time_start, $date_time_end)
   {
@@ -679,4 +739,5 @@ class Production
 
     return $data;
   }
+
 }
