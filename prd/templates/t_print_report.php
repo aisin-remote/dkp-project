@@ -409,7 +409,7 @@
               foreach ($data_stop as $data) {
                 foreach ($stop_exe as $exe) {
                   if ($exe["stop_seq"] == $data["stop_seq"] && $exe["prd_seq"] == $data["prd_seq"]) {
-                    echo '<small>' . $exe["name1"] . '</small>
+                    echo '<small>' . $data["stop_name"] . ' - ' . $exe["name1"] . '</small>
                     <br>';
                   }
                 }

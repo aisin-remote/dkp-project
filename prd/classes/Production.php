@@ -669,8 +669,8 @@ class Production
   public function getStopExe($line, $prd_dt, $shift, $prd_seq) {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.*, b.name1 FROM m_eksekutor a
-        left join t_prd_daily_exec b on b.empid = a.empid
+    $sql = "SELECT a.*, b.name1 FROM t_prd_daily_exec a
+        left join m_prd_operator b on b.empid = a.empid
         WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt, 'YYYYMMDD') = '$prd_dt' OR a.prd_dt = '$prd_dt' AND a.shift = '$shift' 
         AND a.prd_seq = '$prd_seq' AND a.app_id = '".APP."' ";
     $stmt = $conn->prepare($sql);

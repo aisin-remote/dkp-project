@@ -384,7 +384,7 @@ class Reporting
                 inner join m_prd_line f on f.line_id = a.line_id and f.line_ty = 'DM'
                 inner join m_prd_operator g on g.empid = b.jpid
                 inner join m_prd_stop_reason_action h on h.srna_id = c.stop_id and h.app_id = 'AISIN_PRD'
-                left join m_eksekutor i on i.line_id = a.line_id and i.prd_dt = a.prd_dt and i.shift = a.shift and i.prd_seq = c.prd_seq and i.stop_seq = c.stop_seq
+                left join t_prd_daily_exec i on i.line_id = a.line_id and i.prd_dt = a.prd_dt and i.shift = a.shift and i.prd_seq = c.prd_seq and i.stop_seq = c.stop_seq
                 left join m_prd_operator j on j.empid = i.empid
                 left join m_prd_stop_reason_action k on k.srna_id = c.action_id and k.app_id =  'AISIN_PRD'
                 where 1=1 ";
