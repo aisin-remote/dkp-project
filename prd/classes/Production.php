@@ -670,7 +670,7 @@ class Production
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.name1 FROM m_eksekutor a
-        left join m_prd_operator b on b.empid = a.empid
+        left join t_prd_daily_exec b on b.empid = a.empid
         WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt, 'YYYYMMDD') = '$prd_dt' OR a.prd_dt = '$prd_dt' AND a.shift = '$shift' 
         AND a.prd_seq = '$prd_seq' AND a.app_id = '".APP."' ";
     $stmt = $conn->prepare($sql);
@@ -687,7 +687,7 @@ class Production
   public function insertStopExe($line, $prd_dt, $shift, $prd_seq, $empid = array()) {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "INSERT INTO m_eksekutor (line_id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES ";
+    $sql = "INSERT INTO t_prd_daily_exec (line_id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES ";
     $arr_insert = array();
     foreach ($empid as $emp) {
       $arr_insert[] = "('$line', '$prd_dt', '$shift', '$prd_seq', '$emp', '".APP."', (select coalesce(max(stop_seq),0) as stop_seq FROM t_prd_daily_stop where line_id = '".$line."' AND prd_dt = '".$prd_dt."' AND shift = '".$shift."' AND prd_seq = '".$prd_seq."'))";
@@ -710,7 +710,7 @@ class Production
   public function deleteExeStop($line, $prd_dt, $shift, $prd_seq, $stop_seq) {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "DELETE FROM m_eksekutor WHERE line_id = '$line' AND prd_dt = '$prd_dt' AND shift = '$shift' AND prd_seq = '$prd_seq' AND stop_seq = '$stop_seq' AND app_id = '".APP."' ";
+    $sql = "DELETE FROM t_prd_daily_exec WHERE line_id = '$line' AND prd_dt = '$prd_dt' AND shift = '$shift' AND prd_seq = '$prd_seq' AND stop_seq = '$stop_seq' AND app_id = '".APP."' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       $return["status"] = true;
