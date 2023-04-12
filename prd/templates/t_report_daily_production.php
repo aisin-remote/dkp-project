@@ -78,7 +78,7 @@ and open the template in the editor.
                             echo "<tr>" . "<td class='align-middle'>" . $list["prd_dt"] . "</td>"
                               . "<td class='align-middle'>" . $list["prd_year"] . "</td>"
                               . "<td class='align-middle'>" . $list["prd_month"] . "</td>"
-                              . "<td class='align-middle'>" . $list["shift"] . "</td>"
+                              . "<td class='align-middle'>" . $list["pval1"] . "</td>"
                               . "<td class='align-middle'>" . $list["line_name"] . "</td>"
                               . "<td class='align-middle'>" . $list["ld_name"] . "</td>"
                               . "<td class='align-middle'>" . $list["jp_name"] . "</td>"

@@ -63,6 +63,7 @@ and open the template in the editor.
                           <th class="text-center text-nowrap">Plan Qty</th>
                           <th class="text-center text-nowrap">Prod. Qty</th>
                           <th class="text-center text-nowrap">Total NG</th>
+                          <th class="text-center text-nowrap">WIP</th>
                           <th class="text-center text-nowrap">Lost Time(m)</th>
                           <th class="text-center text-nowrap">Efficiency (%)</th>
                           <th class="text-center text-nowrap">Apr By</th>
@@ -72,7 +73,7 @@ and open the template in the editor.
                         <?php if (!empty($data["list"])) {
                           foreach ($data["list"] as $list) {
                             echo "<tr>" . "<td class='text-nowrap'>" . $list["prd_dt"] . "</td>"
-                              . "<td class='text-nowrap'>" . $list["shift"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["pval1"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["line_name"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["operator"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["dies_name"] . "</td>"
@@ -81,6 +82,7 @@ and open the template in the editor.
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["pln_qty"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["prd_qty"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["tot_ng"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["wip"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["loss_time"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["eff"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["apr_name"] . "</td>"

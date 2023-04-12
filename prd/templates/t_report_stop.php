@@ -75,7 +75,7 @@ and open the template in the editor.
                         <?php if (!empty($data["list"])) {
                           foreach ($data["list"] as $list) {
                             echo "<tr>" . "<td class='text-nowrap'>" . $list["prd_dt"] . "</td>"
-                              . "<td class='text-nowrap'>" . $list["shift"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["pval1"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["line_name"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["operator"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["dies_name"] . "</td>"

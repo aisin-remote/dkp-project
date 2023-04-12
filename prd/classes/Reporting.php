@@ -48,7 +48,7 @@ class Reporting
         (select coalesce(sum(ng_qty),0) as ng_ril FROM t_prd_daily_ng WHERE prd_dt = t.prd_dt AND shift = t.shift AND line_id = t.line_id AND ng_type LIKE 'RIL%'), 
         (select coalesce(sum(ng_qty),0) as ng_rol FROM t_prd_daily_ng WHERE prd_dt = t.prd_dt AND shift = t.shift AND line_id = t.line_id AND ng_type LIKE 'ROL%'), 
         round((t.prd_qty * t.cctime / 60 / t.prd_time * 100)::numeric, 2) as eff from 
-        (select TO_CHAR(a.prd_dt, 'YYYY') as prd_year, TO_CHAR(a.prd_dt,'MM') as prd_month, 
+        (select TO_CHAR(a.prd_dt, 'YYYY') as prd_year, TO_CHAR(a.prd_dt,'MM') as prd_month, f.pval1,
         a.prd_dt, a.line_id, b.name1 as line_name, a.shift, d.name1 as ld_name, e.name1 as jp_name,
         AVG(a.cctime) as cctime, sum(a.prd_time) as prd_time, sum(a.pln_qty) as pln_qty, sum(a.prd_qty) as prd_qty
         from t_prd_daily_i a 
@@ -56,6 +56,7 @@ class Reporting
         inner join t_prd_daily_h c on c.prd_dt = a.prd_dt and c.line_id = a.line_id and c.shift = a.shift
         inner join m_prd_operator d on d.empid = c.ldid
         inner join m_prd_operator e on e.empid = c.jpid
+        inner join m_param f on f.pid = 'SHIFT' and f.seq = a.shift
         where 1=1 ";
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
@@ -78,7 +79,7 @@ class Reporting
         if (!empty($jpid)) {
             $sql .= " AND a.jpid = '$jpid' ";
         }
-        $sql .= " group by 1,2,3,4,5,6,7,8) t ";
+        $sql .= " group by 1,2,3,4,5,6,7,8,9) t ";
 
         // echo '<pre>';
         // echo $sql;
