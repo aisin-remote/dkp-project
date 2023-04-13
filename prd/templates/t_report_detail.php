@@ -81,7 +81,7 @@ and open the template in the editor.
                               . "<td class='text-center text-nowrap'>" . $list["cctime"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["pln_qty"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["prd_qty"] . "</td>"
-                              . "<td class='text-center pr-3 text-nowrap'>" . $list["tot_ng"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["ng_count"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["wip"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["loss_time"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["eff"] . "</td>"
