@@ -208,8 +208,8 @@
             <td class="text-center align-middle" rowspan="4">
               <small class="text-bold">Qty planning 100%</small>
             </td>
-            <td rowspan="2" class="text-center">
-              <small class="text-bold">Model</small>
+            <td rowspan="4" class="text-center align-middle">
+              <small class="text-bold">Qty production</small>
             </td>
             <td rowspan="2" class="text-center">
               <small class="text-bold">Model</small>
@@ -291,9 +291,6 @@
             </td>
           </tr>
           <tr>
-            <td rowspan="2" class="text-center">
-              <small class="text-bold">Dies No.</small>
-            </td>
             <td rowspan="2" class="text-center">
               <small class="text-bold">Dies No.</small>
             </td>
