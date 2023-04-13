@@ -40,9 +40,6 @@
     </div>
     <div class="col-4"></div>
   </div>
-  <?php
-    print_r($exe_stop);
-  ?>
   <div class="row">
     <div class="col-3">
       <table class="table table-sm table-borderless table-condensed mx-2">
@@ -548,7 +545,7 @@
           <?php
           foreach ($data2["list"] as $list) {
             ?>
-            <tr>
+            <tr class="text-center">
               <td>
                 <small>
                   <?= $list["group_id"] ?>
