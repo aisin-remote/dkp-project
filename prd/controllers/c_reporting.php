@@ -177,7 +177,7 @@ if ($action == "daily_production") {
         $template["submenu"] = $data_item_dtl["line_name"];
 
         $dies_list = $dies->getListDies($line);
-        $exe_stop = $class2->getStopExe($line, $date, $shift, $seq);
+        $exe_stop = $class2->getStopExeReport($line, $date, $shift, $seq);
 
         require(TEMPLATE_PATH . "/t_report_daily_production_detail.php");
       }

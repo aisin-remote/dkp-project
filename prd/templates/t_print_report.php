@@ -405,7 +405,7 @@
               <td class="text-center align-middle">';
               $seq = $i;
               $data_stop = $class2->getStopList($line_id, $prd_dt, $shift, $seq);
-              $stop_exe = $class2->getStopExe($line_id, $prd_dt, $shift, $seq);
+              $stop_exe = $class2->getStopExeReport($line_id, $prd_dt, $shift, $seq);
               foreach ($data_stop as $data) {
                 foreach ($stop_exe as $exe) {
                   if ($exe["stop_seq"] == $data["stop_seq"] && $exe["prd_seq"] == $data["prd_seq"]) {
