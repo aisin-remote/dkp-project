@@ -15,5 +15,20 @@
             $conn = null;
             return $return;
         }
+
+        public function updateStats($line_id, $stats) {
+            $return = array();
+            $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+            $sql = "UPDATE m_prd_mach SET stats = $stats WHERE line_id = '$line_id' ";
+            $stmt = $conn->prepare($sql);
+            if ($stmt->execute()) {
+                $return = "success";
+            } else {
+                $return = "failed";
+            }
+            $stmt = null;
+            $conn = null;
+            return $return;
+        }
     }
 ?>

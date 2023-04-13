@@ -212,6 +212,8 @@ if ($action == "api_dashboard_adn_single") {
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'RIL'), 
             (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL'),
+            (select coalesce(sum(ng_qty),0) as ng_qty from t_prd_daily_ng 
+            WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq),
             (select sum(b.stop_time)
             from t_prd_daily_i a
             inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
@@ -251,7 +253,7 @@ if ($action == "api_dashboard_adn_single") {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       //$line_name = $row["line_name"];
       $pln_qty = $row["pln_qty"];
-      $prd_qty = $row["prd_qty"] + $row["ril_qty"];
+      $prd_qty = $row["prd_qty"] + $row["ng_qty"];
       $balance = $row["pln_qty"] - ($row["prd_qty"] + $row["ril_qty"]);
       $achieve = round($row["prd_qty"] / $row["pln_qty"] * 100, 1);
       $cctime = $row["cctime"];
@@ -350,6 +352,8 @@ if ($action == "dashboard_line") {
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'RIL'), 
             (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq and SUBSTRING(ng_type,1,3) = 'ROL'),
+            (select coalesce(sum(ng_qty),0) as ng_qty from t_prd_daily_ng 
+            WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and prd_seq = a.prd_seq),
             (select sum(b.stop_time)
             from t_prd_daily_i a
             inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
@@ -388,7 +392,7 @@ if ($action == "dashboard_line") {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       //$line_name = $row["line_name"];
       $pln_qty = $row["pln_qty"];
-      $prd_qty = $row["prd_qty"];
+      $prd_qty = $row["prd_qty"] + $row["ng_qty"];
       $balance = $row["pln_qty"] - $row["prd_qty"];
       $achieve = round($row["prd_qty"] / $row["pln_qty"] * 100, 2);
       $cctime = $row["cctime"];

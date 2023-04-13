@@ -3,7 +3,7 @@
 <?php include "common/t_css.php"; ?>
 
 <body class="bg-dark text-white">
-    <!-- <style>
+    <style>
         .toggle-on,
         .toggle-off {
             white-space: nowrap;
@@ -22,13 +22,14 @@
             background-image: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
             border-radius: 10px;
         }
-    </style> -->
-    <section class="fixed-top">
+
+    </style>
+    <header class="fixed-top">
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
-                    <a class="navbar-brand my-3" onclick="window.location.reload()"><img
-                            src="media/images/logo-white.png" height="30" alt=""></img></a>
+                    <a class="navbar-brand my-3" onclick="window.location.reload()"><img src="media/images/logo-white.png" height="30"
+                            alt="" /></a>
                 </div>
                 <div class="col">
                     <h1 class="text-center my-3 mx-auto font-weight-bold mb-3">
@@ -70,8 +71,8 @@
                 </div>
             </div>
         </div>
-    </section>
-    <section>
+    </header>
+    <main>
         <div class="container-fluid mt-2">
             <!-- <ol class="breadcrumb mb-2">
         <li class="breadcrumb-item">
@@ -81,24 +82,68 @@
           <?php echo $template["menu"]; ?>
         </li>
       </ol> -->
-            <input type="hidden" id="mach" value="<?= $_GET["mach"] ?>"></input>
-            <input type="hidden" id="line_id" value="<?= $result[0]["lineid"] ?>"></input>
-            <input type="hidden" id="shift_hidden" value=""></input>
+            <input type="hidden" id="mach" value="<?= $_GET["mach"] ?>" />
+            <input type="hidden" id="line_id" value="<?= $result[0]["lineid"] ?>" />
+            <input type="hidden" id="shift_hidden" value="" />
             <div id="alert"></div>
-
-            <div class="row px-2 justify-content-center" id="list" style="padding-top: 15%;">
+            
+            <div class="row flex-row flex-nowrap scrolling-wrapper px-2" id="list" style="padding-top: 15%;">
                 <?php
                 if (count($result) < 5) {
-                    $col = "col-3";
+                    $col = "col";
                 } else {
                     $col = "col-2";
                 }
+                // print("<pre class='text-white'>" . print_r($_GET["mach"], true) . "</pre>");
                 foreach ($result as $mach) {
-                    echo "<div class='" . $col . " mb-3'>";
-                    echo "<div class='card'>";
-                    echo '<button type="button" data-toggle="modal" data-target="#' . $mach["machid"] . '" class="card-body ' . $mach["bgcolor"] . ' text-center '.$mach["text_color"].' border border-secondary"><h2>' . $mach['machname'] . '</h2></button>';
-                    echo "</div>";
-                    echo "</div>";
+                    ?>
+                    <div class="<?= $col ?> p-1">
+                        <div class="card border-0 bg-dark mb-2">
+                            <div class="card-body p-0">
+                                <div class="container-fluid p-1 text-center">
+                                    <div class="card border-0 mb-2">
+                                        <!-- <div class="card-body <?= $mach["bgcolor"] ?> text-center text-white"> -->
+                                        <div class="card-body py-1 bg-info text-center text-white">
+                                            <h4 id="mach_name">
+                                                <?= $mach["machname"] ?>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <?php
+                                    foreach ($btns as $btn) {
+                                        foreach ($status as $sts) {
+                                            if ($sts["btn_on"] == 1 && $sts["andon_id"] == $btn["andon_id"] && $mach["machid"] == $btn["mach_id"]) {
+                                                if ($sts["andon_id"] == 1) {
+                                                    $color = "danger";
+                                                } else if ($sts["andon_id"] == 2) {
+                                                    $color = "warning";
+                                                } else if ($sts["andon_id"] == 3) {
+                                                    $color = "success";
+                                                } else if ($sts["andon_id"] == 7) {
+                                                    $color = "info";
+                                                } else {
+                                                    $color = "primary";
+                                                }
+                                                ?>
+                                                <div class='mb-1'>
+                                                    <input onchange='cek_cb(<?= $sts["andon_id"] ?>, "<?= $mach["machid"] ?>")'
+                                                        name='<?= $sts["andon_id"] ?>'
+                                                        id='<?= $sts["andon_id"] ?>_<?= $mach["machid"] ?>' type='checkbox'
+                                                        data-toggle='toggle' data-on='<?= $sts["desc"] ?>'
+                                                        data-off='<?= $sts["desc"] ?>'
+                                                data-onstyle='<?= $color ?>' data-offstyle='secondary' data-width='100%' data-height='100%' data-size='lg'
+                                                        <?= ($mach["machid"] == $btn["mach_id"] && $sts["andon_id"] == $btn["andon_id"] && $btn["btn_sts"] == 1) ? "checked='checked'" : ""; ?> />
+                                                </div>
+                                                <?php
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
                 }
                 ?>
             </div>
@@ -129,60 +174,6 @@
                 </div>
             </div>
         </div>
-        <?php
-        foreach ($result as $mach) {
-            ?>
-            <!-- Modal Button -->
-            <div class="modal fade" id="<?= $mach["machid"] ?>" tabindex="-1" role="dialog"
-                aria-labelledby="<?= $mach["machid"] ?>" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content bg-dark">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-white" id="exampleModalLongTitle">Status</h5>
-                            <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container my-3" id="check" style="width: 70%">
-                                <?php
-                                foreach ($btns as $btn) {
-                                    foreach ($status as $sts) {
-                                        if ($sts["btn_on"] == 1 && $sts["andon_id"] == $btn["andon_id"] && $mach["machid"] == $btn["mach_id"]) {
-                                            if ($sts["andon_id"] == 1) {
-                                                $color = "danger";
-                                            } else if ($sts["andon_id"] == 2) {
-                                                $color = "warning";
-                                            } else if ($sts["andon_id"] == 3) {
-                                                $color = "success";
-                                            } else if ($sts["andon_id"] == 7) {
-                                                $color = "info";
-                                            } else {
-                                                $color = "primary";
-                                            }
-                                            ?>
-                                            <div class="mb-3">
-                                                <input onchange='cek_cb(<?= $sts["andon_id"] ?>, "<?= $mach["machid"] ?>")'
-                                                    name='<?= $sts["andon_id"] ?>' id='<?= $sts["andon_id"] ?>_<?= $mach["machid"] ?>'
-                                                    type='checkbox' data-toggle='toggle' data-on='<?= $sts["desc"] ?>'
-                                                    data-off='<?= $sts["desc"] ?>' data-onstyle='<?= $color ?>'
-                                                    data-offstyle='secondary' data-width='100%' data-height='100%' data-size='lg'
-                                                    <?= ($mach["machid"] == $btn["mach_id"] && $sts["andon_id"] == $btn["andon_id"] && $btn["btn_sts"] == 1) ? "checked='checked'" : ""; ?>></input>
-                                            </div>
-                                            <?php
-                                        }
-                                    }
-                                }
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php
-        }
-        ?>
-
         <!-- Modal -->
         <div class="modal fade" id="productok" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
             aria-hidden="true">
@@ -199,7 +190,7 @@
                             <h5><i class="material-icons">add</i></h5>
                         </button>
                         <input type="number" id="quantityok" value="1" min="1" class="form-control form-control-lg mx-2"
-                            step="1"></input>
+                            step="1" />
                         <button onclick="decrement('#quantityok')" class="btn btn-danger btn-lg">
                             <h5><i class="material-icons">remove</i></h5>
                         </button>
@@ -229,7 +220,7 @@
                                 <h5><i class="material-icons">add</i></h5>
                             </button>
                             <input type="number" id="quantityng" value="1" min="1"
-                                class="form-control form-control-lg mx-2" step="1"></input>
+                                class="form-control form-control-lg mx-2" step="1" />
                             <button onclick="decrement('#quantityng')" class="btn btn-danger btn-lg">
                                 <h5><i class="material-icons">remove</i></h5>
                             </button>
@@ -283,7 +274,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </main>
     <?php include 'common/t_js.php'; ?>
     <script>
         $(document).ready(function () {
@@ -441,19 +432,21 @@
         setInterval(updateQty, 1000);
         setInterval(dateTime, 1000);
 
+        const params = new URLSearchParams(window.location.search)
 
         function updateDashboard() {
             $.getJSON(
-                "?action=api_mach_status", {
-                line_id: '<?= $_GET["line_id"] ?>',
-                shift: $("#shift").text().trim(),
-            },
+                "?action=api_mach_sts",
+                {
+                    line_id: '<?= $_GET["line_id"] ?>',
+                    shift: $("#shift").text().trim(),
+                    mach: params.getAll("mach[]")
+                },
                 function (data) {
                     var head = data.head
                     var mach = data.mach
                     var btn = data.btn
                     var sts = data.status
-                    // console.log(data.mach)
                     $("#cctime").html(head?.cctime ? head?.cctime : 0);
                     $("#shift").html(head?.shift ? head?.pval1 : "");
                     $("#shift_hidden").val(head?.shift ? head?.shift : 0);
@@ -463,41 +456,24 @@
                         $("#prd-btn").html("<a href='?action=api_prd_entry&line=<?= $result[0]["lineid"] ?>&shift=" + $("#shift_hidden").val() + "&date=<?= date('Ymd') ?>' class='btn btn-lg bg-red-blink text-white font-weight-bold'>Create Production</a>")
                         $("#shift").html("")
                     }
-
-                    if (mach.length != 0) {
-                        var append_data = ""
-                        if (mach.length < 5) {
-                            var col = "col-3"
-                        } else {
-                            var col = "col-2"
-                        }
-                        $.each(mach, function (row, m) {
-                            append_data += "<div class='" + col + " mb-3'>";
-                            append_data += "<div class='card'>";
-                            append_data += '<button type="button" data-toggle="modal" data-target="#'+m.mach_id+ '" class="card-body '+m.bgcolor+ ' text-center '+m.text_color+' border border-secondary"><h2>'+m.mach_name+ '</h2></button>';
-                            append_data += "</div>";
-                            append_data += "</div>";
-                        })
-                        $("#list").html(append_data);
-                    }
                 }
             );
         }
 
         function cek_cb(id, machid) {
             if ($("#" + id + "_" + machid).is(":checked")) {
-                // if (id == 4) {
-                //     $.post("?action=api_update_stats", {
-                //         mach_id: machid,
-                //         andon_id: id,
-                //         line_id: '<?= $_GET["line_id"] ?>',
-                //         btn_on: 1,
-                //     }, function (data) {
-                //         // window.location.reload();
-                //         console.log(data)
-                //     });
-                // }
-                $.post("?action=api_update_stats", {
+                if (id == 4) {
+                    $.post("?action=api_update_sts", {
+                        mach_id: machid,
+                        andon_id: id,
+                        line_id: '<?= $_GET["line_id"] ?>',
+                        btn_on: 1,
+                    }, function (data) {
+                        // window.location.reload();
+                        console.log(data)
+                    });
+                }
+                $.post("?action=api_update_sts", {
                     mach_id: machid,
                     andon_id: id,
                     line_id: '<?= $_GET["line_id"] ?>',
@@ -505,14 +481,13 @@
                 }, function (data) {
                     // window.location.reload();
                     console.log(data)
-                    $("#"+machid).modal("hide");
                 });
                 if (id < 4) {
                     $("#4_" + machid).prop("checked", false);
                     $("#4_" + machid).bootstrapToggle('off');
                 }
             } else {
-                $.post("?action=api_update_stats", {
+                $.post("?action=api_update_sts", {
                     mach_id: machid,
                     andon_id: id,
                     line_id: '<?= $_GET["line_id"] ?>',
@@ -520,18 +495,18 @@
                 }, function (data) {
                     // window.location.reload();
                     console.log(data)
-                    $("#"+machid).modal("hide");
                 });
             }
         }
 
         function updateQty() {
             $.getJSON(
-                "?action=api_get_ib", {
-                line_id: $("#line_id").val(),
-                shift: $("#shift_hidden").val(),
-                date: <?= date("Ymd") ?>
-            },
+                "?action=api_get_ib",
+                {
+                    line_id: $("#line_id").val(),
+                    shift: $("#shift_hidden").val(),
+                    date: <?= date("Ymd") ?>
+                },
                 function (data) {
                     $("#qtyok").html(data.totalok && $("#cctime").text().trim() != 0 ? data.totalok.toLocaleString() : 0);
                     $("#qtyng").html(data.totalng && $("#cctime").text().trim() != 0 ? data.totalng.toLocaleString() : 0);

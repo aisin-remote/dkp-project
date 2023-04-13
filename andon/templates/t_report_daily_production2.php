@@ -61,7 +61,7 @@ and open the template in the editor.
                                         </div>
                                         <div class="col-6 py-1 d-flex justify-content-end">
                                             <a target="_blank"
-                                                href="?action=<?= $action ?>&id=<?= $line_id ?>&id2=<?= $prd_dt ?>&id3=<?= $shift ?>&step=2&print=print"
+                                                href="?action=<?= $action ?>&id=<?= $line_id ?>&id2=<?= str_replace("-", "", $prd_dt); ?>&id3=<?= $shift ?>&step=2&print=print"
                                                 class="btn btn-pale-green btn-sm" id="print"><i
                                                     class="material-icons">print</i> Print</a>
                                         </div>
@@ -136,7 +136,7 @@ and open the template in the editor.
                                                 <th class="text-nowrap">Plan Qty</th>
                                                 <th class="text-nowrap">Prod Qty</th>
                                                 <th class="text-nowrap">NG Qty</th>
-                                                <th class="text-nowrap">Stop Count</th>
+                                                <th class="text-nowrap">WIP</th>
                                                 <th class="text-nowrap">Loss Time (m)</th>
                                                 <th class="text-nowrap">Prd Time (m)</th>
                                                 <th class="text-nowrap">Efficiency (%)</th>
@@ -155,7 +155,7 @@ and open the template in the editor.
                                                         . "<td class='text-nowrap'>" . $list["pln_qty"] . "</td>"
                                                         . "<td class='text-nowrap'>" . $list["prd_qty"] . "</td>"
                                                         . "<td class='text-nowrap'>" . $list["tot_ng"] . "</td>"
-                                                        . "<td class='text-nowrap'>" . $list["stop_cnt"] . "</td>"
+                                                        . "<td class='text-nowrap'>" . $list["wip"] . "</td>"
                                                         . "<td class='text-nowrap'>" . $list["loss_time"] . "</td>"
                                                         . "<td class='text-nowrap'>" . $list["prd_time"] . "</td>"
                                                         . "<td class='text-nowrap'>" . $list["eff"] . "</td>"
@@ -190,7 +190,7 @@ and open the template in the editor.
                                                     </th>
                                                 </tr>
                                                 <tr style="background-color: #F0F0F0;">
-                                                    <th class="pl-4 text-dark align-middle">Model</th>
+                                                    <th class="pl-4 text-dark align-middle">Type</th>
                                                     <th class="pl-4 text-dark align-middle">Material</th>
                                                     <th class="pl-4 text-dark align-middle">Waktu Kerja/Shift</th>
                                                     <th class="pl-4 text-dark align-middle">Loss Time Terplanning</th>
@@ -216,10 +216,12 @@ and open the template in the editor.
                                                     <th class="pl-4 text-dark align-middle text-center">SAMPLE QC</th>
                                                     <th class="pl-4 text-dark align-middle text-center">KEKOTANSO
                                                     </th>
+                                                    <th class="pl-4 text-dark align-middle">WIP</th>
                                                     <th class="pl-4 text-dark align-middle">Efficiency</th>
                                                     <th class="pl-4 text-dark align-middle">Losstime</th>
                                                     <th class="pl-4 text-dark align-middle">RIL</th>
                                                     <th class="pl-4 text-dark align-middle">ROL</th>
+                                                    <th class="pl-4 text-dark align-middle">WIP (%)</th>
                                                     <th class="pl-4 text-dark align-middle">Total</th>
                                                 </tr>
                                             </thead>
@@ -230,12 +232,12 @@ and open the template in the editor.
                                                         echo "<tr>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["mtart"] . " " . $list["model_id"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["name1"] . "</td>"
-                                                            . "<td class='pl-4 align-middle text-center'>" . $diff_in_minutes . "</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["waktu_shift"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["loss_time_p"] . "</td>"
-                                                            . "<td class='pl-4 align-middle text-center'>" . $nett_opr . "</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["prd_time"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["loss_time"] . "</td>"
-                                                            . "<td class='pl-4 align-middle text-center'>" . $tot_prd . "</td>"
-                                                            . "<td class='pl-4 align-middle text-center'>" . $qty_lastman . "</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["tot_qty"] . "</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["prd_qty"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["ril"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol1"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol2"] . "</td>"
@@ -247,11 +249,13 @@ and open the template in the editor.
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol8"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol9"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol10"] . "</td>"
-                                                            . "<td class='pl-4 align-middle text-center'>" . $totalEff2 . "%</td>"
-                                                            . "<td class='pl-4 align-middle text-center'>" . $roundloss . "%</td>"
-                                                            . "<td class='pl-4 align-middle text-center'>" . $roundril . "%</td>"
-                                                            . "<td class='pl-4 align-middle text-center'>" . $roundrol . "%</td>"
-                                                            . "<td class='pl-4 align-middle text-center'>" . $total . "%</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["wip"] . "</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["eff"] . "%</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["loss%"] . "%</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["ril%"] . "%</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["rol%"] . "%</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["wip%"] . "%</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["total%"] . "%</td>"
                                                             . "</tr>";
                                                     }
                                                 }

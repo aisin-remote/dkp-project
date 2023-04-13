@@ -25,6 +25,10 @@ if ($action == "daily_production_entry") {
           $param["prd_qty"] = 0;
         }
 
+        if (empty($param["wip"])) {
+          $param["wip"] = 0;
+        }
+
         if (empty($param["dcqcp"])) {
           $param["dcqcp"] = 0;
         }
@@ -76,6 +80,7 @@ if ($action == "daily_production_entry") {
 
       $dies_list = $dies->getListDies($line, "A");
       $matlist = $material->getListMaterial();
+      $exe_stop = $class->getStopExe($line, $date, $shift, $seq);
       require(TEMPLATE_PATH . "/t_production_entry_step3.php");
     } else {
       //check if data already created

@@ -67,6 +67,7 @@ and open the template in the editor.
                           <th class="text-center text-nowrap">Plan Qty</th>
                           <th class="text-center text-nowrap">Prd Qty</th>
                           <th class="text-center text-nowrap">NG Qty</th>
+                          <th class="text-center text-nowrap">WIP</th>
                           <th class="text-center text-nowrap">Stop Count</th>
                           <th class="text-center text-nowrap">Lost Time (m)</th>
                           <th class="text-center text-nowrap">Prd Time (m)</th>
@@ -87,6 +88,7 @@ and open the template in the editor.
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["pln_qty"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["prd_qty"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["ng_count"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["wip"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["stop_count"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["loss_time"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["prd_time"] . "</td>"

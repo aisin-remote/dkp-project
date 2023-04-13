@@ -82,7 +82,7 @@ and open the template in the editor.
                               . "<td class='text-nowrap'>" . $list["pval1"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["line_name"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["operator"] . "</td>"
-                              . "<td class='text-nowrap'>" . $list["material"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["dies_name"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["time_start"] . " - " . $list["time_end"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["start_time"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["end_time"] . "</td>"

@@ -130,6 +130,7 @@ and open the template in the editor.
                           <th class="text-right">Plan Qty</th>
                           <th class="text-right">OK Qty</th>
                           <th class="text-right">NG Qty</th>
+                          <th class="text-right">WIP</th>
                           <!-- <th class="text-right">Scan Qty(OK)</th>
                           <th class="text-right">Scan Qty(NG)</th> -->
                           <th class="text-right">Stop Count</th>
@@ -159,6 +160,7 @@ and open the template in the editor.
                               . "<td class='text-right'>" . $list["pln_qty"] . "</td>"
                               . "<td class='text-right'>" . $list["prd_qty"] . "</td>"
                               . "<td class='text-right'>" . $list["ng_count"] . "</td>"
+                              . "<td class='text-right'>" . $list["wip"] . "</td>"
                               // . "<td class='text-right'>" . $list["scn_qty_ok"] . "</td>"
                               // . "<td class='text-right'>" . $list["scn_qty_ng"] . "</td>"
                               . "<td class='text-right'>" . $list["stop_count"] . "</td>"

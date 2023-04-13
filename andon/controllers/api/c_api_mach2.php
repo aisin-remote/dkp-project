@@ -1,5 +1,5 @@
 <?php
-if ($action == "mach_stats") {
+if ($action == "mach_sts") {
   $line_id = $_REQUEST["line_id"];
   $line = new Line();
   $lines = [];
@@ -24,24 +24,6 @@ if ($action == "mach_stats") {
       $i++;
     }
   }
-
-  // if (isset($_GET["line_id"])) {
-    // $query = "SELECT line_st from m_prd_line where line_id = '$line_id' ";
-    // $stmt = $conn->prepare($query);
-    // if ($stmt->execute()) {
-    //   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    //     $line_st = $row["line_st"];
-    //   }
-    // }
-    // // echo $line_st;
-    // // die();
-    // if ($line_st == 5) {
-    //   $conn->exec("UPDATE m_prd_mach SET stats = 5 WHERE line_id = '$line_id' ");
-    // } 
-    // else {
-    //   $conn->exec("UPDATE m_prd_mach SET stats = 0 WHERE line_id = '$line_id' ");
-    // }
-  // }
 
   // if (isset($_GET["mach"])) {
   //   $mach = $_GET["mach"];
@@ -86,10 +68,10 @@ if ($action == "mach_stats") {
   }
 
   $status = $line->getListStatus();
-  require(TEMPLATE_PATH . "/t_line_status.php");
+  require(TEMPLATE_PATH . "/t_line_status2.php");
 }
 
-if ($action == "api_mach_status") {
+if ($action == "api_mach_sts") {
   $line = new Line();
   $line_id = $_REQUEST["line_id"];
   $shift = $_REQUEST["shift"];
@@ -119,54 +101,37 @@ if ($action == "api_mach_status") {
   $query_line = "SELECT a.*, a.name1 as mach_name, b.*, b.name1 as line_name, c.* from m_prd_mach a
                 left JOIN m_prd_line b ON b.line_id = a.line_id
                 left JOIN m_andon_status c on c.andon_id = a.stats
-                WHERE a.line_id = '$line_id'
                 ORDER BY mach_id ASC ";
   $stmt = $conn->prepare($query_line);
   if ($stmt->execute()) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $header["mach"][] = $row;
+      $lines[] = $row;
     }
   }
 
-  // if (isset($_REQUEST["mach"])) {
-  //   foreach ($lines as $row) {
-  //     $i = 0;
-  //     foreach ($mach as $url) {
-  //       if ($row["mach_id"] == $url) {
-  //         $header["mach"][$i]["machid"] = $row["mach_id"];
-  //         $header["mach"][$i]["machname"] = $row["mach_name"];
-  //         $header["mach"][$i]["lineid"] = $row["line_id"];
-  //         $header["mach"][$i]["linename"] = $row["line_name"];
-  //         $header["mach"][$i]["andonid"] = $row["andon_id"];
-  //         $header["mach"][$i]["bgcolor"] = $row["bgcolor"];
-  //       }
-  //       $i++;
-  //     }
-  //   }
-  // } else {
-  //   $line_id = $lines[0]["line_id"];
-  //   $line_name = $lines[0]["line_name"];
-  //   $mach_id = $lines[0]["mach_id"];
-  //   $mach_name = $lines[0]["mach_name"];
-  //   $bgcolor = $lines[0]["bgcolor"];
-  // }
-
-  // if (isset($_GET["line_id"])) {
-    // $query = "SELECT line_st from m_prd_line where line_id = '$line_id' ";
-    // $stmt = $conn->prepare($query);
-    // if ($stmt->execute()) {
-    //   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    //     $line_st = $row["line_st"];
-    //   }
-    // }
-    // // echo $line_st;
-    // // die();
-    // if ($line_st == 5) {
-    //   $conn->exec("UPDATE m_prd_mach SET stats = 5 WHERE line_id = '$line_id' ");
-    // } else {
-    //   $conn->exec("UPDATE m_prd_mach SET stats = 0 WHERE line_id = '$line_id' ");
-    // }
-  // }
+  if (isset($_REQUEST["mach"])) {
+    $mach = $_REQUEST["mach"];
+    foreach ($lines as $row) {
+      $i = 0;
+      foreach ($mach as $url) {
+        if ($row["mach_id"] == $url) {
+          $header["mach"][$i]["machid"] = $row["mach_id"];
+          $header["mach"][$i]["machname"] = $row["mach_name"];
+          $header["mach"][$i]["lineid"] = $row["line_id"];
+          $header["mach"][$i]["linename"] = $row["line_name"];
+          $header["mach"][$i]["andonid"] = $row["andon_id"];
+          $header["mach"][$i]["bgcolor"] = $row["bgcolor"];
+        }
+        $i++;
+      }
+    }
+  } else {
+    $line_id = $lines[0]["line_id"];
+    $line_name = $lines[0]["line_name"];
+    $mach_id = $lines[0]["mach_id"];
+    $mach_name = $lines[0]["mach_name"];
+    $bgcolor = $lines[0]["bgcolor"];
+  }
 
   $query = "SELECT * FROM m_prd_mach_btn ORDER BY mach_id, line_id, andon_id ASC ";
   $stmt = $conn->prepare($query);
@@ -180,7 +145,7 @@ if ($action == "api_mach_status") {
   echo json_encode($header);
 }
 
-if ($action == "api_update_stats") {
+if ($action == "api_update_sts") {
   $mach_id = $_REQUEST["mach_id"];
   $andon_id = $_REQUEST["andon_id"];
   $isBtnOn = $_REQUEST["btn_on"];
@@ -190,7 +155,7 @@ if ($action == "api_update_stats") {
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
 
   // off scw
-  if ($andon_id == 4 && $isBtnOn == 1) {
+  if (isset($_REQUEST["line_id"]) && $andon_id == 4 && $isBtnOn == 1) {
     $conn->exec("UPDATE m_prd_mach_btn SET btn_sts = 0
             WHERE line_id = '$line_id' AND andon_id = 8 ");
   }
@@ -199,11 +164,6 @@ if ($action == "api_update_stats") {
     $conn->exec("UPDATE m_prd_mach_btn SET btn_sts = 0
             WHERE mach_id = '$mach_id' AND andon_id = 4 ");
   }
-  if ($isBtnOn == 1) {
-    $conn->exec("UPDATE m_prd_mach SET stats = $andon_id
-            WHERE mach_id = '$mach_id' ");
-  }
-
   $query = "UPDATE m_prd_mach_btn SET btn_sts = $isBtnOn
             WHERE mach_id = '$mach_id' AND andon_id = $andon_id ";
   // echo $sum;
@@ -220,19 +180,7 @@ if ($action == "api_update_stats") {
 
     if ($return["sum"] == 0) {
       $conn->exec("UPDATE m_prd_line SET line_st = 5 WHERE line_id = '$line_id' ");
-    }
-
-    $sum1 = "SELECT sum(a.btn_sts) as cnt FROM m_prd_mach_btn a WHERE a.mach_id = '$mach_id' ";
-    $stmt1 = $conn->prepare($sum1);
-    if ($stmt1->execute()) {
-      while ($row = $stmt1->fetch(PDO::FETCH_ASSOC)) {
-        $return["sum1"] = $row["cnt"];
-      }
-    }
-
-    if ($return["sum1"] == 0) {
-      $conn->exec("UPDATE m_prd_mach SET stats = 5 WHERE mach_id = '$mach_id' ");
-    }
+    } 
     // else {
     //   $conn->exec("UPDATE m_prd_line SET line_st = $andon_id WHERE line_id = '$line_id' ");
     // }
@@ -243,6 +191,7 @@ if ($action == "api_update_stats") {
     $return["message"] = trim(str_replace("\n", " ", $error[2]));
     error_log($error[2]);
   }
+
 
   echo json_encode($return);
 }

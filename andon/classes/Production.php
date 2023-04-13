@@ -187,7 +187,7 @@ class Production
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
       $sql = "UPDATE t_prd_daily_i SET dies_id = :dies_id, prd_qty = :prd_qty, prd_time = :prd_time, "
         . "detail_text = :detail_text, dcqcp = :dcqcp, qaqcp = :qaqcp, scn_qty_ok = :scn_qty_ok, scn_qty_ng = :scn_qty_ng,"
-        . " cctime = :cctime, pln_qty = :pln_qty "
+        . " cctime = :cctime, pln_qty = :pln_qty, wip = :wip "
         . "WHERE line_id = :line_id AND prd_dt = :prd_dt AND shift = :shift AND prd_seq = :prd_seq ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":dies_id", $param["dies_id"], PDO::PARAM_STR);
@@ -204,6 +204,7 @@ class Production
       $stmt->bindValue(":scn_qty_ng", $param["scn_qty_ng"], PDO::PARAM_STR);
       $stmt->bindValue(":cctime", $param["cctime"], PDO::PARAM_STR);
       $stmt->bindValue(":pln_qty", $param["pln_qty"], PDO::PARAM_STR);
+      $stmt->bindValue(":wip", $param["wip"], PDO::PARAM_STR);
       if ($stmt->execute($insertData)) {
         $return["status"] = true;
       } else {
@@ -250,7 +251,7 @@ class Production
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, CONCAT(b.matnr, ' ', b.mtart, ' ', b.name1) as dies_name, "
+    $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, CONCAT(b.mtart, ' ', b.name1) as dies_name, "
       . "(select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), "
       . "(select SUM(stop_time) as loss_time from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), "
       . "(select SUM(ng_qty) as ng_count from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq) "
@@ -274,7 +275,7 @@ class Production
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, TO_CHAR(a.prd_dt, 'DD-MM-YYYY') as prod_date, CONCAT(x.matnr, ' ', x.mtart, ' ', x.name1) as dies_name, "
+    $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, TO_CHAR(a.prd_dt, 'DD-MM-YYYY') as prod_date, CONCAT(x.mtart, ' ', x.name1) as dies_name, "
       . "b.name1 as line_name, c.pval1 as shift_name, x.*, "
       . "ld.name1 as ld_name, jp.name1 as jp_name, op1.name1 as op1_name, op2.name1 as op2_name, op3.name1 as op3_name, op4.name1 as op4_name "
       . "FROM t_prd_daily_i a "
@@ -401,6 +402,7 @@ class Production
 
       if ($stmt->execute()) {
         $return["status"] = true;
+        $this->insertStopExe($param["line_id"], $param["prd_dt"], $param["shift"], $param["prd_seq"], $param["exe_empid"]);
       } else {
         $error = $stmt->errorInfo();
         $return["status"] = false;
@@ -637,6 +639,83 @@ class Production
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $return[] = $row;
       }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function getStopExe($line, $prd_dt, $shift, $prd_seq) {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT a.*, b.name1 FROM t_prd_daily_exec a
+        left join m_prd_operator b on b.empid = a.empid
+        WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt, 'YYYYMMDD') = '$prd_dt' AND a.shift = '$shift' 
+        AND a.prd_seq = '$prd_seq' AND a.app_id = '".APP."' ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function getStopExeReport($line, $prd_dt, $shift, $prd_seq) {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT a.*, b.name1 FROM t_prd_daily_exec a
+        left join m_prd_operator b on b.empid = a.empid
+        WHERE a.line_id = '$line' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' 
+        AND a.prd_seq = '$prd_seq' AND a.app_id = '".APP."' ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function insertStopExe($line, $prd_dt, $shift, $prd_seq, $empid = array()) {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "INSERT INTO t_prd_daily_exec (line_id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES ";
+    $arr_insert = array();
+    foreach ($empid as $emp) {
+      $arr_insert[] = "('$line', '$prd_dt', '$shift', '$prd_seq', '$emp', '".APP."', (select coalesce(max(stop_seq),0) as stop_seq FROM t_prd_daily_stop where line_id = '".$line."' AND prd_dt = '".$prd_dt."' AND shift = '".$shift."' AND prd_seq = '".$prd_seq."'))";
+    }
+    $sql .= implode(",", $arr_insert);
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function deleteExeStop($line, $prd_dt, $shift, $prd_seq, $stop_seq) {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "DELETE FROM t_prd_daily_exec WHERE line_id = '$line' AND prd_dt = '$prd_dt' AND shift = '$shift' AND prd_seq = '$prd_seq' AND stop_seq = '$stop_seq' AND app_id = '".APP."' ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
     }
     $stmt = null;
     $conn = null;
