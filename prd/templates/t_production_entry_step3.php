@@ -572,40 +572,47 @@ and open the template in the editor.
     }
 
     function saveDataStop() {
-      $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
-      $(".btn").attr("disabled", "disabled");
       if ($("#stop_id").val().length > 0 && parseFloat($("#stop_time").val()) > 0) {
-        $.ajax({
-          type: 'POST',
-          url: '?action=api_insert_daily_stop',
-          data: {
-            line_id: $("#line_id").val(),
-            prd_dt: $("#prd_dt").val(),
-            shift: $("#shift").val(),
-            prd_seq: $("#prd_seq").val(),
-            start_time: $("#start_time").val(),
-            end_time: $("#end_time").val(),
-            stop_time: $("#stop_time").val(),
-            qty_stc: $("#qty_stc").val(),
-            remarks: $("#remarks").val(),
-            stop_id: $("#stop_id").val(),
-            action_id: $("#action_id").val(),
-            exe_empid: $("#exe_empid").val()
-          },
-          success: function (response) {
-            // handle the response here
-            if (response.status == true) {
-              location.reload();
-            } else {
-              alert(response.message);
-            }
-          },
-          error: function (error) {
-            // handle the error here
-            console.log(error.responseText);
-          },
-          dataType: 'json'
-        });
+        var start_time = new Date('1900-01-01 ' + $("#start_time").val());
+        var end_time = new Date('1900-01-01 ' + $("#end_time").val());
+        if (end_time < start_time) {
+          alert("End time kurang dari Start time!");
+        } else {
+          $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+          $(".btn").attr("disabled", "disabled");
+          $.ajax({
+            type: 'POST',
+            url: '?action=api_insert_daily_stop',
+            data: {
+              line_id: $("#line_id").val(),
+              prd_dt: $("#prd_dt").val(),
+              shift: $("#shift").val(),
+              prd_seq: $("#prd_seq").val(),
+              start_time: $("#start_time").val(),
+              end_time: $("#end_time").val(),
+              stop_time: $("#stop_time").val(),
+              qty_stc: $("#qty_stc").val(),
+              remarks: $("#remarks").val(),
+              stop_id: $("#stop_id").val(),
+              action_id: $("#action_id").val(),
+              exe_empid: $("#exe_empid").val()
+            },
+            success: function (response) {
+              // handle the response here
+              if (response.status == true) {
+                location.reload();
+              } else {
+                alert(response.message);
+              }
+            },
+            error: function (error) {
+              // handle the error here
+              console.log(error.responseText);
+            },
+            dataType: 'json'
+          });
+          console.log("lolos")
+        }
       } else {
         alert("Jam dan Stop Reason Harus Diisi!");
       }
