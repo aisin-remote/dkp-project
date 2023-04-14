@@ -572,6 +572,8 @@ and open the template in the editor.
     }
 
     function saveDataStop() {
+      $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+      $(".btn").attr("disabled", "disabled");
       if ($("#stop_id").val().length > 0 && parseFloat($("#stop_time").val()) > 0) {
         $.ajax({
           type: 'POST',
@@ -611,6 +613,8 @@ and open the template in the editor.
     }
 
     function saveDataNG() {
+      $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+      $(".btn").attr("disabled", "disabled");
       $.ajax({
         type: 'POST',
         url: '?action=api_insert_daily_ng',
@@ -643,6 +647,8 @@ and open the template in the editor.
     }
 
     function delStop(line_id, prd_dt, shift, prd_seq, stop_seq) {
+      $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+      $(".btn").attr("disabled", "disabled");
       $.ajax({
         type: 'POST',
         url: '?action=api_delete_daily_stop',
@@ -670,6 +676,8 @@ and open the template in the editor.
     }
 
     function delNG(line_id, prd_dt, shift, prd_seq, ng_seq) {
+      $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+      $(".btn").attr("disabled", "disabled");
       $.ajax({
         type: 'POST',
         url: '?action=api_delete_daily_ng',
