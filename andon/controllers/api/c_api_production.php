@@ -7,6 +7,12 @@ if ($action == "api_insert_daily_stop") {
     $param["qty_stc"] = "0";
   }
   $save = array();
+  //recalculate stop_time agar jika ada salah parameter dari post js bisa dibetulkan di sini
+  $start_time = strtotime($param["prd_dt"]." ".$param["start_time"].":00");
+  $end_time = strtotime($param["prd_dt"]." ".$param["end_time"].":00");
+  $menit = round(abs($end_time - $start_time) / 60,2);
+  $param["stop_time"] = $menit;
+  //end of recalculate stop_time
   if (!empty($param["line_id"])) {
     //cek dulu tipe stop apakah planned atau unplanned,
     //jika planned maka recalculate production time dan planned qty
