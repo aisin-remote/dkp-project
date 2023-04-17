@@ -181,6 +181,12 @@ and open the template in the editor.
                       </div>
                     </div>
                     <div class="row mt-1">
+                      <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">WIP</div>
+                      <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
+                        <input class="form-control form-control-sm" type="number" name="prd_qty" id="prd_qty" value="<?php echo $data_item_dtl["wip"]; ?>" disabled />
+                      </div>
+                    </div>
+                    <div class="row mt-1">
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Production Time</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
                         <input class="form-control form-control-sm" type="number" name="prd_time" id="prd_time" value="<?php echo $data_item_dtl["prd_time"]; ?>" readonly />
