@@ -27,7 +27,9 @@ if ($action == "daily_production") {
     $prd_dt = $_GET["id2"];
     $shift = $_GET["id3"];
 
-    $data_header = $class2->getHeaderById($line_id, $prd_dt, $shift);
+    $date = str_replace("-", "", $prd_dt);
+
+    $data_header = $class2->getHeaderById($line_id, $date, $shift);
     $data["list"] = $class->getList2($line_id, $prd_dt, $shift);
     $data2["list"] = $class->getList3($line_id, $prd_dt, $shift);
     $data3["list"] = $class->getPrdTime($line_id, $prd_dt, $shift);

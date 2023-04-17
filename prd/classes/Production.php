@@ -257,7 +257,7 @@ class Production
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, CONCAT(b.model_id, ' ', b.group_id, ' ', b.name1) as dies_name, "
+    $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, CONCAT(b.group_id, ' - ', b.model_id, ' - ', b.name1) as dies_name, "
       . "(select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), "
       . "(select SUM(ng_qty) as ng_qty from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), "
       . "(select name1 from m_user where usrid = a.apr_by) as apr_name "
@@ -304,6 +304,9 @@ class Production
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         if (empty($row["prd_qty"])) {
           $row["prd_qty"] = "0";
+        }
+        if (empty($row["wip"])) {
+          $row["wip"] = "0";
         }
         if (empty($row["prd_time"])) {
           $row["prd_time"] = "0";

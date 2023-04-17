@@ -369,7 +369,7 @@
               </td>
               <td class="text-center align-middle">';
               $seq = $i;
-              $data_stop = $class2->getStopList($line_id, $prd_dt, $shift, $seq);
+              $data_stop = $class2->getStopList($line_id, $date, $shift, $seq);
               foreach ($data_stop as $data) {
                 echo '<small>' . $data["start_time"] . ' - ' . $data["stop_name"] . '</small>
                 <br>';
@@ -377,7 +377,7 @@
               echo '</td>
               <td class="text-center align-middle">';
               $seq = $i;
-              $data_stop = $class2->getStopList($line_id, $prd_dt, $shift, $seq);
+              $data_stop = $class2->getStopList($line_id, $date, $shift, $seq);
               foreach ($data_stop as $data) {
                 echo '<small>' . $data["stop_time"] . '</small>
                 <br>';
@@ -393,7 +393,7 @@
               echo '</td>
               <td class="text-center align-middle">';
               $seq = $i;
-              $data_stop = $class2->getStopList($line_id, $prd_dt, $shift, $seq);
+              $data_stop = $class2->getStopList($line_id, $date, $shift, $seq);
               foreach ($data_stop as $data) {
                 echo '<small>' . $data["action_name"] . '</small>
                 <br>';
@@ -401,7 +401,7 @@
               echo '</td>
               <td class="text-center align-middle">';
               $seq = $i;
-              $data_stop = $class2->getStopList($line_id, $prd_dt, $shift, $seq);
+              $data_stop = $class2->getStopList($line_id, $date, $shift, $seq);
               $stop_exe = $class2->getStopExeReport($line_id, $prd_dt, $shift, $seq);
               foreach ($data_stop as $data) {
                 foreach ($stop_exe as $exe) {
@@ -581,57 +581,57 @@
               </td>
               <td>
                 <small>
-                  <?= $list["ril"] ?>
+                  <?= $list["ng_ril"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $list["rol1"] ?>
+                  <?= $list["ng_rol1"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $list["rol2"] ?>
+                  <?= $list["ng_rol2"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $list["rol3"] ?>
+                  <?= $list["ng_rol3"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $list["rol4"] ?>
+                  <?= $list["ng_rol4"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $list["rol5"] ?>
+                  <?= $list["ng_rol5"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $list["rol7"] ?>
+                  <?= $list["ng_rol7"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $list["rol8"] ?>
+                  <?= $list["ng_rol8"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $list["rol9"] ?>
+                  <?= $list["ng_rol9"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $list["rol10"] ?>
+                  <?= $list["ng_rol10"] ?>
                 </small>
               </td>
               <td>
                 <small>
-                  <?= $list["rol6"] ?>
+                  <?= $list["ng_rol6"] ?>
                 </small>
               </td>
               <td>
