@@ -478,7 +478,7 @@ and open the template in the editor.
                 </div>
                 <div class="col-sm-1">
                   <button type="button" class="btn btn-primary" onclick="showImage()"><i
-                      class="material-icons">zoom_in</i></button>
+                      class="material-icons">image</i></button>
                 </div>
               </div>
               <div class="form-group row">
@@ -610,7 +610,7 @@ and open the template in the editor.
     }
 
     function saveDataStop() {
-      if ($("#stop_id").val().length > 0 && parseFloat($("#stop_time").val()) > 0) {
+      if ($("#stop_id").val().length > 0) {
         var start_time = new Date('1900-01-01 ' + $("#start_time").val());
         var end_time = new Date('1900-01-01 ' + $("#end_time").val());
         if (end_time < start_time) {

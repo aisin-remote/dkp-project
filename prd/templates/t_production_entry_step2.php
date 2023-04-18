@@ -96,7 +96,7 @@ and open the template in the editor.
                         <div class="row align-items-center">
                           <div class="col-4">Leader</div>
                           <div class="col-1">:</div>
-                          <div class="col-6 mb-1">
+                          <div class="col-6 mb-1 px-0">
                             <?php
                             if ($op_role == "LEADER" || $op_role == "ADMIN") {
                               ?>
@@ -117,7 +117,7 @@ and open the template in the editor.
                           </div>
                           <div class="col-4">JP</div>
                           <div class="col-1">:</div>
-                          <div class="col-6 mb-1">
+                          <div class="col-6 mb-1 px-0">
                             <?php
                             if ($op_role == "LEADER" || $op_role == "ADMIN") {
                               ?>
@@ -142,7 +142,7 @@ and open the template in the editor.
                         <div class="row align-items-center">
                           <div class="col-4">Operator 1</div>
                           <div class="col-1">:</div>
-                          <div class="col-6 mb-1">
+                          <div class="col-6 mb-1 px-0">
                             <?php
                             if ($op_role == "LEADER" || $op_role == "ADMIN") {
                               ?>
@@ -164,7 +164,7 @@ and open the template in the editor.
                           </div>
                           <div class="col-4">Operator 2</div>
                           <div class="col-1">:</div>
-                          <div class="col-6 mb-1">
+                          <div class="col-6 mb-1 px-0">
                             <?php
                             if ($op_role == "LEADER" || $op_role == "ADMIN") {
                               ?>
@@ -186,7 +186,7 @@ and open the template in the editor.
                           </div>
                           <div class="col-4">Operator 3</div>
                           <div class="col-1">:</div>
-                          <div class="col-6 mb-1">
+                          <div class="col-6 mb-1 px-0">
                             <?php
                             if ($op_role == "LEADER" || $op_role == "ADMIN") {
                               ?>
@@ -208,7 +208,7 @@ and open the template in the editor.
                           </div>
                           <div class="col-4">Operator 4</div>
                           <div class="col-1">:</div>
-                          <div class="col-6">
+                          <div class="col-6 px-0">
                             <?php
                             if ($op_role == "LEADER" || $op_role == "ADMIN") {
                               ?>
