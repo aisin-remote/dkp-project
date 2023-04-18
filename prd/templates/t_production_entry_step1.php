@@ -275,8 +275,6 @@ and open the template in the editor.
       $("#total_target").val(total_target);
     }
 
-
-
     $("#dies_id").change(getDefaultCycleTime);
     $("#dies_id").change(getPreventive);
 

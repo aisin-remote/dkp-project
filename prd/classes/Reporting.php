@@ -239,7 +239,7 @@ class Reporting
                 $rol = $row["ng_rol"];
                 $wip = $row["wip"];
 
-                $tot_qty = $prd_qty + $tot_ng;
+                $tot_qty = $prd_qty + $tot_ng + $wip;
                 $waktu_shift = $row["prd_time"] + $row["loss_time_p"];
                 // $efficiency = (($prd_qty * $cctime) / 60) / $row["prd_time"];
                 // $roundEff2 = round($efficiency, 2);

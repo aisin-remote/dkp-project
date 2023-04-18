@@ -65,7 +65,7 @@ class Production
     $return = 0;
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT count(*) as cnt FROM m_prd_shift "
-      . "WHERE shift_id = '$shift' ";
+      . "WHERE shift_id = '$shift' AND app_id = '" . APP . "' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -282,7 +282,7 @@ class Production
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, TO_CHAR(a.prd_dt, 'DD-MM-YYYY') as prod_date, CONCAT(x.model_id, ' ', x.group_id, ' ', x.name1) as dies_name, "
+    $sql = "SELECT a.*, x.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, TO_CHAR(a.prd_dt, 'DD-MM-YYYY') as prod_date, CONCAT(x.model_id, ' ', x.group_id, ' ', x.name1) as dies_name, "
       . "b.name1 as line_name, c.pval1 as shift_name, "
       . "ld.name1 as ld_name, jp.name1 as jp_name, op1.name1 as op1_name, op2.name1 as op2_name, op3.name1 as op3_name, op4.name1 as op4_name "
       . "FROM t_prd_daily_i a "
@@ -732,6 +732,25 @@ class Production
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "DELETE FROM t_prd_daily_exec WHERE line_id = '$line' AND prd_dt = '$prd_dt' AND shift = '$shift' AND prd_seq = '$prd_seq' AND stop_seq = '$stop_seq' AND app_id = '".APP."' ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function updateHeader($line_id, $prd_dt, $shift, $param) {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "UPDATE t_prd_daily_h SET ldid = '".$param["ldid"]."', jpid = '".$param["jpid"]."', op1id = '".$param["op1id"]."', op2id = '".$param["op2id"]."', op3id = '".$param["op3id"]."', op4id = '".$param["op4id"]."'
+          WHERE line_id = '$line_id' AND TO_CHAR(prd_dt, 'YYYYMMDD') = '$prd_dt' AND shift = '$shift' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       $return["status"] = true;

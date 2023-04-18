@@ -176,11 +176,12 @@ class Dies
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
       $sql = "INSERT INTO m_dm_dies_model (model_id, name1, group_id) "
-        . "values (:model_id, :name1, :group_id) ";
+        . "values (:model_id, :name1, :group_id, :img) ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":model_id", strtoupper(trim($param["model_id"])), PDO::PARAM_STR);
       $stmt->bindValue(":name1", $param["name1"], PDO::PARAM_STR);
       $stmt->bindValue(":group_id", $param["group_id"], PDO::PARAM_STR);
+      $stmt->bindValue(":img", $param["img"], PDO::PARAM_STR);
       //$stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
 
       if ($stmt->execute()) {
@@ -208,12 +209,13 @@ class Dies
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "UPDATE m_dm_dies_model SET model_id = :model_id, name1 = :name1, group_id = :group_id " //, line_id = :line_id "
+      $sql = "UPDATE m_dm_dies_model SET model_id = :model_id, name1 = :name1, group_id = :group_id, img = :img " //, line_id = :line_id "
         . "WHERE model_id = :model_id AND group_id = :group_id";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":model_id", strtoupper($param["model_id"]), PDO::PARAM_STR);
       $stmt->bindValue(":name1", $param["name1"], PDO::PARAM_STR);
       $stmt->bindValue(":group_id", $param["group_id"], PDO::PARAM_STR);
+      $stmt->bindValue(":img", $param["img"], PDO::PARAM_STR);
       //$stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
 
       if ($stmt->execute()) {

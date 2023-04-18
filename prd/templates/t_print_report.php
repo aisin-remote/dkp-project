@@ -154,17 +154,17 @@
             <td class="text-center" width="125">
               <small style="font-weight: 700;" class="mb-0">Model </small>
             </td>
+            <?php
+              foreach ($data2["list"] as $row) {
+            ?>
             <td class="text-center align-middle" width="75">
               <small class="mb-0">
-                <?= $data["list"][0]["name1"] ?>
+                <?= $row["group_id"]. " " .$row["model_id"]. " " .$row["dies_no"]  ?>
               </small>
             </td>
-            <td class="text-center" width="75">
-              <small class="mb-0">&nbsp;</small>
-            </td>
-            <td class="text-center" width="75">
-              <small style="font-weight: 700;" class="mb-0">&nbsp;</small>
-            </td>
+            <?php
+              }
+            ?>
           </tr>
           <tr>
             <td class="text-center" width="125">

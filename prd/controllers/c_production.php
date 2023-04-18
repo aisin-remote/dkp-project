@@ -79,6 +79,7 @@ if ($action == "daily_production_entry") {
 
       $dies_list = $dies->getListDies($line, "A");
       $exe_stop = $class->getStopExe($line, $date, $shift, $seq);
+      $model_list = $dies->getListModel();
 
       require(TEMPLATE_PATH . "/t_production_entry_step3.php");
     } else {
@@ -91,6 +92,9 @@ if ($action == "daily_production_entry") {
         $template["submenu"] = $data_header["line_name"];
         //cek apakah user ada role leader
         $op_role = "OPERATOR";
+        $ld_list = $member->getList("LD");
+        $jp_list = $member->getList("JP");
+        $op_list = $member->getList("OP");
         $cek_user = $user->getUserRole($_SESSION[LOGIN_SESSION]);
         if (!empty($cek_user)) {
           foreach ($cek_user as $usr) {
@@ -98,6 +102,17 @@ if ($action == "daily_production_entry") {
               $op_role = "LEADER";
               break;
             }
+          }
+        }
+        if (isset($_POST["save"])) {
+          $param = $_POST;
+          $save = $class->updateHeader($line, $date, $shift, $param);
+          if ($save["status"] == true) {
+            $success = "Data Saved";
+            header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&success=" . $success);
+          } else {
+            $error = $save["message"];
+            header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&error=" . $error);
           }
         }
         //end of cek apakah user ada role leader

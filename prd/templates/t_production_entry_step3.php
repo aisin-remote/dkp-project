@@ -277,13 +277,13 @@ and open the template in the editor.
                           . "<td>" . $row["stop_name"] . "</td>"
                           . "<td>" . $row["action_name"] . "</td>"
                           . "<td>" . $row["remarks"] . "</td>"
-                          . "<td>" ;
-                          foreach ($exe_stop as $exe) {
-                            if ($exe["stop_seq"] == $row["stop_seq"] && $exe["prd_seq"] == $row["prd_seq"]) {
-                              echo $exe["name1"] . ", ";
-                            }
+                          . "<td>";
+                        foreach ($exe_stop as $exe) {
+                          if ($exe["stop_seq"] == $row["stop_seq"] && $exe["prd_seq"] == $row["prd_seq"]) {
+                            echo $exe["name1"] . ", ";
                           }
-                          echo "</td>"
+                        }
+                        echo "</td>"
                           . "<td class='text-center'>$button_del</td>"
                           . "</tr>";
                       }
@@ -392,7 +392,8 @@ and open the template in the editor.
               <div class="form-group row">
                 <label for="action_id" class="col-sm-3 col-form-label">Eksekutor</label>
                 <div class="col-sm-9">
-                  <select id="exe_empid" name="exe_empid[]" class="form-control modalSelect01" multiple="" data-live-search="true">
+                  <select id="exe_empid" name="exe_empid[]" class="form-control modalSelect01" multiple=""
+                    data-live-search="true">
                     <option value="">Select Eksekutor</option>
                     <?php
                     if (!empty($list_person)) {
@@ -471,9 +472,13 @@ and open the template in the editor.
                 <div class="col-sm-3">
                   <input type="text" class="form-control" id="loc_x">
                 </div>
-                <label for="loc_y" class="col-sm-3 col-form-label">Y</label>
+                <label for="loc_y" class="col-sm-1 col-form-label">Y</label>
                 <div class="col-sm-3">
                   <input type="number" class="form-control" id="loc_y">
+                </div>
+                <div class="col-sm-1">
+                  <button type="button" class="btn btn-primary" onclick="showImage()"><i
+                      class="material-icons">zoom_in</i></button>
                 </div>
               </div>
               <div class="form-group row">
@@ -486,6 +491,31 @@ and open the template in the editor.
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary" onclick="saveDataNG()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="visual" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="visualLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="visualLabel">Not Good Visualization</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <center>
+              <?php
+              foreach ($model_list as $row) {
+                if ($data_item_dtl["group_id"] == $row["group_id"] && $data_item_dtl["model_id"] == $row["model_id"]) {
+                  echo "<img id='output' class='cropit-preview' width='1000' height='300' src='data:image/jpeg;base64," . $row["img"] . "'>";
+                }
+              }
+              ?>
+              </center>
             </div>
           </div>
         </div>
@@ -522,6 +552,7 @@ and open the template in the editor.
         disableMobile: "true"
       });
 
+      $(".view-image").EZView();
       //getDataScan();
     });
 
@@ -553,6 +584,13 @@ and open the template in the editor.
         keyboard: false
       });
     }
+
+    function showImage() {
+      $('#visual').modal({
+        keyboard: false
+      });
+    }
+
     $("#start_time").change(function () {
       calculateDate();
     });
