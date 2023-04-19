@@ -126,7 +126,7 @@ if ($action == "api_dashboard_prd") {
     $today = date(strtotime($today . "- 1 days"), "Y-m-d");
   }
 
-  $query_sum = "select line_id, line_name, sum(cctime) as cctime, sum(pln_qty) as pln_qty, sum(prd_time) as prd_time, sum(prd_qty) as prd_qty, sum(ril_qty) as ril_qty, sum(rol_qty) as rol_qty, sum(per_jam) as per_jam from ( 
+  $query_sum = "select line_id, line_name, avg(cctime) as cctime, sum(pln_qty) as pln_qty, sum(prd_time) as prd_time, sum(prd_qty) as prd_qty, sum(ril_qty) as ril_qty, sum(rol_qty) as rol_qty, sum(per_jam) as per_jam from ( 
     select a.line_id, b.name1 as line_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
     (select coalesce(sum(ng_qty),0) from t_prd_daily_ng 
     WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift 
@@ -154,10 +154,10 @@ if ($action == "api_dashboard_prd") {
   if ($stmt->execute()) {
     $i = 0;
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $eff_sum = round((($row["prd_qty"] * $row["cctime"] / $row["per_jam"]) / $row["prd_time"]) * 100, 2);
+      $eff_sum = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
       $data_eff_sum[] = $eff_sum;
-      $data_ril_sum[] = round((($row["ril_qty"] * $row["cctime"] / $row["per_jam"]) / $row["prd_time"]) * 100, 2);
-      $data_rol_sum[] = round((($row["rol_qty"] * $row["cctime"] / $row["per_jam"]) / $row["prd_time"]) * 100, 2);
+      $data_ril_sum[] = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
+      $data_rol_sum[] = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
       $data_line_name_sum[$i] = $row["line_name"];
       $i++;
     }
