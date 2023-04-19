@@ -154,7 +154,7 @@ class Reporting
             ) x ON a.line_id = x.line_id AND a.prd_dt = x.prd_dt AND a.shift = x.shift AND c.model_id = x.model_id "
             . "WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' ";
         $sql .= " GROUP BY 1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17 ";
-        $sql .= " ORDER BY  a.prd_seq";
+        $sql .= " ORDER BY  a.time_start";
 
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {

@@ -17,7 +17,7 @@ if ($action == "daily_production_entry") {
     if (isset($_GET["prd_seq"])) {
       $seq = $_GET["prd_seq"];
       //lanjut ke step 3
-
+      
       if (isset($_POST["save"])) {
         $param = $_POST;
         if (empty($param["prd_qty"])) {
@@ -53,12 +53,71 @@ if ($action == "daily_production_entry") {
           header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&prd_seq=" . $seq . "&error=" . $error);
         }
       }
+      
+      $data_item_dtl = $class->getItemById($line, $date, $shift, $seq);
+      $data_stop = $class->getStopList($line, $date, $shift, $seq);
+      if(isset($_GET["dandori"])) {
+        $time_start = $data_item_dtl["time_start"];
+        $time_end = $data_item_dtl["time_end"];
+        $dandori_time = $_GET["dandori_time"];
+        if($dandori_time == $data_item_dtl["time_start"] || $dandori_time == $data_item_dtl["time_end"]) {
+          //do nothing
+        } else {
+          //step 1
+          //update item end time = dandori_time dan kalkulasikan prd_time - jumlah stop time
+          $param_1 = $data_item_dtl;
+          $param_1["time_end"] = $dandori_time;
+          $r_time_start = explode(":", $time_start);
+          $min_time_start = $r_time_start[0] * 60 + $r_time_start[1];
+          
+          $r_time_dan = explode(":", $dandori_time);
+          $min_time_dan = $r_time_dan[0] * 60 + $r_time_dan[1];          
+          
+          $stop_time = 0;
+          foreach($data_stop as $ds) {
+            $stop_time += $ds["stop_time"];
+          }
+          $param_1["prd_time"] = ( $min_time_dan - $min_time_start ) - $stop_time;
+          $param_1["pln_qty"] = round(($param_1["prd_time"] * 60) / floatval($param_1["cctime"]),0,PHP_ROUND_HALF_UP);
+          $save1 = $class->updateItem($param_1);
+          if($save1["status"] == false) {
+            $error = $save1["message"];
+            header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&error=" . $error);
+            die();
+          }
+          //step 2 
+          //tambahkan list baru dengan start time = dandori_time dan end_time = time_end
+          
+          $cls_dies = new Dies();
+          $data_dies = $cls_dies->getDiesById($_GET["dies_id"]);
+          $r_time_end = explode(":", $time_end);
+          $min_time_end = $r_time_end[0] * 60 + $r_time_end[1];
+          $param_2 = $data_item_dtl;
+          $param_2["dies_id"] = $_GET["dies_id"];
+          $param_2["cctime"] = $data_dies["ctsec"];
+          $param_2["time_start"] = $dandori_time;
+          $param_2["prd_time"] = $min_time_end - $min_time_dan;
+          $param_2["pln_qty"] = round(($param_2["prd_time"] * 60) / floatval($param_2["cctime"]),0,PHP_ROUND_HALF_UP);
+          $save2 = $class->appendItem($param_2);
+          //var_dump($param_2); die();
+          if($save2["status"] == false) {
+            $error = $save2["message"];
+            header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&error=" . $error);
+            die();
+          }
+          
+          if($save1["status"] == true && $save2["status"] == true) {
+            header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&success=Dandori Success");
+            die();
+          }
+        }
+      }
+      
       $list_stop = $stop->getList('S', null);
       $list_action = $stop->getList('A');
       //$list_person = $class->getPersonById($line, $date, $shift);
       $list_person = $member->getList(null, "A");
-      $data_item_dtl = $class->getItemById($line, $date, $shift, $seq);
-      $data_stop = $class->getStopList($line, $date, $shift, $seq);
+      
       $line_name = $data_item_dtl["line_name"];
       $date_time_start = $data_item_dtl["prd_dt"] . "%20" . $data_item_dtl["time_start"];
       $date_time_end = $data_item_dtl["prd_dt"] . "%20" . $data_item_dtl["time_end"];
@@ -89,6 +148,7 @@ if ($action == "daily_production_entry") {
         //lanjut ke step 2
         $data_header = $class->getHeaderById($line, $date, $shift);
         $data_item = $class->getListItemById($line, $date, $shift);
+        $dies_list = $dies->getListDies($line, "A");
         $template["submenu"] = $data_header["line_name"];
         //cek apakah user ada role leader
         $op_role = "OPERATOR";
@@ -124,6 +184,7 @@ if ($action == "daily_production_entry") {
           $param = $_POST;
           // print_r($param);
           // die();
+          $shift = $_POST["shift"];
           $dies->updateZonaByLine($param["line_id"]);
           $save_header = $class->insertHeader($param);
           if ($save_header["status"] == true) {

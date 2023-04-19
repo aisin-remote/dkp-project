@@ -27,9 +27,12 @@ if ($action == "home") {
             where a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' and a.stats = 'A' AND a.line_id = g.line_id ";
   //$query .= "and a.stats = 'A' ";
   $query .= "ORDER BY line_name ASC";*/
-  $query = "select a.line_id, a.name1 as line_name, a.line_ty as type, 
+  $query = "select t.line_id, t.line_name, t.type, t.gstat, string_agg(t.dies_name,' - ') as dies_name, 
+            avg(t.cctime) as cctime,  
+            sum(pln_qty) as pln_qty, sum(prd_qty) as prd_qty, sum(prd_time) as prd_time, sum(ril_qty) as ril_qty, sum(rol_qty) as rol_qty 
+            from (select a.line_id, a.name1 as line_name, a.line_ty as type, 
             coalesce(i.dies_id,'-') as dies_id, coalesce(CONCAT(c.group_id,' ',c.model_id,' ',c.dies_no),'-') as dies_name, c.gstat, 
-            coalesce(i.cctime,0) as cctime, coalesce(i.pln_qty,0) as pln_time, 
+            coalesce(i.cctime,0) as cctime, coalesce(i.pln_qty,0) as pln_qty, 
             coalesce(i.prd_time,0) as prd_time, coalesce(i.prd_qty,0) as prd_qty, 
             (select coalesce(sum(ng_qty),0) as ril_qty from t_prd_daily_ng 
             WHERE line_id = a.line_id and prd_dt = i.prd_dt and shift = i.shift and prd_seq = i.prd_seq and SUBSTRING(ng_type,1,3) = 'RIL'), 
@@ -39,11 +42,12 @@ if ($action == "home") {
             LEFT JOIN t_prd_daily_i i 
             ON i.line_id = a.line_id 
             AND i.prd_dt = '$today' 
-            AND TO_CHAR(TO_TIMESTAMP(i.prd_dt||' '||i.time_end,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
+            AND TO_CHAR(TO_TIMESTAMP(i.prd_dt||' '||i.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
             AND i.stats = 'A' 
             left join m_dm_dies_asset c on c.dies_id = i.dies_id::int 
             where a.line_ty = 'DM' 
-            ORDER BY line_id asc";
+            ORDER BY line_id asc) t 
+            group by 1,2,3,4";
   $stmt = $conn->prepare($query);
   $data_per_jam = [];
   $data_ril = [];

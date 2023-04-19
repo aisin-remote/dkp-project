@@ -35,7 +35,7 @@ and open the template in the editor.
           </ol>
           <?php
           if (isset($_GET["error"])) {
-            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            echo '<div class="alert alert-danger alert-dismissible fade show mt-1" role="alert">
                       Error : ' . $_GET["error"] . '
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -46,7 +46,7 @@ and open the template in the editor.
 
           <?php
           if (isset($_GET["success"])) {
-            echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            echo '<div class="alert alert-success alert-dismissible fade show mt-1" role="alert">
                       Success : ' . $_GET["success"] . '
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -272,7 +272,7 @@ and open the template in the editor.
                             $efficiency = round(($list["prd_qty"] * $list["cctime"] / 60) / $list["prd_time"] * 100, 2);
                             $btn_approve = "";
                             if ($list["stats"] == "N") {
-                              $btn_approve = "<button type='button' class='btn btn-sm btn-success' onclick='approveDailyI(\"" . $list["line_id"] . "\",\"" . $list["shift"] . "\",\"" . $list["prd_dt"] . "\",\"" . $list["prd_seq"] . "\")'><i class='material-icons'>done_outline</i></button>";
+                              $btn_approve = "<button data-toggle='tooltip' data-placement='top' title='Approve' type='button' class='btn btn-sm btn-success' onclick='approveDailyI(\"" . $list["line_id"] . "\",\"" . $list["shift"] . "\",\"" . $list["prd_dt"] . "\",\"" . $list["prd_seq"] . "\")'><i class='material-icons'>done_outline</i></button>";
                             }
                             echo "<tr>"
                               . "<td class=''>" . $list["dies_name"] . "</td>"
@@ -288,7 +288,8 @@ and open the template in the editor.
                               . "<td class='text-right'>" . $list["prd_time"] . "</td>"
                               . "<td class='text-right'>" . $efficiency . "</td>"
                               . "<td class='text-center'>"
-                              . "<a href='?action=$action&line=" . $list["line_id"] . "&date=" . $list["xdate"] . "&shift=" . $list["shift"] . "&prd_seq=" . $list["prd_seq"] . "' class='btn btn-link btn-sm text-center text-dark'><i class='material-icons'>edit_square</i></a>"
+                              . "<a data-toggle='tooltip' data-placement='top' title='Edit' href='?action=$action&line=" . $list["line_id"] . "&date=" . $list["xdate"] . "&shift=" . $list["shift"] . "&prd_seq=" . $list["prd_seq"] . "' class='btn btn-secondary btn-sm'><i class='material-icons'>edit_square</i></a>"
+                              . "<button data-toggle='tooltip' data-placement='top' title='Dandori' onclick='openModalDandori(\"".$list["time_start"]."\",\"".$list["time_end"]."\",\"".$list["line_id"]."\",\"".$list["xdate"]."\",\"".$list["shift"]."\",\"".$list["prd_seq"]."\")' class='ml-2 btn btn-warning btn-sm'><i class='material-icons'>splitscreen</i></a>"
                               . "</td>";
                             if ($op_role == "LEADER") {
                               echo "<td class='text-center'>$btn_approve</td>";
@@ -313,10 +314,83 @@ and open the template in the editor.
       <?php include 'common/t_footer.php'; ?>
     </div>
   </div>
+  <!-- Modal -->
+  <div class="modal fade" id="modal_dandori" data-backdrop="static" data-keyboard="false" aria-labelledby="modal_dandori_label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <form class="modal-content" method="get" id="dandori_form">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal_dandori_label">Dandori</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">          
+          <div class="form-group row">
+            <label for="dandori_time" class="col-3 col-form-label">Dandori Time</label>
+            <div class="col-3">
+              <input type="text" class="form-control" id="dandori_time" name="dandori_time">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="dandori_time" class="col-3 col-form-label">Dies</label>
+            <div class="col-9">
+              <select name="dies_id" id="dies_id" class="form-control select2" data-live-search="true">
+                <?php
+                foreach ($dies_list as $row) {
+                  ?>
+                  <option value="<?php echo $row["dies_id"]; ?>" <?php if ($row["dies_id"] == $data_item_dtl["dies_id"]) {
+                       echo "selected";
+                     } ?>><?php echo $row["group_id"] . " - " . $row["model_id"] . " - " . $row["dies_no"]; ?></option>
+                  <?php
+                }
+                ?>
+              </select>
+            </div>
+          </div>
+          <input type="hidden" name="action" value="<?=$action?>">
+          <input type="hidden" name="line" id="d_line" value="">
+          <input type="hidden" name="date" id="d_date" value="">
+          <input type="hidden" name="shift" id="d_shift" value="">
+          <input type="hidden" name="prd_seq" id="d_seq" value="">          
+          <input type="hidden" name="dandori" value="true">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Dandori</button>
+        </div>
+      </form>
+    </div>
+  </div>
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    $(document).ready(function () { });
+    $(document).ready(function () { 
+      
+    });
+    
+    $("#dandori_form").submit(function(event){
+      $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+      $(".btn").attr("disabled", "disabled");
+    });
+    
+    function openModalDandori(time_start, time_end, line, date, shift, seq) { 
+      $("#dandori_time").flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        minTime: time_start,
+        maxTime: time_end,
+        defaultHour: time_start.split(":")[0],
+        defaultMinute: time_start.split(":")[1],
+        disableMobile: "true",
+      });
+      $("#d_line").val(line);
+      $("#d_date").val(date);
+      $("#d_shift").val(shift);
+      $("#d_seq").val(seq);           
+      $("#modal_dandori").modal('show');
+    }
 
     function approveDailyI(line_id, shift, prd_dt, prd_seq) {
       $.ajax({

@@ -180,6 +180,42 @@ class Production
     }
     return $return;
   }
+  
+  public function appendItem($param = array()) {
+    $return = array();
+    if (empty($param)) {
+      $return["status"] = false;
+      $return["message"] = "Data Empty";
+    } else {
+      $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+      $sql = "INSERT INTO t_prd_daily_i (line_id,prd_dt,shift,prd_seq,dies_id,time_start,time_end,cctime,pln_qty,prd_time) "
+        . "VALUES ('".$param["line_id"]."','".$param["prd_dt"]."','".$param["shift"]."',"
+              . "(SELECT max(prd_seq)+1 as prd_seq FROM t_prd_daily_i WHERE line_id='".$param["line_id"]."' AND prd_dt = '".$param["prd_dt"]."' AND shift = '".$param["shift"]."'),"
+              . "'".$param["dies_id"]."','".$param["time_start"]."','".$param["time_end"]."','".$param["cctime"]."','".$param["pln_qty"]."','".$param["prd_time"]."')";
+
+      $stmt = $conn->prepare($sql);
+      /*$stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
+      $stmt->bindValue(":prd_dt", $param["prd_dt"], PDO::PARAM_STR);
+      $stmt->bindValue(":shift", $param["shift"], PDO::PARAM_STR);
+      $stmt->bindValue(":dies_id", $param["dies_id"], PDO::PARAM_STR);
+      $stmt->bindValue(":time_start", $param["time_start"], PDO::PARAM_STR);
+      $stmt->bindValue(":time_end", $param["time_end"], PDO::PARAM_STR);
+      $stmt->bindValue(":cctime", $param["cctime"], PDO::PARAM_STR);
+      $stmt->bindValue(":pln_qty", $param["pln_qty"], PDO::PARAM_STR);
+      $stmt->bindValue(":prd_time", $param["prd_time"], PDO::PARAM_STR);*/
+      if ($stmt->execute()) {
+        $return["status"] = true;
+      } else {
+        $error = $stmt->errorInfo();
+        $return["status"] = false;
+        $return["message"] = trim(str_replace("\n", " ", $error[2]."<br>".$sql));
+        error_log($error[2]);
+      }
+      $stmt = null;
+      $conn = null;
+    }
+    return $return;
+  }
 
   public function updateItem($param = array())
   {
@@ -191,8 +227,14 @@ class Production
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
       $sql = "UPDATE t_prd_daily_i SET dies_id = :dies_id, prd_qty = :prd_qty, prd_time = :prd_time, "
         . "detail_text = :detail_text, dcqcp = :dcqcp, qaqcp = :qaqcp, scn_qty_ok = :scn_qty_ok, scn_qty_ng = :scn_qty_ng,"
-        . " cctime = :cctime, pln_qty = :pln_qty, wip = :wip "
-        . "WHERE line_id = :line_id AND prd_dt = :prd_dt AND shift = :shift AND prd_seq = :prd_seq ";
+        . " cctime = :cctime, pln_qty = :pln_qty, wip = :wip ";
+      if(isset($param["time_start"])) {
+        $sql .= " ,time_start = '".$param["time_start"]."' ";
+      }
+      if(isset($param["time_end"])) {
+        $sql .= " ,time_end = '".$param["time_end"]."' ";
+      }
+      $sql .= "WHERE line_id = :line_id AND prd_dt = :prd_dt AND shift = :shift AND prd_seq = :prd_seq ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":dies_id", $param["dies_id"], PDO::PARAM_STR);
       $stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
@@ -209,7 +251,7 @@ class Production
       $stmt->bindValue(":cctime", $param["cctime"], PDO::PARAM_STR);
       $stmt->bindValue(":pln_qty", $param["pln_qty"], PDO::PARAM_STR);
       $stmt->bindValue(":wip", $param["wip"], PDO::PARAM_STR);
-      if ($stmt->execute($insertData)) {
+      if ($stmt->execute()) {
         $return["status"] = true;
       } else {
         $error = $stmt->errorInfo();
@@ -264,7 +306,7 @@ class Production
       . "FROM t_prd_daily_i a "
       . "INNER JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint) "
       . "WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$date' AND a.shift = '$shift' "
-      . "ORDER BY prd_seq asc ";
+      . "ORDER BY a.time_start asc ";
 
     $stmt = $conn->prepare($sql);
     $count = 0;
@@ -767,16 +809,30 @@ class Production
 
   public function getDataScan($line_name, $date_time_start, $date_time_end)
   {
-    $curl = curl_init();
-    $url = str_replace(" ", "%20", "http://avicenna-dev:8081/trace/api/getqty/" . $line_name . "/" . $date_time_start . "/" . $date_time_end);
+    $data = [];
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT * FROM m_param WHERE pid = 'API_AVICENNA' AND seq = '1'";
+    $stmt = $conn->prepare($sql);
+    $api_avicenna = '0';
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $api_avicenna = $row["pval1"];
+      }
+    } 
+    
+    if($api_avicenna == "1") {
+      $curl = curl_init();
+      $url = str_replace(" ", "%20", "http://avicenna-dev:8081/trace/api/getqty/" . $line_name . "/" . $date_time_start . "/" . $date_time_end);
 
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10); 
+      curl_setopt($curl, CURLOPT_TIMEOUT, 10);
 
-    $result = curl_exec($curl);
-    curl_close($curl);
-    $data = json_decode($result, 1);
-
+      $result = curl_exec($curl);
+      curl_close($curl);
+      $data = json_decode($result, 1);
+    }    
     return $data;
   }
 
