@@ -116,45 +116,45 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.line_id, a.prd_dt, a.shift, a.prd_seq, a.time_start, a.time_end, a.cctime, "
-            . "a.pln_qty, coalesce(a.prd_qty, 0) as prd_qty, a.prd_time, a.apr_by, b.name1 as apr_name, "
-            . "c.name1, c.model_id, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time, coalesce(SUM(x.ng_qty), 0) as steuchi, coalesce(a.wip, 0) as wip "
-            . "FROM t_prd_daily_i a "
-            . "LEFT JOIN m_user b ON a.apr_by = b.usrid "
-            . "LEFT JOIN m_dm_dies_asset c ON a.dies_id::integer = c.dies_id "
-            . "LEFT JOIN (
-                SELECT line_id, prd_dt, shift, prd_seq, COALESCE(SUM(ng_qty), 0) as ng_qty
-                FROM t_prd_daily_ng
-                GROUP BY line_id, prd_dt, shift, prd_seq
-            ) d ON a.line_id = d.line_id AND a.prd_dt = d.prd_dt AND a.shift = d.shift AND a.prd_seq = d.prd_seq "
-            . "LEFT JOIN (
-                SELECT line_id, prd_dt, shift, prd_seq, COALESCE(SUM(stop_time), 0) as stop_time
-                FROM t_prd_daily_stop
-                GROUP BY line_id, prd_dt, shift, prd_seq
-            ) e ON a.line_id = e.line_id AND a.prd_dt = e.prd_dt AND a.shift = e.shift AND a.prd_seq = e.prd_seq "
-            . "LEFT JOIN (
-                SELECT a.line_id, a.prd_dt, a.shift, COALESCE(SUM(a.ng_qty), 0) as ng_qty
-                FROM t_prd_daily_ng a
-                LEFT JOIN (
-                    SELECT line_id, line_ty, name1 AS line_name
-                    FROM m_prd_line
-                    WHERE line_ty = 'DM'
-                ) b ON a.line_id = b.line_id
-                WHERE a.line_id = b.line_id
-                GROUP BY a.line_id, a.prd_dt, a.shift
-            ) f ON a.line_id = f.line_id AND a.prd_dt = f.prd_dt AND a.shift = f.shift "
-            . "LEFT JOIN ( 
-                SELECT e.pval2, d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol, SUM(a.ng_qty) as ng_qty 
-                FROM t_prd_daily_ng a 
-                INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
-                INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
-                INNER JOIN m_param e ON a.ng_type = e.pval1
-                WHERE a.ng_type LIKE 'ROL%' AND a.line_id SIMILAR TO '[0-9]+' AND e.pval2 LIKE '%STEUCHI%'
-                GROUP BY 1,2,3,4,5
-            ) x ON a.line_id = x.line_id AND a.prd_dt = x.prd_dt AND a.shift = x.shift AND c.model_id = x.model_id "
-            . "WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' ";
-        $sql .= " GROUP BY 1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17 ";
-        $sql .= " ORDER BY  a.time_start";
+        $sql = "SELECT a.line_id, a.prd_dt, a.shift, a.prd_seq, a.time_start, a.time_end, a.cctime, 
+        a.pln_qty, coalesce(a.prd_qty, 0) as prd_qty, a.prd_time, a.apr_by, b.name1 as apr_name, 
+        c.name1, c.model_id, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time, coalesce(SUM(x.ng_qty), 0) as steuchi, coalesce(a.wip, 0) as wip 
+        FROM t_prd_daily_i a 
+        LEFT JOIN m_user b ON a.apr_by = b.usrid 
+        LEFT JOIN m_dm_dies_asset c ON a.dies_id::integer = c.dies_id 
+        LEFT JOIN (
+                        SELECT line_id, prd_dt, shift, prd_seq, COALESCE(SUM(ng_qty), 0) as ng_qty
+                        FROM t_prd_daily_ng
+                        GROUP BY line_id, prd_dt, shift, prd_seq
+                    ) d ON a.line_id = d.line_id AND a.prd_dt = d.prd_dt AND a.shift = d.shift AND a.prd_seq = d.prd_seq
+                    LEFT JOIN (
+                        SELECT line_id, prd_dt, shift, prd_seq, COALESCE(SUM(stop_time), 0) as stop_time
+                        FROM t_prd_daily_stop
+                        GROUP BY line_id, prd_dt, shift, prd_seq
+                    ) e ON a.line_id = e.line_id AND a.prd_dt = e.prd_dt AND a.shift = e.shift AND a.prd_seq = e.prd_seq 
+                    LEFT JOIN (
+                        SELECT a.line_id, a.prd_dt, a.shift, COALESCE(SUM(a.ng_qty), 0) as ng_qty
+                        FROM t_prd_daily_ng a
+                        LEFT JOIN (
+                            SELECT line_id, line_ty, name1 AS line_name
+                            FROM m_prd_line
+                            WHERE line_ty = 'DM'
+                        ) b ON a.line_id = b.line_id
+                        WHERE a.line_id = b.line_id
+                        GROUP BY a.line_id, a.prd_dt, a.shift
+                    ) f ON a.line_id = f.line_id AND a.prd_dt = f.prd_dt AND a.shift = f.shift 
+                    LEFT JOIN ( 
+                        SELECT e.pval2, d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol, SUM(a.ng_qty) as ng_qty 
+                        FROM t_prd_daily_ng a 
+                        INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                        INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                        INNER JOIN m_param e ON a.ng_type = e.pval1
+                        WHERE a.ng_type LIKE 'ROL%' AND a.line_id SIMILAR TO '[0-9]+' AND e.pval2 LIKE '%STEUCHI%'
+                        GROUP BY 1,2,3,4,5
+                    ) x ON a.line_id = x.line_id AND a.prd_dt = x.prd_dt AND a.shift = x.shift AND c.model_id = x.model_id 
+                    WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift'
+                    GROUP BY 1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17
+        ORDER BY  a.prd_seq ASC ";
 
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
@@ -470,14 +470,15 @@ class Reporting
         return $return;
     }
 
-    public function getListShift() {
+    public function getListShift()
+    {
         $return = array();
-        $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT * FROM m_param WHERE pid = 'SHIFT' ORDER BY seq ASC";
 
         $stmt = $conn->prepare($sql);
-        if($stmt->execute()) {
-            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $return[] = $row;
             }
         }

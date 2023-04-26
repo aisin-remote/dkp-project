@@ -127,7 +127,7 @@ and open the template in the editor.
                             <div class="card mt-2">
                                 <div class="card-body">
                                     <!-- Edit Here -->
-                                    <table class="table table-striped table-sm" id="data-table">
+                                    <table class="table table-striped table-sm" id="data-table-x">
                                         <thead>
                                             <tr>
                                                 <th>Dies</th>
@@ -145,6 +145,7 @@ and open the template in the editor.
                                         </thead>
                                         <tbody>
                                             <?php
+                                            // echo "<pre>" . print_r($data["list"], true) . "</pre>";
                                             if (!empty($data["list"])) {
                                                 foreach ($data["list"] as $list) {
                                                     echo "<tr>"
@@ -327,25 +328,7 @@ and open the template in the editor.
         $(document).ready(function () {
             $("#data-table-x").DataTable({
                 stateSave: true,
-                order: [[3, 'asc']],
-                dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-2'l><'col-sm-12 col-md-4'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-                buttons: [{
-                    extend: 'excel',
-                    title: "material_bom",
-                    className: 'btn btn-pale-green btn-sm',
-                    text: '<i class="material-icons">download</i>Download Excel',
-                },
-                {
-                    className: 'btn btn-pale-green-outlined btn-sm',
-                    text: '<i class="material-icons">filter_alt</i> Filter',
-                    action: function () {
-                        $('#modal_filter').modal("show");
-
-                    }
-                }
-                ]
+                order: [10, 'asc'],
             });
 
             $(".datepicker").flatpickr({
