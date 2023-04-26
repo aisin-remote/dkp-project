@@ -96,6 +96,7 @@ if ($action == "daily_production_entry") {
           $param_2["dies_id"] = $_GET["dies_id"];
           $param_2["cctime"] = $data_dies["ctsec"];
           $param_2["time_start"] = $dandori_time;
+          $param_2["prd_seq"] = $seq;
           $param_2["prd_time"] = $min_time_end - $min_time_dan;
           $param_2["pln_qty"] = round(($param_2["prd_time"] * 60) / floatval($param_2["cctime"]),0,PHP_ROUND_HALF_UP);
           $save2 = $class->appendItem($param_2);

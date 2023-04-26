@@ -183,14 +183,14 @@ class Production
   
   public function appendItem($param = array()) {
     $return = array();
+    $param["prd_seq"] = (int)$param["prd_seq"] + 1;
     if (empty($param)) {
       $return["status"] = false;
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
       $sql = "INSERT INTO t_prd_daily_i (line_id,prd_dt,shift,prd_seq,dies_id,time_start,time_end,cctime,pln_qty,prd_time) "
-        . "VALUES ('".$param["line_id"]."','".$param["prd_dt"]."','".$param["shift"]."',"
-              . "(SELECT max(prd_seq)+1 as prd_seq FROM t_prd_daily_i WHERE line_id='".$param["line_id"]."' AND prd_dt = '".$param["prd_dt"]."' AND shift = '".$param["shift"]."'),"
+        . "VALUES ('".$param["line_id"]."','".$param["prd_dt"]."','".$param["shift"]."', '".$param["prd_seq"]."',"
               . "'".$param["dies_id"]."','".$param["time_start"]."','".$param["time_end"]."','".$param["cctime"]."','".$param["pln_qty"]."','".$param["prd_time"]."')";
 
       $stmt = $conn->prepare($sql);
@@ -306,7 +306,7 @@ class Production
       . "FROM t_prd_daily_i a "
       . "INNER JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint) "
       . "WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$date' AND a.shift = '$shift' "
-      . "ORDER BY a.time_start asc ";
+      . "ORDER BY a.prd_seq asc ";
 
     $stmt = $conn->prepare($sql);
     $count = 0;
