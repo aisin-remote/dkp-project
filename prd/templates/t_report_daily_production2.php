@@ -138,6 +138,7 @@ and open the template in the editor.
                                                 <th>WIP</th>
                                                 <th>Total NG</th>
                                                 <th>Loss Time(m)</th>
+                                                <th>Prod Time</th>
                                                 <th>Efficiency</th>
                                                 <th>Apr. By</th>
                                                 <th class="text-center">Action</th>
@@ -157,6 +158,7 @@ and open the template in the editor.
                                                         . "<td class='align-middle'>" . $list["wip"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["tot_ng"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["loss_time"] . "</td>"
+                                                        . "<td class='align-middle'>" . $list["prd_time"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["eff"] . "</td>"
                                                         . "<td class='align-middle'>" . $list["apr_name"] . "</td>"
                                                         . "<td class='text-center pr-3'>"

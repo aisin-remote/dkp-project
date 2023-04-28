@@ -17,7 +17,7 @@ if ($action == "daily_production_entry") {
     if (isset($_GET["prd_seq"])) {
       $seq = $_GET["prd_seq"];
       //lanjut ke step 3
-      
+
       if (isset($_POST["save"])) {
         $param = $_POST;
         if (empty($param["prd_qty"])) {
@@ -53,14 +53,14 @@ if ($action == "daily_production_entry") {
           header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&prd_seq=" . $seq . "&error=" . $error);
         }
       }
-      
+
       $data_item_dtl = $class->getItemById($line, $date, $shift, $seq);
       $data_stop = $class->getStopList($line, $date, $shift, $seq);
-      if(isset($_GET["dandori"])) {
+      if (isset($_GET["dandori"])) {
         $time_start = $data_item_dtl["time_start"];
         $time_end = $data_item_dtl["time_end"];
         $dandori_time = $_GET["dandori_time"];
-        if($dandori_time == $data_item_dtl["time_start"] || $dandori_time == $data_item_dtl["time_end"]) {
+        if ($dandori_time == $data_item_dtl["time_start"] || $dandori_time == $data_item_dtl["time_end"]) {
           //do nothing
         } else {
           //step 1
@@ -69,25 +69,25 @@ if ($action == "daily_production_entry") {
           $param_1["time_end"] = $dandori_time;
           $r_time_start = explode(":", $time_start);
           $min_time_start = $r_time_start[0] * 60 + $r_time_start[1];
-          
+
           $r_time_dan = explode(":", $dandori_time);
-          $min_time_dan = $r_time_dan[0] * 60 + $r_time_dan[1];          
-          
+          $min_time_dan = $r_time_dan[0] * 60 + $r_time_dan[1];
+
           $stop_time = 0;
-          foreach($data_stop as $ds) {
+          foreach ($data_stop as $ds) {
             $stop_time += $ds["stop_time"];
           }
-          $param_1["prd_time"] = ( $min_time_dan - $min_time_start ) - $stop_time;
-          $param_1["pln_qty"] = round(($param_1["prd_time"] * 60) / floatval($param_1["cctime"]),0,PHP_ROUND_HALF_UP);
+          $param_1["prd_time"] = ($min_time_dan - $min_time_start) - $stop_time;
+          $param_1["pln_qty"] = round(($param_1["prd_time"] * 60) / floatval($param_1["cctime"]), 0, PHP_ROUND_HALF_UP);
           $save1 = $class->updateItem($param_1);
-          if($save1["status"] == false) {
+          if ($save1["status"] == false) {
             $error = $save1["message"];
             header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&error=" . $error);
             die();
           }
           //step 2 
           //tambahkan list baru dengan start time = dandori_time dan end_time = time_end
-          
+
           $cls_dies = new Dies();
           $data_dies = $cls_dies->getDiesById($_GET["dies_id"]);
           $r_time_end = explode(":", $time_end);
@@ -98,27 +98,40 @@ if ($action == "daily_production_entry") {
           $param_2["time_start"] = $dandori_time;
           $param_2["prd_seq"] = $seq;
           $param_2["prd_time"] = $min_time_end - $min_time_dan;
-          $param_2["pln_qty"] = round(($param_2["prd_time"] * 60) / floatval($param_2["cctime"]),0,PHP_ROUND_HALF_UP);
+          $param_2["pln_qty"] = round(($param_2["prd_time"] * 60) / floatval($param_2["cctime"]), 0, PHP_ROUND_HALF_UP);
+          // $save3 = $class->deleteStop($line, $date, $shift, $seq, null);
           $save2 = $class->appendItem($param_2);
+          // $cek_data = $class->getPrdStop($line_id, date('Y-m-d', $date), $shift, $seq, null);
+          // if ($cek_data["type2"] == "P") {
+          //   //e-calculate production time dan planning Qty
+          //   $fdate = str_replace("-", "", $prd_dt);
+          //   $daily_i = $class->getItemById($line_id, $date, $shift, $seq);
+          //   $cctime = $daily_i["cctime"];
+          //   $prd_time = floatval($daily_i["prd_time"]);
+          //   $prd_time += floatval($cek_data["stop_time"]);
+          //   $target_per_jam = ($prd_time * 60) / floatval($cctime);
+          //   $pln_qty = round($target_per_jam, 0, PHP_ROUND_HALF_UP);
+          //   $del = $class->updateTargetDailyI($line_id, $date, $shift, $seq, $prd_time, $pln_qty);
+          // }
           //var_dump($param_2); die();
-          if($save2["status"] == false) {
+          if ($save2["status"] == false) {
             $error = $save2["message"];
             header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&error=" . $error);
             die();
           }
-          
-          if($save1["status"] == true && $save2["status"] == true) {
+
+          if ($save1["status"] == true && $save2["status"] == true) {
             header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&success=Dandori Success");
             die();
           }
         }
       }
-      
+
       $list_stop = $stop->getList('S', null);
       $list_action = $stop->getList('A');
       //$list_person = $class->getPersonById($line, $date, $shift);
       $list_person = $member->getList(null, "A");
-      
+
       $line_name = $data_item_dtl["line_name"];
       $date_time_start = $data_item_dtl["prd_dt"] . "%20" . $data_item_dtl["time_start"];
       $date_time_end = $data_item_dtl["prd_dt"] . "%20" . $data_item_dtl["time_end"];
@@ -174,6 +187,17 @@ if ($action == "daily_production_entry") {
           } else {
             $error = $save["message"];
             header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&error=" . $error);
+          }
+        }
+
+        if (isset($_GET["delete"])) {
+          $save = $class->deletePrd($line, $date, $shift);
+          if ($save["status"] == true) {
+            $success = "Data Deleted";
+            header("Location: ?action=" . $action . "&success=" . $success);
+          } else {
+            $error = "Cannot delete production entry, please contact administrator";
+            header("Location: ?action=" . $action . "&error=" . $error);
           }
         }
         //end of cek apakah user ada role leader

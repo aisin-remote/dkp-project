@@ -156,7 +156,7 @@ and open the template in the editor.
                       <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-form-label">Cycle Time</div>
                       <div class="col-xl-2 col-lg-3 col-md-5 col-sm-6">
                         <input class="form-control form-control-sm" type="number" name="cctime" id="cctime"
-                          value="<?php echo $data_item_dtl["cctime"]; ?>" readonly />
+                          value="<?php echo $data_item_dtl["cctime"]; ?>" />
                       </div>
                     </div>
                     <div class="row mt-1">
@@ -815,7 +815,7 @@ and open the template in the editor.
         },
         success: function (response) {
           // handle the response here
-          $("#cctime").removeAttr("readonly");
+          // $("#cctime").removeAttr("readonly");
           $("#cctime").val(response.cctime);
           calculateTarget();
         },

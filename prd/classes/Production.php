@@ -180,18 +180,19 @@ class Production
     }
     return $return;
   }
-  
-  public function appendItem($param = array()) {
+
+  public function appendItem($param = array())
+  {
     $return = array();
-    $param["prd_seq"] = (int)$param["prd_seq"] + 1;
+    $param["seq"] = (int) $param["prd_seq"] + 1;
     if (empty($param)) {
       $return["status"] = false;
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
       $sql = "INSERT INTO t_prd_daily_i (line_id,prd_dt,shift,prd_seq,dies_id,time_start,time_end,cctime,pln_qty,prd_time) "
-        . "VALUES ('".$param["line_id"]."','".$param["prd_dt"]."','".$param["shift"]."', '".$param["prd_seq"]."',"
-              . "'".$param["dies_id"]."','".$param["time_start"]."','".$param["time_end"]."','".$param["cctime"]."','".$param["pln_qty"]."','".$param["prd_time"]."')";
+        . "VALUES ('" . $param["line_id"] . "','" . $param["prd_dt"] . "','" . $param["shift"] . "', '" . $param["seq"] . "',"
+        . "'" . $param["dies_id"] . "','" . $param["time_start"] . "','" . $param["time_end"] . "','" . $param["cctime"] . "','" . $param["pln_qty"] . "','" . $param["prd_time"] . "')";
 
       $stmt = $conn->prepare($sql);
       /*$stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
@@ -208,7 +209,7 @@ class Production
       } else {
         $error = $stmt->errorInfo();
         $return["status"] = false;
-        $return["message"] = trim(str_replace("\n", " ", $error[2]."<br>".$sql));
+        $return["message"] = trim(str_replace("\n", " ", $error[2] . "<br>" . $sql));
         error_log($error[2]);
       }
       $stmt = null;
@@ -228,11 +229,11 @@ class Production
       $sql = "UPDATE t_prd_daily_i SET dies_id = :dies_id, prd_qty = :prd_qty, prd_time = :prd_time, "
         . "detail_text = :detail_text, dcqcp = :dcqcp, qaqcp = :qaqcp, scn_qty_ok = :scn_qty_ok, scn_qty_ng = :scn_qty_ng,"
         . " cctime = :cctime, pln_qty = :pln_qty, wip = :wip ";
-      if(isset($param["time_start"])) {
-        $sql .= " ,time_start = '".$param["time_start"]."' ";
+      if (isset($param["time_start"])) {
+        $sql .= " ,time_start = '" . $param["time_start"] . "' ";
       }
-      if(isset($param["time_end"])) {
-        $sql .= " ,time_end = '".$param["time_end"]."' ";
+      if (isset($param["time_end"])) {
+        $sql .= " ,time_end = '" . $param["time_end"] . "' ";
       }
       $sql .= "WHERE line_id = :line_id AND prd_dt = :prd_dt AND shift = :shift AND prd_seq = :prd_seq ";
       $stmt = $conn->prepare($sql);
@@ -474,8 +475,10 @@ class Production
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "DELETE FROM t_prd_daily_stop WHERE line_id = '$line' AND prd_dt = '$date' AND shift = '$shift' AND prd_seq = '$prd_seq' AND stop_seq = '$stop_seq'";
-
+    $sql = "DELETE FROM t_prd_daily_stop WHERE line_id = '$line' AND prd_dt = '$date' AND shift = '$shift' AND prd_seq = '$prd_seq' ";
+    if (!empty($stop_seq)) {
+      $sql .= "AND stop_seq = '$stop_seq' ";
+    }
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       $return["status"] = true;
@@ -496,7 +499,11 @@ class Production
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.type1, b.type2 FROM t_prd_daily_stop a "
       . "INNER JOIN m_prd_stop_reason_action b ON b.srna_id = a.stop_id "
-      . "WHERE a.line_id = '$line' AND a.prd_dt = '$date' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq' AND a.stop_seq = '$stop_seq' ";
+      . "WHERE a.line_id = '$line' AND a.prd_dt = '$date' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq' ";
+
+    if (!empty($stop_seq)) {
+      $sql .= "AND a.stop_seq = '$stop_seq' ";
+    }
     $stmt = $conn->prepare($sql);
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -710,14 +717,15 @@ class Production
     $conn = null;
     return $return;
   }
-  
-  public function getStopExe($line, $prd_dt, $shift, $prd_seq) {
+
+  public function getStopExe($line, $prd_dt, $shift, $prd_seq)
+  {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.name1 FROM t_prd_daily_exec a
         left join m_prd_operator b on b.empid = a.empid
         WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt, 'YYYYMMDD') = '$prd_dt' AND a.shift = '$shift' 
-        AND a.prd_seq = '$prd_seq' AND a.app_id = '".APP."' ";
+        AND a.prd_seq = '$prd_seq' AND a.app_id = '" . APP . "' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -729,13 +737,14 @@ class Production
     return $return;
   }
 
-  public function getStopExeReport($line, $prd_dt, $shift, $prd_seq) {
+  public function getStopExeReport($line, $prd_dt, $shift, $prd_seq)
+  {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.name1 FROM t_prd_daily_exec a
         left join m_prd_operator b on b.empid = a.empid
         WHERE a.line_id = '$line' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' 
-        AND a.prd_seq = '$prd_seq' AND a.app_id = '".APP."' ";
+        AND a.prd_seq = '$prd_seq' AND a.app_id = '" . APP . "' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -747,13 +756,14 @@ class Production
     return $return;
   }
 
-  public function insertStopExe($line, $prd_dt, $shift, $prd_seq, $empid = array()) {
+  public function insertStopExe($line, $prd_dt, $shift, $prd_seq, $empid = array())
+  {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "INSERT INTO t_prd_daily_exec (line_id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES ";
     $arr_insert = array();
     foreach ($empid as $emp) {
-      $arr_insert[] = "('$line', '$prd_dt', '$shift', '$prd_seq', '$emp', '".APP."', (select coalesce(max(stop_seq),0) as stop_seq FROM t_prd_daily_stop where line_id = '".$line."' AND prd_dt = '".$prd_dt."' AND shift = '".$shift."' AND prd_seq = '".$prd_seq."'))";
+      $arr_insert[] = "('$line', '$prd_dt', '$shift', '$prd_seq', '$emp', '" . APP . "', (select coalesce(max(stop_seq),0) as stop_seq FROM t_prd_daily_stop where line_id = '" . $line . "' AND prd_dt = '" . $prd_dt . "' AND shift = '" . $shift . "' AND prd_seq = '" . $prd_seq . "'))";
     }
     $sql .= implode(",", $arr_insert);
     $stmt = $conn->prepare($sql);
@@ -770,10 +780,11 @@ class Production
     return $return;
   }
 
-  public function deleteExeStop($line, $prd_dt, $shift, $prd_seq, $stop_seq) {
+  public function deleteExeStop($line, $prd_dt, $shift, $prd_seq, $stop_seq)
+  {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "DELETE FROM t_prd_daily_exec WHERE line_id = '$line' AND prd_dt = '$prd_dt' AND shift = '$shift' AND prd_seq = '$prd_seq' AND stop_seq = '$stop_seq' AND app_id = '".APP."' ";
+    $sql = "DELETE FROM t_prd_daily_exec WHERE line_id = '$line' AND prd_dt = '$prd_dt' AND shift = '$shift' AND prd_seq = '$prd_seq' AND stop_seq = '$stop_seq' AND app_id = '" . APP . "' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       $return["status"] = true;
@@ -788,10 +799,11 @@ class Production
     return $return;
   }
 
-  public function updateHeader($line_id, $prd_dt, $shift, $param) {
+  public function updateHeader($line_id, $prd_dt, $shift, $param)
+  {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "UPDATE t_prd_daily_h SET ldid = '".$param["ldid"]."', jpid = '".$param["jpid"]."', op1id = '".$param["op1id"]."', op2id = '".$param["op2id"]."', op3id = '".$param["op3id"]."', op4id = '".$param["op4id"]."'
+    $sql = "UPDATE t_prd_daily_h SET ldid = '" . $param["ldid"] . "', jpid = '" . $param["jpid"] . "', op1id = '" . $param["op1id"] . "', op2id = '" . $param["op2id"] . "', op3id = '" . $param["op3id"] . "', op4id = '" . $param["op4id"] . "'
           WHERE line_id = '$line_id' AND TO_CHAR(prd_dt, 'YYYYMMDD') = '$prd_dt' AND shift = '$shift' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
@@ -807,6 +819,25 @@ class Production
     return $return;
   }
 
+  public function deletePrd($line_id, $prd_dt, $shift)
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "DELETE FROM t_prd_daily_h WHERE line_id = '$line_id' AND TO_CHAR(prd_dt, 'YYYYMMDD') = '$prd_dt' AND shift = '$shift';
+            DELETE FROM t_prd_daily_i WHERE line_id = '$line_id' AND TO_CHAR(prd_dt, 'YYYYMMDD') = '$prd_dt' AND shift = '$shift';
+            DELETE FROM t_prd_daily_ng WHERE line_id = '$line_id' AND TO_CHAR(prd_dt, 'YYYYMMDD') = '$prd_dt' AND shift = '$shift';
+            DELETE FROM t_prd_daily_stop WHERE line_id = '$line_id' AND TO_CHAR(prd_dt, 'YYYYMMDD') = '$prd_dt' AND shift = '$shift';
+            DELETE FROM t_prd_daily_exec WHERE line_id = '$line_id' AND TO_CHAR(prd_dt, 'YYYYMMDD') = '$prd_dt' AND shift = '$shift'";
+    $success = $conn->exec($sql);
+    if ($success == 0) {
+      $return["status"] = true;
+    } else {
+      $return["status"] = false;
+    }
+    $conn = null;
+    return $return;
+  }
+
   public function getDataScan($line_name, $date_time_start, $date_time_end)
   {
     $data = [];
@@ -818,21 +849,21 @@ class Production
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $api_avicenna = $row["pval1"];
       }
-    } 
-    
-    if($api_avicenna == "1") {
+    }
+
+    if ($api_avicenna == "1") {
       $curl = curl_init();
       $url = str_replace(" ", "%20", "http://avicenna-dev:8081/trace/api/getqty/" . $line_name . "/" . $date_time_start . "/" . $date_time_end);
 
       curl_setopt($curl, CURLOPT_URL, $url);
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10); 
+      curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
       curl_setopt($curl, CURLOPT_TIMEOUT, 10);
 
       $result = curl_exec($curl);
       curl_close($curl);
       $data = json_decode($result, 1);
-    }    
+    }
     return $data;
   }
 

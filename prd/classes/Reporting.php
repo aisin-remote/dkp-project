@@ -486,4 +486,20 @@ class Reporting
         $conn = null;
         return $return;
     }
+
+    public function getListLog() {
+        $return = array();
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "SELECT *, TO_CHAR(crt_dt, 'DD-MM-YYYY') as date, TO_CHAR(crt_dt, 'HH24:MM:SS') as time FROM t_logger ORDER BY id DESC";
+
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $return[] = $row;
+            }
+        }
+        $stmt = null;
+        $conn = null;
+        return $return;
+    }
 }

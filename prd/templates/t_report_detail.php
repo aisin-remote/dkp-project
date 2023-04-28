@@ -65,6 +65,7 @@ and open the template in the editor.
                           <th class="text-center text-nowrap">Total NG</th>
                           <th class="text-center text-nowrap">WIP</th>
                           <th class="text-center text-nowrap">Lost Time(m)</th>
+                          <th class="text-center text-nowrap">Prod Time</th>
                           <th class="text-center text-nowrap">Efficiency (%)</th>
                           <th class="text-center text-nowrap">Apr By</th>
                         </tr>
@@ -84,6 +85,7 @@ and open the template in the editor.
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["ng_count"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["wip"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["loss_time"] . "</td>"
+                              . "<td class='text-center pr-3 text-nowrap'>" . $list["prd_time"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["eff"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["apr_name"] . "</td>"
                               . "</tr>";
