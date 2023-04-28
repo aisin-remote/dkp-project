@@ -7,7 +7,7 @@ if ($action == "checksheet_preventive") {
   $class = new Checksheet();
   $zona = new Zona();
   $dstk = new DiesStrokeHistory();
-  
+
   if (isset($_GET["id"])) {
     $id = $_GET["id"];
     $step = $_GET["step"];
@@ -19,7 +19,7 @@ if ($action == "checksheet_preventive") {
         //cek apakah zona maintenance sedang dipakai
         $zone_used = $zona->isUsed($param["zona_id"], $param["dies_id"]);
         if ($zone_used["count"] > 0) {
-          header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&error=Zona Maintenance [" . $zone_used["desc"] . "] Sedang Dipakai!");
+          header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&group_id=" . $param["group_id"] . "&model_id=" . $param["model_id"] . "&dies_id=" . $param["dies_id"] . "&error=Zona Maintenance [" . $zone_used["desc"] . "] Sedang Dipakai!");
           die();
         }
         //cek dulu apakah dies sudah saatnya maintenance
@@ -40,13 +40,13 @@ if ($action == "checksheet_preventive") {
         $save = array();
         //cek apakah dies masih di preventive
         if ($cek_dies["gstat"] == "P") {
-          header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&error=Dies Masih Dalam Preventive Maintenance!");
+          header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&group_id=" . $param["group_id"] . "&model_id=" . $param["model_id"] . "&dies_id=" . $param["dies_id"] . "&error=Dies Masih Dalam Preventive Maintenance!");
           die();
         } else {
           $param["pmtid"] = $class->generateID();
 
           if ($cek_dies["gstat"] == "R") {
-            header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&error=Dies Masih Dalam Repair!");
+            header("Location: ?action=" . $action . "&id=" . $id . "&step=1" . "&group_id=" . $param["group_id"] . "&model_id=" . $param["model_id"] . "&dies_id=" . $param["dies_id"] . "&error=Dies Masih Dalam Repair!");
             die();
           } else if ($diesGstat["gstat"] == "PC") {
             header("Location: ?action=" . $action . "&error=Dies%20sedang%20pergantian%20part!");
@@ -55,7 +55,7 @@ if ($action == "checksheet_preventive") {
             //update status dies menjadi P
             $dies->updateDiesGStat($param["dies_id"], "P");
             $save = $class->insert($param);
-            if($save["status"] == true) {
+            if ($save["status"] == true) {
               $param_hist = [];
               $param_hist["sthty"] = "P";
               $param_hist["dies_id"] = $param["dies_id"];
@@ -428,7 +428,7 @@ if ($action == "checksheet_preventive") {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
-            
+
             //complete-kan dies stroke history
             $dstk->setComplete($param["dies_id"]);
           }
@@ -436,7 +436,7 @@ if ($action == "checksheet_preventive") {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
-            
+
             //complete-kan dies stroke history
             $dstk->setComplete($param["dies_id"]);
           }
@@ -445,7 +445,7 @@ if ($action == "checksheet_preventive") {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
-            
+
             //complete-kan dies stroke history
             $dstk->setComplete($param["dies_id"]);
           }
@@ -453,7 +453,7 @@ if ($action == "checksheet_preventive") {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
-            
+
             //complete-kan dies stroke history
             $dstk->setComplete($param["dies_id"]);
           }
@@ -462,7 +462,7 @@ if ($action == "checksheet_preventive") {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
-            
+
             //complete-kan dies stroke history
             $dstk->setComplete($param["dies_id"]);
           }
@@ -470,7 +470,7 @@ if ($action == "checksheet_preventive") {
             $param["pmstat"] = "C";
             //jika close update kembali gstat menjadi N
             $dies->updateDiesGStat($param["dies_id"], "N");
-            
+
             //complete-kan dies stroke history
             $dstk->setComplete($param["dies_id"]);
           }
