@@ -149,9 +149,9 @@ if ($action == "home") {
     $i = 0;
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $eff_sum = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
-      $data_eff_sum[] = $eff_sum;
-      $data_ril_sum[] = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
-      $data_rol_sum[] = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
+      $data_eff_sum[$i] = $eff_sum;
+      $data_ril_sum[$i] = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
+      $data_rol_sum[$i] = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
       $data_line_name_sum[$i]["line"] = $row["line_name"];
       $i++;
     }
