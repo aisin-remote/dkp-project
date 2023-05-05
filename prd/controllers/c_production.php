@@ -61,7 +61,7 @@ if ($action == "daily_production_entry") {
         $time_end = $data_item_dtl["time_end"];
         $dandori_time = $_GET["dandori_time"];
         if ($dandori_time == $data_item_dtl["time_start"] || $dandori_time == $data_item_dtl["time_end"]) {
-          //do nothing
+          header("location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&error=Dandori Time tidak boleh sama dengan time start / time end");
         } else {
           //step 1
           //update item end time = dandori_time dan kalkulasikan prd_time - jumlah stop time
