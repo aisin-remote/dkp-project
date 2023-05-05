@@ -274,6 +274,14 @@ and open the template in the editor.
                           foreach ($data_item as $list) {
                             // $efficiency = round(($list["prd_qty"] / $list["pln_qty"]) * 100, 2);
                             $efficiency = round(($list["prd_qty"] * $list["cctime"] / 60) / $list["prd_time"] * 100, 2);
+                            if (empty($list["real_dt"])) {
+                              $isDisable = "disabled";
+                            }
+                            if ($efficiency > 100 || $efficiency < 0) {
+                              $text = "text-danger";
+                            } else {
+                              $text = "";
+                            }
                             $btn_approve = "";
                             if ($list["stats"] == "N") {
                               $btn_approve = "<button data-toggle='tooltip' data-placement='top' title='Approve' type='button' class='btn btn-sm btn-success' onclick='approveDailyI(\"" . $list["line_id"] . "\",\"" . $list["shift"] . "\",\"" . $list["prd_dt"] . "\",\"" . $list["prd_seq"] . "\")'><i class='material-icons'>done_outline</i></button>";
@@ -290,10 +298,10 @@ and open the template in the editor.
                               . "<td class='text-right'>" . $list["scn_qty_ng"] . "</td>"
                               . "<td class='text-right'>" . $list["stop_count"] . "</td>"
                               . "<td class='text-right'>" . $list["prd_time"] . "</td>"
-                              . "<td class='text-right'>" . $efficiency . "</td>"
+                              . "<td class='text-right ".$text."'>" . $efficiency . "</td>"
                               . "<td class='text-center'>"
                               . "<a data-toggle='tooltip' data-placement='top' title='Edit' href='?action=$action&line=" . $list["line_id"] . "&date=" . $list["xdate"] . "&shift=" . $list["shift"] . "&prd_seq=" . $list["prd_seq"] . "' class='btn btn-secondary btn-sm'><i class='material-icons'>edit_square</i></a>"
-                              . "<button data-toggle='tooltip' data-placement='top' title='Dandori' onclick='openModalDandori(\"" . $list["time_start"] . "\",\"" . $list["time_end"] . "\",\"" . $list["line_id"] . "\",\"" . $list["xdate"] . "\",\"" . $list["shift"] . "\",\"" . $list["prd_seq"] . "\")' class='ml-2 btn btn-warning btn-sm'><i class='material-icons'>splitscreen</i></a>"
+                              . "<button data-toggle='tooltip' data-placement='top' title='Dandori' onclick='openModalDandori(\"" . $list["time_start"] . "\",\"" . $list["time_end"] . "\",\"" . $list["line_id"] . "\",\"" . $list["xdate"] . "\",\"" . $list["shift"] . "\",\"" . $list["prd_seq"] . "\")' class='ml-2 btn btn-warning btn-sm' $isDisable><i class='material-icons'>splitscreen</i></a>"
                               . "</td>";
                             if ($op_role == "LEADER") {
                               echo "<td class='text-center'>$btn_approve</td>";
@@ -380,8 +388,13 @@ and open the template in the editor.
     }
 
     $("#dandori_form").submit(function (event) {
-      $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
-      $(".btn").attr("disabled", "disabled");
+      if ($("#dandori_time").val() == "") {
+        alert("Please input dandori time.");
+        return false;
+      } else {
+        $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+        $(".btn").attr("disabled", "disabled");
+      }
     });
 
     function openModalDandori(time_start, time_end, line, date, shift, seq) {

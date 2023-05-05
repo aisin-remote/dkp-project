@@ -140,14 +140,14 @@ class Production
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO t_prd_daily_i (line_id,prd_dt,shift,prd_seq,dies_id,time_start,time_end,cctime,pln_qty,prd_time) "
+      $sql = "INSERT INTO t_prd_daily_i (line_id,prd_dt,shift,prd_seq,dies_id,time_start,time_end,cctime,pln_qty,prd_time,real_dt) "
         . "values ";
 
       $insertQuery = array();
       $insertData = array();
 
       foreach ($param as $row) {
-        $insertQuery[] = "(?, TO_DATE(?,'YYYYMMDD'), ?, ?, ?, ?, ?, ?, ?, ?)";
+        $insertQuery[] = "(?, TO_DATE(?,'YYYYMMDD'), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $insertData[] = $row["line_id"];
         $insertData[] = $row["prd_dt"];
         $insertData[] = $row["shift"];
@@ -158,6 +158,7 @@ class Production
         $insertData[] = $row["cctime"];
         $insertData[] = $row["pln_qty"];
         $insertData[] = $row["prd_time"];
+        $insertData[] = date('Ymd', strtotime(date('Y-m-d') . '+' . $row["date_add"] . ' day'));
       }
 
       if (!empty($insertQuery)) {
@@ -184,15 +185,15 @@ class Production
   public function appendItem($param = array())
   {
     $return = array();
-    $param["seq"] = (int) $param["prd_seq"] + 1;
     if (empty($param)) {
       $return["status"] = false;
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO t_prd_daily_i (line_id,prd_dt,shift,prd_seq,dies_id,time_start,time_end,cctime,pln_qty,prd_time) "
-        . "VALUES ('" . $param["line_id"] . "','" . $param["prd_dt"] . "','" . $param["shift"] . "', '" . $param["seq"] . "',"
-        . "'" . $param["dies_id"] . "','" . $param["time_start"] . "','" . $param["time_end"] . "','" . $param["cctime"] . "','" . $param["pln_qty"] . "','" . $param["prd_time"] . "')";
+      $sql = "INSERT INTO t_prd_daily_i (line_id,prd_dt,shift,prd_seq,dies_id,time_start,time_end,cctime,pln_qty,prd_time,real_dt) "
+        . "VALUES ('" . $param["line_id"] . "','" . $param["prd_dt"] . "','" . $param["shift"] . "',"
+        . "(SELECT max(prd_seq)+1 as prd_seq FROM t_prd_daily_i WHERE line_id='" . $param["line_id"] . "' AND prd_dt = '" . $param["prd_dt"] . "' AND shift = '" . $param["shift"] . "'),"
+        . "'" . $param["dies_id"] . "','" . $param["time_start"] . "','" . $param["time_end"] . "','" . $param["cctime"] . "','" . $param["pln_qty"] . "','" . $param["prd_time"] . "', '" . $param["real_dt"] . "')";
 
       $stmt = $conn->prepare($sql);
       /*$stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
@@ -300,14 +301,14 @@ class Production
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, CONCAT(b.group_id, ' - ', b.model_id, ' - ', b.name1) as dies_name, "
-      . "(select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), "
-      . "(select SUM(ng_qty) as ng_qty from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), "
-      . "(select name1 from m_user where usrid = a.apr_by) as apr_name "
-      . "FROM t_prd_daily_i a "
-      . "INNER JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint) "
-      . "WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$date' AND a.shift = '$shift' "
-      . "ORDER BY a.prd_seq asc ";
+    $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, CONCAT(b.group_id, ' - ', b.model_id, ' - ', b.name1) as dies_name, 
+        (select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), 
+        (select SUM(ng_qty) as ng_qty from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), 
+        (select name1 from m_user where usrid = a.apr_by) as apr_name 
+        FROM t_prd_daily_i a 
+        INNER JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint) 
+        WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$date' AND a.shift = '$shift' 
+        ORDER BY a.real_dt, a.time_start asc ";
 
     $stmt = $conn->prepare($sql);
     $count = 0;

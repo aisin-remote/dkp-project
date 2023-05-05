@@ -196,7 +196,7 @@ if ($action == "daily_production_entry") {
             $success = "Data Deleted";
             header("Location: ?action=" . $action . "&success=" . $success);
           } else {
-            $error = "Cannot delete production entry, please contact administrator";
+            $error = "Data Failed to Delete";
             header("Location: ?action=" . $action . "&error=" . $error);
           }
         }
@@ -235,6 +235,7 @@ if ($action == "daily_production_entry") {
               $param_item[$i]["dies_id"] = $dies_id;
               $param_item[$i]["time_start"] = $itm["time_start"];
               $param_item[$i]["time_end"] = $itm["time_end"];
+              $param_item[$i]["date_add"] = $itm["date_add"];
               $param_item[$i]["cctime"] = $cctime_per_jam;
 
               //calculate pengurang production time
