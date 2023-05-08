@@ -277,16 +277,16 @@ and open the template in the editor.
                             if (empty($list["real_dt"])) {
                               $isDisable = "disabled";
                             }
-                            if ($efficiency > 100 || $efficiency < 0) {
-                              $text = "text-danger";
+                            if ($efficiency > 100 || $efficiency < 0 || $row["pln_qty"] < 0) {
+                              $warna = "table-danger";
                             } else {
-                              $text = "";
+                              $warna = "";
                             }
                             $btn_approve = "";
                             if ($list["stats"] == "N") {
                               $btn_approve = "<button data-toggle='tooltip' data-placement='top' title='Approve' type='button' class='btn btn-sm btn-success' onclick='approveDailyI(\"" . $list["line_id"] . "\",\"" . $list["shift"] . "\",\"" . $list["prd_dt"] . "\",\"" . $list["prd_seq"] . "\")'><i class='material-icons'>done_outline</i></button>";
                             }
-                            echo "<tr>"
+                            echo "<tr class='$warna'>"
                               . "<td class=''>" . $list["dies_name"] . "</td>"
                               . "<td class='text-center'>" . $list["time_start"] . " - " . $list["time_end"] . "</td>"
                               . "<td class='text-right'>" . $list["cctime"] . "</td>"
@@ -298,13 +298,13 @@ and open the template in the editor.
                               . "<td class='text-right'>" . $list["scn_qty_ng"] . "</td>"
                               . "<td class='text-right'>" . $list["stop_count"] . "</td>"
                               . "<td class='text-right'>" . $list["prd_time"] . "</td>"
-                              . "<td class='text-right ".$text."'>" . $efficiency . "</td>"
-                              . "<td class='text-center'>"
+                              . "<td class='text-right'>" . $efficiency . "</td>"
+                              . "<td class='text-center py-0'>"
                               . "<a data-toggle='tooltip' data-placement='top' title='Edit' href='?action=$action&line=" . $list["line_id"] . "&date=" . $list["xdate"] . "&shift=" . $list["shift"] . "&prd_seq=" . $list["prd_seq"] . "' class='btn btn-secondary btn-sm'><i class='material-icons'>edit_square</i></a>"
                               . "<button data-toggle='tooltip' data-placement='top' title='Dandori' onclick='openModalDandori(\"" . $list["time_start"] . "\",\"" . $list["time_end"] . "\",\"" . $list["line_id"] . "\",\"" . $list["xdate"] . "\",\"" . $list["shift"] . "\",\"" . $list["prd_seq"] . "\")' class='ml-2 btn btn-warning btn-sm' $isDisable><i class='material-icons'>splitscreen</i></a>"
                               . "</td>";
                             if ($op_role == "LEADER") {
-                              echo "<td class='text-center'>$btn_approve</td>";
+                              echo "<td class='text-center py-0'>$btn_approve</td>";
                             }
                             echo "<td class='text-left'>" . $list["apr_name"] . "</td>"
                               . "</tr>";
@@ -382,7 +382,9 @@ and open the template in the editor.
     });
 
     function deleteProd() {
-      if (confirm("Are you sure to delete this production?")) {
+      if (confirm("Are you sure to delete this production? this action cannot be undone")) {
+        $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+        $(".btn").attr("disabled", "disabled");
         window.location = "?action="+$("#action").val()+"&line=<?= $_GET["line"] ?>&date=<?= $date ?>&shift=<?= $_GET["shift"] ?>&delete=true";
       }
     }
@@ -420,6 +422,7 @@ and open the template in the editor.
       $.ajax({
         type: 'POST',
         url: '?action=api_approve_daily_i',
+        async: false,
         data: {
           line_id: line_id,
           shift: shift,
@@ -437,12 +440,17 @@ and open the template in the editor.
         error: function (error) {
           // handle the error here
           alert(error);
+          location.reload();
+        },
+        beforeSend : function(event) {
+          $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+          $(".btn").attr("disabled", "disabled");
         },
         dataType: 'json'
       });
     }
 
-    function delStop(line_id, prd_dt, shift, prd_seq, stop_seq) {
+    /*function delStop(line_id, prd_dt, shift, prd_seq, stop_seq) {
       // $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
       // $(".btn").attr("disabled", "disabled");
       $.ajax({
@@ -469,7 +477,7 @@ and open the template in the editor.
         },
         dataType: 'json'
       });
-    }
+    }*/
   </script>
 </body>
 
