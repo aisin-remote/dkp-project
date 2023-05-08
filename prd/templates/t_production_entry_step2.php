@@ -108,7 +108,7 @@ and open the template in the editor.
                                 <?php
                                 foreach ($ld_list as $row) {
                                   ?>
-                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] == $data_header["ldid"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["ldid"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
                                   <?php
                                 }
                                 ?>
@@ -129,7 +129,7 @@ and open the template in the editor.
                                 <?php
                                 foreach ($jp_list as $row) {
                                   ?>
-                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] == $data_header["jpid"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["jpid"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
                                   <?php
                                 }
                                 ?>
@@ -155,7 +155,7 @@ and open the template in the editor.
                                 <?php
                                 foreach ($op_list as $row) {
                                   ?>
-                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] == $data_header["op1id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["op1id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
                                   <?php
                                 }
                                 ?>
@@ -177,7 +177,7 @@ and open the template in the editor.
                                 <?php
                                 foreach ($op_list as $row) {
                                   ?>
-                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] == $data_header["op2id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["op2id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
                                   <?php
                                 }
                                 ?>
@@ -199,7 +199,7 @@ and open the template in the editor.
                                 <?php
                                 foreach ($op_list as $row) {
                                   ?>
-                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] == $data_header["op3id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["op3id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
                                   <?php
                                 }
                                 ?>
@@ -221,7 +221,7 @@ and open the template in the editor.
                                 <?php
                                 foreach ($op_list as $row) {
                                   ?>
-                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] == $data_header["op4id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["op4id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
                                   <?php
                                 }
                                 ?>
