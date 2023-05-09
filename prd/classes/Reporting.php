@@ -331,7 +331,7 @@ class Reporting
             $sql .= " AND a.jpid = '$jpid' ";
         }
 
-        $sql .= " ORDER BY a.shift, a.line_id, a.prd_seq ASC ";
+        $sql .= " ORDER BY a.real_dt, a.time_start asc ";
 
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
