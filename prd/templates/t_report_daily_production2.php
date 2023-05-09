@@ -330,7 +330,7 @@ and open the template in the editor.
         $(document).ready(function () {
             $("#data-table-x").DataTable({
                 stateSave: true,
-                order: [10, 'asc'],
+                ordering: false,
             });
 
             $(".datepicker").flatpickr({
