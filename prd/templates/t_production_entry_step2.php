@@ -277,7 +277,10 @@ and open the template in the editor.
                             if (empty($list["real_dt"])) {
                               $isDisable = "disabled";
                             }
-                            if ($efficiency > 100 || $efficiency < 0 || $row["pln_qty"] < 0) {
+                            // if ($list["pln_qty"] == $list["prd_qty"]) {
+                            //   $efficiency = 100;
+                            // }
+                            if ($efficiency > 100 || $efficiency < 0 || $list["pln_qty"] < 0) {
                               $warna = "table-danger";
                             } else {
                               $warna = "";

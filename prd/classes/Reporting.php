@@ -176,6 +176,8 @@ class Reporting
 
                 if ($prd_time == 0) {
                     $efficiency = 0;
+                } else if ($pln_qty < 0) {
+                    $efficiency = 0;
                 } else {
                     $efficiency = ($prd_qty * $cctime / 60) / $prd_time * 100;
                 }
