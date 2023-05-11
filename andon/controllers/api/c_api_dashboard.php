@@ -254,7 +254,7 @@ if ($action == "api_dashboard_adn_single") {
       //$line_name = $row["line_name"];
       $pln_qty = $row["pln_qty"];
       $prd_qty = $row["prd_qty"] + $row["ng_qty"];
-      $balance = $row["pln_qty"] - ($row["prd_qty"] + $row["ril_qty"]);
+      $balance = $row["pln_qty"] - $prd_qty;
       $achieve = round($row["prd_qty"] / $row["pln_qty"] * 100, 1);
       $cctime = $row["cctime"];
       $stop_dies = $row["stop_part"] * 60;
@@ -393,7 +393,7 @@ if ($action == "dashboard_line") {
       //$line_name = $row["line_name"];
       $pln_qty = $row["pln_qty"];
       $prd_qty = $row["prd_qty"] + $row["ng_qty"];
-      $balance = $row["pln_qty"] - $row["prd_qty"];
+      $balance = $row["pln_qty"] - $prd_qty;
       $achieve = round($row["prd_qty"] / $row["pln_qty"] * 100, 2);
       $cctime = $row["cctime"];
       $stop_dies = $row["stop_part"] * 60;
