@@ -28,7 +28,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
-                    <a class="navbar-brand my-3" onclick="window.location.reload()"><img src="media/images/logo-white.png" height="30"
+                    <a class="navbar-brand my-3" onclick="window.location.reload()"><img src="media/images/logo-aisin.png" height="30"
                             alt="" /></a>
                 </div>
                 <div class="col">

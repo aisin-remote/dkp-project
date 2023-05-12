@@ -28,7 +28,7 @@
             <div class="row">
                 <div class="col">
                     <a class="navbar-brand my-3" onclick="window.location.reload()"><img
-                            src="media/images/logo-white.png" height="30" alt=""></img></a>
+                            src="media/images/logo-aisin.png" height="30" alt=""></img></a>
                 </div>
                 <div class="col">
                     <h1 class="text-center my-3 mx-auto font-weight-bold mb-3">
