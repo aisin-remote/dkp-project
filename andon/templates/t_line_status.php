@@ -437,7 +437,7 @@
             }
         }
 
-        setInterval(updateDashboard, 5000);
+        setInterval(updateDashboard, 3000);
         setInterval(updateQty, 1000);
         setInterval(dateTime, 1000);
 
