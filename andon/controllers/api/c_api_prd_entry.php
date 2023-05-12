@@ -43,6 +43,7 @@ if ($action == "api_prd_entry") {
                     $param_item[$i]["dies_id"] = $dies_id;
                     $param_item[$i]["time_start"] = $itm["time_start"];
                     $param_item[$i]["time_end"] = $itm["time_end"];
+                    $param_item[$i]["date_add"] = $itm["date_add"];
                     $param_item[$i]["cctime"] = $cctime_per_jam;
 
                     //calculate pengurang production time
@@ -78,7 +79,7 @@ if ($action == "api_prd_entry") {
                         $param_stop["exe_empid"] = null;
                         $class->insertStop($param_stop);
                     }
-                    header("Location: ".$param["reff"]."&success=Daily Production Entry has been saved!");
+                    header("Location: ".$param["reff"]."");
                 } else {
                     $class->rollBackHeader($line, $date, $param["shift"]);
                     $error = "Item - " . $save_item["message"];
