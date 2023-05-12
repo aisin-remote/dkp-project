@@ -319,7 +319,7 @@ and open the template in the editor.
                         $button_del = "<button type='button' class='btn btn-xs btn-outline-dark' onclick='delNG(\"" . $row["line_id"] . "\",\"" . $row["prd_dt"] . "\",\"" . $row["shift"] . "\",\"" . $row["prd_seq"] . "\",\"" . $row["ng_seq"] . "\")'><i class='material-icons'>delete</i></button>";
                         echo "<tr>"
                           . "<td>" . $row["ng_seq"] . "</td>"
-                          . "<td>" . $row["ng_type_text"] . "</td>"
+                          . "<td>" . $row["name1"] . "</td>"
                           . "<td class='text-center'>" . $row["loc_x"] . "," . $row["loc_y"] . "</td>"
                           . "<td class='text-center'>" . $row["ng_qty"] . "</td>"
                           . "<td>" . $row["crt_by_name"] . "</td>"

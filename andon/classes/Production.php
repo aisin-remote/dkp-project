@@ -509,9 +509,9 @@ class Production
   public function getNGList($line_id, $prd_dt, $shift, $prd_seq)
   {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.*, b.pval2 as ng_type_text, c.name1 as crt_by_name "
+    $sql = "SELECT a.*, b.*, c.name1 as crt_by_name "
       . "FROM t_prd_daily_ng a "
-      . "LEFT JOIN m_param b ON b.pid = 'NG_TYPE' and b.pval1 = a.ng_type "
+      . "LEFT JOIN m_prd_ng_type b ON b.ng_type_id = a.ng_type and b.app_id = 'AISIN_ADN' "
       . "LEFT JOIN m_user c ON c.usrid = a.crt_by "
       . "WHERE a.line_id = '$line_id' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$prd_dt' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq'";
     $stmt = $conn->prepare($sql);
