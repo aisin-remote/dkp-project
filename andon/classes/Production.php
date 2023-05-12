@@ -261,6 +261,7 @@ class Production
     $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, CONCAT(b.mtart, ' - ', b.name1) as dies_name, 
         (select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), 
         (select SUM(ng_qty) as ng_qty from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), 
+        (select SUM(stop_time) as loss_time from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), 
         (select name1 from m_user where usrid = a.apr_by) as apr_name 
         FROM t_prd_daily_i a 
         INNER JOIN wms.m_mara b ON b.matnr = a.dies_id 
