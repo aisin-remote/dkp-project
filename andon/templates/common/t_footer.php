@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="d-flex align-items-center justify-content-between small">
       <div class="text-muted"><?php echo FOOTER; ?></div>
-      <div class="text-muted">
+      <!-- <div class="text-muted">
         <?php
         if($cek_license == true) {
           
@@ -11,7 +11,7 @@
           . "<p class='mb-0'>Go to <a href='LICENSE'>Setting</a> to Activate Software</p>";
         }
         ?>
-      </div>
+      </div> -->
     </div>
   </div>
 </footer>
