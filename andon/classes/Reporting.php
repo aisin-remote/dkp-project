@@ -57,7 +57,7 @@ class Reporting
                 inner join m_prd_operator d on d.empid = c.ldid
                 inner join m_prd_operator e on e.empid = c.jpid
                 inner join m_param f on f.pid = 'SHIFT' and f.seq = a.shift
-                where 1=1 ";    
+                where 1=1 ";
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
         }
@@ -116,48 +116,45 @@ class Reporting
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.line_id, a.prd_dt, a.shift, a.prd_seq, a.time_start, a.time_end, a.cctime,
-        a.pln_qty, coalesce(a.prd_qty, 0) as prd_qty, a.prd_time, a.apr_by, b.name1 as apr_name,
-        c.name1, c.mtart, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time, coalesce(SUM(x.ng_qty), 0) as steuchi, coalesce(a.wip, 0) as wip 
+        $sql = "SELECT a.line_id, a.prd_dt, a.shift, a.prd_seq, a.time_start, a.time_end, a.cctime, 
+        a.pln_qty, coalesce(a.prd_qty, 0) as prd_qty, a.prd_time, a.apr_by, b.name1 as apr_name, 
+        c.name1, c.mtart, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time, coalesce(SUM(x.ng_qty), 0) as steuchi, coalesce(a.wip, 0) as wip, a.real_dt 
         FROM t_prd_daily_i a 
-        LEFT JOIN m_user b ON a.apr_by = b.usrid
+        LEFT JOIN m_user b ON a.apr_by = b.usrid 
         LEFT JOIN wms.m_mara c ON a.dies_id = c.matnr
         LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, prd_seq, COALESCE(SUM(ng_qty), 0) as ng_qty
-                    FROM t_prd_daily_ng
-                    GROUP BY line_id, prd_dt, shift, prd_seq
-                ) d ON a.line_id = d.line_id AND a.prd_dt = d.prd_dt AND a.shift = d.shift AND a.prd_seq = d.prd_seq 
-                LEFT JOIN (
-                    SELECT line_id, prd_dt, shift, prd_seq, COALESCE(SUM(stop_time), 0) as stop_time
-                    FROM t_prd_daily_stop
-                    GROUP BY line_id, prd_dt, shift, prd_seq
-                ) e ON a.line_id = e.line_id AND a.prd_dt = e.prd_dt AND a.shift = e.shift AND a.prd_seq = e.prd_seq
-                LEFT JOIN (
-                    SELECT a.line_id, a.prd_dt, a.shift, COALESCE(SUM(a.ng_qty), 0) as ng_qty
-                    FROM t_prd_daily_ng a
+                        SELECT line_id, prd_dt, shift, prd_seq, COALESCE(SUM(ng_qty), 0) as ng_qty
+                        FROM t_prd_daily_ng
+                        GROUP BY line_id, prd_dt, shift, prd_seq
+                    ) d ON a.line_id = d.line_id AND a.prd_dt = d.prd_dt AND a.shift = d.shift AND a.prd_seq = d.prd_seq
                     LEFT JOIN (
-                        SELECT line_id, line_ty, name1 AS line_name
-                        FROM m_prd_line
-                        WHERE line_ty = 'ECU'
-                    ) b ON a.line_id = b.line_id
-                    WHERE a.line_id = b.line_id
-                    GROUP BY a.line_id, a.prd_dt, a.shift
-                ) f ON a.line_id = f.line_id AND a.prd_dt = f.prd_dt AND a.shift = f.shift 
-                LEFT JOIN ( 
-                    SELECT e.pval2, d.mtart, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol, SUM(a.ng_qty) as ng_qty 
-                    FROM t_prd_daily_ng a 
-                    INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
-                    INNER JOIN wms.m_mara d ON c.dies_id = d.matnr
-                    INNER JOIN m_param e ON a.ng_type = e.pval1
-                    WHERE a.ng_type LIKE 'ROL%' AND a.line_id SIMILAR TO '[0-9]+' AND e.pval2 LIKE '%STEUCHI%'
-                    GROUP BY 1,2,3,4,5
-                ) x ON a.line_id = x.line_id AND a.prd_dt = x.prd_dt AND a.shift = x.shift "
-        . "WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' ";
-    $sql .= " GROUP BY 1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17 ";
-    $sql .= " ORDER BY  a.prd_seq";
-
-        // echo $sql;
-        // die();
+                        SELECT line_id, prd_dt, shift, prd_seq, COALESCE(SUM(stop_time), 0) as stop_time
+                        FROM t_prd_daily_stop
+                        GROUP BY line_id, prd_dt, shift, prd_seq
+                    ) e ON a.line_id = e.line_id AND a.prd_dt = e.prd_dt AND a.shift = e.shift AND a.prd_seq = e.prd_seq 
+                    LEFT JOIN (
+                        SELECT a.line_id, a.prd_dt, a.shift, COALESCE(SUM(a.ng_qty), 0) as ng_qty
+                        FROM t_prd_daily_ng a
+                        LEFT JOIN (
+                            SELECT line_id, line_ty, name1 AS line_name
+                            FROM m_prd_line
+                            WHERE line_ty = 'ECU'
+                        ) b ON a.line_id = b.line_id
+                        WHERE a.line_id = b.line_id
+                        GROUP BY a.line_id, a.prd_dt, a.shift
+                    ) f ON a.line_id = f.line_id AND a.prd_dt = f.prd_dt AND a.shift = f.shift 
+                    LEFT JOIN ( 
+                        SELECT e.pval2, d.model_id, a.line_id, a.prd_dt, a.shift, COUNT(a.ng_type) as rol, SUM(a.ng_qty) as ng_qty 
+                        FROM t_prd_daily_ng a 
+                        INNER JOIN t_prd_daily_i c ON a.line_id = c.line_id AND a.prd_dt = c.prd_dt AND a.shift = c.shift AND a.prd_seq = c.prd_seq
+                        INNER JOIN m_dm_dies_asset d ON c.dies_id = d.dies_id::character varying
+                        INNER JOIN m_param e ON a.ng_type = e.pval1
+                        WHERE a.ng_type LIKE 'ROL%' AND a.line_id SIMILAR TO '[0-9]+' AND e.pval2 LIKE '%STEUCHI%'
+                        GROUP BY 1,2,3,4,5
+                    ) x ON a.line_id = x.line_id AND a.prd_dt = x.prd_dt AND a.shift = x.shift
+                    WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift'
+                    GROUP BY 1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17
+                    ORDER BY a.real_dt, a.time_start asc ";
 
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
@@ -178,14 +175,16 @@ class Reporting
 
                 if ($prd_time == 0) {
                     $efficiency = 0;
+                } else if ($pln_qty < 0) {
+                    $efficiency = 0;
                 } else {
-                    $efficiency = (($prd_qty - $ng_qty) * $cctime / 60) / $prd_time;
+                    $efficiency = ($prd_qty * $cctime / 60) / $prd_time * 100;
                 }
 
-                $roundEff = round($efficiency, 3);
-                $totalEff = $roundEff * 100;
+                $roundEff = round($efficiency, 2);
+                // $totalEff = $roundEff * 100;
 
-                $row["eff"] = $totalEff;
+                $row["eff"] = $roundEff;
 
                 $return[] = $row;
             }
@@ -241,7 +240,7 @@ class Reporting
                 $rol = $row["ng_rol"];
                 $wip = $row["wip"];
 
-                $tot_qty = $prd_qty + $tot_ng;
+                $tot_qty = $prd_qty + $tot_ng + $wip;
                 $waktu_shift = $row["prd_time"] + $row["loss_time_p"];
                 // $efficiency = (($prd_qty * $cctime) / 60) / $row["prd_time"];
                 // $roundEff2 = round($efficiency, 2);
@@ -295,16 +294,17 @@ class Reporting
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT a.*, b.*, c.*, c.name1 as material, d.*, e.*, e.name1 as line_name, f.name1 as operator,
-            (select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
-            (select SUM(stop_time) as loss_time from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
-            (select SUM(ng_qty) as ng_count from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq)
-            from t_prd_daily_i a
-            inner join t_prd_daily_h b on b.prd_dt = a.prd_dt and b.shift = a.shift and b.line_id = a.line_id
-            inner join wms.m_mara c on c.matnr = a.dies_id
-            inner join m_param d on d.pid = 'SHIFT' and d.seq = a.shift
-            inner join m_prd_line e on e.line_id = a.line_id and e.line_ty = 'ECU'
-            inner join m_prd_operator f on f.empid = b.jpid
-            where 1=1 ";
+                (select count(*) as stop_count from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
+                (select SUM(stop_time) as loss_time from t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
+                (select SUM(ng_qty) as ng_count from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), g.name1 as apr_name
+                from t_prd_daily_i a
+                inner join t_prd_daily_h b on b.prd_dt = a.prd_dt and b.shift = a.shift and b.line_id = a.line_id
+                inner join wms.m_mara c on c.matnr = a.dies_id
+                inner join m_param d on d.pid = 'SHIFT' and d.seq = a.shift
+                inner join m_prd_line e on e.line_id = a.line_id and e.line_ty = 'ECU'
+                inner join m_prd_operator f on f.empid = b.jpid
+                left join m_user g on g.usrid = a.apr_by
+                where 1=1 ";
 
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
@@ -322,7 +322,7 @@ class Reporting
             $sql .= " AND a.jpid = '$jpid' ";
         }
 
-        $sql .= " ORDER BY a.shift, a.prd_seq ASC ";
+        $sql .= " ORDER BY a.real_dt, a.time_start asc";
 
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
@@ -344,10 +344,10 @@ class Reporting
                 if ($prd_time == 0) {
                     $efficiency = 0;
                 } else {
-                    $efficiency = (($prd_qty - $ng_qty) * $cctime / 60) / $prd_time;
+                    $efficiency = ($prd_qty * $cctime / 60) / $prd_time;
                 }
 
-                $roundEff = round($efficiency, 3);
+                $roundEff = round($efficiency, 2);
                 $totalEff = $roundEff * 100;
 
                 $row["eff"] = $totalEff;

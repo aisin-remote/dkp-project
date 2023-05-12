@@ -55,65 +55,188 @@ and open the template in the editor.
           }
           ?>
           <div class="row mt-1">
-            <div class="col-12">
-              <div class="card">
-                <div class="card-header" style="background-color: #E4E4E4;">
-                  <h6 class="mb-0">Header Information</h6>
-                </div>
-                <div class="card-body" style="background-color: #F5F5F5;">
-                  <div class="row">
-                    <div class="col-md-4 col-sm-12">
-                      <div class="row">
-                        <div class="col-4">Line</div>
-                        <div class="col-8">:
-                          <?php echo $data_header["line_name"]; ?>
+            <form method="post"
+              action="?action=<?= $action . "&line=" . $data_header["line_id"] . "&date=" . $date . "&shift=" . $data_header["shift"] ?>">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header" style="background-color: #E4E4E4;">
+                    <div class="d-flex align-items-center justify-content-between">
+                      <h6 class="mb-0">Header Information</h6>
+                      <?php
+                      if ($op_role == "LEADER" || $op_role == "ADMIN") {
+                        ?>
+                        <div>
+                          <button type="submit" name="save" id="btn_save" value="save"
+                            class="btn btn-md btn-pale-green"><i class="material-icons">save</i> Save</button>
                         </div>
-                        <div class="col-4">Date</div>
-                        <div class="col-8">:
-                          <?php echo $data_header["prod_date"]; ?>
-                        </div>
-                        <div class="col-4">Shift</div>
-                        <div class="col-8">:
-                          <?php echo $data_header["shift_name"]; ?>
+                        <?php
+                      } else {
+                        echo null;
+                      }
+                      ?>
+                    </div>
+                  </div>
+                  <div class="card-body" style="background-color: #F5F5F5;">
+                    <div class="row">
+                      <div class="col-md-4 col-sm-12">
+                        <div class="row">
+                          <div class="col-4">Line</div>
+                          <div class="col-8">:
+                            <?php echo $data_header["line_name"]; ?>
+                          </div>
+                          <div class="col-4">Date</div>
+                          <div class="col-8">:
+                            <?php echo $data_header["prod_date"]; ?>
+                          </div>
+                          <div class="col-4">Shift</div>
+                          <div class="col-8">:
+                            <?php echo $data_header["shift_name"]; ?>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="col-md-4 col-sm-12">
-                      <div class="row">
-                        <div class="col-4">Leader</div>
-                        <div class="col-8">:
-                          <?php echo $data_header["ld_name"]; ?>
-                        </div>
-                        <div class="col-4">JP</div>
-                        <div class="col-8" :>:
-                          <?php echo $data_header["jp_name"]; ?>
+                      <div class="col-md-4 col-sm-12">
+                        <div class="row align-items-center">
+                          <div class="col-4">Leader</div>
+                          <div class="col-1">:</div>
+                          <div class="col-6 mb-1 px-0">
+                            <?php
+                            if ($op_role == "LEADER" || $op_role == "ADMIN") {
+                              ?>
+                              <select name="ldid" class="form-control select2">
+                                <?php
+                                foreach ($ld_list as $row) {
+                                  ?>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["ldid"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <?php
+                                }
+                                ?>
+                              </select>
+                              <?php
+                            } else {
+                              echo $data_header["ld_name"];
+                            }
+                            ?>
+                          </div>
+                          <div class="col-4">JP</div>
+                          <div class="col-1">:</div>
+                          <div class="col-6 mb-1 px-0">
+                            <?php
+                            if ($op_role == "LEADER" || $op_role == "ADMIN") {
+                              ?>
+                              <select name="jpid" class="form-control select2">
+                                <?php
+                                foreach ($jp_list as $row) {
+                                  ?>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["jpid"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <?php
+                                }
+                                ?>
+                              </select>
+                              <?php
+                            } else {
+                              echo $data_header["jp_name"];
+                            }
+                            ?>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="col-md-4 col-sm-12">
-                      <div class="row">
-                        <div class="col-4">Operator 1</div>
-                        <div class="col-8">:
-                          <?php echo $data_header["op1_name"]; ?>
-                        </div>
-                        <div class="col-4">Operator 2</div>
-                        <div class="col-8">:
-                          <?php echo $data_header["op2_name"]; ?>
-                        </div>
-                        <div class="col-4">Operator 3</div>
-                        <div class="col-8">:
-                          <?php echo $data_header["op3_name"]; ?>
-                        </div>
-                        <div class="col-4">Operator 4</div>
-                        <div class="col-8">:
-                          <?php echo $data_header["op4_name"]; ?>
+                      <div class="col-md-4 col-sm-12">
+                        <div class="row align-items-center">
+                          <div class="col-4">Operator 1</div>
+                          <div class="col-1">:</div>
+                          <div class="col-6 mb-1 px-0">
+                            <?php
+                            if ($op_role == "LEADER" || $op_role == "ADMIN") {
+                              ?>
+                              <select name="op1id" class="form-control select2">
+                                <option value=""></option>
+                                <?php
+                                foreach ($op_list as $row) {
+                                  ?>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["op1id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <?php
+                                }
+                                ?>
+                              </select>
+                              <?php
+                            } else {
+                              echo $data_header["op1_name"];
+                            }
+                            ?>
+                          </div>
+                          <div class="col-4">Operator 2</div>
+                          <div class="col-1">:</div>
+                          <div class="col-6 mb-1 px-0">
+                            <?php
+                            if ($op_role == "LEADER" || $op_role == "ADMIN") {
+                              ?>
+                              <select name="op2id" class="form-control select2">
+                                <option value=""></option>
+                                <?php
+                                foreach ($op_list as $row) {
+                                  ?>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["op2id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <?php
+                                }
+                                ?>
+                              </select>
+                              <?php
+                            } else {
+                              echo $data_header["op2_name"];
+                            }
+                            ?>
+                          </div>
+                          <div class="col-4">Operator 3</div>
+                          <div class="col-1">:</div>
+                          <div class="col-6 mb-1 px-0">
+                            <?php
+                            if ($op_role == "LEADER" || $op_role == "ADMIN") {
+                              ?>
+                              <select name="op3id" class="form-control select2">
+                                <option value=""></option>
+                                <?php
+                                foreach ($op_list as $row) {
+                                  ?>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["op3id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <?php
+                                }
+                                ?>
+                              </select>
+                              <?php
+                            } else {
+                              echo $data_header["op3_name"];
+                            }
+                            ?>
+                          </div>
+                          <div class="col-4">Operator 4</div>
+                          <div class="col-1">:</div>
+                          <div class="col-6 px-0">
+                            <?php
+                            if ($op_role == "LEADER" || $op_role == "ADMIN") {
+                              ?>
+                              <select name="op4id" class="form-control select2">
+                                <option value=""></option>
+                                <?php
+                                foreach ($op_list as $row) {
+                                  ?>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["op4id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <?php
+                                }
+                                ?>
+                              </select>
+                              <?php
+                            } else {
+                              echo $data_header["op4_name"];
+                            }
+                            ?>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
           <div class="row">
             <div class="col-12">
