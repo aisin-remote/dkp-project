@@ -363,8 +363,8 @@ class Production
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.name1 as stop_name, c.name1 as action_name, d.name1 as exe_name, b.type2 as stop_type "
       . "FROM t_prd_daily_stop a "
-      . "LEFT JOIN m_prd_stop_reason_action b ON b.srna_id = a.stop_id AND b.app_id = '" . APP . "' "
-      . "LEFT JOIN m_prd_stop_reason_action c ON c.srna_id = a.action_id AND c.app_id = '" . APP . "' "
+      . "LEFT JOIN m_prd_stop_reason_action b ON b.srna_id = a.stop_id AND b.app_id = 'AISIN_ADN' "
+      . "LEFT JOIN m_prd_stop_reason_action c ON c.srna_id = a.action_id AND c.app_id = 'AISIN_ADN' "
       . "LEFT JOIN m_prd_operator d ON d.empid = a.exe_empid "
       . "WHERE a.line_id = '$line_id' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$prd_dt' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq'";
     $stmt = $conn->prepare($sql);

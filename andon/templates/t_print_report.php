@@ -368,7 +368,7 @@
                 <small></small>
               </td>
               <td class="text-center align-middle">';
-              $seq = $i;
+              $seq = $i*100;
               $data_stop = $class2->getStopList($line_id, $date, $shift, $seq);
               foreach ($data_stop as $data) {
                 echo '<small>' . $data["start_time"] . ' - ' . $data["stop_name"] . '</small>
@@ -376,7 +376,7 @@
               }
               echo '</td>
               <td class="text-center align-middle">';
-              $seq = $i;
+              $seq = $i*100;
               $data_stop = $class2->getStopList($line_id, $date, $shift, $seq);
               foreach ($data_stop as $data) {
                 echo '<small>' . $data["stop_time"] . '</small>
@@ -392,7 +392,7 @@
               // }
               echo '</td>
               <td class="text-center align-middle">';
-              $seq = $i;
+              $seq = $i*100;
               $data_stop = $class2->getStopList($line_id, $date, $shift, $seq);
               foreach ($data_stop as $data) {
                 echo '<small>' . $data["action_name"] . '</small>
@@ -400,7 +400,7 @@
               }
               echo '</td>
               <td class="text-center align-middle">';
-              $seq = $i;
+              $seq = $i*100;
               $data_stop = $class2->getStopList($line_id, $date, $shift, $seq);
               $stop_exe = $class2->getStopExeReport($line_id, $prd_dt, $shift, $seq);
               foreach ($data_stop as $data) {

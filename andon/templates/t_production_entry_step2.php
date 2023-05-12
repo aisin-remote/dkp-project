@@ -271,12 +271,17 @@ and open the template in the editor.
                         <?php
                         if (!empty($data_item)) {
                           foreach ($data_item as $list) {
-                            $efficiency = round(($list["prd_qty"] / $list["pln_qty"]) * 100, 2);
+                            $efficiency = round(($list["prd_qty"] * $list["cctime"] / 60) / $list["prd_time"] * 100, 2);
+                            if ($efficiency > 100 || $efficiency < 0 || $list["pln_qty"] < 0) {
+                              $warna = "table-danger";
+                            } else {
+                              $warna = "";
+                            }
                             $btn_approve = "";
                             if ($list["stats"] == "N") {
                               $btn_approve = "<button type='button' class='btn btn-sm btn-success' onclick='approveDailyI(\"" . $list["line_id"] . "\",\"" . $list["shift"] . "\",\"" . $list["prd_dt"] . "\",\"" . $list["prd_seq"] . "\")'><i class='material-icons'>done_outline</i></button>";
                             }
-                            echo "<tr>"
+                            echo "<tr class='$warna'>"
                               . "<td class=''>" . $list["dies_name"] . "</td>"
                               . "<td class='text-center'>" . $list["time_start"] . " - " . $list["time_end"] . "</td>"
                               . "<td class='text-right'>" . $list["cctime"] . "</td>"
