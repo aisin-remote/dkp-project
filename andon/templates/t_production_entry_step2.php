@@ -287,7 +287,7 @@ and open the template in the editor.
                               . "<td class='text-right'>" . $list["cctime"] . "</td>"
                               . "<td class='text-right'>" . $list["pln_qty"] . "</td>"
                               . "<td class='text-right'>" . $list["prd_qty"] . "</td>"
-                              . "<td class='text-right'>" . $list["ng_count"] . "</td>"
+                              . "<td class='text-right'>" . $list["ng_qty"] . "</td>"
                               . "<td class='text-right'>" . $list["wip"] . "</td>"
                               // . "<td class='text-right'>" . $list["scn_qty_ok"] . "</td>"
                               // . "<td class='text-right'>" . $list["scn_qty_ng"] . "</td>"
