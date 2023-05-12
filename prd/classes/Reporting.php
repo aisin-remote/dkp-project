@@ -54,8 +54,8 @@ class Reporting
         from t_prd_daily_i a 
         inner join m_prd_line b ON b.line_id = a.line_id and b.line_ty = 'DM'
         inner join t_prd_daily_h c on c.prd_dt = a.prd_dt and c.line_id = a.line_id and c.shift = a.shift
-        inner join m_prd_operator d on d.empid = c.ldid
-        inner join m_prd_operator e on e.empid = c.jpid
+        left join m_prd_operator d on d.empid = c.ldid
+        left join m_prd_operator e on e.empid = c.jpid
         inner join m_param f on f.pid = 'SHIFT' and f.seq = a.shift
         where 1=1 ";
         if ($date_from !== "*" && $date_to !== "*") {

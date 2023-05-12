@@ -533,8 +533,9 @@
                 date: <?= date("Ymd") ?>
             },
                 function (data) {
-                    $("#qtyok").html(data.totalok && $("#cctime").text().trim() != 0 ? data.totalok.toLocaleString() : 0);
-                    $("#qtyng").html(data.totalng && $("#cctime").text().trim() != 0 ? data.totalng.toLocaleString() : 0);
+                    console.log(data)
+                    $("#qtyok").html(data?.totalok && $("#cctime").text().trim() != 0 ? data.totalok.toLocaleString() : 0);
+                    $("#qtyng").html(data?.totalng && $("#cctime").text().trim() != 0 ? data.totalng.toLocaleString() : 0);
                     // console.log(data)
                 }
             );

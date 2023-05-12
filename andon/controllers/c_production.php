@@ -215,13 +215,13 @@ if ($action == "daily_production_entry") {
     if (isset($_GET["date"])) {
       $date = $_GET["date"];
     }
-    $shift = "1";
+    $shift_ori = $class->getShiftOri();
+    $shift = $shift_ori[0]["seq"];
     if (isset($_GET["shift"])) {
       $shift = $_GET["shift"];
     }
     $shift_list = $class->getListShift();
     $line_list = $class->getListLine();
-    $shift_ori = $class->getShiftOri();
     //check data
     $i = 0;
     foreach ($line_list as $row) {

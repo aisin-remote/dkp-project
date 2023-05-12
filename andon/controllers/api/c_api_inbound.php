@@ -3,9 +3,10 @@ if ($action == "api_get_ib") {
     $param = $_REQUEST;
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $query = "SELECT SUM(qty) as totalok from t_prd_ib
-            where line_id = :line_id and TO_CHAR(crt_dt, 'YYYYMMDD') = :crt_dt and shift = :shift and 
-            ib_type = 'P' and rev_ind != 'Y' ";
+    // $query = "SELECT SUM(qty) as totalok from t_prd_ib
+    //         where line_id = :line_id and TO_CHAR(crt_dt, 'YYYYMMDD') = :crt_dt and shift = :shift and 
+    //         ib_type = 'P' and rev_ind != 'Y' ";
+    $query = "SELECT sum(prd_qty) as totalok from t_prd_daily_i where TO_CHAR(prd_dt, 'YYYYMMDD') = :crt_dt and shift = :shift and line_id = :line_id ";
     $stmt = $conn->prepare($query);
     $stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
     $stmt->bindValue(":crt_dt", $param["date"], PDO::PARAM_STR);
@@ -15,9 +16,7 @@ if ($action == "api_get_ib") {
             $return["totalok"] = $row["totalok"];
         }
     }
-    $query = "SELECT SUM(qty) as totalng from t_prd_ib
-            where line_id = :line_id and TO_CHAR(crt_dt, 'YYYYMMDD') = :crt_dt and shift = :shift and 
-            ib_type = 'N' and rev_ind != 'Y' ";
+    $query = "SELECT sum(ng_qty) as totalng from t_prd_daily_ng where TO_CHAR(prd_dt, 'YYYYMMDD') = :crt_dt and shift = :shift and line_id = :line_id ";
     $stmt = $conn->prepare($query);
     $stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
     $stmt->bindValue(":crt_dt", $param["date"], PDO::PARAM_STR);

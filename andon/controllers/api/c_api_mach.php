@@ -105,10 +105,15 @@ if ($action == "api_mach_status") {
   $query_ng = "";
   // $query = "SELECT * from t_prd_daily_h
   //           where line_id = '$line_id' and prd_dt = '$now' and shift = '$shift' ";
-  $query = "SELECT a.*, c.pval1 from t_prd_daily_h a
-            inner join t_prd_daily_i b ON b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift
-            inner join m_param c ON a.shift = c.seq
-            where c.pid = 'SHIFT' AND a.line_id = '$line_id' AND a.prd_dt = '$now' AND TO_CHAR(TO_TIMESTAMP(b.prd_dt||' '||b.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' ";
+  // $query = "SELECT a.*, c.pval1 from t_prd_daily_h a
+  //           inner join t_prd_daily_i b ON b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift
+  //           inner join m_param c ON a.shift = c.seq
+  //           where c.pid = 'SHIFT' AND a.line_id = '$line_id' AND a.prd_dt = '$now' AND TO_CHAR(TO_TIMESTAMP(b.real_dt||' '||b.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' ";
+  $query = "SELECT a.*, b.* from t_prd_daily_i a
+            inner join m_param b on a.shift = b.seq and b.pid = 'SHIFT'
+            WHERE a.line_id = '$line_id' 
+            AND TO_CHAR(a.real_dt,'YYYY-MM-DD') = '$now'  
+            AND TO_CHAR(TO_TIMESTAMP(a.real_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' ";
   $stmt = $conn->prepare($query);
   $header["head"] = [];
   if ($stmt->execute() or die($stmt->errorInfo()[2])) {
