@@ -125,7 +125,7 @@ and open the template in the editor.
                 <div class="card">
                   <div class="card-header" style="background-color: #E4E4E4;">
                     <h6 class="mb-0">Hour
-                      <?php echo $data_item_dtl["prd_seq"] . " - " . $data_item_dtl["time_start"] . " - " . $data_item_dtl["time_end"]; ?>
+                      <?php echo $data_item_dtl["time_start"] . " - " . $data_item_dtl["time_end"]; ?>
                     </h6>
                   </div>
                   <div class="card-body" style="background-color: #F5F5F5;">

@@ -52,10 +52,10 @@ class Reporting
         a.prd_dt, a.line_id, b.name1 as line_name, a.shift, d.name1 as ld_name, e.name1 as jp_name,
         AVG(a.cctime) as cctime, sum(a.prd_time) as prd_time, sum(a.pln_qty) as pln_qty, sum(a.prd_qty) as prd_qty
         from t_prd_daily_i a 
-        inner join m_prd_line b ON b.line_id = a.line_id 
+        inner join m_prd_line b ON b.line_id = a.line_id and b.line_ty = 'DM'
         inner join t_prd_daily_h c on c.prd_dt = a.prd_dt and c.line_id = a.line_id and c.shift = a.shift
-        inner join m_prd_operator d on d.empid = c.ldid
-        inner join m_prd_operator e on e.empid = c.jpid
+        left join m_prd_operator d on d.empid = c.ldid
+        left join m_prd_operator e on e.empid = c.jpid
         inner join m_param f on f.pid = 'SHIFT' and f.seq = a.shift
         where 1=1 ";
         if ($date_from !== "*" && $date_to !== "*") {
@@ -161,7 +161,6 @@ class Reporting
             $tot_pln_qty = 0;
             $tot_prd_qty = 0;
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
                 $prd_qty = floatval($row["prd_qty"]);
                 $ng_qty = floatval($row["ng_qty"]);
                 $cctime = floatval($row["cctime"]);
@@ -306,17 +305,7 @@ class Reporting
                 left join m_prd_operator f on f.empid = b.jpid
                 left join m_user g on g.usrid = a.apr_by
                 where 1=1 ";
-        // $sql = "SELECT a.prd_dt, a.prd_time, a.shift, c.name1 AS line_name, e.name1 AS operator, b.name1 AS dies_name, a.time_start, a.time_end, a.cctime, a.pln_qty, a.prd_qty, coalesce(f.ng_qty, 0) as tot_ng, COALESCE(g.stop_time, 0) as loss_time, h.name1 AS apr_name 
-        //         FROM t_prd_daily_i a
-        //         INNER JOIN m_dm_dies_asset b ON b.dies_id = CAST(a.dies_id as bigint)
-        //         INNER JOIN m_prd_line c ON c.line_id = a.line_id AND c.line_ty = 'DM'
-        //         INNER JOIN t_prd_daily_h d ON d.prd_dt = a.prd_dt AND d.shift = a.shift AND d.line_id = a.line_id
-        //         INNER JOIN m_prd_operator e ON e.empid = d.jpid
-        //         LEFT JOIN t_prd_daily_ng f ON f.prd_dt = a.prd_dt AND f.shift = a.shift AND f.line_id = a.line_id
-        //         LEFT JOIN t_prd_daily_stop g ON g.prd_dt = a.prd_dt AND g.shift = a.shift AND g.line_id = a.line_id
-        //         LEFT JOIN m_user h ON h.usrid = a.apr_by
-        //         WHERE 1=1 ";
-
+                
         if ($date_from !== "*" && $date_to !== "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
         }

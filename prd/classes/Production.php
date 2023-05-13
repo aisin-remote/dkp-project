@@ -311,7 +311,6 @@ class Production
         ORDER BY a.real_dt, a.time_start asc ";
 
     $stmt = $conn->prepare($sql);
-    $count = 0;
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $return[] = $row;
@@ -343,7 +342,6 @@ class Production
       . "WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$date' AND a.shift = '$shift' AND a.prd_seq = '$seq' "
       . "";
     $stmt = $conn->prepare($sql);
-    $count = 0;
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         if (empty($row["prd_qty"])) {

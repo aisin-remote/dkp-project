@@ -335,27 +335,7 @@ and open the template in the editor.
         $(document).ready(function () {
             $("#data-table-x").DataTable({
                 stateSave: true,
-                order: [
-                    [0, 'desc']
-                ],
-                dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-2'l><'col-sm-12 col-md-4'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-                buttons: [{
-                    extend: 'excel',
-                    title: "material_bom",
-                    className: 'btn btn-pale-green btn-sm',
-                    text: '<i class="material-icons">download</i>Download Excel',
-                },
-                {
-                    className: 'btn btn-pale-green-outlined btn-sm',
-                    text: '<i class="material-icons">filter_alt</i> Filter',
-                    action: function () {
-                        $('#modal_filter').modal("show");
-
-                    }
-                }
-                ]
+                ordering: false,
             });
 
             $(".datepicker").flatpickr({

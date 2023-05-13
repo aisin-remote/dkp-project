@@ -9,7 +9,6 @@ if ($action == "daily_production_entry") {
   $stop = new Stop();
   $user = new User();
   $material = new Material();
-  // $zona = new Zona();
   if (isset($_GET["line"])) {
     $line = $_GET["line"];
     $date = $_GET["date"];
@@ -92,6 +91,9 @@ if ($action == "daily_production_entry") {
         $template["submenu"] = $data_header["line_name"];
         //cek apakah user ada role leader
         $op_role = "OPERATOR";
+        $ld_list = $member->getList("LD");
+        $jp_list = $member->getList("JP");
+        $op_list = $member->getList("OP");
         $cek_user = $user->getUserRole($_SESSION[LOGIN_SESSION]);
         if (!empty($cek_user)) {
           foreach ($cek_user as $usr) {
@@ -99,6 +101,17 @@ if ($action == "daily_production_entry") {
               $op_role = "LEADER";
               break;
             }
+          }
+        }
+        if (isset($_POST["save"])) {
+          $param = $_POST;
+          $save = $class->updateHeader($line, $date, $shift, $param);
+          if ($save["status"] == true) {
+            $success = "Data Saved";
+            header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&success=" . $success);
+          } else {
+            $error = $save["message"];
+            header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&error=" . $error);
           }
         }
         //end of cek apakah user ada role leader
@@ -135,6 +148,7 @@ if ($action == "daily_production_entry") {
               $param_item[$i]["dies_id"] = $dies_id;
               $param_item[$i]["time_start"] = $itm["time_start"];
               $param_item[$i]["time_end"] = $itm["time_end"];
+              $param_item[$i]["date_add"] = $itm["date_add"];
               $param_item[$i]["cctime"] = $cctime_per_jam;
 
               //calculate pengurang production time
@@ -201,13 +215,13 @@ if ($action == "daily_production_entry") {
     if (isset($_GET["date"])) {
       $date = $_GET["date"];
     }
-    $shift = "1";
+    $shift_ori = $class->getShiftOri();
+    $shift = $shift_ori[0]["seq"];
     if (isset($_GET["shift"])) {
       $shift = $_GET["shift"];
     }
     $shift_list = $class->getListShift();
     $line_list = $class->getListLine();
-    $shift_ori = $class->getShiftOri();
     //check data
     $i = 0;
     foreach ($line_list as $row) {
