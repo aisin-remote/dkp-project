@@ -131,11 +131,11 @@ class LoadingList {
         }
       }
       
-      $sql = "INSERT INTO t_io_ldlist_dtl (ldnum, ldseq, trseq, kanban_i, kanban_e, matnr, matn1, crt_by, crt_dt, pallet_id) "
+      $sql = "INSERT INTO t_io_ldlist_dtl (ldnum, ldseq, trseq, kanban_i, kanban_e, matnr, matn1, crt_by, crt_dt, pallet_id, cycle1) "
               . "values ";
       $i = $last_seq + 1;
       foreach($param as $row) {
-        $arr_insert[] = "('$ldnum','".$ldseq."','".$i."','".$row["kanban_i"]."','".$row["kanban_e"]."','".$row["matnr"]."','".$row["matn1"]."','".$row["crt_by"]."',CURRENT_TIMESTAMP, '".$row["pallet_id"]."')";
+        $arr_insert[] = "('$ldnum','".$ldseq."','".$i."','".$row["kanban_i"]."','".$row["kanban_e"]."','".$row["matnr"]."','".$row["matn1"]."','".$row["crt_by"]."',CURRENT_TIMESTAMP, '".$row["pallet_id"]."', '".$row["cycle1"]."')";
         $i++;
       }
       $sql .= implode(",",$arr_insert);

@@ -111,6 +111,7 @@ if($action == "api_get_ldlist") {
 if($action == "api_save_ldlist") {
   set_time_limit(0);
   $class = new LoadingList();
+  $cAvic = new Avicenna();
   $data_scanning = json_decode($_REQUEST["data_scanning"],true);
   //pilah pilah dulu data per loading list
   $data_loading_list = [];
@@ -129,12 +130,16 @@ if($action == "api_save_ldlist") {
     //insert dtl
     $param_dtl = [];
     if($update_itm["status"] == true) {
+      
+      $data_header = $class->getHeaderById($data_itm["ldnum"]);
+      
       $param_dtl[0]["kanban_i"] = $row["kanban_i"];
       $param_dtl[0]["kanban_e"] = $row["kanban_e"];
       $param_dtl[0]["matnr"] = $row["matnr"];
       $param_dtl[0]["matn1"] = $row["matn1"];
       $param_dtl[0]["crt_by"] = $row["crt_by"];
       $param_dtl[0]["pallet_id"] = $row["pallet_id"];
+      $param_dtl[0]["cycle1"] = $data_header["cycle1"];
       
       $insert_dtl = $class->insertDetail($data_itm["ldnum"], $data_itm["ldseq"], $param_dtl);
       if($insert_dtl["status"] == true) {
@@ -149,6 +154,17 @@ if($action == "api_save_ldlist") {
           //jika wmeng sudah memenuhi menge, maka close
           $class->updateStatus($data_itm[$i]["ldnum"], 'C');
         }
+        //mulai insert avicenna
+        $data_kanban = $cAvic->explodeKanbanInternal($row["kanban_i"]);
+        
+        $param_avc["kanban_serial"] = substr($data_kanban[10], -4);
+        $param_avc["back_number"] = $data_kanban[9];
+        $param_avc["cycle"] = $data_header["cycle1"];
+        $param_avc["customer"] = $data_header["lifnr"];
+        $param_avc["npk"] = $row["crt_by"];
+        $param_avc["access_token"] = $class->getAuthToken($row["crt_by"]);
+        $cAvic->insertAvicenna($param_avc);
+        //end of insert avicenna
       } else {
         $message .= "Data ke $i Gagal Insert Kanban Ke System";
       }
