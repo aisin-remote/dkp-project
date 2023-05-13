@@ -103,6 +103,7 @@ and open the template in the editor.
                             <th class='text-nowrap'>Qty/Pack</th>
                             <th class='text-nowrap'>Qty</th>
                             <th class='text-nowrap'>Status</th>
+                            <th class='text-nowrap'>Delivery Status</th>
                             <!-- <th class='text-center'>Device Antenna</th> -->
                           </tr>
                         </thead>
@@ -127,6 +128,7 @@ and open the template in the editor.
                                 . "<td class='align-middle'>" . $row["wmeng"] . "</td>"
                                 . "<td class='align-middle'>" . $row["perpack"] . "</td>"
                                 . "<td class='align-middle'>" . $row["totqty"] . "</td>"
+                                . "<td class='align-middle text-nowrap'>" . $row["stats"] . "</td>"
                                 . "<td class='align-middle text-nowrap'>" . $row["dstat"] . "</td>"
                                 . "</tr>";
                             }
@@ -177,8 +179,8 @@ and open the template in the editor.
                   <?php
                   foreach ($customer as $cust) {
                     ?>
-                    <option value="<?php echo $cust["name1"]; ?>" <?php
-                       if ($cust['name1'] == $_GET["customer"]) {
+                    <option value="<?php echo $cust["lifnr"]; ?>" <?php
+                       if ($cust['lifnr'] == $_GET["customer"]) {
                          echo "selected";
                        }
                        ?>><?php echo $cust["name1"]; ?></option>
@@ -249,6 +251,10 @@ and open the template in the editor.
           $(this).css('color', 'green');
         } else if ($(this).html() == 'UNCOMPLETED') {
           $(this).css('color', 'red');
+        } else if ($(this).html() == 'DELIVERED') {
+          $(this).css('color', 'green');
+        } else if ($(this).html() == 'NOT DELIVERED') {
+          $(this).css('color', 'red');
         }
       });
 
@@ -258,6 +264,10 @@ and open the template in the editor.
           if ($(this).html() == 'COMPLETED') {
             $(this).css('color', 'green');
           } else if ($(this).html() == 'UNCOMPLETED') {
+            $(this).css('color', 'red');
+          } else if ($(this).html() == 'DELIVERED') {
+            $(this).css('color', 'green');
+          } else if ($(this).html() == 'NOT DELIVERED') {
             $(this).css('color', 'red');
           }
         });

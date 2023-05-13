@@ -102,6 +102,7 @@ and open the template in the editor.
                             <th class='text-nowrap'>Kanban External</th>
                             <th class='text-nowrap'>Part Name</th>
                             <th class='text-nowrap'>Scan Date</th>
+                            <th class='text-nowrap'>Delivery Status</th>
                             <th class='text-nowrap'>Delivered Date</th>
                             <th class='text-nowrap'>Delivered Time</th>
                             <!-- <th class='text-center'>Device Antenna</th> -->
@@ -128,6 +129,7 @@ and open the template in the editor.
                                 . "<td class='align-middle'>" . $row["kanban_e"] . "</td>"
                                 . "<td class='align-middle text-nowrap'>" . $row["name1"] . "</td>"
                                 . "<td class='align-middle'>" . $row["scan_date"] . "</td>"
+                                . "<td class='align-middle'>" . $row["dstat"] . "</td>"
                                 . "<td class='align-middle'>" . $row["date_only"] . "</td>"
                                 . "<td class='align-middle'>" . $row["time_only"] . "</td>"
                                 . "</tr>";
@@ -179,8 +181,8 @@ and open the template in the editor.
                   <?php
                   foreach ($customer as $cust) {
                     ?>
-                    <option value="<?php echo $cust["name1"]; ?>" <?php
-                       if ($cust['name1'] == $_GET["customer"]) {
+                    <option value="<?php echo $cust["lifnr"]; ?>" <?php
+                       if ($cust['lifnr'] == $_GET["customer"]) {
                          echo "selected";
                        }
                        ?>><?php echo $cust["name1"]; ?></option>
@@ -251,6 +253,10 @@ and open the template in the editor.
           $(this).css('color', 'green');
         } else if ($(this).html() == 'UNCOMPLETED') {
           $(this).css('color', 'red');
+        } else if ($(this).html() == 'DELIVERED') {
+          $(this).css('color', 'green');
+        } else if ($(this).html() == 'NOT DELIVERED') {
+          $(this).css('color', 'red');
         }
       });
 
@@ -260,6 +266,10 @@ and open the template in the editor.
           if ($(this).html() == 'COMPLETED') {
             $(this).css('color', 'green');
           } else if ($(this).html() == 'UNCOMPLETED') {
+            $(this).css('color', 'red');
+          } else if ($(this).html() == 'DELIVERED') {
+            $(this).css('color', 'green');
+          } else if ($(this).html() == 'NOT DELIVERED') {
             $(this).css('color', 'red');
           }
         });

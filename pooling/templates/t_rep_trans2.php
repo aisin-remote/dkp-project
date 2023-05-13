@@ -68,6 +68,7 @@ and open the template in the editor.
                                                         <th class=''>Qty/Pack</th>
                                                         <th class=''>Qty</th>
                                                         <th class=''>Status</th>
+                                                        <th class=''>Delivery Status</th>
                                                         <th class=''>Action</th>
                                                         <!-- <th class=''>Delivery Date</th>
                                                         <th class=''>Status</th>
@@ -89,6 +90,7 @@ and open the template in the editor.
                                                                 . "<td class='align-middle'>" . $row["wmeng"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["perpack"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["totqty"] . "</td>"
+                                                                . "<td class='align-middle'>" . $row["stats"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["dstat"] . "</td>"
                                                                 . "<td class='pr-3 align-middle text-center'><a href='?action=$action&id=" . $row["ldnum"] . "&seq=" . $row["ldseq"] . "' class='btn btn-outline-primary btn-xs'><i class='material-icons'>visibility
                                                                 </i></a></td>"
@@ -172,6 +174,33 @@ and open the template in the editor.
                     text: '<i class="material-icons">download</i> Excel',
                 }
                 ]
+            });
+
+            $('td').each(function () {
+                if ($(this).html() == 'COMPLETED') {
+                    $(this).css('color', 'green');
+                } else if ($(this).html() == 'UNCOMPLETED') {
+                    $(this).css('color', 'red');
+                } else if ($(this).html() == 'DELIVERED') {
+                    $(this).css('color', 'green');
+                } else if ($(this).html() == 'NOT DELIVERED') {
+                    $(this).css('color', 'red');
+                }
+            });
+
+            var table = $('#data-table-x').DataTable();
+            table.on('draw.dt', function () {
+                $('td').each(function () {
+                    if ($(this).html() == 'COMPLETED') {
+                        $(this).css('color', 'green');
+                    } else if ($(this).html() == 'UNCOMPLETED') {
+                        $(this).css('color', 'red');
+                    } else if ($(this).html() == 'DELIVERED') {
+                        $(this).css('color', 'green');
+                    } else if ($(this).html() == 'NOT DELIVERED') {
+                        $(this).css('color', 'red');
+                    }
+                });
             });
         });
     </script>

@@ -168,6 +168,33 @@ and open the template in the editor.
                 }
                 ]
             });
+
+            $('td').each(function () {
+                if ($(this).html() == 'COMPLETED') {
+                    $(this).css('color', 'green');
+                } else if ($(this).html() == 'UNCOMPLETED') {
+                    $(this).css('color', 'red');
+                } else if ($(this).html() == 'DELIVERED') {
+                    $(this).css('color', 'green');
+                } else if ($(this).html() == 'NOT DELIVERED') {
+                    $(this).css('color', 'red');
+                }
+            });
+
+            var table = $('#data-table-x').DataTable();
+            table.on('draw.dt', function () {
+                $('td').each(function () {
+                    if ($(this).html() == 'COMPLETED') {
+                        $(this).css('color', 'green');
+                    } else if ($(this).html() == 'UNCOMPLETED') {
+                        $(this).css('color', 'red');
+                    } else if ($(this).html() == 'DELIVERED') {
+                        $(this).css('color', 'green');
+                    } else if ($(this).html() == 'NOT DELIVERED') {
+                        $(this).css('color', 'red');
+                    }
+                });
+            });
         });
     </script>
 </body>

@@ -5,7 +5,7 @@ if ($action == "r_transaksi_scanner") {
     $class = new Report();
 
 
-    $lddat_from = date('Ymd', strtotime(date('Y-m-d') . '-30 day'));
+    $lddat_from = date('Ymd', strtotime(date('Y-m-d') . '-90 day'));
     if (!empty($_GET["date_from"])) {
         $lddat_from = $_GET["date_from"];
     }
@@ -31,7 +31,7 @@ if ($action == "r_transaksi_scanner") {
     } else {
 
         $customer = $class->getCustomer();
-        $list = $class->getList();
+        $list = $class->getList($lddat_from, $lddat_to, $fil_cust);
         require(TEMPLATE_PATH . "/t_rep_trans.php");
     }
 }
@@ -55,7 +55,7 @@ if ($action == "r_transaksi_scanner_detail") {
     $fil_cust = $_GET["customer"];
 
     $customer = $class->getCustomer();
-    $list = $class->getListDetail();
+    $list = $class->getListDetail($lddat_from, $lddat_to, $fil_cust);
     require(TEMPLATE_PATH . "/t_rep_trans_detail.php");
 }
 
@@ -78,6 +78,6 @@ if ($action == "r_transaksi_scanner_kanban") {
     $fil_cust = $_GET["customer"];
 
     $customer = $class->getCustomer();
-    $list = $class->getListDetail2();
+    $list = $class->getListDetail2($lddat_from, $lddat_to, $fil_cust);
     require(TEMPLATE_PATH . "/t_rep_trans_detail2.php");
 }
