@@ -19,7 +19,7 @@
     <h4 class="tagline mb-5">UNIT PLANT DIGITALIZATION (Die Casting, Machining, Assy Line & Electrical Line)</h4>
     <div class="row">
       <div class="col">
-        <div class="card bg-transparent border-secondary">
+        <div class="card bg-transparent border-secondary h-100">
           <div class="card-body ">
             <div class="card-title font-weight-bold py-0"><h3>DIE CASTING</h3></div>
             <hr class="bg-secondary">
@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="card bg-transparent border-secondary">
+        <div class="card bg-transparent border-secondary h-100">
           <div class="card-body ">
           <div class="card-title font-weight-bold py-0"><h3>ELECTRICAL</h3></div>
             <hr class="bg-secondary">
