@@ -359,22 +359,22 @@ if ($action == "dashboard_line") {
             inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
             inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'MESIN'
             where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
-            AND a.stats = 'A' and app_id = '".APP."') as stop_mesin,
+            and app_id = '".APP."') as stop_mesin,
             (select sum(b.stop_time)
             from t_prd_daily_i a
             inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
             inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'PART'
             where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
-            AND a.stats = 'A' and app_id = '".APP."') as stop_part, 
+            and app_id = '".APP."') as stop_part, 
             (select sum(b.stop_time)
             from t_prd_daily_i a
             inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
             inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2005'
             where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
-            AND a.stats = 'A' and app_id = 'AISIN_ADN') as stop_dandori 
+            and app_id = 'AISIN_ADN') as stop_dandori 
             from t_prd_daily_i a 
             inner join m_prd_line b ON b.line_id = a.line_id AND b.line_ty = 'ECU'
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' AND a.stats = 'A'";
+            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' ";
   $stmt = $conn->prepare($query);
   $pln_qty = 0;
   $prd_qty = 0;
