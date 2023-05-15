@@ -66,6 +66,9 @@ and open the template in the editor.
                       if ($op_role == "LEADER" || $op_role == "ADMIN") {
                         ?>
                         <div>
+                          <a class="btn btn-md btn-danger" onclick="deleteProd()"><i class="material-icons">delete</i>
+                            Delete
+                            Prod Entry</a>
                           <button type="submit" name="save" id="btn_save" value="save"
                             class="btn btn-md btn-pale-green"><i class="material-icons">save</i> Save</button>
                         </div>
@@ -319,12 +322,21 @@ and open the template in the editor.
         </div>
       </main>
       <?php include 'common/t_footer.php'; ?>
+      <input type="hidden" name="action" id="action" value="<?= $action ?>">
     </div>
   </div>
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
     $(document).ready(function () { });
+
+    function deleteProd() {
+      if (confirm("Are you sure to delete this production? this action cannot be undone")) {
+        $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+        $(".btn").attr("disabled", "disabled");
+        window.location = "?action=" + $("#action").val() + "&line=<?= $_GET["line"] ?>&date=<?= $date ?>&shift=<?= $_GET["shift"] ?>&delete=true";
+      }
+    }
 
     function approveDailyI(line_id, shift, prd_dt, prd_seq) {
       $.ajax({

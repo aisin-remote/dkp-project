@@ -114,6 +114,17 @@ if ($action == "daily_production_entry") {
             header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&error=" . $error);
           }
         }
+
+        if (isset($_GET["delete"])) {
+          $save = $class->deletePrd($line, $date, $shift);
+          if ($save["status"] == true) {
+            $success = "Data Deleted";
+            header("Location: ?action=" . $action . "&success=" . $success);
+          } else {
+            $error = "Data Failed to Delete";
+            header("Location: ?action=" . $action . "&error=" . $error);
+          }
+        }
         //end of cek apakah user ada role leader
         require(TEMPLATE_PATH . "/t_production_entry_step2.php");
       } else {

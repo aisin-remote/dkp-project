@@ -23,6 +23,24 @@ and open the template in the editor.
             <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
             <li class="breadcrumb-item active"><?php echo $template["submenu"]; ?></li>
           </ol>
+          <?php
+          if (isset($_GET["error"])) {
+            echo '<div class="alert alert-danger alert-dismissible fade show mt-1" role="alert">
+                      Error : ' . $_GET["error"] . '
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>';
+          } 
+          if (isset($_GET["success"])) {
+            echo '<div class="alert alert-success alert-dismissible fade show mt-1" role="alert">
+                      Success : ' . $_GET["success"] . '
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>';
+          }
+          ?>
 
           <form method="get" action="?action=<?php echo $action; ?>">
             <input type="hidden" name="action" value="<?= $action ?>">

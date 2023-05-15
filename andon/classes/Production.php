@@ -753,6 +753,27 @@ class Production
     return $return;
   }
 
+  public function deletePrd($line_id, $prd_dt, $shift)
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "DELETE FROM t_prd_daily_h WHERE line_id = '$line_id' AND TO_CHAR(prd_dt, 'YYYYMMDD') = '$prd_dt' AND shift = '$shift';
+            DELETE FROM t_prd_daily_i WHERE line_id = '$line_id' AND TO_CHAR(prd_dt, 'YYYYMMDD') = '$prd_dt' AND shift = '$shift';
+            DELETE FROM t_prd_daily_ng WHERE line_id = '$line_id' AND TO_CHAR(prd_dt, 'YYYYMMDD') = '$prd_dt' AND shift = '$shift';
+            DELETE FROM t_prd_daily_stop WHERE line_id = '$line_id' AND TO_CHAR(prd_dt, 'YYYYMMDD') = '$prd_dt' AND shift = '$shift';
+            DELETE FROM t_prd_daily_exec WHERE line_id = '$line_id' AND TO_CHAR(prd_dt, 'YYYYMMDD') = '$prd_dt' AND shift = '$shift'";
+    // echo $sql;
+    // die();
+    $success = $conn->exec($sql);
+    if ($success == 0) {
+      $return["status"] = true;
+    } else {
+      $return["status"] = false;
+    }
+    $conn = null;
+    return $return;
+  }
+
   // public function getDataScan($line_name, $date_time_start, $date_time_end)
   // {
   //   $data = [];
