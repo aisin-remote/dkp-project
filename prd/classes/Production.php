@@ -77,6 +77,22 @@ class Production
     return $return;
   }
 
+  public function getShiftOri()
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT * FROM m_param WHERE pid = 'SHIFTORI' and TO_CHAR(current_timestamp, 'HH24MISS') between pval1 and pval2  ORDER BY seq";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
   public function insertHeader($param = array())
   {
     $return = array();

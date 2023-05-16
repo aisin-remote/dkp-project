@@ -307,7 +307,8 @@ if ($action == "daily_production_entry") {
     if (isset($_GET["date"])) {
       $date = $_GET["date"];
     }
-    $shift = "1";
+    $shift_ori = $class->getShiftOri();
+    $shift = $shift_ori[0]["seq"];
     if (isset($_GET["shift"])) {
       $shift = $_GET["shift"];
     }
