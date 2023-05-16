@@ -9,10 +9,14 @@ if ($action == "home") {
     $today = date("Y-m-d",strtotime($today." -1 days"));
   }
   $min_now = intval(date("i"));
+  // $now = date("Y-m-d H:i:s");
+  $jam_end = date("H", strtotime('-1 hours'));
+  // echo $jam_end;
+  // die();
   /*if($min_now > 0) {
   $jam_now += 1;
   }*/
-  $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
+  // $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
   /*$query = "select a.line_id, b.name1 as line_name, a.dies_id, c.gstat, CONCAT(c.group_id,' ',c.model_id,' ',c.dies_no) as dies_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
             (select coalesce(sum(ng_qty),0) as ril_qty from t_prd_daily_ng 
@@ -51,6 +55,8 @@ if ($action == "home") {
             where a.line_ty = 'DM' 
             ORDER BY line_id asc) t 
             group by 1,2,3,4";
+  // echo $query;
+  // die();
   $stmt = $conn->prepare($query);
   $data_per_jam = [];
   $data_ril = [];
