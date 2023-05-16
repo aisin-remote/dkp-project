@@ -74,8 +74,14 @@ if ($action == "daily_production_entry") {
           $min_time_dan = $r_time_dan[0] * 60 + $r_time_dan[1];
 
           $stop_time = 0;
+          // print_r($data_stop);
+          // die();
           foreach ($data_stop as $ds) {
-            $stop_time += $ds["stop_time"];
+            if ($ds["stop_type"] == "P") {
+              $stop_time += $ds["stop_time"];
+            } else {
+              $stop_time += 0;
+            }
           }
           $param_1["prd_time"] = ($min_time_dan - $min_time_start) - $stop_time;
           $param_1["pln_qty"] = round(($param_1["prd_time"] * 60) / floatval($param_1["cctime"]), 0, PHP_ROUND_HALF_UP);
