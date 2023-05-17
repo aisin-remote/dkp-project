@@ -7,7 +7,7 @@ class Dies
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT * FROM m_prd_line ";
+    $sql = "SELECT * FROM m_prd_line where line_ty = 'DM' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
