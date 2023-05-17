@@ -299,9 +299,9 @@ class Reporting
                 (select SUM(ng_qty) as ng_count from t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq), g.name1 as apr_name
                 from t_prd_daily_i a
                 left join t_prd_daily_h b on b.prd_dt = a.prd_dt and b.shift = a.shift and b.line_id = a.line_id
-                left join m_dm_dies_asset c on c.dies_id = CAST(a.dies_id as bigint)
+                left join m_dm_dies_asset c on CAST(c.dies_id as varchar) = a.dies_id
                 left join m_param d on d.pid = 'SHIFT' and d.seq = a.shift
-                left join m_prd_line e on e.line_id = a.line_id and e.line_ty = 'DM'
+                inner join m_prd_line e on e.line_id = a.line_id and e.line_ty = 'DM'
                 left join m_prd_operator f on f.empid = b.jpid
                 left join m_user g on g.usrid = a.apr_by
                 where 1=1 ";
