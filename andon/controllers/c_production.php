@@ -45,7 +45,7 @@ if ($action == "daily_production_entry") {
 
         $save = $class->updateItem($param);
         if ($save["status"] == true) {
-          $dies->updateStroke($prev_dies_id, $param["dies_id"], $prev_prd_qty, $param["prd_qty"]);
+          // $dies->updateStroke($prev_dies_id, $param["dies_id"], $prev_prd_qty, $param["prd_qty"]);
           $success = "Data Saved";
           header("Location: ?action=" . $action . "&line=" . $line . "&date=" . $date . "&shift=" . $shift . "&prd_seq=" . $seq . "&success=" . $success);
         } else {
