@@ -81,7 +81,7 @@ and open the template in the editor.
                   </div>
                   <div class="card-body" style="background-color: #F5F5F5;">
                     <div class="row">
-                      <div class="col-md-4 col-sm-12">
+                      <div class="col-md-3 col-sm-12">
                         <div class="row">
                           <div class="col-4">Line</div>
                           <div class="col-8">:
@@ -97,7 +97,7 @@ and open the template in the editor.
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-4 col-sm-12">
+                      <div class="col-md-3 col-sm-12">
                         <div class="row align-items-center">
                           <div class="col-4">Leader</div>
                           <div class="col-1">:</div>
@@ -143,7 +143,7 @@ and open the template in the editor.
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-4 col-sm-12">
+                      <div class="col-md-3 col-sm-12">
                         <div class="row align-items-center">
                           <div class="col-4">Operator 1</div>
                           <div class="col-1">:</div>
@@ -230,6 +230,98 @@ and open the template in the editor.
                               <?php
                             } else {
                               echo $data_header["op4_name"];
+                            }
+                            ?>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3 col-sm-12">
+                        <div class="row align-items-center">
+                          <div class="col-4">Operator 5</div>
+                          <div class="col-1">:</div>
+                          <div class="col-6 mb-1 px-0">
+                            <?php
+                            if ($op_role == "LEADER" || $op_role == "ADMIN") {
+                              ?>
+                              <select name="op5id" class="form-control select2">
+                                <option value=""></option>
+                                <?php
+                                foreach ($op_list as $row) {
+                                  ?>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["op5id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <?php
+                                }
+                                ?>
+                              </select>
+                              <?php
+                            } else {
+                              echo $data_header["op5_name"];
+                            }
+                            ?>
+                          </div>
+                          <div class="col-4">Operator 6</div>
+                          <div class="col-1">:</div>
+                          <div class="col-6 mb-1 px-0">
+                            <?php
+                            if ($op_role == "LEADER" || $op_role == "ADMIN") {
+                              ?>
+                              <select name="op6id" class="form-control select2">
+                                <option value=""></option>
+                                <?php
+                                foreach ($op_list as $row) {
+                                  ?>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["op6id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <?php
+                                }
+                                ?>
+                              </select>
+                              <?php
+                            } else {
+                              echo $data_header["op6_name"];
+                            }
+                            ?>
+                          </div>
+                          <div class="col-4">Operator 7</div>
+                          <div class="col-1">:</div>
+                          <div class="col-6 mb-1 px-0">
+                            <?php
+                            if ($op_role == "LEADER" || $op_role == "ADMIN") {
+                              ?>
+                              <select name="op7id" class="form-control select2">
+                                <option value=""></option>
+                                <?php
+                                foreach ($op_list as $row) {
+                                  ?>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["op7id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <?php
+                                }
+                                ?>
+                              </select>
+                              <?php
+                            } else {
+                              echo $data_header["op7_name"];
+                            }
+                            ?>
+                          </div>
+                          <div class="col-4">Operator 8</div>
+                          <div class="col-1">:</div>
+                          <div class="col-6 px-0">
+                            <?php
+                            if ($op_role == "LEADER" || $op_role == "ADMIN") {
+                              ?>
+                              <select name="op8id" class="form-control select2">
+                                <option value=""></option>
+                                <?php
+                                foreach ($op_list as $row) {
+                                  ?>
+                                  <option value="<?php echo $row["empid"]; ?>" <?= ($row["empid"] === $data_header["op8id"]) ? 'selected' : '' ?>><?php echo $row["name1"]; ?></option>
+                                  <?php
+                                }
+                                ?>
+                              </select>
+                              <?php
+                            } else {
+                              echo $data_header["op8_name"];
                             }
                             ?>
                           </div>

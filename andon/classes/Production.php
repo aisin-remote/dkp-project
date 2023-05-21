@@ -81,8 +81,8 @@ class Production
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO t_prd_daily_h (line_id,prd_dt,shift,ldid,jpid,op1id,op2id,op3id,op4id,cctime) "
-        . "values (:line_id,TO_DATE(:prd_dt,'YYYYMMDD'),:shift,:ldid,:jpid,:op1id,:op2id,:op3id,:op4id,:cctime) ";
+      $sql = "INSERT INTO t_prd_daily_h (line_id,prd_dt,shift,ldid,jpid,op1id,op2id,op3id,op4id,op5id,op6id,op7id,op8id,cctime) "
+        . "values (:line_id,TO_DATE(:prd_dt,'YYYYMMDD'),:shift,:ldid,:jpid,:op1id,:op2id,:op3id,:op4id,:op5id,:op6id,:op7id,:op8id,:cctime) ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
       $stmt->bindValue(":prd_dt", $param["prd_dt"], PDO::PARAM_STR);
@@ -93,6 +93,10 @@ class Production
       $stmt->bindValue(":op2id", $param["op2id"], PDO::PARAM_STR);
       $stmt->bindValue(":op3id", $param["op3id"], PDO::PARAM_STR);
       $stmt->bindValue(":op4id", $param["op4id"], PDO::PARAM_STR);
+      $stmt->bindValue(":op5id", $param["op5id"], PDO::PARAM_STR);
+      $stmt->bindValue(":op6id", $param["op6id"], PDO::PARAM_STR);
+      $stmt->bindValue(":op7id", $param["op7id"], PDO::PARAM_STR);
+      $stmt->bindValue(":op8id", $param["op8id"], PDO::PARAM_STR);
       $stmt->bindValue(":cctime", $param["cctime"], PDO::PARAM_STR);
 
       if ($stmt->execute()) {
@@ -737,7 +741,7 @@ class Production
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "UPDATE t_prd_daily_h SET ldid = '" . $param["ldid"] . "', jpid = '" . $param["jpid"] . "', op1id = '" . $param["op1id"] . "', op2id = '" . $param["op2id"] . "', op3id = '" . $param["op3id"] . "', op4id = '" . $param["op4id"] . "'
+    $sql = "UPDATE t_prd_daily_h SET ldid = '" . $param["ldid"] . "', jpid = '" . $param["jpid"] . "', op1id = '" . $param["op1id"] . "', op2id = '" . $param["op2id"] . "', op3id = '" . $param["op3id"] . "', op4id = '" . $param["op4id"] . "', op5id = '" . $param["op5id"] . "', op6id = '" . $param["op6id"] . "', op7id = '" . $param["op7id"] . "', op8id = '" . $param["op8id"] . "'
           WHERE line_id = '$line_id' AND TO_CHAR(prd_dt, 'YYYYMMDD') = '$prd_dt' AND shift = '$shift' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {

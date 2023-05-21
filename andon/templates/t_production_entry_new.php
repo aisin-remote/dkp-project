@@ -169,6 +169,69 @@ and open the template in the editor.
                       </div>
 
                       <div class="col-6">
+                      <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Operator 5</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <select name="op5id" id="op5id" class="form-control select2">
+                              <option value="">None</option>
+                              <?php
+                              foreach ($op_list as $row) {
+                                ?>
+                                <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                                <?php
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Operator 6</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <select name="op6id" id="op6id" class="form-control select2">
+                              <option value="">None</option>
+                              <?php
+                              foreach ($op_list as $row) {
+                                ?>
+                                <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                                <?php
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Operator 7</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <select name="op7id" id="op7id" class="form-control select2">
+                              <option value="">None</option>
+                              <?php
+                              foreach ($op_list as $row) {
+                                ?>
+                                <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                                <?php
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Operator 8</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <select name="op8id" id="op8id" class="form-control select2">
+                              <option value="">None</option>
+                              <?php
+                              foreach ($op_list as $row) {
+                                ?>
+                                <option value="<?php echo $row["empid"]; ?>"><?php echo $row["name1"]; ?></option>
+                                <?php
+                              }
+                              ?>
+                            </select>
+                          </div>
+                        </div>
                         <div class="form-group row">
                           <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Material</label>
                           <div class="col-lg-8 col-md-2 col-sm-12">

@@ -37,14 +37,6 @@ and open the template in the editor.
                     <!-- Edit Here -->
                     
                     <input type="hidden" name="empid" class="form-control" maxlength="100" value="<?php echo $data["data"]["empid"]; ?>">
-
-                    <div class="form-group row">
-                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Employee ID</label>
-                      <div class="col-lg-3 col-md-5 col-sm-12">
-                        <input type="text" name="empid" class="form-control" maxlength="100" value="<?php echo $data["data"]["empid"]; ?>" <?php if(!empty($data["data"]["empid"])) {echo "readonly";} ?> required>
-                      </div>
-                    </div>
-                    
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Role</label>
                         <div class="col-lg-3 col-md-5 col-sm-12">
@@ -59,6 +51,14 @@ and open the template in the editor.
                             </select>
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Employee ID</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <input type="text" name="empid" class="form-control" maxlength="100" value="<?php echo $data["data"]["empid"]; ?>" <?php if(!empty($data["data"]["empid"])) {echo "readonly";} ?> required>
+                      </div>
+                    </div>
+                    
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Employee Name</label>

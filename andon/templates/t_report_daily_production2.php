@@ -69,7 +69,7 @@ and open the template in the editor.
                                 </div>
                                 <div class="card-body" style="background-color: #F5F5F5;">
                                     <div class="row">
-                                        <div class="col-md-4 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="row">
                                                 <div class="col-4">Line</div>
                                                 <div class="col-8">:
@@ -85,7 +85,7 @@ and open the template in the editor.
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="row">
                                                 <div class="col-4">Leader</div>
                                                 <div class="col-8">:
@@ -97,7 +97,7 @@ and open the template in the editor.
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4 col-sm-12">
+                                        <div class="col-md-3 col-sm-12">
                                             <div class="row">
                                                 <div class="col-4">Operator 1</div>
                                                 <div class="col-8">:
@@ -114,6 +114,26 @@ and open the template in the editor.
                                                 <div class="col-4">Operator 4</div>
                                                 <div class="col-8">:
                                                     <?php echo $data_header["op4_name"]; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-4">Operator 5</div>
+                                                <div class="col-8">:
+                                                    <?php echo $data_header["op5_name"]; ?>
+                                                </div>
+                                                <div class="col-4">Operator 6</div>
+                                                <div class="col-8">:
+                                                    <?php echo $data_header["op6_name"]; ?>
+                                                </div>
+                                                <div class="col-4">Operator 7</div>
+                                                <div class="col-8">:
+                                                    <?php echo $data_header["op7_name"]; ?>
+                                                </div>
+                                                <div class="col-4">Operator 8</div>
+                                                <div class="col-8">:
+                                                    <?php echo $data_header["op8_name"]; ?>
                                                 </div>
                                             </div>
                                         </div>
