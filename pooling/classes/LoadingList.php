@@ -20,7 +20,10 @@ class LoadingList {
   public function getHeaderById($id) {
     $return = array();
     $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-    $sql = "SELECT a.*, b.name1 as cust_name, TO_CHAR(a.lddat,'DD-MM-YYYY') as shipping_date, TO_CHAR(a.lddat,'HH24:MI') as shipping_time FROM t_io_ldlist_h a "
+    $sql = "SELECT a.*, b.name1 as cust_name, TO_CHAR(a.lddat,'DD-MM-YYYY') as shipping_date, TO_CHAR(a.lddat,'HH24:MI') as shipping_time, 
+            (select coalesce(sum(menge),0) as menge from t_io_ldlist_i where ldnum = a.ldnum), 
+            (select coalesce(sum(wmeng),0) as wmeng from t_io_ldlist_i where ldnum = a.ldnum) 
+            FROM t_io_ldlist_h a "
             . "LEFT JOIN m_io_lfa1 b ON b.lifnr = a.lifnr "
             . "WHERE a.ldnum = :id";
     $stmt = $conn->prepare($sql);
@@ -98,10 +101,13 @@ class LoadingList {
     return $return;
   }
   
-  public function getItemById($id) {
+  public function getItemById($id, $ldseq = null) {
     $return = array();
     $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-    $sql = "SELECT * FROM t_io_ldlist_i WHERE ldnum = :id";
+    $sql = "SELECT * FROM t_io_ldlist_i WHERE ldnum = :id ";
+    if(!empty($ldseq)) {
+      $sql .= " AND ldseq = '$ldseq' ";
+    }
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":id", $id, PDO::PARAM_STR);
     if($stmt->execute()) {
@@ -241,7 +247,7 @@ class LoadingList {
     return $return;
   }
   
-  public function updateStatus($ldnnum, $stats) {
+  public function updateStatus($ldnum, $stats) {
     $return = [];
     $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
     $sql = "UPDATE t_io_ldlist_h SET stats = '$stats' ";
@@ -258,6 +264,42 @@ class LoadingList {
       $error = $stmt->errorInfo();
       $return["message"] = trim(str_replace("\n", " ", $error[2]));
     }    
+    return $return;
+  }
+  
+  public function updateStatusItem($ldnum, $ldseq, $stats) {
+    $return = [];
+    $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
+    $sql = "UPDATE t_io_ldlist_i SET stats = '$stats' ";
+    
+    $sql .= " WHERE ldnum = '$ldnum' AND ldseq = '$ldseq' ";
+    $stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare($sql);
+    if($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $return["status"] = false;
+      $error = $stmt->errorInfo();
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+    }    
+    return $return;
+  }
+  
+  public function isDetailExist($ldnum, $ldseq, $kanban_i) {
+    $return = 0;
+    $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
+    $sql = "SELECT count(*) as cnt FROM t_io_ldlist_dtl WHERE ldnum = :ldnum AND ldseq = :ldseq AND kanban_i = :kanban_i";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(":ldnum", $ldnum, PDO::PARAM_STR);
+    $stmt->bindValue(":ldseq", $ldseq, PDO::PARAM_STR);
+    $stmt->bindValue(":kanban_i", $kanban_i, PDO::PARAM_STR);
+    if($stmt->execute()) {
+      while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+        $return = $row["cnt"];
+      }
+    }
+    $stmt = null;
+    $conn = null;
     return $return;
   }
 }
