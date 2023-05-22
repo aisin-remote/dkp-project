@@ -59,7 +59,7 @@ and open the template in the editor.
                     <div class="col-lg-6 col-sm-12">
                       <div class="d-flex justify-content-end">
                         <!-- button placement -->
-                        <a class="btn btn-pale-green" href="?action=<?php echo $action ?>&id=0"><span
+                        <a class="btn btn-pale-green" href="?action=<?php echo $action ?>&line=0"><span
                             class="material-icons">add</span>New</a>
                       </div>
                     </div>
@@ -78,9 +78,8 @@ and open the template in the editor.
                       <table class="table table-sm table-striped" id="data-table-x">
                         <thead>
                           <tr>
-                            <th class="">Employee Name</th>
-                            <th class="">Line</th>
                             <th class="">Group</th>
+                            <th class="">Line</th>
                             <th class="text-center pr-2">Action</th>
                           </tr>
                         </thead>
@@ -89,11 +88,10 @@ and open the template in the editor.
                           if (!empty($list)) {
                             foreach ($list as $row) {
                               echo "<tr>"
-                                . "<td class=''>" . $row["name1"] . "</td>"
+                                . "<td class=''>Group " . $row["group_id"] . "</td>"
                                 . "<td class=''>" . $row["line"] . "</td>"
-                                . "<td class=''>" . $row["group_id"] . "</td>"
                                 . "<td class='text-center'>"
-                                . "<a href='?action=$action&id=" . $row["empid"] . "&line=" . $row["line_id"] . "&group=" . $row["group_id"] . "' class='btn btn-outline-dark btn-xs'><i class='material-icons'>edit</i> Edit</a>"
+                                . "<a href='?action=".$action."&line=" . $row["line_id"] . "&group=" . $row["group_id"] . "' class='btn btn-outline-dark btn-xs'><i class='material-icons'>edit</i> Edit</a>"
                                 . "</td>"
                                 . "</tr>";
                             }
@@ -151,7 +149,7 @@ and open the template in the editor.
       $("#data-table-x").DataTable({
         stateSave: true,
         order: [
-          [0, 'desc']
+          [0, 'asc']
         ],
         dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-2'l><'col-sm-12 col-md-4'f>>" +
           "<'row'<'col-sm-12'tr>>" +

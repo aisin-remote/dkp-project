@@ -158,9 +158,8 @@ class Member
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "select a.*, b.name1, c.name1 as line from m_group_operator a
-    left join m_prd_operator b on b.empid = a.empid
-    left join m_prd_line c on c.line_id = a.line_id ";
+    $sql = "select DISTINCT(a.group_id), a.line_id, b.name1 as line from m_group_operator a
+    left join m_prd_line b on b.line_id = a.line_id ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -172,14 +171,14 @@ class Member
     return $return;
   }
 
-  public function getGroupById($empid, $line, $group)
+  public function getGroupById($line, $group)
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "select a.*, b.name1, c.name1 as line from m_group_operator a
     left join m_prd_operator b on b.empid = a.empid
     left join m_prd_line c on c.line_id = a.line_id
-    where a.empid = '$empid' and a.line_id = '$line' and a.group_id = '$group' ";
+    where a.line_id = '$line' and a.group_id = '$group' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -195,7 +194,12 @@ class Member
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "INSERT INTO m_group_operator (group_id, line_id, empid) values('" . $param["group"] . "', '" . $param["line"] . "', '" . $param["empid"] . "')";
+    $sql = "INSERT INTO m_group_operator (group_id, line_id, empid) values ";
+    $arr_insert = array();
+    foreach ($param["empid"] as $row) {
+      $arr_insert[] = "('" . $param["group"] . "', '" . $param["line"] . "', '" . $row . "')";
+    }
+    $sql .= implode(",", $arr_insert);
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       $return["status"] = true;
@@ -214,8 +218,13 @@ class Member
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "UPDATE m_group_operator SET group_id = '" . $param["group"] . "', line_id = '" . $param["line"] . "', empid = '" . $param["empid"] . "' 
-    WHERE empid = '" . $param["id"] . "' and line_id = '" . $param["line1"] . "' and group_id = '" . $param["group1"] . "'";
+    $conn->exec("DELETE FROM m_group_operator WHERE line_id = '" . $param["line1"] . "' AND group_id = '" . $param["group1"] . "'");
+    $sql = "INSERT INTO m_group_operator (group_id, line_id, empid) values ";
+    $arr_insert = array();
+    foreach ($param["empid"] as $row) {
+      $arr_insert[] = "('" . $param["group"] . "', '" . $param["line"] . "', '" . $row . "')";
+    }
+    $sql .= implode(",", $arr_insert);
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       $return["status"] = true;

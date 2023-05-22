@@ -33,7 +33,8 @@ and open the template in the editor.
                     </div>';
                     }
                     ?>
-                    <form method="post" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>&line=<?php echo $data[0]["line_id"]; ?>&group=<?php echo $data[0]["group_id"]; ?>">
+                    <form method="post"
+                        action="?action=<?php echo $action; ?>&line=<?= empty($data[0]["line_id"]) ? '0' : $data[0]["line_id"]; ?>&group=<?php echo $data[0]["group_id"]; ?>">
                         <div class="row">
                             <div class="col-12">
                                 <div class="card mt-2">
@@ -44,19 +45,15 @@ and open the template in the editor.
                                             value="<?php echo $data[0]["empid"]; ?>">
 
                                         <div class="form-group row">
-                                            <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Operator</label>
+                                            <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Group</label>
                                             <div class="col-lg-3 col-md-5 col-sm-12">
-                                                <select name="empid" class="form-control select2">
-                                                    <?php
-                                                    foreach ($opr_list as $opr) {
-                                                        ?>
-                                                        <option value="<?php echo $opr["empid"]; ?>" <?php if ($opr["empid"] == $data[0]["empid"]) {
-                                                               echo "selected";
-                                                           } ?>>
-                                                            <?php echo $opr["name1"]; ?></option>
-                                                        <?php
-                                                    }
-                                                    ?>
+                                                <select name="group" class="form-control select2">
+                                                    <option value="A" <?php if ($data[0]["group_id"] == "A") {
+                                                        echo "selected";
+                                                    } ?>>Group A</option>
+                                                    <option value="B" <?php if ($data[0]["group_id"] == "B") {
+                                                        echo "selected";
+                                                    } ?>>Group B</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -77,21 +74,51 @@ and open the template in the editor.
                                                 </select>
                                             </div>
                                         </div>
-
+                                        <?php
+                                            if ($_GET["line"] == "0") {
+                                        ?>
                                         <div class="form-group row">
-                                            <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Group</label>
+                                            <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Operator</label>
                                             <div class="col-lg-3 col-md-5 col-sm-12">
-                                                <select name="group" class="form-control select2">
-                                                    <option value="A" <?php if ($data[0]["group_id"] == "A") {
-                                                        echo "selected";
-                                                    } ?>>Group A</option>
-                                                    <option value="B" <?php if ($data[0]["group_id"] == "B") {
-                                                        echo "selected";
-                                                    } ?>>Group B</option>
+                                                <select name="empid[]" class="form-control select2" multiple=""
+                                                    data-live-search="true">
+                                                    <?php
+                                                    foreach ($opr_list as $opr) {
+                                                            ?>
+                                                            <option value="<?php echo $opr["empid"]; ?>">
+                                                                <?php echo $opr["name1"]; ?></option>
+                                                            <?php
+                                                    }
+                                                    ?>
                                                 </select>
                                             </div>
                                         </div>
-
+                                        <?php
+                                            } else {
+                                        ?>
+                                        <div class="form-group row">
+                                            <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Operator</label>
+                                            <div class="col-lg-3 col-md-5 col-sm-12">
+                                                <select name="empid[]" class="form-control select2" multiple=""
+                                                    data-live-search="true">
+                                                    <?php
+                                                    foreach ($opr_list as $opr) {
+                                                        foreach ($data as $row) {
+                                                            ?>
+                                                            <option value="<?php echo $opr["empid"]; ?>" <?php if ($opr["empid"] == $row["empid"]) {
+                                                                   echo "selected";
+                                                               } ?>>
+                                                                <?php echo $opr["name1"]; ?></option>
+                                                            <?php
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <?php
+                                            }
+                                        ?>
                                         <div class="form-group row">
                                             <div class="col-lg-2 col-md-3 col-sm-12 d-sm-none d-md-block"></div>
                                             <div class="col-lg-5 col-md-5 col-sm-12">

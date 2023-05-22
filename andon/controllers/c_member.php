@@ -60,32 +60,33 @@ if ($action == "group_opr") {
   $class = new Member();
   $line = new Dies();
 
-  if (isset($_GET["id"])) {
-    $id = $_GET["id"];
+  if (isset($_GET["line"])) {
+    $line_id = $_GET["line"];
     if (isset($_POST["save"])) {
       $param = $_POST;
       $save = array();
-      if ($id == "0") {
+      if ($line_id == "0") {
         $save = $class->insertGroup($param);
       } else {
-        $param["id"] = $id;
-        $param["line1"] = $_GET["line"];
+        $param["line1"] = $line_id;
         $param["group1"] = $_GET["group"];
+        // print_r($param);
+        // die();
         $save = $class->updateGroup($param);
       }
       if ($save["status"] == true) {
         header("Location: ?action=" . $action . "&success=Data%20Saved");
       } else {
-        header("Location: ?action=" . $action . "&id=" . $id . "&error=" . $save["message"]);
+        header("Location: ?action=" . $action . "&error=" . $save["message"]);
       }
     }
 
-    if ($id == "0") {
+    if ($line == "0") {
       $data = array();
     } else {
-      $line_id = $_GET["line"];
+      // $line_id = $_GET["line"];
       $group = $_GET["group"];
-      $data = $class->getGroupById($id, $line_id, $group);
+      $data = $class->getGroupById($line_id, $group);
     }
     $opr_list = $class->getList("OP", "A");
     $line_list = $line->getListLine();
