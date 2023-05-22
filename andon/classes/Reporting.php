@@ -12,14 +12,22 @@ class Reporting
                     op1.name1 AS op1_name,
                     op2.name1 AS op2_name,
                     op3.name1 AS op3_name,
-                    op4.name1 AS op4_name
+                    op4.name1 AS op4_name,
+                    op5.name1 AS op5_name,
+                    op6.name1 AS op6_name,
+                    op7.name1 AS op7_name,
+                    op8.name1 AS op8_name
                 FROM t_prd_daily_h a
                 LEFT JOIN m_prd_operator ld ON ld.empid = a.ldid
                 LEFT JOIN m_prd_operator jp ON jp.empid = a.jpid
                 LEFT JOIN m_prd_operator op1 ON op1.empid = a.op1id
                 LEFT JOIN m_prd_operator op2 ON op2.empid = a.op2id
                 LEFT JOIN m_prd_operator op3 ON op3.empid = a.op3id
-                LEFT JOIN m_prd_operator op4 ON op4.empid = a.op4id "
+                LEFT JOIN m_prd_operator op4 ON op4.empid = a.op4id
+                LEFT JOIN m_prd_operator op5 ON op5.empid = a.op5id
+                LEFT JOIN m_prd_operator op6 ON op6.empid = a.op6id
+                LEFT JOIN m_prd_operator op7 ON op7.empid = a.op7id
+                LEFT JOIN m_prd_operator op8 ON op8.empid = a.op8id "
             . "WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' ";
 
         // echo $sql;

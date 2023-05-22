@@ -104,6 +104,17 @@ and open the template in the editor.
                         </div>
 
                         <div class="form-group row">
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Group</label>
+                          <div class="col-lg-8 col-md-2 col-sm-12">
+                            <select name="group" id="group" class="form-control select2">
+                              <option value="A">None</option>
+                              <option value="A">Group A</option>
+                              <option value="B">Group B</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group row">
                           <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Operator 1</label>
                           <div class="col-lg-8 col-md-2 col-sm-12">
                             <select name="op1id" id="op1id" class="form-control select2">
@@ -288,6 +299,7 @@ and open the template in the editor.
     </div>
   </div>
   <input type="hidden" id="shift_count" value="">
+  <input type="hidden" id="line" value="<?= $_GET["line"] ?>">
 
   <div class="modal fade" id="modal_delete" data-backdrop="static" data-keyboard="false" tabindex="-1"
     aria-labelledby="modal_upload_label" aria-hidden="true">
@@ -357,6 +369,32 @@ and open the template in the editor.
 
     $("#dies_id").change(getDefaultCycleTime);
     $("#dies_id").change(getPreventive);
+
+    $("#group").change(function () {
+      var groupid = $("#group").val();
+      $.ajax({
+        type: 'GET',
+        url: '?action=api_get_opr',
+        data: {
+          group: groupid,
+          line: $("#line").val()
+        },
+        success: function (response) {
+          // handle the response here
+          let data = $.parseJSON(response);
+          // console.log(data[0]);
+          for (let i = 0; i < data.length; i++) {
+            console.log("#op" + (i + 1) + "id - " + data[i].empid);
+            $("#op" + (i + 1) + "id option[value='" + data[i].empid + "']").prop("selected", true).change();
+            // $("#op" + (i + 1)).val(data[i].empid);
+          }
+        },
+        error: function (error) {
+          // handle the error here
+          alert(error);
+        }
+      });
+    })
 
     function getDefaultCycleTime() {
       $.ajax({

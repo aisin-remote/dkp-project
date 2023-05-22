@@ -26,7 +26,7 @@ class Member
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.pval2 as role_name FROM m_prd_operator a "
       . "LEFT JOIN m_param b ON b.pid = 'OPR_ROLE' and b.pval1 = a.role1 "
-      . "WHERE a.app_id = '".APP."' ";
+      . "WHERE a.app_id = '" . APP . "' ";
     if (!empty($role)) {
       $sql .= " AND a.role1 = '$role' ";
     }
@@ -79,7 +79,7 @@ class Member
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
       $sql = "INSERT INTO m_prd_operator (empid, name1, role1, stats, app_id) "
-        . "values (:empid, :name1, :role1, 'A', '".APP."') ";
+        . "values (:empid, :name1, :role1, 'A', '" . APP . "') ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":empid", strtoupper(trim($param["empid"])), PDO::PARAM_STR);
       $stmt->bindValue(":name1", $param["name1"], PDO::PARAM_STR);
@@ -140,6 +140,82 @@ class Member
       . "END) "
       . "WHERE empid IN('$extract_id')";
 
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function getListGroup()
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "select a.*, b.name1, c.name1 as line from m_group_operator a
+    left join m_prd_operator b on b.empid = a.empid
+    left join m_prd_line c on c.line_id = a.line_id ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function getGroupById($empid, $line, $group)
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "select a.*, b.name1, c.name1 as line from m_group_operator a
+    left join m_prd_operator b on b.empid = a.empid
+    left join m_prd_line c on c.line_id = a.line_id
+    where a.empid = '$empid' and a.line_id = '$line' and a.group_id = '$group' ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function insertGroup($param = array())
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "INSERT INTO m_group_operator (group_id, line_id, empid) values('" . $param["group"] . "', '" . $param["line"] . "', '" . $param["empid"] . "')";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function updateGroup($param = array())
+  {
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "UPDATE m_group_operator SET group_id = '" . $param["group"] . "', line_id = '" . $param["line"] . "', empid = '" . $param["empid"] . "' 
+    WHERE empid = '" . $param["id"] . "' and line_id = '" . $param["line1"] . "' and group_id = '" . $param["group1"] . "'";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       $return["status"] = true;

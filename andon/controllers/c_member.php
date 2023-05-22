@@ -53,3 +53,45 @@ if ($action == "member_operator") {
     unset($data["list"]);
   }
 }
+
+if ($action == "group_opr") {
+  $template["group"] = "Master Data";
+  $template["menu"] = "Group Operator";
+  $class = new Member();
+  $line = new Dies();
+
+  if (isset($_GET["id"])) {
+    $id = $_GET["id"];
+    if (isset($_POST["save"])) {
+      $param = $_POST;
+      $save = array();
+      if ($id == "0") {
+        $save = $class->insertGroup($param);
+      } else {
+        $param["id"] = $id;
+        $param["line1"] = $_GET["line"];
+        $param["group1"] = $_GET["group"];
+        $save = $class->updateGroup($param);
+      }
+      if ($save["status"] == true) {
+        header("Location: ?action=" . $action . "&success=Data%20Saved");
+      } else {
+        header("Location: ?action=" . $action . "&id=" . $id . "&error=" . $save["message"]);
+      }
+    }
+
+    if ($id == "0") {
+      $data = array();
+    } else {
+      $line_id = $_GET["line"];
+      $group = $_GET["group"];
+      $data = $class->getGroupById($id, $line_id, $group);
+    }
+    $opr_list = $class->getList("OP", "A");
+    $line_list = $line->getListLine();
+    require(TEMPLATE_PATH . "/t_group_opr_edit.php");
+  } else {
+    $list = $class->getListGroup();
+    require(TEMPLATE_PATH . "/t_group_opr.php");
+  }
+}

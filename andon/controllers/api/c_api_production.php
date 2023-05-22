@@ -8,9 +8,9 @@ if ($action == "api_insert_daily_stop") {
   }
   $save = array();
   //recalculate stop_time agar jika ada salah parameter dari post js bisa dibetulkan di sini
-  $start_time = strtotime($param["prd_dt"]." ".$param["start_time"].":00");
-  $end_time = strtotime($param["prd_dt"]." ".$param["end_time"].":00");
-  $menit = round(abs($end_time - $start_time) / 60,2);
+  $start_time = strtotime($param["prd_dt"] . " " . $param["start_time"] . ":00");
+  $end_time = strtotime($param["prd_dt"] . " " . $param["end_time"] . ":00");
+  $menit = round(abs($end_time - $start_time) / 60, 2);
   $param["stop_time"] = $menit;
   //end of recalculate stop_time
   if (!empty($param["line_id"])) {
@@ -142,6 +142,25 @@ if ($action == "api_approve_daily_i") {
     $return["status"] = false;
     $error = $stmt->errorInfo();
     $return["message"] = trim(str_replace("\n", " ", $error[2]));
+  }
+  $stmt = null;
+  $conn = null;
+  echo json_encode($return);
+}
+
+if ($action == "api_get_opr") {
+  $return = [];
+  $group = $_REQUEST["group"];
+  $line = $_REQUEST["line"];
+  $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+  $query = "SELECT a.*, b.* FROM m_group_operator a
+  left join m_prd_operator b on b.empid = a.empid
+  WHERE group_id = '$group' and line_id = '$line'";
+  $stmt = $conn->prepare($query);
+  if ($stmt->execute()) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $return[] = $row;
+    }
   }
   $stmt = null;
   $conn = null;
