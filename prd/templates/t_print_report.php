@@ -192,15 +192,7 @@
             <td class="text-center align-middle" rowspan="4">
               <small class="text-bold">Production time</small>
               <br>
-              <small class="text-bold">Centang 1</small>
-              <br>
-              <small class="text-bold">NS</small>
-              <br>
-              <small class="text-bold">S1</small>
-              <br>
-              <small class="text-bold">S2</small>
-              <br>
-              <small class="text-bold">S3</small>
+              <small class="text-bold"><?php echo $data_header["shift_name"]; ?></small>
             </td>
             <td class="text-center align-middle" rowspan="4">
               <small class="text-bold">Nett Operasi</small>
@@ -211,16 +203,7 @@
             <td rowspan="4" class="text-center align-middle">
               <small class="text-bold">Qty production</small>
             </td>
-            <td rowspan="2" class="text-center">
-              <small class="text-bold">Model</small>
-            </td>
-            <td rowspan="2" class="text-center">
-              <small class="text-bold">Model</small>
-            </td>
-            <td rowspan="2" class="text-center">
-              <small class="text-bold">Model</small>
-            </td>
-            <td rowspan="2" class="text-center">
+            <td rowspan="2" class="text-center align-middle">
               <small class="text-bold">Model</small>
             </td>
             <td rowspan="4" class="text-center align-middle">
@@ -291,30 +274,21 @@
             </td>
           </tr>
           <tr>
-            <td rowspan="2" class="text-center">
+            <td rowspan="2" class="text-center align-middle">
               <small class="text-bold">Dies No.</small>
             </td>
-            <td rowspan="2" class="text-center">
-              <small class="text-bold">Dies No.</small>
-            </td>
-            <td rowspan="2" class="text-center">
-              <small class="text-bold">Dies No.</small>
-            </td>
-            <td rowspan="2" class="text-center">
-              <small class="text-bold">Dies No.</small>
-            </td>
-            <td rowspan="2" class="align-middle">
+            <td rowspan="2" class="text-center align-middle">
               <small class="text-bold">*jam</small>
             </td>
-            <td class="align-middle">
+            <td class="text-center align-middle">
               <small class="text-bold">Ada Masih NG : </small>
             </td>
-            <td rowspan="2" class="align-middle">
+            <td rowspan="2" class="text-center align-middle">
               <small class="text-bold">Nama &</small>
               <br>
               <small class="text-bold">Sign</small>
             </td>
-            <td rowspan="2" class="align-middle">
+            <td rowspan="2" class="text-center align-middle">
               <small class="text-bold">Num & Nama PIC</small>
             </td>
             <td rowspan="2" class="align-middle text-center">
@@ -329,7 +303,7 @@
             </td>
           </tr>
           <tr>
-            <td class="align-middle">
+            <td class="text-center align-middle">
               <small class="text-bold">Sudah Close :</small>
             </td>
           </tr>
@@ -354,15 +328,6 @@
               </td>
               <td class="text-center align-middle">
                 <small>'.$list["name1"].'</small>
-              </td>
-              <td class="text-center align-middle">
-                <small></small>
-              </td>
-              <td class="text-center align-middle">
-                <small></small>
-              </td>
-              <td class="text-center align-middle">
-                <small></small>
               </td>
               <td class="text-center align-middle">';
               $seq = $i*100;
