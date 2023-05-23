@@ -103,14 +103,17 @@ and open the template in the editor.
                                                     data-live-search="true">
                                                     <?php
                                                     foreach ($opr_list as $opr) {
+                                                        $selected = null;
                                                         foreach ($data as $row) {
-                                                            ?>
-                                                            <option value="<?php echo $opr["empid"]; ?>" <?php if ($opr["empid"] == $row["empid"]) {
-                                                                   echo "selected";
-                                                               } ?>>
-                                                                <?php echo $opr["name1"]; ?></option>
-                                                            <?php
+                                                            if ($opr["empid"] == $row["empid"]) {
+                                                              $selected = "selected";
+                                                              break;
+                                                            }
                                                         }
+                                                        ?>
+                                                        <option value="<?php echo $opr["empid"]; ?>" <?=$selected?>>
+                                                            <?php echo $opr["name1"]; ?></option>
+                                                        <?php
                                                     }
                                                     ?>
                                                 </select>
