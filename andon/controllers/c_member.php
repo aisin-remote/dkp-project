@@ -92,7 +92,7 @@ if ($action == "group_opr") {
     $line_list = $line->getListLine();
     require(TEMPLATE_PATH . "/t_group_opr_edit.php");
   } else {
-    $list = $class->getListGroup();
+    $list = $class->getListGroup(null);
     require(TEMPLATE_PATH . "/t_group_opr.php");
   }
 }

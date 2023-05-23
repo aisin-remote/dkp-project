@@ -100,6 +100,7 @@ if ($action == "api_prd_entry") {
             $dies_list = $dies->getListDies($line, "A");
             $matlist = $material->getListMaterial();
             $shift_ori = $class->getShiftOri();
+            $group = $member->getListGroup($line);
             require(TEMPLATE_PATH . "/t_production_entry_new.php");
         }
     }

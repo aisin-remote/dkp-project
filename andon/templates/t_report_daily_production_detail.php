@@ -97,19 +97,19 @@ and open the template in the editor.
                     </div>
                     <div class="col-md-3 col-sm-12">
                       <div class="row">
-                        <div class="col-4 text-nowrap">POS 1</div>
+                        <div class="col-4 text-nowrap"><?= ($_GET["line"] == 'E14') ? 'POS 1' : 'Operator 1'; ?></div>
                         <div class="col-8">:
                           <?php echo $data_item_dtl["op1_name"]; ?>
                         </div>
-                        <div class="col-4 text-nowrap">POS 2</div>
+                        <div class="col-4 text-nowrap"><?= ($_GET["line"] == 'E14') ? 'POS 2' : 'Operator 2'; ?></div>
                         <div class="col-8">:
                           <?php echo $data_item_dtl["op2_name"]; ?>
                         </div>
-                        <div class="col-4 text-nowrap">POS 3</div>
+                        <div class="col-4 text-nowrap"><?= ($_GET["line"] == 'E14') ? 'POS 3' : 'Operator 3'; ?></div>
                         <div class="col-8">:
                           <?php echo $data_item_dtl["op3_name"]; ?>
                         </div>
-                        <div class="col-4 text-nowrap">POS 4</div>
+                        <div class="col-4 text-nowrap"><?= ($_GET["line"] == 'E14') ? 'POS 4' : 'Operator 4'; ?></div>
                         <div class="col-8">:
                           <?php echo $data_item_dtl["op4_name"]; ?>
                         </div>
@@ -117,19 +117,19 @@ and open the template in the editor.
                     </div>
                     <div class="col-md-3 col-sm-12">
                       <div class="row">
-                        <div class="col-4 text-nowrap">POS 5</div>
+                        <div class="col-4 text-nowrap"><?= ($_GET["line"] == 'E14') ? 'POS 5' : 'Operator 5'; ?></div>
                         <div class="col-8">:
                           <?php echo $data_item_dtl["op5_name"]; ?>
                         </div>
-                        <div class="col-4 text-nowrap">POS 6</div>
+                        <div class="col-4 text-nowrap"><?= ($_GET["line"] == 'E14') ? 'POS 6' : 'Operator 6'; ?></div>
                         <div class="col-8">:
                           <?php echo $data_item_dtl["op6_name"]; ?>
                         </div>
-                        <div class="col-4 text-nowrap">POS 7</div>
+                        <div class="col-4 text-nowrap"><?= ($_GET["line"] == 'E14') ? 'POS 7' : 'Operator 7'; ?></div>
                         <div class="col-8">:
                           <?php echo $data_item_dtl["op7_name"]; ?>
                         </div>
-                        <div class="col-4 text-nowrap">POS 8</div>
+                        <div class="col-4 text-nowrap"><?= ($_GET["line"] == 'E14') ? 'POS 8' : 'Operator 8'; ?></div>
                         <div class="col-8">:
                           <?php echo $data_item_dtl["op8_name"]; ?>
                         </div>

@@ -27,16 +27,16 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col">
-                    <a class="navbar-brand my-3" onclick="window.location.reload()"><img
+                    <a class="navbar-brand my-2" onclick="window.location.reload()"><img
                             src="media/images/logo-aisin.png" height="30" alt=""></img></a>
                 </div>
                 <div class="col">
-                    <h1 class="text-center my-3 mx-auto font-weight-bold mb-3">
+                    <h1 class="text-center my-2 mx-auto font-weight-bold mb-3">
                         <?= $result[0]["linename"] ?>
                     </h1>
                 </div>
                 <div class="col">
-                    <div class="my-3 float-right" id="prd-btn"></div>
+                    <div class="my-2 float-right" id="prd-btn"></div>
                 </div>
             </div>
         </div>
@@ -44,28 +44,28 @@
             <div class="card-body p-2">
                 <div class="row">
                     <div class="col px-1">
-                        <h3 class="text-info">Date : </h3>
-                        <h2 id="date"></h2>
+                        <h4 class="text-info">Date : </h4>
+                        <h3 id="date"></h3>
                     </div>
                     <div class="col px-1">
-                        <h3 class="text-info">Time : </h3>
-                        <h2 id="time"></h2>
+                        <h4 class="text-info">Time : </h4>
+                        <h3 id="time"></h3>
                     </div>
                     <div class="col px-1">
-                        <h3 class="text-info">Shift : </h3>
-                        <h2 id="shift"></h2>
+                        <h4 class="text-info">Shift : </h4>
+                        <h3 id="shift"></h3>
                     </div>
                     <div class="col px-1">
-                        <h3 class="text-info">Cycle Time : </h3>
-                        <h1 id="cctime"></h1>
+                        <h4 class="text-info">Cycle Time : </h4>
+                        <h2 id="cctime"></h2>
                     </div>
                     <div class="col px-1">
-                        <h3 class="text-info">Qty OK : </h3>
-                        <h1 id="qtyok" class="text-success"></h1>
+                        <h4 class="text-info">Qty OK : </h4>
+                        <h2 id="qtyok" class="text-success"></h2>
                     </div>
                     <div class="col px-1">
-                        <h3 class="text-info">Qty NG : </h3>
-                        <h1 id="qtyng" class="text-danger"></h1>
+                        <h4 class="text-info">Qty NG : </h4>
+                        <h2 id="qtyng" class="text-danger"></h2>
                     </div>
                 </div>
             </div>
@@ -86,7 +86,7 @@
             <input type="hidden" id="shift_hidden" value=""></input>
             <div id="alert"></div>
 
-            <div class="row px-2 justify-content-center" id="list" style="padding-top: 15%;">
+            <div class="row px-2 justify-content-center" id="list" style="padding-top: 13%;">
                 <?php
                 if (count($result) < 5) {
                     $col = "col-3";
@@ -96,34 +96,34 @@
                 foreach ($result as $mach) {
                     echo "<div class='" . $col . " mb-3'>";
                     echo "<div class='card'>";
-                    echo '<button type="button" data-toggle="modal" data-target="#' . $mach["machid"] . '" class="card-body ' . $mach["bgcolor"] . ' text-center '.$mach["text_color"].' border border-secondary"><h2>' . $mach['machname'] . '</h2></button>';
+                    echo '<button type="button" data-toggle="modal" data-target="#' . $mach["machid"] . '" class="card-body ' . $mach["bgcolor"] . ' text-center '.$mach["text_color"].' border border-secondary"><h4>' . $mach['machname'] . '</h4></button>';
                     echo "</div>";
                     echo "</div>";
                 }
                 ?>
             </div>
-            <div class="card border-0 pb-4 bg-dark border-white fixed-bottom">
+            <div class="card border-0 pb-1 bg-dark border-white fixed-bottom">
                 <div class="card-body">
                     <div class="d-flex justify-content-around">
                         <button type="button" onclick="checkPrd('#productok')"
                             class="btn btn-lg rounded-pill text-center bg-primary text-white border border-secondary"
                             style="width: 20%">
-                            <h3>Product OK</h3>
+                            <h4>Product OK</h4>
                         </button>
                         <button type="button" onclick="handleRev('ok')"
                             class="btn btn-lg rounded-pill text-center text-white border border-secondary"
                             style="width: 20%; background-color: #F99417">
-                            <h3>OK Reversal</h3>
+                            <h4>OK Reversal</h4>
                         </button>
                         <button type="button" onclick="checkPrd('#productng')"
                             class="btn btn-lg rounded-pill text-center bg-danger text-white border border-secondary"
                             style="width: 20%">
-                            <h3>Product NG</h3>
+                            <h4>Product NG</h4>
                         </button>
                         <button type="button" onclick="handleRev('ng')"
                             class="btn btn-lg rounded-pill text-center text-white border border-secondary"
                             style="width: 20%; background-color: #F99417">
-                            <h3>NG Reversal</h3>
+                            <h4>NG Reversal</h4>
                         </button>
                     </div>
                 </div>
@@ -474,7 +474,7 @@
                         $.each(mach, function (row, m) {
                             append_data += "<div class='" + col + " mb-3'>";
                             append_data += "<div class='card'>";
-                            append_data += '<button type="button" data-toggle="modal" data-target="#'+m.mach_id+ '" class="card-body '+m.bgcolor+ ' text-center '+m.text_color+' border border-secondary"><h2>'+m.mach_name+ '</h2></button>';
+                            append_data += '<button type="button" data-toggle="modal" data-target="#'+m.mach_id+ '" class="card-body '+m.bgcolor+ ' text-center '+m.text_color+' border border-secondary"><h4>'+m.mach_name+ '</h4></button>';
                             append_data += "</div>";
                             append_data += "</div>";
                         })

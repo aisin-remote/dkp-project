@@ -99,19 +99,19 @@ and open the template in the editor.
                                         </div>
                                         <div class="col-md-3 col-sm-12">
                                             <div class="row">
-                                                <div class="col-4">POS 1</div>
+                                                <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 1' : 'Operator 1'; ?></div>
                                                 <div class="col-8">:
                                                     <?php echo $data_header["op1_name"]; ?>
                                                 </div>
-                                                <div class="col-4">POS 2</div>
+                                                <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 2' : 'Operator 2'; ?></div>
                                                 <div class="col-8">:
                                                     <?php echo $data_header["op2_name"]; ?>
                                                 </div>
-                                                <div class="col-4">POS 3</div>
+                                                <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 3' : 'Operator 3'; ?></div>
                                                 <div class="col-8">:
                                                     <?php echo $data_header["op3_name"]; ?>
                                                 </div>
-                                                <div class="col-4">POS 4</div>
+                                                <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 4' : 'Operator 4'; ?></div>
                                                 <div class="col-8">:
                                                     <?php echo $data_header["op4_name"]; ?>
                                                 </div>
@@ -119,19 +119,19 @@ and open the template in the editor.
                                         </div>
                                         <div class="col-md-3 col-sm-12">
                                             <div class="row">
-                                                <div class="col-4">POS 5</div>
+                                                <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 5' : 'Operator 5'; ?></div>
                                                 <div class="col-8">:
                                                     <?php echo $data_header["op5_name"]; ?>
                                                 </div>
-                                                <div class="col-4">POS 6</div>
+                                                <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 6' : 'Operator 6'; ?></div>
                                                 <div class="col-8">:
                                                     <?php echo $data_header["op6_name"]; ?>
                                                 </div>
-                                                <div class="col-4">POS 7</div>
+                                                <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 7' : 'Operator 7'; ?></div>
                                                 <div class="col-8">:
                                                     <?php echo $data_header["op7_name"]; ?>
                                                 </div>
-                                                <div class="col-4">POS 8</div>
+                                                <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 8' : 'Operator 8'; ?></div>
                                                 <div class="col-8">:
                                                     <?php echo $data_header["op8_name"]; ?>
                                                 </div>
