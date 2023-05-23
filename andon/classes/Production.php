@@ -292,7 +292,7 @@ class Production
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, TO_CHAR(a.prd_dt, 'YYYYMMDD') as xdate, TO_CHAR(a.prd_dt, 'DD-MM-YYYY') as prod_date, CONCAT(x.mtart, ' ', x.name1) as dies_name, "
       . "b.name1 as line_name, c.pval1 as shift_name, x.*, "
-      . "ld.name1 as ld_name, jp.name1 as jp_name, op1.name1 as op1_name, op2.name1 as op2_name, op3.name1 as op3_name, op4.name1 as op4_name "
+      . "ld.name1 as ld_name, jp.name1 as jp_name, op1.name1 as op1_name, op2.name1 as op2_name, op3.name1 as op3_name, op4.name1 as op4_name, op5.name1 as op5_name, op6.name1 as op6_name, op7.name1 as op7_name, op8.name1 as op8_name "
       . "FROM t_prd_daily_i a "
       . "INNER JOIN wms.m_mara x ON x.matnr = a.dies_id "
       . "INNER JOIN m_prd_line b ON b.line_id = a.line_id "
@@ -304,6 +304,10 @@ class Production
       . "LEFT JOIN m_prd_operator op2 ON op2.empid = h.op2id "
       . "LEFT JOIN m_prd_operator op3 ON op3.empid = h.op3id "
       . "LEFT JOIN m_prd_operator op4 ON op4.empid = h.op4id "
+      . "LEFT JOIN m_prd_operator op5 ON op5.empid = h.op5id "
+      . "LEFT JOIN m_prd_operator op6 ON op6.empid = h.op6id "
+      . "LEFT JOIN m_prd_operator op7 ON op7.empid = h.op7id "
+      . "LEFT JOIN m_prd_operator op8 ON op8.empid = h.op8id "
       . "WHERE a.line_id = '$line' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$date' AND a.shift = '$shift' AND a.prd_seq = '$seq' "
       . "";
     $stmt = $conn->prepare($sql);

@@ -47,14 +47,7 @@ and open the template in the editor.
                                         <div class="form-group row">
                                             <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Group</label>
                                             <div class="col-lg-3 col-md-5 col-sm-12">
-                                                <select name="group" class="form-control select2">
-                                                    <option value="A" <?php if ($data[0]["group_id"] == "A") {
-                                                        echo "selected";
-                                                    } ?>>Group A</option>
-                                                    <option value="B" <?php if ($data[0]["group_id"] == "B") {
-                                                        echo "selected";
-                                                    } ?>>Group B</option>
-                                                </select>
+                                                <input type="text" name="group" class="form-control" maxlength="10" value="<?= $data[0]["group_id"] ?>" />
                                             </div>
                                         </div>
 

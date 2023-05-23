@@ -88,7 +88,7 @@ and open the template in the editor.
                           if (!empty($list)) {
                             foreach ($list as $row) {
                               echo "<tr>"
-                                . "<td class=''>Group " . $row["group_id"] . "</td>"
+                                . "<td class=''>" . $row["group_id"] . "</td>"
                                 . "<td class=''>" . $row["line"] . "</td>"
                                 . "<td class='text-center'>"
                                 . "<a href='?action=".$action."&line=" . $row["line_id"] . "&group=" . $row["group_id"] . "' class='btn btn-outline-dark btn-xs'><i class='material-icons'>edit</i> Edit</a>"

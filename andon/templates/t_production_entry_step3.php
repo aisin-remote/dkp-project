@@ -63,7 +63,7 @@ and open the template in the editor.
                 </div>
                 <div class="card-body" style="background-color: #F5F5F5;">
                   <div class="row">
-                    <div class="col-md-4 col-sm-12">
+                    <div class="col-md-3 col-sm-12">
                       <div class="row">
                         <div class="col-4">Line</div>
                         <div class="col-8">:
@@ -83,7 +83,7 @@ and open the template in the editor.
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-4 col-sm-12">
+                    <div class="col-md-3 col-sm-12">
                       <div class="row">
                         <div class="col-4">Leader</div>
                         <div class="col-8">:
@@ -95,23 +95,43 @@ and open the template in the editor.
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-4 col-sm-12">
+                    <div class="col-md-3 col-sm-12">
                       <div class="row">
-                        <div class="col-4 text-nowrap">Operator 1</div>
+                        <div class="col-4 text-nowrap">POS 1</div>
                         <div class="col-8">:
                           <?php echo $data_item_dtl["op1_name"]; ?>
                         </div>
-                        <div class="col-4 text-nowrap">Operator 2</div>
+                        <div class="col-4 text-nowrap">POS 2</div>
                         <div class="col-8">:
                           <?php echo $data_item_dtl["op2_name"]; ?>
                         </div>
-                        <div class="col-4 text-nowrap">Operator 3</div>
+                        <div class="col-4 text-nowrap">POS 3</div>
                         <div class="col-8">:
                           <?php echo $data_item_dtl["op3_name"]; ?>
                         </div>
-                        <div class="col-4 text-nowrap">Operator 4</div>
+                        <div class="col-4 text-nowrap">POS 4</div>
                         <div class="col-8">:
                           <?php echo $data_item_dtl["op4_name"]; ?>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 col-sm-12">
+                      <div class="row">
+                        <div class="col-4 text-nowrap">POS 5</div>
+                        <div class="col-8">:
+                          <?php echo $data_item_dtl["op5_name"]; ?>
+                        </div>
+                        <div class="col-4 text-nowrap">POS 6</div>
+                        <div class="col-8">:
+                          <?php echo $data_item_dtl["op6_name"]; ?>
+                        </div>
+                        <div class="col-4 text-nowrap">POS 7</div>
+                        <div class="col-8">:
+                          <?php echo $data_item_dtl["op7_name"]; ?>
+                        </div>
+                        <div class="col-4 text-nowrap">POS 8</div>
+                        <div class="col-8">:
+                          <?php echo $data_item_dtl["op8_name"]; ?>
                         </div>
                       </div>
                     </div>
