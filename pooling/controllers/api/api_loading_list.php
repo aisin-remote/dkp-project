@@ -1,6 +1,10 @@
 <?php 
 if($action == "api_get_ldlist") {
-  $ldnum = substr($_REQUEST["ldnum"], 0, -1);
+  if(is_numeric(substr($_REQUEST["ldnum"],-1))) {
+    $ldnum = $_REQUEST["ldnum"];
+  } else {
+    $ldnum = substr($_REQUEST["ldnum"], 0, -1);
+  }
   $crt_by = $_REQUEST["crt_by"];
   $return = [];
   $class = new LoadingList();
@@ -185,5 +189,92 @@ if($action == "api_save_ldlist") {
     $return["message"] = $message;
   }
   echo json_encode($return);   
+}
+
+if($action == "api_save_ldlist_s") {
+  $return = [];
+  $class = new LoadingList(); 
+  $cAvic = new Avicenna();
+  if(empty($_REQUEST["data_kanban"])) {
+    $return["status"] = false;
+    $return["message"] = "Data Kanban Kosong";
+    echo json_encode($return); die();
+  }
+  //cek dulu apakah di loading_list_dtl sudah penuh?
+  $data_kanban = json_decode($_REQUEST["data_kanban"],true);
+  $loading_list = $class->getItemById($data_kanban["ldnum"],$data_kanban["ldseq"]);
+  if($loading_list[0]["wmeng"] >= $loading_list[0]["menge"]) {
+    $return["status"] = false;
+    $return["message"] = "Loading List [".$data_kanban["ldnum"]."], Item No [".$data_kanban["ldseq"]."], Material [".$loading_list[0]["matnr"]."] quantity sudah terpenuhi!";
+    echo json_encode($return); die();
+  }
+  
+  //insert detail
+  $param_dtl = [];
+  $param_dtl[0]["kanban_i"] = $data_kanban["kanban_i"];
+  $param_dtl[0]["kanban_e"] = $data_kanban["kanban_e"];
+  $param_dtl[0]["matnr"] = $data_kanban["matnr"];
+  $param_dtl[0]["matn1"] = $data_kanban["matn1"];
+  $param_dtl[0]["crt_by"] = $data_kanban["crt_by"];
+  $param_dtl[0]["pallet_id"] = $data_kanban["pallet_id"];
+  $param_dtl[0]["cycle1"] = $data_kanban["cycle"];
+  
+  $is_exist = $class->isDetailExist($data_kanban["ldnum"],$data_kanban["ldseq"], $data_kanban["kanban_i"]);
+  if($is_exist > 0) {
+    $return["status"] = false;
+    $return["message"] = "Kanban sudah di Scan!";
+    echo json_encode($return); die();
+  }
+  $insert_detail = $class->insertDetail($data_kanban["ldnum"],$data_kanban["ldseq"], $param_dtl);
+  
+  if($insert_detail["status"] == true) {
+    //lanjut
+  } else {
+    $return = $insert_detail;
+    echo json_encode($return);
+    die();
+  }
+  
+  //update loading list item wmeng
+  $update_wmeng = $class->updateWmeng($data_kanban["ldnum"],$data_kanban["ldseq"], 1);
+  if($update_wmeng["status"] == true) {
+    //lanjut
+  } else {
+    $return = $update_wmeng;
+    echo json_encode($return);
+    die();
+  }
+  
+  //cek apakah qty loading list item sudah tepenuhi
+  $data_detail = $class->getItemById($data_kanban["ldnum"],$data_kanban["ldseq"]);
+  if($data_detail[0]["wmeng"] >= $data_detail[0]["menge"]) {
+    $class->updateStatusItem($data_kanban["ldnum"],$data_kanban["ldseq"], "C");
+  }
+  
+  //cek apakah semua qty sudah terpenuhi
+  $data_header = $class->getHeaderById($data_kanban["ldnum"]);
+  
+  if($data_header["wmeng"] >= $data_header["menge"]) {
+    $class->updateStatus($data_kanban["ldnum"], "C");
+  }
+  
+  //insert avicenna 
+  $interlock = $cAvic->getInterlockAvicenna();
+    if($interlock == "1") {
+    $data_kanban_i = $cAvic->explodeKanbanInternal($data_kanban["kanban_i"]);
+
+    $param_avc["kanban_serial"] = substr($data_kanban_i[10], -4);
+    $param_avc["back_number"] = $data_kanban_i[9];
+    $param_avc["cycle"] = $data_header["cycle1"];
+    $param_avc["customer"] = $data_header["lifnr"];
+    $param_avc["npk"] = $data_kanban["crt_by"];
+    $param_avc["access_token"] = $class->getAuthToken($data_kanban["crt_by"]);
+    $cAvic->insertAvicenna($param_avc);
+  }
+  //setelah semua OK kembalikan return true dan quantity total
+  $return["status"] = true;
+  $return["menge"] = $data_header["menge"];
+  $return["wmeng"] = $data_header["wmeng"];
+  echo json_encode($return); die();
 }
 ?>

@@ -27,7 +27,8 @@ and open the template in the editor.
                     </div>';
             }
             ?>
-            <form method="post" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>">
+            <form id="myform" method="post" action="?action=<?php echo $action; ?>&id=<?php echo $id; ?>">
+              <input type="hidden" name="save" value="save">
             <div class="row">
               <div class="col-12">
                 <div class="card">
@@ -88,8 +89,9 @@ and open the template in the editor.
         checklabel("enable_alarm");
       });
       
-      $('#enable_alarm').on("change",function(){
-        checklabel("enable_alarm");        
+      $("#myform").submit(function(e){
+        $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+        $(".btn").attr("disabled", "disabled");
       });
       
       function checklabel(id) {
