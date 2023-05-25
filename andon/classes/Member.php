@@ -162,7 +162,7 @@ class Member
     left join m_prd_line b on b.line_id = a.line_id
     where 1=1 ";
     if (!empty($line)) {
-      $sql .= " where a.line_id = '$line' ";
+      $sql .= " and a.line_id = '$line' ";
     }
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
