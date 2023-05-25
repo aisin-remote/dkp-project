@@ -154,14 +154,14 @@ class Member
     return $return;
   }
 
-  public function getListGroup($line)
+  public function getListGroup($line = "*")
   {
     $return = array();
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "select DISTINCT(a.group_id), a.line_id, b.name1 as line from m_group_operator a
     left join m_prd_line b on b.line_id = a.line_id
     where 1=1 ";
-    if (!empty($line)) {
+    if ($line != "*") {
       $sql .= " and a.line_id = '$line' ";
     }
     $stmt = $conn->prepare($sql);
