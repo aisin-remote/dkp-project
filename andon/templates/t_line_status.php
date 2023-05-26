@@ -95,14 +95,14 @@
                 }
                 foreach ($result as $mach) {
                     echo "<div class='" . $col . " mb-3'>";
-                    echo "<div class='card'>";
-                    echo '<button type="button" data-toggle="modal" data-target="#' . $mach["machid"] . '" class="card-body ' . $mach["bgcolor"] . ' text-center '.$mach["text_color"].' border border-secondary"><h4>' . $mach['machname'] . '</h4></button>';
+                    echo "<div class='card h-100'>";
+                    echo '<button type="button" data-toggle="modal" data-target="#' . $mach["machid"] . '" class="card-body ' . $mach["bgcolor"] . ' text-center '.$mach["text_color"].' border border-secondary text-wrap"><h6>' . $mach['machname'] . '</h6></button>';
                     echo "</div>";
                     echo "</div>";
                 }
                 ?>
             </div>
-            <div class="card border-0 pb-1 bg-dark border-white fixed-bottom">
+            <div class="card border-0 bg-dark border-white fixed-bottom">
                 <div class="card-body">
                     <div class="d-flex justify-content-around">
                         <button type="button" onclick="checkPrd('#productok')"
@@ -473,8 +473,8 @@
                         }
                         $.each(mach, function (row, m) {
                             append_data += "<div class='" + col + " mb-3'>";
-                            append_data += "<div class='card'>";
-                            append_data += '<button type="button" data-toggle="modal" data-target="#'+m.mach_id+ '" class="card-body '+m.bgcolor+ ' text-center '+m.text_color+' border border-secondary"><h4>'+m.mach_name+ '</h4></button>';
+                            append_data += "<div class='card h-100'>";
+                            append_data += '<button type="button" data-toggle="modal" data-target="#'+m.mach_id+ '" class="card-body '+m.bgcolor+ ' text-center '+m.text_color+' border border-secondary text-wrap"><h6>'+m.mach_name+ '</h6></button>';
                             append_data += "</div>";
                             append_data += "</div>";
                         })
