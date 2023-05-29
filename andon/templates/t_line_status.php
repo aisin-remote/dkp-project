@@ -108,22 +108,22 @@
                         <button type="button" onclick="checkPrd('#productok')"
                             class="btn btn-lg rounded-pill text-center bg-primary text-white border border-secondary"
                             style="width: 20%">
-                            <h4>Product OK</h4>
+                            <h6>Product OK</h6>
                         </button>
                         <button type="button" onclick="handleRev('ok')"
                             class="btn btn-lg rounded-pill text-center text-white border border-secondary"
                             style="width: 20%; background-color: #F99417">
-                            <h4>OK Reversal</h4>
+                            <h6>OK Reversal</h6>
                         </button>
                         <button type="button" onclick="checkPrd('#productng')"
                             class="btn btn-lg rounded-pill text-center bg-danger text-white border border-secondary"
                             style="width: 20%">
-                            <h4>Product NG</h4>
+                            <h6>Product NG</h6>
                         </button>
                         <button type="button" onclick="handleRev('ng')"
                             class="btn btn-lg rounded-pill text-center text-white border border-secondary"
                             style="width: 20%; background-color: #F99417">
-                            <h4>NG Reversal</h4>
+                            <h6>NG Reversal</h6>
                         </button>
                     </div>
                 </div>
