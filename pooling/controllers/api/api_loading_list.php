@@ -208,7 +208,20 @@ if($action == "api_save_ldlist_s") {
     $return["message"] = "Loading List [".$data_kanban["ldnum"]."], Item No [".$data_kanban["ldseq"]."], Material [".$loading_list[0]["matnr"]."] quantity sudah terpenuhi!";
     echo json_encode($return); die();
   }
-  
+  //insert avicenna 
+  $interlock = $cAvic->getInterlockAvicenna();
+  if($interlock == "1") {
+    $data_kanban_i = $cAvic->explodeKanbanInternal($data_kanban["kanban_i"]);
+
+    $param_avc["kanban_serial"] = substr($data_kanban_i[10], -4);
+    $param_avc["back_number"] = $data_kanban_i[9];
+    $param_avc["cycle"] = $data_header["cycle1"];
+    $param_avc["customer"] = $data_header["lifnr"];
+    $param_avc["npk"] = $data_kanban["crt_by"];
+    $param_avc["access_token"] = $cAvic->getAuthToken($data_kanban["crt_by"]);
+    $cAvic->insertAvicenna($param_avc);
+  }
+  //end of insert avicenna
   //insert detail
   $param_dtl = [];
   $param_dtl[0]["kanban_i"] = $data_kanban["kanban_i"];
@@ -258,19 +271,6 @@ if($action == "api_save_ldlist_s") {
     $class->updateStatus($data_kanban["ldnum"], "C");
   }
   
-  //insert avicenna 
-  $interlock = $cAvic->getInterlockAvicenna();
-    if($interlock == "1") {
-    $data_kanban_i = $cAvic->explodeKanbanInternal($data_kanban["kanban_i"]);
-
-    $param_avc["kanban_serial"] = substr($data_kanban_i[10], -4);
-    $param_avc["back_number"] = $data_kanban_i[9];
-    $param_avc["cycle"] = $data_header["cycle1"];
-    $param_avc["customer"] = $data_header["lifnr"];
-    $param_avc["npk"] = $data_kanban["crt_by"];
-    $param_avc["access_token"] = $class->getAuthToken($data_kanban["crt_by"]);
-    $cAvic->insertAvicenna($param_avc);
-  }
   //setelah semua OK kembalikan return true dan quantity total
   $return["status"] = true;
   $return["menge"] = $data_header["menge"];
