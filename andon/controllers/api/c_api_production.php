@@ -166,3 +166,19 @@ if ($action == "api_get_opr") {
   $conn = null;
   echo json_encode($return);
 }
+
+if ($action == "api_get_ng") {
+  $return = [];
+  $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+  $query = "SELECT * FROM m_prd_ng_type WHERE app_id = '".APP."' ";
+  $stmt = $conn->prepare($query);
+  if ($stmt->execute()) {
+    $return["status"] = true;
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $return["data"][] = $row;
+    }
+  }
+  $stmt = null;
+  $conn = null;
+  echo json_encode($return);
+}
