@@ -26,21 +26,21 @@ if ($action == "mach_stats") {
   }
 
   // if (isset($_GET["line_id"])) {
-    // $query = "SELECT line_st from m_prd_line where line_id = '$line_id' ";
-    // $stmt = $conn->prepare($query);
-    // if ($stmt->execute()) {
-    //   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    //     $line_st = $row["line_st"];
-    //   }
-    // }
-    // // echo $line_st;
-    // // die();
-    // if ($line_st == 5) {
-    //   $conn->exec("UPDATE m_prd_mach SET stats = 5 WHERE line_id = '$line_id' ");
-    // } 
-    // else {
-    //   $conn->exec("UPDATE m_prd_mach SET stats = 0 WHERE line_id = '$line_id' ");
-    // }
+  // $query = "SELECT line_st from m_prd_line where line_id = '$line_id' ";
+  // $stmt = $conn->prepare($query);
+  // if ($stmt->execute()) {
+  //   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+  //     $line_st = $row["line_st"];
+  //   }
+  // }
+  // // echo $line_st;
+  // // die();
+  // if ($line_st == 5) {
+  //   $conn->exec("UPDATE m_prd_mach SET stats = 5 WHERE line_id = '$line_id' ");
+  // } 
+  // else {
+  //   $conn->exec("UPDATE m_prd_mach SET stats = 0 WHERE line_id = '$line_id' ");
+  // }
   // }
 
   // if (isset($_GET["mach"])) {
@@ -157,20 +157,20 @@ if ($action == "api_mach_status") {
   // }
 
   // if (isset($_GET["line_id"])) {
-    // $query = "SELECT line_st from m_prd_line where line_id = '$line_id' ";
-    // $stmt = $conn->prepare($query);
-    // if ($stmt->execute()) {
-    //   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    //     $line_st = $row["line_st"];
-    //   }
-    // }
-    // // echo $line_st;
-    // // die();
-    // if ($line_st == 5) {
-    //   $conn->exec("UPDATE m_prd_mach SET stats = 5 WHERE line_id = '$line_id' ");
-    // } else {
-    //   $conn->exec("UPDATE m_prd_mach SET stats = 0 WHERE line_id = '$line_id' ");
-    // }
+  // $query = "SELECT line_st from m_prd_line where line_id = '$line_id' ";
+  // $stmt = $conn->prepare($query);
+  // if ($stmt->execute()) {
+  //   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+  //     $line_st = $row["line_st"];
+  //   }
+  // }
+  // // echo $line_st;
+  // // die();
+  // if ($line_st == 5) {
+  //   $conn->exec("UPDATE m_prd_mach SET stats = 5 WHERE line_id = '$line_id' ");
+  // } else {
+  //   $conn->exec("UPDATE m_prd_mach SET stats = 0 WHERE line_id = '$line_id' ");
+  // }
   // }
 
   $query = "SELECT * FROM m_prd_mach_btn ORDER BY mach_id, line_id, andon_id ASC ";
@@ -179,6 +179,13 @@ if ($action == "api_mach_status") {
   if ($stmt->execute()) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $header["btn"][] = $row;
+    }
+  }
+  $query = "select buzzred, buzzgreen, buzzyellow, buzzjp from m_prd_line where line_id = '$line_id' ";
+  $stmt = $conn->prepare($query);
+  if ($stmt->execute()) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $header["buzz"] = $row;
     }
   }
   $header["status"] = $line->getListStatus();

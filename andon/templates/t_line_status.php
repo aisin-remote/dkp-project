@@ -37,6 +37,7 @@
                 </div>
                 <div class="col">
                     <div class="my-2 float-right" id="prd-btn"></div>
+                    <div class="my-2 float-right mr-2" id="buzzer"></div>
                 </div>
             </div>
         </div>
@@ -453,6 +454,7 @@
                     var mach = data.mach
                     var btn = data.btn
                     var sts = data.status
+                    var buzz = data.buzz
                     // console.log(data.mach)
                     $("#cctime").html(head?.cctime ? head?.cctime : 0);
                     $("#shift").html(head?.shift ? head?.pval1 : "");
@@ -463,6 +465,12 @@
                         $("#prd-btn").html("<a href='?action=api_prd_entry&line=<?= $result[0]["lineid"] ?>&shift=" + $("#shift_hidden").val() + "&date=<?= date('Ymd') ?>' class='btn btn-lg bg-red-blink text-white font-weight-bold'>Create Production</a>")
                         $("#shift").html("")
                     }
+
+                    if ((buzz.buzzred > 0 || buzz.buzzgreen > 0 || buzz.buzzyellow > 0) && buzz.buzzjp == 1) {
+                            $("#buzzer").html("<button class='btn btn-lg bg-warning-blink text-white font-weight-bold' onclick='offBuzz(\""+$("#line_id").val()+"\")'>Silent Buzzer</button>")
+                        } else {
+                            $("#buzzer").html("");
+                        }
 
                     if (mach.length != 0) {
                         var append_data = ""
@@ -482,6 +490,15 @@
                     }
                 }
             );
+        }
+
+        function offBuzz(line_id) {
+            $.post("?action=api_update_buzzjp", {
+                line_id: line_id,
+            }, function (data) {
+                console.log(data)
+                $("#prd-btn").html("");
+            });
         }
 
         function cek_cb(id, machid) {
