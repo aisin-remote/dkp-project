@@ -131,7 +131,7 @@ class Avicenna {
       $param_log["api_url"] = $url;
       $param_log["api_body"] = "";
       $param_log["api_response"] = $result;
-      $param_log["crt_by"] = $param["crt_by"];
+      $param_log["crt_by"] = $param["npk"];
       $this->insertApiLog($param_log);
       
       curl_close($curl);
