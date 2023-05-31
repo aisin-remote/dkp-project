@@ -27,7 +27,7 @@
             foreach($data_andon_status as $row) {
           ?>
           <div class="alert text-center <?=$row["bgcolor"].' '.$row["text_color"]?>" role="alert" id="<?=$row["line_id"]."_".$row["mach_id"]."_".$row["andon_id"]?>" style="display: none;">
-            <h1 class="display-1"><?=$row["mach_id"]?> <?=$row["desc"]?></h1>
+            <h1 class="display-3 w-100"><?=$row["mach_id"]?> <?=$row["desc"]?> <span class="align-content-end" id="<?=$row["line_id"]."_".$row["mach_id"]."_".$row["andon_id"]?>_timer">00:00</span></h1>
           </div>
           <?php
             }
@@ -142,7 +142,7 @@
                   </span></td>
               </tr>
               <tr>
-                <td class="text-center h1" style="width: 60%;color: #19A7CE;font-size:60px">RIL</td>
+                <td class="text-center h1" style="width: 60%;color: #19A7CE;font-size:60px">NG</td>
                 <td class="text-right h1 border-right-0"><span id="data_ril"
                     style="width: 25%;color: #19A7CE;font-size:60px">
                     <?= $ril ?>
@@ -201,7 +201,7 @@
   <?php include 'common/t_js.php'; ?>
   <script>
     $(document).ready(function(){
-      setInterval(updateDashboard, 5000);
+      setInterval(updateDashboard, 1000);
       setInterval(dateTime, 1000);
     });
     // Detect fullscreen support
@@ -385,6 +385,7 @@
               var toast_show = false;
               $.each(data, function(row, value2){
                 toast_id_single = value2.line_id+"_"+value2.mach_id+"_"+value2.andon_id;
+                $("#"+value2.line_id+"_"+value2.mach_id+"_"+value2.andon_id+"_timer").html(value2.diff);
                 if(toast_id_single == value) {
                   toast_show = true;
                   return false;
