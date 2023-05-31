@@ -202,18 +202,22 @@ if ($action == "api_update_stats") {
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
 
   // off scw
-  if ($andon_id == 4 && $isBtnOn == 1) {
-    $conn->exec("UPDATE m_prd_mach_btn SET btn_sts = 0
-            WHERE line_id = '$line_id' AND andon_id = 8 ");
-  }
+  // if ($andon_id == 4 && $isBtnOn == 1) {
+  //   $conn->exec("UPDATE m_prd_mach_btn SET btn_sts = 0
+  //           WHERE line_id = '$line_id' AND andon_id = 8 ");
+  // }
   // off andon id 4 if andon id 1,2,3 is on
-  if (($andon_id == 1 || $andon_id == 2 || $andon_id == 3) && $isBtnOn == 1) {
-    $conn->exec("UPDATE m_prd_mach_btn SET btn_sts = 0
-            WHERE mach_id = '$mach_id' AND andon_id = 4 ");
-  }
+  // if (($andon_id == 1 || $andon_id == 2 || $andon_id == 3) && $isBtnOn == 1) {
+  //   $conn->exec("UPDATE m_prd_mach_btn SET btn_sts = 0
+  //           WHERE mach_id = '$mach_id' AND andon_id = 4 ");
+  // }
   if ($isBtnOn == 1) {
     $conn->exec("UPDATE m_prd_mach SET stats = $andon_id
             WHERE mach_id = '$mach_id' ");
+  } 
+  if ($isBtnOn == 0) {
+    $conn->exec("UPDATE m_prd_mach set stats = (select andon_id from m_prd_mach_btn where mach_id = '$mach_id' AND btn_sts = '1' order by andon_id desc limit 1 )
+      where mach_id = '$mach_id' ");
   }
 
   $query = "UPDATE m_prd_mach_btn SET btn_sts = $isBtnOn
