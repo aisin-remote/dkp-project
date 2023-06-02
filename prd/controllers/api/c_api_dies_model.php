@@ -6,6 +6,14 @@ if ($action == "api_get_dies_model") {
   echo json_encode($data_model);
 }
 
+if($action == "api_get_dies_list") {
+  $model = $_REQUEST["model"];
+  $group = $_REQUEST["group_id"];
+  $class = new Dies();
+  $data_dies = $class->getListDies(null, "A", $group, $model);
+  echo json_encode($data_dies);
+}
+
 if ($action == "api_get_default_cctime") {
   $dies_id = $_REQUEST["dies_id"];
   $class = new Dies();

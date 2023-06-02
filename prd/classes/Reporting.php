@@ -289,7 +289,7 @@ class Reporting
         return $return;
     }
 
-    public function getReportDetail($date_from = "*", $date_to = "*", $shift = null, $line_id = null, $ldid = null, $jpid = null)
+    public function getReportDetail($date_from = "*", $date_to = "*", $shift = "*", $line_id = "*", $group = "*", $model = "*", $dies_no = "*")
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
@@ -305,25 +305,29 @@ class Reporting
                 left join m_prd_operator f on f.empid = b.jpid
                 left join m_user g on g.usrid = a.apr_by
                 where 1=1 ";
-                
-        if ($date_from !== "*" && $date_to !== "*") {
+
+        if ($date_from != "*" && $date_to != "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
         }
-        if (!empty($shift)) {
+        if ($shift != "*") {
             $sql .= " AND a.shift = '$shift' ";
         }
-        if (!empty($line_id)) {
+        if ($line_id != "*") {
             $sql .= " AND a.line_id = '$line_id' ";
         }
-        if (!empty($ldid)) {
-            $sql .= " AND a.ldid = '$ldid' ";
+        if ($group != "*") {
+            $sql .= " AND c.group_id = '$group' ";
         }
-        if (!empty($jpid)) {
-            $sql .= " AND a.jpid = '$jpid' ";
+        if ($model != "*") {
+            $sql .= " AND c.model_id = '$model' ";
+        }
+        if ($dies_no != "*") {
+            $sql .= " AND c.dies_id = $dies_no ";
         }
 
         $sql .= " ORDER BY a.real_dt, a.time_start asc ";
-
+        // echo $sql;
+        // die();
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
             $tot_pln_qty = 0;
@@ -360,7 +364,7 @@ class Reporting
         return $return;
     }
 
-    public function getReportStop($date_from = "*", $date_to = "*", $shift = null, $line_id = null, $ldid = null, $jpid = null)
+    public function getReportStop($date_from = "*", $date_to = "*", $shift = "*", $line_id = "*", $group = "*", $model = "*", $dies_no = "*")
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
@@ -381,20 +385,23 @@ class Reporting
                 left join m_prd_stop_reason_action k on k.srna_id = c.action_id and k.app_id =  'AISIN_PRD'
                 where 1=1 ";
 
-        if ($date_from !== "*" && $date_to !== "*") {
+        if ($date_from != "*" && $date_to != "*") {
             $sql .= " AND TO_CHAR(a.prd_dt, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
         }
-        if (!empty($shift)) {
+        if ($shift != "*") {
             $sql .= " AND a.shift = '$shift' ";
         }
-        if (!empty($line_id)) {
+        if ($line_id != "*") {
             $sql .= " AND a.line_id = '$line_id' ";
         }
-        if (!empty($ldid)) {
-            $sql .= " AND a.ldid = '$ldid' ";
+        if ($group != "*") {
+            $sql .= " AND d.group_id = '$group' ";
         }
-        if (!empty($jpid)) {
-            $sql .= " AND a.jpid = '$jpid' ";
+        if ($model != "*") {
+            $sql .= " AND d.model_id = '$model' ";
+        }
+        if ($dies_no != "*") {
+            $sql .= " AND d.dies_id = $dies_no ";
         }
 
         $sql .= " ORDER BY a.shift, a.prd_seq ASC ";
@@ -478,7 +485,8 @@ class Reporting
         return $return;
     }
 
-    public function getListLog() {
+    public function getListLog()
+    {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT *, TO_CHAR(crt_dt, 'DD-MM-YYYY') as date, TO_CHAR(crt_dt, 'HH24:MM:SS') as time FROM t_logger ORDER BY id DESC";

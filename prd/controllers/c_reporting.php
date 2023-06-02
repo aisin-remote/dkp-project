@@ -214,14 +214,37 @@ if ($action == "report_detail") {
     $date_to = $_GET["date_to"];
   }
 
-  $shift = $_GET["shift"];
-  $line_id = $_GET["line_id"];
-  $ldid = $_GET["ldid"];
-  $jpid = $_GET["jpid"];
 
-  $data["list"] = $report->getReportDetail($date_from, $date_to, $shift, $line_id, $ldid, $jpid);
+  $shift = $_GET["shift"];
+  if (empty($shift)) {
+    $shift = "*";
+  }
+  $line_id = $_GET["line_id"];
+  if (empty($line_id)) {
+    $line_id = "*";
+  }
+  $group_id = $_GET["group_id"];
+  if (empty($group_id)) {
+    $group_id = "*";
+  }
+  $model_id = $_GET["model_id"];
+  if (empty($model_id)) {
+    $model_id = "*";
+  }
+  $dies_no = $_GET["dies_id"];
+  if (empty($dies_no)) {
+    $dies_no = "*";
+  }
+
+  $group_list = $dies->getDiesGroup();
+  $model_list = $dies->getDiesModel(null, $group_list[0]["pval1"]);
+  $diesid_list = $dies->getListDies(null, "A", $group_list[0]["pval1"], $model_list[0]["model_id"]);
+
   $line = $dies->getLineByType();
   $shiftlist = $report->getListShift();
+  $report_detail = $report->getReportDetail($date_from, $date_to, $shift, $line_id, $group_id, $model_id, $dies_no);
+  // print_r($report_detail);
+  // die();
   require(TEMPLATE_PATH . "/t_report_detail.php");
 }
 
@@ -244,12 +267,32 @@ if ($action == "report_stop") {
   }
 
   $shift = $_GET["shift"];
+  if (empty($shift)) {
+    $shift = "*";
+  }
   $line_id = $_GET["line_id"];
-  $ldid = $_GET["ldid"];
-  $jpid = $_GET["jpid"];
+  if (empty($line_id)) {
+    $line_id = "*";
+  }
+  $group_id = $_GET["group_id"];
+  if (empty($group_id)) {
+    $group_id = "*";
+  }
+  $model_id = $_GET["model_id"];
+  if (empty($model_id)) {
+    $model_id = "*";
+  }
+  $dies_no = $_GET["dies_id"];
+  if (empty($dies_no)) {
+    $dies_no = "*";
+  }
 
-  $data["list"] = $report->getReportStop($date_from, $date_to, $shift, $line_id, $ldid, $jpid);
+  $group_list = $dies->getDiesGroup();
+  $model_list = $dies->getDiesModel(null, $group_list[0]["pval1"]);
+  $diesid_list = $dies->getListDies(null, "A", $group_list[0]["pval1"], $model_list[0]["model_id"]);
+
   $line = $dies->getLineByType();
   $shiftlist = $report->getListShift();
+  $data["list"] = $report->getReportStop($date_from, $date_to, $shift, $line_id, $group_id, $model_id, $dies_no);
   require(TEMPLATE_PATH . "/t_report_stop.php");
 }

@@ -19,8 +19,12 @@ and open the template in the editor.
       <main>
         <div class="container-fluid">
           <ol class="breadcrumb mb-2 mt-4">
-            <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-            <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
+            <li class="breadcrumb-item">
+              <?php echo $template["group"]; ?>
+            </li>
+            <li class="breadcrumb-item active">
+              <?php echo $template["menu"]; ?>
+            </li>
           </ol>
           <?php
           if (isset($_GET["error"])) {
@@ -71,14 +75,14 @@ and open the template in the editor.
                         </tr>
                       </thead>
                       <tbody>
-                        <?php if (!empty($data["list"])) {
-                          foreach ($data["list"] as $list) {
+                        <?php if (!empty($report_detail)) {
+                          foreach ($report_detail as $list) {
                             echo "<tr>" . "<td class='text-nowrap'>" . $list["prd_dt"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["pval1"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["line_name"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["operator"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["dies_name"] . "</td>"
-                              . "<td class='text-nowrap'>" . $list["time_start"] ." - ". $list["time_end"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["time_start"] . " - " . $list["time_end"] . "</td>"
                               . "<td class='text-center text-nowrap'>" . $list["cctime"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["pln_qty"] . "</td>"
                               . "<td class='text-center pr-3 text-nowrap'>" . $list["prd_qty"] . "</td>"
@@ -130,7 +134,7 @@ and open the template in the editor.
             </div>
             <!-- <div clas
            -->
-           <div class="row my-2">
+            <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Shift</label></div>
               <!-- <div class="col"><input type="text" name="shift" class="form-control" value="<?php echo $shift; ?>"></div> -->
               <div class="col">
@@ -150,13 +154,51 @@ and open the template in the editor.
             </div>
             <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Line DC</label></div>
-              <div class="col"><select name="line_id" id="line_id"
-                  class="form-control select2" style="width: 300px">
+              <div class="col"><select name="line_id" id="line_id" class="form-control select2" style="width: 300px">
                   <option value="" selected>Pilih Line</option>
                   <?php
                   foreach ($line as $group) {
                     ?>
-                    <option value="<?php echo $group["line_id"]; ?>" ><?php echo $group["name1"]; ?></option>
+                    <option value="<?php echo $group["line_id"]; ?>"><?php echo $group["name1"]; ?></option>
+                    <?php
+                  }
+                  ?>
+                </select></div>
+            </div>
+            <div class="row my-2">
+              <div class="col-4"><label class="col-form-label">Group</label></div>
+              <div class="col"><select name="group_id" id="group_id" class="form-control select2" style="width: 300px">
+                  <option value="" selected>Pilih Group</option>
+                  <?php
+                  foreach ($group_list as $group) {
+                    ?>
+                    <option value="<?php echo $group["pval1"]; ?>"><?php echo $group["pval1"]; ?></option>
+                    <?php
+                  }
+                  ?>
+                </select></div>
+            </div>
+            <div class="row my-2">
+              <div class="col-4"><label class="col-form-label">Model</label></div>
+              <div class="col"><select name="model_id" id="model_id" class="form-control select2" style="width: 300px">
+                  <option value="" selected>Pilih Model</option>
+                  <?php
+                  foreach ($model_list as $model) {
+                    ?>
+                    <option value="<?php echo $model["model_id"]; ?>"><?php echo $model["model_id"]; ?></option>
+                    <?php
+                  }
+                  ?>
+                </select></div>
+            </div>
+            <div class="row my-2">
+              <div class="col-4"><label class="col-form-label">Dies No #</label></div>
+              <div class="col"><select name="dies_id" id="dies_id" class="form-control select2" style="width: 300px">
+                  <option value="" selected>Pilih Dies</option>
+                  <?php
+                  foreach ($diesid_list as $dies) {
+                    ?>
+                    <option value="<?php echo $dies["dies_id"]; ?>"><?php echo $dies["dies_no"] . " - " . $dies["name1"]; ?></option>
                     <?php
                   }
                   ?>
@@ -182,26 +224,26 @@ and open the template in the editor.
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       $("#data-table-x").DataTable({
         stateSave: true,
         dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-2'l><'col-sm-12 col-md-4'f>>" +
           "<'row'<'col-sm-12'tr>>" +
           "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
         buttons: [{
-            extend: 'excel',
-            title: "daily_production_report_detail",
-            className: 'btn btn-pale-green btn-sm',
-            text: '<i class="material-icons">download</i>Download Excel',
-          },
-          {
-            className: 'btn btn-pale-green-outlined btn-sm',
-            text: '<i class="material-icons">filter_alt</i> Filter',
-            action: function() {
-              $('#modal_filter').modal("show");
+          extend: 'excel',
+          title: "daily_production_report_detail",
+          className: 'btn btn-pale-green btn-sm',
+          text: '<i class="material-icons">download</i>Download Excel',
+        },
+        {
+          className: 'btn btn-pale-green-outlined btn-sm',
+          text: '<i class="material-icons">filter_alt</i> Filter',
+          action: function () {
+            $('#modal_filter').modal("show");
 
-            }
           }
+        }
         ]
       });
 
@@ -211,7 +253,7 @@ and open the template in the editor.
         dateFormat: "Ymd"
       });
 
-      $('td').each(function() {
+      $('td').each(function () {
         if ($(this).html() == 'Completed') {
           $(this).css('color', 'green');
         } else if ($(this).html() == 'On Progress') {
@@ -219,6 +261,110 @@ and open the template in the editor.
         }
       });
     });
+
+    $("#group_id").change(function () {
+      getDiesModel($("#group_id").val());
+    });
+
+    function getDiesModel(group_id) {
+      $("#model_id").empty();
+      var first_model = "";
+      $.getJSON("?action=api_get_dies_model", {
+        group: group_id
+      }, function (data) {
+        var items = "";
+        //$("#model_id").empty();
+        var $i = 0
+        $.each(data, function (key, val) {
+          // if ($i == 0) {
+          //     first_model = val.model_id;
+          //     if (first_model.length > 0) {
+          //         getDiesList(first_model);
+          //     }
+          // }
+          console.log(val.model_id);
+          items += "<option value='" + val.model_id + "'>" + val.model_id + "</option>";
+          $i++;
+        });
+
+        $("#model_id").html(items);
+      });
+    }
+
+    $("#model_id").change(function () {
+      getDiesList($("#group_id").val(), $("#model_id").val());
+    });
+
+    function getDiesList(group_id, model_id) {
+      $("#dies_id").empty();
+      $.getJSON("?action=api_get_dies_list", {
+        model: model_id,
+        group_id: group_id
+      }, function (data) {
+        var items = "";
+        //$("#model_id").empty();
+
+        $.each(data, function (key, val) {
+          console.log(val.model_id);
+          if (val.model_id == model_id) {
+            items += "<option value='" + val.dies_id + "'>" + val.dies_no + " - " + val.name1 + "</option>";
+          }
+        });
+
+        $("#dies_id").html(items);
+      });
+    } $("#group_id").change(function () {
+      getDiesModel($("#group_id").val());
+    });
+
+    function getDiesModel(group_id) {
+      $("#model_id").empty();
+      var first_model = "";
+      $.getJSON("?action=api_get_dies_model", {
+        group: group_id
+      }, function (data) {
+        var items = "";
+        //$("#model_id").empty();
+        var $i = 0
+        $.each(data, function (key, val) {
+          if ($i == 0) {
+            first_model = val.model_id;
+            if (first_model.length > 0) {
+              items += "<option value=''>Pilih Model</option>"
+            }
+          }
+          console.log(val.model_id);
+          items += "<option value='" + val.model_id + "'>" + val.model_id + "</option>";
+          $i++;
+        });
+
+        $("#model_id").html(items);
+      });
+    }
+
+    $("#model_id").change(function () {
+      getDiesList($("#group_id").val(), $("#model_id").val());
+    });
+
+    function getDiesList(group_id, model_id) {
+      $("#dies_id").empty();
+      $.getJSON("?action=api_get_dies_list", {
+        model: model_id,
+        group_id: group_id
+      }, function (data) {
+        var items = "";
+        //$("#model_id").empty();
+
+        $.each(data, function (key, val) {
+          console.log(val.model_id);
+          if (val.model_id == model_id) {
+            items += "<option value='" + val.dies_id + "'>" + val.dies_no + " - " + val.name1 + "</option>";
+          }
+        });
+
+        $("#dies_id").html(items);
+      });
+    }
   </script>
 </body>
 
