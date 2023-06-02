@@ -401,7 +401,7 @@ class Reporting
             $sql .= " AND d.model_id = '$model' ";
         }
         if ($dies_no != "*") {
-            $sql .= " AND d.dies_id = $dies_no ";
+            $sql .= " AND d.dies_id = '$dies_no' ";
         }
 
         $sql .= " ORDER BY a.shift, a.prd_seq ASC ";
