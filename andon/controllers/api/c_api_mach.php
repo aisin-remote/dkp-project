@@ -215,10 +215,10 @@ if ($action == "api_update_stats") {
     $conn->exec("UPDATE m_prd_mach SET stats = $andon_id WHERE mach_id = '$mach_id' ");
     $conn->exec("UPDATE m_prd_mach_btn SET btn_sts = 0 WHERE line_id = '$line_id' AND andon_id = 8 ");
   }
-  if ($isBtnOn == 0) {
-    $conn->exec("UPDATE m_prd_mach set stats = (select andon_id from m_prd_mach_btn where mach_id = '$mach_id' AND btn_sts = '1' order by andon_id desc limit 1 )
-      where mach_id = '$mach_id' ");
-  }
+  // if ($isBtnOn == 0) {
+  //   $conn->exec("UPDATE m_prd_mach set stats = (select andon_id from m_prd_mach_btn where mach_id = '$mach_id' AND btn_sts = '1' order by andon_id desc limit 1 )
+  //     where mach_id = '$mach_id' ");
+  // }
 
   $query = "UPDATE m_prd_mach_btn SET btn_sts = $isBtnOn
             WHERE mach_id = '$mach_id' AND andon_id = $andon_id ";
