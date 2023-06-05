@@ -59,8 +59,8 @@ and open the template in the editor.
                                             <table class="table table-sm" id="data-table-x">
                                                 <thead>
                                                     <tr>
+                                                        <th class=''>Item No.</th>
                                                         <th class=''>Loading List Number</th>
-                                                        <th class=''>No.</th>
                                                         <th class=''>Parts No.</th>
                                                         <th class=''>Cust. Parts No.</th>
                                                         <th class=''>Kanban Qty</th>
@@ -82,8 +82,8 @@ and open the template in the editor.
                                                         foreach ($list as $row) {
                                                             echo
                                                                 "<tr>"
-                                                                . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["ldseq"] . "</td>"
+                                                                . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["matnr"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["custpart"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["menge"] . "</td>"

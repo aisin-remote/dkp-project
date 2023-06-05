@@ -26,6 +26,13 @@ if($action == "device") {
       } else {
         header("Location: ?action=".$action."&id=".$id."&error=".$save["message"]);
       }
+    } else if(isset($_GET["del"])) {
+      $delete = $class->delete($id);
+      if($delete["status"] == true) {
+        header("Location: ?action=".$action);
+      } else {
+        header("Location: ?action=".$action."&id=".$id."&error=".$delete["message"]);
+      }
     } else {
       if($id == "0") {
         $data["data"] = array();

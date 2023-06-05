@@ -112,6 +112,13 @@ class LoadingList {
     $stmt->bindValue(":id", $id, PDO::PARAM_STR);
     if($stmt->execute()) {
       while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+        if($row["stats"] == "N") {
+          $row["row_color"] = "";
+          $row["status_tx"] = "<span class='text-danger'>INCOMPLETE</span>";
+        } else if($row["stats"] == "C") {
+          $row["row_color"] = "table-success";
+          $row["status_tx"] = "<span class='text-success'>COMPLETE</span>";
+        }
         $return[] = $row;
       }
     }
@@ -137,11 +144,11 @@ class LoadingList {
         }
       }
       
-      $sql = "INSERT INTO t_io_ldlist_dtl (ldnum, ldseq, trseq, kanban_i, kanban_e, matnr, matn1, crt_by, crt_dt, pallet_id, cycle1) "
+      $sql = "INSERT INTO t_io_ldlist_dtl (ldnum, ldseq, trseq, kanban_i, kanban_e, matnr, matn1, crt_by, crt_dt, pallet_id, cycle1, kanban_i_srl, is_rfid) "
               . "values ";
       $i = $last_seq + 1;
       foreach($param as $row) {
-        $arr_insert[] = "('$ldnum','".$ldseq."','".$i."','".$row["kanban_i"]."','".$row["kanban_e"]."','".$row["matnr"]."','".$row["matn1"]."','".$row["crt_by"]."',CURRENT_TIMESTAMP, '".$row["pallet_id"]."', '".$row["cycle1"]."')";
+        $arr_insert[] = "('$ldnum','".$ldseq."','".$i."','".$row["kanban_i"]."','".$row["kanban_e"]."','".$row["matnr"]."','".$row["matn1"]."','".$row["crt_by"]."',CURRENT_TIMESTAMP, '".$row["pallet_id"]."', '".$row["cycle1"]."', '".$row["kanban_i_srl"]."', '".$row["is_rfid"]."')";
         $i++;
       }
       $sql .= implode(",",$arr_insert);
@@ -293,6 +300,64 @@ class LoadingList {
     $stmt->bindValue(":ldnum", $ldnum, PDO::PARAM_STR);
     $stmt->bindValue(":ldseq", $ldseq, PDO::PARAM_STR);
     $stmt->bindValue(":kanban_i", $kanban_i, PDO::PARAM_STR);
+    if($stmt->execute()) {
+      while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+        $return = $row["cnt"];
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+  
+  public function isKanbanInternalScanned($ldnum, $kanban_i_srl) {
+    $return = 0;
+    $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
+    $sql = "SELECT count(*) as cnt FROM t_io_ldlist_dtl WHERE ldnum = :ldnum AND kanban_i_srl = :kanban_i_srl";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(":ldnum", $ldnum, PDO::PARAM_STR);
+    $stmt->bindValue(":kanban_i_srl", $kanban_i_srl, PDO::PARAM_STR);
+    if($stmt->execute()) {
+      while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+        $return = $row["cnt"];
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+  
+  public function getDetailList($ldnum, $ldseq) {
+    $return = [];
+    $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
+    $sql = "SELECT * FROM t_io_ldlist_dtl WHERE ldnum = :ldnum AND ldseq = :ldseq ORDER BY trseq ASC";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(":ldnum", $ldnum, PDO::PARAM_STR);
+    $stmt->bindValue(":ldseq", $ldseq, PDO::PARAM_STR);
+    if($stmt->execute()) {
+      while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+        if($row["is_rfid"] == "X") {
+          $row["row_color"] = "table-light";
+          $row["kbn_type"] = "RFID";
+        } else {
+          $row["row_color"] = "table-white";
+          $row["kbn_type"] = "BARCODE";
+        }
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+  
+  public function isKanbanRFIDScanned($ldnum, $kanban_e) {
+    $return = 0;
+    $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
+    $sql = "SELECT count(*) as cnt FROM t_io_ldlist_dtl WHERE ldnum = :ldnum AND kanban_e = :kanban_e";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(":ldnum", $ldnum, PDO::PARAM_STR);
+    $stmt->bindValue(":kanban_e", $kanban_e, PDO::PARAM_STR);
     if($stmt->execute()) {
       while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
         $return = $row["cnt"];

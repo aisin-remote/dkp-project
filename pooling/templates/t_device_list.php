@@ -51,6 +51,7 @@ and open the template in the editor.
                           <th>ID</th>
                           <th>Description</th>
                           <th class="text-center">Edit</th>
+                          <th class="text-center">Delete</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -61,6 +62,7 @@ and open the template in the editor.
                             . "<td>".$list["device_id"]."</td>"
                             . "<td>".$list["name1"]."</td>"
                             . "<td class='text-center'><a href='?action=$action&id=".$list["device_id"]."' class='btn btn-outline-primary btn-sm'>edit</a></td>"
+                            . "<td class='text-center'><a href='?action=$action&id=".$list["device_id"]."&del=true' class='btn btn-danger btn-sm'>delete</a></td>"
                             . "</tr>";
                           }
                         }

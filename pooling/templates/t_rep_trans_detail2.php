@@ -88,7 +88,8 @@ and open the template in the editor.
                         <thead>
                           <tr>
                             <th class='text-nowrap'>Loading List Number</th>
-                            <th class='text-nowrap'>No</th>
+                            <th class='text-nowrap'>Item No.</th>
+                            <th class='text-nowrap'>No.</th>
                             <th class='text-nowrap'>PDS Number</th>
                             <th class='text-nowrap'>Customer</th>
                             <th class='text-nowrap'>P. Code</th>
@@ -116,6 +117,7 @@ and open the template in the editor.
                                 "<tr>"
                                 . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
                                 . "<td class='align-middle'>" . $row["ldseq"] . "</td>"
+                                . "<td class='align-middle'>" . $row["trseq"] . "</td>"
                                 . "<td class='align-middle text-nowrap'>" . $row["pdsno"] . "</td>"
                                 . "<td class='align-middle text-nowrap'>" . $row["customer"] . "</td>"
                                 . "<td class='align-middle'>" . $row["werks"] . "</td>"

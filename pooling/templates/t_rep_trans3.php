@@ -59,8 +59,9 @@ and open the template in the editor.
                                             <table class="table table-sm" id="data-table-x">
                                                 <thead>
                                                     <tr>
-                                                        <th class='text-nowrap'>Loading List Number</th>
                                                         <th class=''>No.</th>
+                                                        <th class=''>Item No.</th>
+                                                        <th class='text-nowrap'>Loading List Number</th>
                                                         <th class='text-nowrap'>Kanban Internal</th>
                                                         <th class='text-nowrap'>Kanban External</th>
                                                         <th class='text-nowrap'>Part Name</th>
@@ -79,8 +80,9 @@ and open the template in the editor.
                                                         foreach ($list as $row) {
                                                             echo
                                                                 "<tr>"
-                                                                . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
+                                                                . "<td class='align-middle'>" . $row["trseq"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["ldseq"] . "</td>"
+                                                                . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["kanban_i"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["kanban_e"] . "</td>"
                                                                 . "<td class='align-middle text-nowrap'>" . $row["name1"] . "</td>"

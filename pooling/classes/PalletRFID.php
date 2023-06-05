@@ -83,7 +83,7 @@ class PalletRFID {
       }
       
       if (!empty($insertQuery)) {
-        $sql .= implode(', ', $insertQuery);
+        $sql .= implode(', ', $insertQuery)." ON CONFLICT DO NOTHING ";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute($insertData)) {
           $return["status"] = true;
