@@ -26,7 +26,7 @@ if($action == "api_get_ldlist") {
       $matnr[] = trim($itm["matnr"]);
     }
     $filtered_matnr = array_unique($matnr);
-    $master_rfid = $c_rfid->getRfidList($filtered_matnr);
+    $master_rfid = [];//$c_rfid->getRfidList($filtered_matnr);
     $return["status"] = true;
     $return["data_hdr"] = $data_hdr;
     $return["data_itm"] = $data_itm;
@@ -112,6 +112,27 @@ if($action == "api_get_ldlist") {
   echo json_encode($return);
 }
 
+if($action == "api_get_ldlist_dtl") {
+  $ldnum = $_REQUEST["ldnum"];
+  $ldseq = $_REQUEST["ldseq"];
+  $class = new LoadingList();
+  $return = [];
+  $data = $class->getDetailList($ldnum, $ldseq);
+  if(empty($data)) {
+    $return["status"] = false;
+    $return["message"] = "No Data Found";
+    $return["data"] = $data;
+  } else {
+    $return["status"] = true;
+    $return["message"] = "Data Found";
+    $return["data"] = $data;
+  }
+  
+  echo json_encode($return);
+}
+/*
+ * API untuk save batched data
+ */
 if($action == "api_save_ldlist") {
   set_time_limit(0);
   $class = new LoadingList();
@@ -190,7 +211,9 @@ if($action == "api_save_ldlist") {
   }
   echo json_encode($return);   
 }
-
+/*
+ * Save per scan
+ */
 if($action == "api_save_ldlist_s") {
   $return = [];
   $class = new LoadingList(); 
@@ -205,13 +228,14 @@ if($action == "api_save_ldlist_s") {
   $loading_list = $class->getItemById($data_kanban["ldnum"],$data_kanban["ldseq"]);
   if($loading_list[0]["wmeng"] >= $loading_list[0]["menge"]) {
     $return["status"] = false;
-    $return["message"] = "Loading List [".$data_kanban["ldnum"]."], Item No [".$data_kanban["ldseq"]."], Material [".$loading_list[0]["matnr"]."] quantity sudah terpenuhi!";
+    $return["message"] = "Loading List [".$data_kanban["ldnum"]."], Item No [".$data_kanban["ldseq"]."], Material [".$loading_list[0]["matnr"]."]<BR>Quantity sudah terpenuhi!";
     echo json_encode($return); die();
   }
   //insert avicenna 
   $interlock = $cAvic->getInterlockAvicenna();
+  $data_kanban_i = $cAvic->explodeKanbanInternal($data_kanban["kanban_i"]);
+  
   if($interlock == "1") {
-    $data_kanban_i = $cAvic->explodeKanbanInternal($data_kanban["kanban_i"]);
 
     $param_avc["kanban_serial"] = substr($data_kanban_i[10], -4);
     $param_avc["back_number"] = $data_kanban_i[9];
@@ -231,12 +255,23 @@ if($action == "api_save_ldlist_s") {
   $param_dtl[0]["crt_by"] = $data_kanban["crt_by"];
   $param_dtl[0]["pallet_id"] = $data_kanban["pallet_id"];
   $param_dtl[0]["cycle1"] = $data_kanban["cycle"];
+  $param_dtl[0]["kanban_i_srl"] = $data_kanban_i[10];
+  $param_dtl[0]["is_rfid"] = $data_kanban["is_rfid"];
   
   $is_exist = $class->isDetailExist($data_kanban["ldnum"],$data_kanban["ldseq"], $data_kanban["kanban_i"]);
   if($is_exist > 0) {
     $return["status"] = false;
-    $return["message"] = "Kanban sudah di Scan!";
+    $return["message"] = "Kanban Internal Sudah Pernah Di Scan!";
     echo json_encode($return); die();
+  }
+  
+  if($data_kanban["is_rfid"] == "X") {
+    $is_scanned = $class->isKanbanRFIDScanned($data_kanban["ldnum"], $data_kanban["kanban_e"]);
+    if($is_scanned > 0) {
+      $return["status"] = false;
+      $return["message"] = "Kanban RFID Customer Sudah Pernah Di Scan!";
+      echo json_encode($return); die();
+    }
   }
   $insert_detail = $class->insertDetail($data_kanban["ldnum"],$data_kanban["ldseq"], $param_dtl);
   
@@ -275,6 +310,62 @@ if($action == "api_save_ldlist_s") {
   $return["status"] = true;
   $return["menge"] = $data_header["menge"];
   $return["wmeng"] = $data_header["wmeng"];
+  $return["message"] = "Data Save OK [Server]";
   echo json_encode($return); die();
+}
+
+if($action == "api_check_kanban_i") {
+  $return = [];
+  $ldnum = $_REQUEST["ldnum"];
+  $kanban_i = $_REQUEST["kanban_i"];
+  $class = new LoadingList();
+  $cAvc = new Avicenna();
+  
+  $data_kanban_i = $cAvc->explodeKanbanInternal($kanban_i);
+  
+  $kanban_i_srl = $data_kanban_i[10];
+  $is_scanned = $class->isKanbanInternalScanned($ldnum, $kanban_i_srl);
+  $return["is_scanned"] = $is_scanned;
+  $return["ldnum"] = $ldnum;
+  $return["srl_no"] = $kanban_i_srl;
+  if($is_scanned > 0) {
+    $return["status"] = false;
+    $return["message"] = "Kanban Internal Sudah Pernah Di Scan!";
+  } else {
+    $return["status"] = true;
+    $return["message"] = "Kanban Internal OK";
+  }
+  echo json_encode($return);
+}
+
+if($action == "api_ldlist_check_qty") {
+  
+}
+
+if($action == "api_check_rfid_matnr") {
+  $return = [];
+  $matnr = trim($_REQUEST["matnr"]);
+  $rfid = trim($_REQUEST["rfid"]);
+  
+  $cRfid = new KanbanRFID();
+  
+  $get_material = $cRfid->getById($rfid);
+  
+  if(empty($get_material)) {
+    $return["status"] = false;
+    $return["message"] = "Kanban RFID [$rfid] NG<br>Tidak Terdaftar!";
+    echo json_encode($return);
+    die();
+  }
+  
+  if($get_material["matnr"] == $matnr) {
+    $return["status"] = true;
+    $return["message"] = "Kanban RFID [$rfid] OK";
+    $return["matnr"] = $get_material["matnr"];
+  } else {
+    $return["status"] = false;
+    $return["message"] = "Kanban RFID [$rfid] NG<br>Incorrect Part No. [".$get_material["matnr"]."] Scanned!";
+  }
+  echo json_encode($return);
 }
 ?>

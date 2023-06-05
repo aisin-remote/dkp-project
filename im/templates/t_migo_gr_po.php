@@ -140,7 +140,7 @@ and open the template in the editor.
                             </select>
                           </td>
                           <td>
-                            <input type="number" name="menge[]" class="form-control menge" min="0" value="" placeholder="0" required="required">
+                            <input type="number" name="menge[]" class="form-control menge" step="any" min="0" value="" placeholder="0" required="required">
                           </td>
                           <td class="text-center">
                             <button id="btn_del_item_1" type="button" class="btn btn-outline-danger" onclick="deleteItem('1')"><i class="material-icons">delete</i></button>
