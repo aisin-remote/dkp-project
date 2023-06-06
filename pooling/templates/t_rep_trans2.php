@@ -65,6 +65,7 @@ and open the template in the editor.
                                                         <th class=''>Cust. Parts No.</th>
                                                         <th class=''>Kanban Qty</th>
                                                         <th class=''>Actual Qty</th>
+                                                        <th class=''>Delivered Qty</th>
                                                         <th class=''>Qty/Pack</th>
                                                         <th class=''>Qty</th>
                                                         <th class=''>Status</th>
@@ -88,6 +89,7 @@ and open the template in the editor.
                                                                 . "<td class='align-middle'>" . $row["custpart"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["menge"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["wmeng"] . "</td>"
+                                                                . "<td class='align-middle'>" . $row["dlv_qty"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["perpack"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["totqty"] . "</td>"
                                                                 . "<td class='align-middle'>" . $row["stats"] . "</td>"

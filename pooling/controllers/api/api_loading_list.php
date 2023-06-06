@@ -228,7 +228,7 @@ if($action == "api_save_ldlist_s") {
   $loading_list = $class->getItemById($data_kanban["ldnum"],$data_kanban["ldseq"]);
   if($loading_list[0]["wmeng"] >= $loading_list[0]["menge"]) {
     $return["status"] = false;
-    $return["message"] = "Loading List [".$data_kanban["ldnum"]."], Item No [".$data_kanban["ldseq"]."], Material [".$loading_list[0]["matnr"]."]<BR>Quantity sudah terpenuhi!";
+    $return["message"] = "Loading List [".$data_kanban["ldnum"]."], Item No [".$data_kanban["ldseq"]."], Part Number [".$loading_list[0]["matnr"]."]<BR>Quantity sudah terpenuhi!";
     echo json_encode($return); die();
   }
   //insert avicenna 
@@ -324,6 +324,8 @@ if($action == "api_check_kanban_i") {
   $data_kanban_i = $cAvc->explodeKanbanInternal($kanban_i);
   
   $kanban_i_srl = $data_kanban_i[10];
+  $matnr = $data_kanban_i[4];
+  
   $is_scanned = $class->isKanbanInternalScanned($ldnum, $kanban_i_srl);
   $return["is_scanned"] = $is_scanned;
   $return["ldnum"] = $ldnum;
@@ -332,8 +334,28 @@ if($action == "api_check_kanban_i") {
     $return["status"] = false;
     $return["message"] = "Kanban Internal Sudah Pernah Di Scan!";
   } else {
-    $return["status"] = true;
-    $return["message"] = "Kanban Internal OK";
+    //cek apakah quantity sudah memenuhi 
+    $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
+    $query = "SELECT ldseq, menge, wmeng FROM t_io_ldlist_i WHERE ldnum = '$ldnum' AND matnr = '$matnr'";
+    $stmt = $conn->prepare($query);
+    $menge = 0;
+    $wmeng = 0;
+    $ldseq = 0;
+    if($stmt->execute()) {
+      while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+        $ldseq = $row["ldseq"];
+        $menge = intval($row["menge"]);
+        $wmeng = intval($row["wmeng"]);
+      }
+    }
+    if ($wmeng >= $menge) {
+      $return["status"] = false;
+      $return["message"] = "Loading List [$ldnum], Item No [$ldseq], Part Number [$matnr].<BR>Quantity sudah terpenuhi!";
+    } else {
+      $return["status"] = true;
+      $return["message"] = "Kanban Internal OK";
+    }
+      
   }
   echo json_encode($return);
 }
