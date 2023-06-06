@@ -38,7 +38,8 @@
         <?php echo $data_header["prod_date"]; ?>
       </p>
     </div>
-    <div class="col-4"></div>
+    <div class="col-4">
+    </div>
   </div>
   <div class="row">
     <div class="col-3">
@@ -155,30 +156,32 @@
               <small style="font-weight: 700;" class="mb-0">Model </small>
             </td>
             <?php
-              foreach ($data2["list"] as $row) {
-            ?>
-            <td class="text-center align-middle" width="75">
-              <small class="mb-0">
-                <?= $row["group_id"]. " " .$row["model_id"]. " " .$row["dies_no"]  ?>
-              </small>
-            </td>
-            <?php
-              }
+            foreach ($data2["list"] as $row) {
+              ?>
+              <td class="text-center align-middle" width="75">
+                <small class="mb-0">
+                  <?= $row["group_id"] . " " . $row["model_id"] . " " . $row["dies_no"] ?>
+                </small>
+              </td>
+              <?php
+            }
             ?>
           </tr>
           <tr>
             <td class="text-center" width="125">
               <small style="font-weight: 700;" class="mb-0">Qty Target Planning </small>
             </td>
-            <td class="text-center" width="75">
-              <small class="mb-0">&nbsp;</small>
-            </td>
-            <td class="text-center" width="75">
-              <small class="mb-0">&nbsp;</small>
-            </td>
-            <td class="text-center" width="75">
-              <small style="font-weight: 700;" class="mb-0">&nbsp;</small>
-            </td>
+            <?php
+            foreach ($data2["list"] as $row) {
+              ?>
+              <td class="text-center align-middle" width="75">
+                <small class="mb-0">
+                  <?= $row["pln_qty"] ?>
+                </small>
+              </td>
+              <?php
+            }
+            ?>
           </tr>
         </tbody>
       </table>
@@ -192,7 +195,9 @@
             <td class="text-center align-middle" rowspan="4">
               <small class="text-bold">Production time</small>
               <br>
-              <small class="text-bold"><?php echo $data_header["shift_name"]; ?></small>
+              <small class="text-bold">
+                <?php echo $data_header["shift_name"]; ?>
+              </small>
             </td>
             <td class="text-center align-middle" rowspan="4">
               <small class="text-bold">Nett Operasi</small>
@@ -221,7 +226,7 @@
             <td rowspan="4" class="text-center align-middle">
               <small class="text-bold">Eksekutor</small>
             </td>
-            <td colspan="4" class="text-center align-middle">
+            <!-- <td colspan="4" class="text-center align-middle">
               <small class="text-bold">Job & Historical Abnormal</small>
             </td>
             <td colspan="2" class="text-center align-middle">
@@ -229,10 +234,10 @@
             </td>
             <td colspan="2" class="text-center align-middle" width="100">
               <small class="text-bold">Sign Pengawas</small>
-            </td>
+            </td> -->
           </tr>
-          <tr>
-            <td class="text-center align-middle">
+          <!-- <tr> -->
+          <!-- <td class="text-center align-middle">
               <small class="text-bold">Cleaning Keeping</small>
               <br>
               <small class="text-bold">Furnace (Min. 3</small>
@@ -271,12 +276,10 @@
             </td>
             <td rowspan="3" class="text-center align-middle" width="50">
               <small class="text-bold">LDR</small>
-            </td>
-          </tr>
+            </td> -->
+          <!-- </tr> -->
           <tr>
-            <td rowspan="2" class="text-center align-middle">
-              <small class="text-bold">Dies No.</small>
-            </td>
+            <!--             
             <td rowspan="2" class="text-center align-middle">
               <small class="text-bold">*jam</small>
             </td>
@@ -300,11 +303,11 @@
               <small class="text-bold">*Penanganan Bagaimana? *Hasil?</small>
               <br>
               <small class="text-bold">Cek Leak?</small>
-            </td>
+            </td> -->
           </tr>
           <tr>
-            <td class="text-center align-middle">
-              <small class="text-bold">Sudah Close :</small>
+            <td rowspan="2" class="text-center align-middle">
+              <small class="text-bold">Dies No.</small>
             </td>
           </tr>
         </thead>
@@ -327,10 +330,10 @@
                 <small>' . $list["prd_qty"] . ' / ' . $list["tot_prd_qty"] . '</small>
               </td>
               <td class="text-center align-middle">
-                <small>'.$list["name1"].'</small>
+                <small>' . $list["name1"] . '</small>
               </td>
               <td class="text-center align-middle">';
-              $seq = $i*100;
+              $seq = $i * 100;
               $data_stop = $class2->getStopList($line_id, $prd_dt, $shift, $seq);
               // print_r($data_stop);
               foreach ($data_stop as $data) {
@@ -339,7 +342,7 @@
               }
               echo '</td>
               <td class="text-center align-middle">';
-              $seq = $i*100;
+              $seq = $i * 100;
               $data_stop = $class2->getStopList($line_id, $prd_dt, $shift, $seq);
               foreach ($data_stop as $data) {
                 echo '<small>' . $data["stop_time"] . '</small>
@@ -347,7 +350,7 @@
               }
               echo '</td>
               <td class="text-center align-middle">';
-              $seq = $i*100;
+              $seq = $i * 100;
               $data_steuchi = $class->getSteuchiList($line_id, $prd_dt, $shift, $seq);
               foreach ($data_steuchi as $data) {
                 echo '<small>' . $data["steuchi"] . '</small>
@@ -355,7 +358,7 @@
               }
               echo '</td>
               <td class="text-center align-middle">';
-              $seq = $i*100;
+              $seq = $i * 100;
               $data_stop = $class2->getStopList($line_id, $prd_dt, $shift, $seq);
               foreach ($data_stop as $data) {
                 echo '<small>' . $data["action_name"] . '</small>
@@ -363,7 +366,7 @@
               }
               echo '</td>
               <td class="text-center align-middle">';
-              $seq = $i*100;
+              $seq = $i * 100;
               $data_stop = $class2->getStopList($line_id, $prd_dt, $shift, $seq);
               $stop_exe = $class2->getStopExeReport($line_id, $prd_dt, $shift, $seq);
               foreach ($data_stop as $data) {
@@ -375,32 +378,7 @@
                 }
               }
               echo '</td>
-              <td class="text-center align-middle">
-                <small></small>
-                <small></small>
-                <small></small>
-              </td>
-              <td class="text-center align-middle">
-                <small></small>
-              </td>
-              <td class="text-center align-middle">
-                <small></small>
-              </td>
-              <td class="text-center align-middle">
-                <small></small>
-              </td>
-              <td class="text-center align-middle">
-                <small></small>
-              </td>
-              <td class="text-center align-middle">
-                <small></small>
-              </td>
-              <td class="text-center align-middle">
-                <small></small>
-              </td>
-              <td class="text-center align-middle">
-                <small></small>
-              </td>
+              
             </tr>
             <?php';
               $i++;

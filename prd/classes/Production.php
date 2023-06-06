@@ -760,7 +760,7 @@ class Production
     $sql = "SELECT a.*, b.name1 FROM t_prd_daily_exec a
         left join m_prd_operator b on b.empid = a.empid
         WHERE a.line_id = '$line' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' 
-        AND a.prd_seq = '$prd_seq' AND a.app_id = '" . APP . "' ";
+        AND a.prd_seq = '$prd_seq' ";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

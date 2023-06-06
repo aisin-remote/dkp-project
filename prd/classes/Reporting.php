@@ -485,6 +485,29 @@ class Reporting
         return $return;
     }
 
+    public function getDiesExcel($line_id, $prd_dt, $shift)
+    {
+        $return = array();
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "select CONCAT(c.group_id, ' ', c.model_id) as dies_id, 
+        coalesce(sum(a.pln_qty),0) as pln_qty
+        from t_prd_daily_i a 
+        inner join m_prd_line b ON b.line_id = a.line_id
+        inner join m_dm_dies_asset c on c.dies_id = CAST(a.dies_id as bigint)
+        where a.prd_dt = '$prd_dt' and a.shift = '$shift' AND a.line_id = '$line_id'
+        group by 1 ";
+
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $return[] = $row;
+            }
+        }
+        $stmt = null;
+        $conn = null;
+        return $return;
+    }
+
     public function getListLog()
     {
         $return = array();
