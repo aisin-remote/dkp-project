@@ -63,7 +63,7 @@ and open the template in the editor.
                                             <a target="_blank"
                                                 href="?action=<?= $action ?>&id=<?= $line_id ?>&id2=<?= $prd_dt ?>&id3=<?= $shift ?>&step=2&print=print"
                                                 class="btn btn-pale-green btn-sm" id="print"><i
-                                                    class="material-icons">print</i> Print</a>
+                                                    class="material-icons">download</i> Download</a>
                                         </div>
                                     </div>
                                 </div>
