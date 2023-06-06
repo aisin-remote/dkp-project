@@ -119,6 +119,11 @@ class LoadingList {
           $row["row_color"] = "table-success";
           $row["status_tx"] = "<span class='text-success'>COMPLETE</span>";
         }
+        
+        if($row["dstat"] == "D") {
+          $row["row_color"] = "table-info";
+          $row["status_tx"] = "<span class='text-success'>DELIVERED</span>";
+        }
         $return[] = $row;
       }
     }

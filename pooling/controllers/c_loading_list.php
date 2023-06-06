@@ -1,7 +1,7 @@
 <?php
 if ($action == "t_loading_list") {
     $template["group"] = "Transaction";
-    $template["menu"] = "Loading List";
+    $template["menu"] = "Loading List Manual Delivery";
     $class = new Transaction();
 
     $lddat_from = date('Ymd', strtotime(date('Y-m-d') . '-90 day'));

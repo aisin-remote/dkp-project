@@ -47,7 +47,7 @@ class Report
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, a.matn1 as custpart, b.* FROM t_io_ldlist_i a
+        $sql = "SELECT a.*, a.matn1 as custpart, b.*, (SELECT COUNT(*) as dlv_qty FROM t_io_ldlist_dtl WHERE ldnum = a.ldnum AND ldseq = a.ldseq AND dstat = 'D') FROM t_io_ldlist_i a
                 LEFT JOIN m_io_mara b on b.matnr = a.matnr
                 where a.ldnum = '$id' ";
         $sql .= " ORDER by a.ldseq ASC ";
