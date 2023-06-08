@@ -13,19 +13,57 @@ if($action == "api_dashboard_pooling") {
     }
   }    
   $return["lead_time"] = $lead_time;
+  $tanggal = date("Y-m-d");
   $today = date("Ymd");
-  //$today = "20230127"; //buat testing doang
+  $next_day = date("Ymd",strtotime(date("Y-m-d")." +1 day"));
+  if(isset($_REQUEST["tanggal"])) {
+    $tanggal = $_REQUEST["tanggal"];
+    $today = date("Ymd",strtotime(date($_REQUEST["tanggal"])));
+    $next_day = date("Ymd",strtotime(date($_REQUEST["tanggal"])." +1 day"));
+  }
   
-  $sql = "SELECT DISTINCT 
-            chr_cod_sykmno AS ldnum,             
-            chr_ngp_syukka AS shipping_date, 
-            chr_tim_syukka AS shipping_time, 
-            CHR_COD_TOKISAKI AS customer_code, 
-            CHR_MEI_NOUNYU AS customer_name             
-            FROM tt_gig_sykmeisai 
-            WHERE chr_ngp_syukka = '".$today."' 
-            ORDER BY shipping_time asc ";
+  $shift = "1";
+  
+  $current_time = floatval(date("Hi"));
+  if($current_time >= 600 && $current_time <= 1359) {
+    $shift = "1";
+  } else if($current_time >= 1400 && $current_time <= 2159) {
+    $shift = "2";
+  } else {
+    $shift = "3";
+  }
+  
+  if(isset($_REQUEST["shift"])) {
+    $shift = $_REQUEST["shift"];
+  }
+  
+  $time_start = "060000";
+  $time_end = "145900";
+  if($shift == "1") {
+    $next_day = $today;
+    $time_start = "060000";
+    $time_end = "135959";
+  } else if($shift == "2") {
+    $next_day = $today;
+    $time_start = "140000";
+    $time_end = "215959";
+  } else {
+    $time_start = "220000";
+    $time_end = "055959";
+  }
+  //$today = "20230127"; //buat testing doang
+  $sql = "SELECT DISTINCT "
+         ."chr_cod_sykmno AS ldnum, "
+         ."chr_ngp_syukka AS shipping_date, "
+         ."chr_tim_syukka AS shipping_time, "
+         ."CHR_COD_TOKISAKI AS customer_code, "
+         ."CHR_MEI_NOUNYU AS customer_name, "
+         ."chr_ngp_syukka+''+chr_tim_syukka AS dt_time "
+         ."FROM tt_gig_sykmeisai "
+         ."WHERE chr_ngp_syukka+''+chr_tim_syukka BETWEEN '".$today.$time_start."' AND '".$next_day.$time_end."' "
+         ."ORDER BY dt_time asc ";
   $stmt = $conn_sql_srv->prepare($sql);
+  $return["sql"] = $sql;
   $data_main = [];
   $i = 0;
   $js_ms = 1000;
@@ -43,7 +81,7 @@ if($action == "api_dashboard_pooling") {
               .substr($row["shipping_time"], 2, 2).":"
               .substr($row["shipping_time"], 4, 2)."";
       $js_time1 = strtotime($str_dat) * $js_ms;
-      $js_time2 = ((strtotime($str_dat)+(60*5)) * $js_ms);
+      $js_time2 = ((strtotime($str_dat)+(60*2)) * $js_ms);
       
       $color = "#cfcfcf";
       $cek_ldlist = $cLdList->getHeaderById($row["ldnum"]);

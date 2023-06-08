@@ -43,6 +43,19 @@ and open the template in the editor.
                       </div>                        
                     </div>
                     <div class="col-12">
+                      <form method="get" action="#">
+                        <table class="table table-sm border-bottom py-1 ">
+                          <tr>
+                            <td><label class="col-form-label">Tanggal</label></td>
+                            <td><input type="date" class="form-control form-control-sm" name="tanggal" id="tanggal" value="<?=$tanggal?>"></td>
+                            <td><label class="col-form-label">Shift</label></td>
+                            <td><select class="custom-select custom-select-sm" name="shift" id="shift"><?php foreach($data_shift as $row) {$selected = ""; if($row["code"] == $shift){$selected = "selected";} echo "<option value='".$row["code"]."' $selected>".$row["name"]."</option>";} ?></select></td>
+                            <td><button class="btn btn-block btn-primary btn-sm" type="submit" name="save">Refresh Data</button></td>
+                          </tr>
+                        </table>
+                      </form>
+                    </div>
+                    <div class="col-12">
                       <div id="chart"></div>
                     </div>
                     <div class="col-12">
@@ -191,7 +204,7 @@ and open the template in the editor.
       function updateDashboard() {
         $.getJSON(
           "?action=api_dashboard_pooling", 
-          {device_id:'<?=$_SERVER["REMOTE_ADDR"]?>'}, 
+          {device_id:'<?=$_SERVER["REMOTE_ADDR"]?>',tanggal:$("#tanggal").val(),shift:$("#shift").val()}, 
           function(data) {
             //var data_per_jam = data.data_per_jam;
             $("#lead_time").val(data.lead_time);
