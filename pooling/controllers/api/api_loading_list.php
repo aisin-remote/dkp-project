@@ -1,9 +1,9 @@
 <?php 
 if($action == "api_get_ldlist") {
-  if(is_numeric(substr($_REQUEST["ldnum"],-1))) {
-    $ldnum = $_REQUEST["ldnum"];
-  } else {
+  if(strlen($_REQUEST["ldnum"]) > 11) {
     $ldnum = substr($_REQUEST["ldnum"], 0, -1);
+  } else {
+    $ldnum = $_REQUEST["ldnum"];
   }
   $crt_by = $_REQUEST["crt_by"];
   $return = [];
@@ -97,7 +97,7 @@ if($action == "api_get_ldlist") {
         $matnr[] = trim($itm["matnr"]);
       }
       $filtered_matnr = array_unique($matnr);
-      $master_rfid = $c_rfid->getRfidList($filtered_matnr);
+      $master_rfid = [];//$c_rfid->getRfidList($filtered_matnr);
       $return["status"] = true;
       $return["data_hdr"] = $data_hdr;
       $return["data_itm"] = $data_itm;
@@ -105,7 +105,7 @@ if($action == "api_get_ldlist") {
       $return["rfid_list"] = $master_rfid;
     } else {
       $return["status"] = false;
-      $return["message"] = "Loading List tidak ditemukan!";
+      $return["message"] = "Loading [$ldnum] List tidak ditemukan!";
     }
   }
   
