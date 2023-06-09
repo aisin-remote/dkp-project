@@ -324,7 +324,7 @@ if($action == "api_check_kanban_i") {
   $data_kanban_i = $cAvc->explodeKanbanInternal($kanban_i);
   
   $kanban_i_srl = $data_kanban_i[10];
-  $matnr = $data_kanban_i[4];
+  $matnr = ltrim($data_kanban_i[4], '0');;
   
   $is_scanned = $class->isKanbanInternalScanned($ldnum, $kanban_i_srl);
   $return["is_scanned"] = $is_scanned;
