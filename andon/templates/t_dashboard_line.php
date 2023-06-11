@@ -68,6 +68,9 @@
           <table class="table table-bordered">
             <tbody>
               <tr>
+                <td colspan="3" class="text-center h2" style="width: 100%;color: #19A7CE;font-size:50px">MODEL : <span id="material_name"><?= $material_name ?></span></td>
+              </tr>
+              <tr>
                 <td class="text-center h1" style="width: 60%;color: #002E94;font-size:60px">TARGET QTY</td>
                 <td class="text-right align-middle h1 border-right-0" id="pln_qty"
                   style="width: 25%;color: #002E94;font-size:60px">
@@ -129,26 +132,37 @@
                   style="width: 15%;color: #19A7CE;font-size:60px">
                   s
                 </td>
-              </tr>              
+              </tr>
               <tr>
-                <td class="text-center h1" style="width: 60%;color: #002E94;font-size:60px">DANDORI</td>
+                <td class="text-center h1" style="width: 60%;color: #002E94;font-size:60px">LOSS TIME (QA)</td>
+                <td class="text-right align-middle h1 border-right-0" id="stopqas"
+                  style="width: 25%;color: #002E94;font-size:60px">
+                  <?= $stop_qas ?>
+                </td>
+                <td class="text-left align-middle h1 border-left-0" 
+                  style="width: 15%;color: #002E94;font-size:60px">
+                  s
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center h1" style="width: 60%;color: #19A7CE;font-size:60px">DANDORI</td>
                 <td class="text-right h1 border-right-0"><span id="data_dandori"
-                    style="width: 25%;color: #002E94;font-size:60px">
+                    style="width: 25%;color: #19A7CE;font-size:60px">
                     <?= $dandori ?>
                   </span></td>
                 <td class="text-left h1 border-left-0"><span 
-                    style="width: 15%;color: #002E94;font-size:60px">
+                    style="width: 15%;color: #19A7CE;font-size:60px">
                     s
                   </span></td>
               </tr>
               <tr>
-                <td class="text-center h1" style="width: 60%;color: #19A7CE;font-size:60px">NG</td>
+                <td class="text-center h1" style="width: 60%;color: #002E94;font-size:60px">NG</td>
                 <td class="text-right h1 border-right-0"><span id="data_ril"
-                    style="width: 25%;color: #19A7CE;font-size:60px">
+                    style="width: 25%;color: #002E94;font-size:60px">
                     <?= $ril ?>
                   </span></td>
                 <td class="text-left h1 border-left-0"><span 
-                    style="width: 15%;color: #19A7CE;font-size:60px">
+                    style="width: 15%;color: #002E94;font-size:60px">
                     %
                   </span></td>
               </tr>
@@ -331,12 +345,14 @@
           /*update series per line*/
           chart_line.updateSeries([data.eff]);
           $(".line_name").html(data.line_name);
+          $("#material_name").html(data.material_name);
           $("#pln_qty").html(data.pln_qty);
           $("#prd_qty").html(data.prd_qty);
           $("#balance").html(data.balance);
           $("#cctime").html(data.cctime);
           $("#stopdies").html(data.stop_dies ? data.stop_dies : 0);
           $("#stopmesin").html(data.stop_mesin ? data.stop_mesin : 0);
+          $("#stopqas").html(data.stop_qas ? data.stop_qas : 0);
           $("#dandori").html(data.dandori ? data.dandori : 0);
           $("#achieve").html(data.achieve);
           $("#data_eff").html(data.eff);

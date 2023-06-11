@@ -225,18 +225,21 @@ if ($action == "dashboard_line") {
   
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
   //$jam_end = "18";
-  $query = "select a.line_id, a.shift, a.cctime, a.prd_seq from t_prd_daily_i a 
+  $query = "select a.line_id, a.shift, a.cctime, a.prd_seq, b.name1 from t_prd_daily_i a 
+            left join wms.m_mara b ON b.matnr = a.dies_id 
             where a.line_id = '$line_id' 
             AND a.prd_dt = '$today' 
             AND TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end'";
   
   $stmt = $conn->prepare($query);
   $shift = "0"; //initialize shift
+  $material_name = "";
   $cctime = 0;
   if ($stmt->execute() or die($stmt->errorInfo()[2])) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $shift = $row["shift"];
       $cctime = $row["cctime"];
+      $material_name = $row["name1"];
     }
   }
   //initialize variable
@@ -323,7 +326,7 @@ if ($action == "dashboard_line") {
     $stop_dies = 0;
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $top_dies = $row["stop_part"];
+        $top_dies = $row["stop_part"] * 60;
       }
     }
     //get stop mesin
@@ -337,10 +340,23 @@ if ($action == "dashboard_line") {
     $stop_mesin = 0;
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $stop_mesin = $row["stop_mesin"];
+        $stop_mesin = $row["stop_mesin"] * 60;
       }
     }
-
+    //get stop quality
+    $query = "select coalesce(sum(b.stop_time),0) as stop_qas 
+              from t_prd_daily_i a
+              inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
+              inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2002'
+              where a.line_id = '$line_id' AND a.prd_dt = '$today' and a.shift = '$shift'   
+              and app_id = '".APP."'";
+    $stmt = $conn->prepare($query);
+    $stop_qas = 0;
+    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $stop_qas = $row["stop_qas"] * 60;
+      }
+    }
     //get stop dandori
     $query = "select coalesce(sum(b.stop_time),0) as stop_dandori 
               from t_prd_daily_i a
@@ -486,17 +502,20 @@ if ($action == "api_dashboard_adn_single") {
       $rol = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
     }
   }*/
-  $query = "select a.line_id, a.shift, a.cctime, a.prd_seq from t_prd_daily_i a 
+  $query = "select a.line_id, a.shift, a.cctime, a.prd_seq, b.name1 from t_prd_daily_i a 
+            left join wms.m_mara b ON b.matnr = a.dies_id 
             where a.line_id = '$line_id' 
             AND a.prd_dt = '$today' 
             AND TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end'";
   $stmt = $conn->prepare($query);
   $shift = "0"; //initialize shift
+  $material_name = "";
   $cctime = 0;
   if ($stmt->execute() or die($stmt->errorInfo()[2])) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $shift = $row["shift"];
       $cctime = $row["cctime"];
+      $material_name = $row["name1"];
     }
   }
 //initialize variable
@@ -582,7 +601,7 @@ if ($action == "api_dashboard_adn_single") {
     $stop_dies = 0;
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $top_dies = $row["stop_part"];
+        $top_dies = $row["stop_part"] * 60;
       }
     }
     //get stop mesin
@@ -596,10 +615,23 @@ if ($action == "api_dashboard_adn_single") {
     $stop_mesin = 0;
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $stop_mesin = $row["stop_mesin"];
+        $stop_mesin = $row["stop_mesin"] * 60;
       }
     }
-
+    //get stop quality
+    $query = "select coalesce(sum(b.stop_time),0) as stop_qas 
+              from t_prd_daily_i a
+              inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
+              inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2002'
+              where a.line_id = '$line_id' AND a.prd_dt = '$today' and a.shift = '$shift'   
+              and app_id = '".APP."'";
+    $stmt = $conn->prepare($query);
+    $stop_qas = 0;
+    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $stop_qas = $row["stop_qas"] * 60;
+      }
+    }
     //get stop dandori
     $query = "select coalesce(sum(b.stop_time),0) as stop_dandori 
               from t_prd_daily_i a
@@ -620,6 +652,7 @@ if ($action == "api_dashboard_adn_single") {
   }
   $return = [];
   $return["line_name"] = $line_name;
+  $return["material_name"] = $material_name;
   $return["pln_qty"] = number_format($pln_qty);
   $return["prd_qty"] = number_format($prd_qty);
   $return["balance"] = number_format($balance);
@@ -627,6 +660,7 @@ if ($action == "api_dashboard_adn_single") {
   $return["cctime"] = number_format($cctime);
   $return["stop_dies"] = number_format($stop_dies);
   $return["stop_mesin"] = number_format($stop_mesin);
+  $return["stop_qas"] = number_format($stop_qas);
   $return["eff"] = $eff;
   $conn->exec("UPDATE m_prd_line SET eff = '$eff' WHERE line_id = '$line_id'");
   $return["ril"] = $ril;
