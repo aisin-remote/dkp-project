@@ -45,8 +45,8 @@ class Material {
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-      $sql = "INSERT INTO wms.m_mara (matnr, mtart, name1, meins, ematn, crt_by, crt_dt, matkl, cctime) "
-              . "values (:matnr, :mtart, :name1, :meins, :ematn, :crt_by, CURRENT_TIMESTAMP, :matkl, :cctime) ";
+      $sql = "INSERT INTO wms.m_mara (matnr, mtart, name1, meins, ematn, crt_by, crt_dt, matkl, cctime, lgort) "
+              . "values (:matnr, :mtart, :name1, :meins, :ematn, :crt_by, CURRENT_TIMESTAMP, :matkl, :cctime, :lgort) ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":matnr", strtoupper(trim($param["matnr"])), PDO::PARAM_STR);
       $stmt->bindValue(":mtart", strtoupper(trim($param["mtart"])), PDO::PARAM_STR);
@@ -56,6 +56,7 @@ class Material {
       $stmt->bindValue(":crt_by", $param["crt_by"], PDO::PARAM_STR);
       $stmt->bindValue(":matkl", strtoupper(trim($param["matkl"])), PDO::PARAM_STR);
       $stmt->bindValue(":cctime", $param["cctime"], PDO::PARAM_STR);
+      $stmt->bindValue(":lgort", $param["lgort"], PDO::PARAM_STR);
       
       if($stmt->execute()) {
         $return["status"] = true;
@@ -80,7 +81,7 @@ class Material {
       $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
       $sql = "UPDATE wms.m_mara SET mtart = :mtart, matkl = :matkl, name1 = :name1, "
               . "meins = :meins, ematn = :ematn, chg_by = :chg_by, chg_dt = CURRENT_TIMESTAMP, "
-              . "cctime = :cctime "
+              . "cctime = :cctime, lgort = :lgort "
               . "WHERE matnr = :matnr";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":matnr", strtoupper(trim($param["matnr"])), PDO::PARAM_STR);
@@ -91,6 +92,7 @@ class Material {
       $stmt->bindValue(":chg_by", $param["chg_by"], PDO::PARAM_STR);
       $stmt->bindValue(":matkl", strtoupper(trim($param["matkl"])), PDO::PARAM_STR);
       $stmt->bindValue(":cctime", $param["cctime"], PDO::PARAM_STR);
+      $stmt->bindValue(":lgort", $param["lgort"], PDO::PARAM_STR);
       
       if($stmt->execute()) {
         $return["status"] = true;

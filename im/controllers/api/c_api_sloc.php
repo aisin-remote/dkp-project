@@ -9,4 +9,12 @@ if($action == "api_wms_get_sloc") {
   echo json_encode($data);
   unset($data);
 }
+
+if($action == "api_wms_get_default_sloc") {
+  $matnr = $_REQUEST["matnr"];
+  $class = new Material();
+  $data = $class->getById($matnr);
+  echo json_encode($data);
+  unset($data);
+}
 ?>

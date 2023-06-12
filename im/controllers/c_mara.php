@@ -4,12 +4,16 @@ if ($action == "mara") {
   $template["group"] = "Master Data";
   $template["menu"] = "Master Material";
   $class = new Material();
+  $cSloc = new StoreLocation();
   if (isset($_GET["id"])) {
     $id = $_GET["id"];
     if (isset($_POST["save"])) {
       $param = $_POST;
       $param["crt_by"] = $_SESSION[LOGIN_SESSION];
       $param["chg_by"] = $_SESSION[LOGIN_SESSION];
+      if(empty($param["cctime"])) {
+        $param["cctime"] = 0;
+      }
       $save = array();
       if ($id == "0") {
         $save = $class->insert($param);
@@ -45,6 +49,7 @@ if ($action == "mara") {
       }
       $data["mtarts"] = $class->getType();
       $data["matkls"] = $class->getGroup();
+      $data["lgorts"] = $cSloc->getList("JE10");
       require( TEMPLATE_PATH . "/t_mara_edit.php" );
     }
   } else if (isset($_GET['upload'])) {
@@ -75,6 +80,11 @@ if ($action == "mara") {
           $param["ematn"] = trim($row["D"]);
           $param["name1"] = trim($row["E"]);
           $param["meins"] = trim($row["F"]);
+          $param["cctime"] = trim($row["G"]);
+          $param["lgort"] = trim($row["H"]);
+          if(empty($param["cctime"])) {
+            $param["cctime"] = 0;
+          }
           $param["crt_by"] = $_SESSION[LOGIN_SESSION];
           $param["chg_by"] = $_SESSION[LOGIN_SESSION];
 

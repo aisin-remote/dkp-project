@@ -93,6 +93,26 @@ and open the template in the editor.
                     </div>
                     
                     <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Default Str.Location</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <select name="lgort" class="form-control">
+                          <option value='' selected>SELECT STORE LOCATION</option>
+                          <?php 
+                          if(!empty($data["lgorts"])) {
+                            foreach($data["lgorts"] as $grp) {
+                              if($grp["lgort"] == $data["data"]["lgort"]) {
+                                echo "<option value='".$grp["lgort"]."' selected>".$grp["lgort"]." - ".$grp["name1"]."</option>";
+                              } else {
+                                echo "<option value='".$grp["lgort"]."'>".$grp["lgort"]." - ".$grp["name1"]."</option>";
+                              }
+                            }
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Material No.</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
                         <input type="text" name="matnr" class="form-control" maxlength="40" value="<?php echo $data["data"]["matnr"]; ?>" <?php if(!empty($data["data"]["matnr"])) {echo "readonly";} ?>>
@@ -126,6 +146,7 @@ and open the template in the editor.
                         <input type="number" name="cctime" step="any" class="form-control" value="<?php echo $data["data"]["cctime"]; ?>">
                       </div>
                     </div>
+                    
                   </div>
                 </div>
               </div>              

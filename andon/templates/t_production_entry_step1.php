@@ -267,7 +267,7 @@ and open the template in the editor.
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Material</label>
+                          <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Model</label>
                           <div class="col-lg-8 col-md-2 col-sm-12">
                             <select name="dies_id" id="dies_id" class="form-control select2">
                               <?php

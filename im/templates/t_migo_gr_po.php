@@ -53,6 +53,7 @@ and open the template in the editor.
                       <div class="col-lg-6 col-sm-12">
                         <div class="d-flex justify-content-end">
                           <!-- button placement -->
+                          <button type="button" id="btn_scn2" name="btn_scn1" class="btn btn-info mr-2" data-toggle="modal" data-target="#modal_02"><span class="material-icons">qr_code_scanner</span> Scan Kanban Receiving</button>
                           <button type="button" id="btn_scn1" name="btn_scn1" class="btn btn-warning mr-2" data-toggle="modal" data-target="#modal_01"><span class="material-icons">qr_code_scanner</span> Scan Label Kuning</button>
                           <button type="submit" id="btn_save" name="btn_save" value="btn_save" class="btn btn-primary"><span class="material-icons">send</span> Post</button>
                         </div>
@@ -183,6 +184,28 @@ and open the template in the editor.
         </div>
       </div>
     </div>
+    
+    <div class="modal fade" id="modal_02" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_02_label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal_02_label">Scan Kanban Receiving</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label class="col-form-label">QR Code Kanban Receiving</label>
+              <input type="text" name="qrcode2" id="qrcode2" class="form-control" value="" >
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <?php include 'common/t_js.php'; ?>
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
@@ -194,10 +217,22 @@ and open the template in the editor.
         $("#qrcode").focus();
       });
       
+      $('#modal_02').on('shown.bs.modal', function (event) {
+        $("#qrcode2").focus();
+      });
+      
       
       $("#qrcode").keypress(function(e) {        
         if(e.which == 13) {
           validateQrCodeKuning(this.value);            
+        } else {
+          
+        }
+      });
+      
+      $("#qrcode2").keypress(function(e) {        
+        if(e.which == 13) {
+          validateQrCodeKanbanRecv(this.value);            
         } else {
           
         }
@@ -210,16 +245,89 @@ and open the template in the editor.
         var charg = arr_code[5];
         var lgort = "MSTR";
         $("#qrcode").val("");
+        //get default lgort
+        $.ajax({
+          type: "POST",
+          url: "index.php?action=api_wms_get_default_sloc",
+          dataType: "json",
+          data : {matnr:matnr},
+          success: function(data){
+            if(data.lgort) {
+              lgort = data.lgort;              
+            }
+            var matnrs = $("select[name='matnr[]']");
+            var menges = $("input[name='menge[]']");
+            var chargs = $("input[name='charg[]']");
+            var lgorts = $("select[name='lgort[]']");
+            if(matnrs[matnrs.length-1].value == "") {
+              matnrs[matnrs.length-1].value = matnr;
+              menges[matnrs.length-1].value = menge;
+              chargs[matnrs.length-1].value = matnr; /*charg;*/
+              lgorts[matnrs.length-1].value = lgort;
+            } else {
+              addItem();
+              matnrs = $("select[name='matnr[]']");
+              menges = $("input[name='menge[]']");
+              chargs = $("input[name='charg[]']");
+              lgorts = $("select[name='lgort[]']");
+              matnrs[matnrs.length-1].value = matnr;
+              menges[matnrs.length-1].value = menge;
+              chargs[matnrs.length-1].value = matnr; /*charg;*/
+              lgorts[matnrs.length-1].value = lgort;
+            }
+
+            $('#modal_01').modal("hide");
+          },
+          error : function () {
+            alert("Connection Failed");
+          }
+        });
+      }
+      
+      function validateQrCodeKanbanRecv(qrcode) {
+        var arr_code = qrcode.split(/\s+/);
+        var matnr = arr_code[3].substring(9);
+        var menge = parseInt(arr_code[7].substring(0, 7));
+        var charg = arr_code[8];
+        var lgort = "MSTR";
+        $("#qrcode2").val("");
         
-        var matnrs = $("select[name='matnr[]']");
-        var menges = $("input[name='menge[]']");
-        var chargs = $("input[name='charg[]']");
-        var lgorts = $("select[name='lgort[]']");
-        matnrs[matnrs.length-1].value = matnr;
-        menges[matnrs.length-1].value = menge;
-        chargs[matnrs.length-1].value = matnr; /*charg;*/
-        lgorts[matnrs.length-1].value = lgort;
-        $('#modal_01').modal("hide");
+        $.ajax({
+          type: "POST",
+          url: "index.php?action=api_wms_get_default_sloc",
+          dataType: "json",
+          data : {matnr:matnr},
+          success: function(data){
+            if(data.lgort) {
+              lgort = data.lgort;              
+            }
+            var matnrs = $("select[name='matnr[]']");
+            var menges = $("input[name='menge[]']");
+            var chargs = $("input[name='charg[]']");
+            var lgorts = $("select[name='lgort[]']");
+            if(matnrs[matnrs.length-1].value == "") {
+              matnrs[matnrs.length-1].value = matnr;
+              menges[matnrs.length-1].value = menge;
+              chargs[matnrs.length-1].value = matnr; /*charg;*/
+              lgorts[matnrs.length-1].value = lgort;
+            } else {
+              addItem();
+              matnrs = $("select[name='matnr[]']");
+              menges = $("input[name='menge[]']");
+              chargs = $("input[name='charg[]']");
+              lgorts = $("select[name='lgort[]']");
+              matnrs[matnrs.length-1].value = matnr;
+              menges[matnrs.length-1].value = menge;
+              chargs[matnrs.length-1].value = matnr; /*charg;*/
+              lgorts[matnrs.length-1].value = lgort;
+            }
+
+            $('#modal_02').modal("hide");
+          },
+          error : function () {
+            alert("Connection Failed");
+          }
+        });
       }
       
       $("#my_form").submit(function(){
@@ -241,6 +349,10 @@ and open the template in the editor.
       }
       
       $("#btn_add_item").click(function(){
+        addItem();
+      });
+      
+      function addItem() {
         // get the last DIV which ID starts with ^= "klon"
         var $div = $('tr[id^="mseg_data_"]:last');
 
@@ -259,7 +371,7 @@ and open the template in the editor.
         $("#"+$klon_id+" #btn_del_item_"+num_before).prop("id","btn_del_item_"+num);
         $("#btn_del_item_"+num).attr("onclick","deleteItem('"+num+"')");
         $("#"+$klon_id+" .menge").val("");
-      });
+      }
       
       function deleteItem(num) {
         if(num == "1") {

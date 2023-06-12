@@ -70,6 +70,7 @@ and open the template in the editor.
                         <tr>
                           <th>Material Type</th>
                           <th>Material Group</th>
+                          <th>Default S.Loc</th>
                           <th>Material No.</th>
                           <th>External Material No.</th>
                           <th>Material Description</th>
@@ -86,6 +87,7 @@ and open the template in the editor.
                             echo "<tr>"
                             . "<td>".$list["mtart"]." - ".$list["mat_type"]."</td>"
                             . "<td>".$list["matkl"]." - ".$list["mat_group"]."</td>"
+                            . "<td>".$list["lgort"]."</td>"
                             . "<td>".$list["matnr"]."</td>"
                             . "<td>".$list["ematn"]."</td>"
                             . "<td>".$list["name1"]."</td>"                                 
