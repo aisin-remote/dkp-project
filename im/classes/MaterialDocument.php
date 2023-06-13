@@ -77,8 +77,8 @@ class MaterialDocument {
   public function insertItem($param = array()) {
     $return = [];
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "INSERT INTO wms.t_mseg (mblnr,mjahr,mblpo,matnr,bwart,shkzg,menge,werks,lgort,charg,ebeln,aufnr) "
-            . "VALUES (:mblnr,:mjahr,:mblpo,:matnr,:bwart,:shkzg,:menge,:werks,:lgort,:charg,:ebeln,:aufnr)";
+    $sql = "INSERT INTO wms.t_mseg (mblnr,mjahr,mblpo,matnr,bwart,shkzg,menge,werks,lgort,charg,ebeln,aufnr, vbeln, lifnr) "
+            . "VALUES (:mblnr,:mjahr,:mblpo,:matnr,:bwart,:shkzg,:menge,:werks,:lgort,:charg,:ebeln,:aufnr, '".$param["vbeln"]."','".$param["lifnr"]."')";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":mblnr", $param["mblnr"], PDO::PARAM_STR);
     $stmt->bindValue(":mjahr", $param["mjahr"], PDO::PARAM_STR);
