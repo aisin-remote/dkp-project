@@ -168,6 +168,9 @@ and open the template in the editor.
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
     $(document).ready(function () {
+      $("#checkAll").change(function () {
+        $("input[type='checkbox']:not(option[disabled])").prop("checked", this.checked);
+      });
     });
 
     $(".datepicker").flatpickr({
@@ -227,9 +230,7 @@ and open the template in the editor.
       });
     });
 
-    $("#checkAll").change(function () {
-      $("input[type='checkbox']").prop("checked", this.checked);
-    });
+
   </script>
 </body>
 
