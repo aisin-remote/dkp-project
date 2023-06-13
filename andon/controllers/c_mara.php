@@ -10,6 +10,9 @@ if ($action == "mara") {
       $param = $_POST;
       $param["crt_by"] = $_SESSION[LOGIN_SESSION];
       $param["chg_by"] = $_SESSION[LOGIN_SESSION];
+      if(empty($param["cctime"])) {
+        $param["cctime"] = 0;
+      }
       $save = array();
       if ($id == "0") {
         $save = $class->insert($param);
