@@ -94,7 +94,12 @@ if ($action == "daily_production") {
       foreach ($data_stop as $detail) {
         $exec = array();
         $spreadsheet->getActiveSheet()->setCellValue('F' . ($i + 11), $detail["start_time"] . " - " . $detail["stop_name"]);
-        $spreadsheet->getActiveSheet()->setCellValue('G' . ($i + 11), $detail["stop_time"]);
+        if ($detail["stop_type"] == "P") {
+          $spreadsheet->getActiveSheet()->setCellValue('G' . ($i + 11), "(".$detail["stop_time"].")");
+        } else {
+          $spreadsheet->getActiveSheet()->setCellValue('G' . ($i + 11), $detail["stop_time"]);
+        }
+        // $spreadsheet->getActiveSheet()->setCellValue('G' . ($i + 11), $detail["stop_time"]);
         $spreadsheet->getActiveSheet()->setCellValue('H' . ($i + 11), $detail["action_name"]);
         foreach ($stop_exe as $exe) {
           if ($exe["stop_seq"] == $detail["stop_seq"] && $exe["prd_seq"] == $detail["prd_seq"]) {
