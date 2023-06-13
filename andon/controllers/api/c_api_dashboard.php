@@ -504,9 +504,9 @@ if ($action == "api_dashboard_adn_single") {
   }*/
   $query = "select a.line_id, a.shift, a.cctime, a.prd_seq, b.name1 from t_prd_daily_i a 
             left join wms.m_mara b ON b.matnr = a.dies_id 
-            where a.line_id = '$line_id' 
-            AND a.prd_dt = '$today' 
-            AND TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end'";
+            where a.line_id = '$line_id'
+            AND TO_CHAR(a.real_dt,'YYYY-MM-DD') = '$today' 
+            AND TO_CHAR(TO_TIMESTAMP(a.real_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end'";
   $stmt = $conn->prepare($query);
   $shift = "0"; //initialize shift
   $material_name = "";

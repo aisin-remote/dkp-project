@@ -116,7 +116,7 @@ if ($action == "bom") {
         $bomheader = $bom->getHeader($id);
         $bomdetail = $bom->getDetail($id);
         $matlist = $material->getListMaterial();
-        $matlistall = $material->getListRaw();
+        $matlistall = $material->getList();
         require(TEMPLATE_PATH . "/t_bom_edit.php");
     } else {
         $bomlist = $bom->getListHeader();

@@ -21,21 +21,26 @@
         </li>
       </ol> -->
       <div style="position: absolute; top: 20px; left: 0;" class="container-fluid">
-        <div id="toast_container" class="position-relative w-100 bg-dark" style="z-index:9999;" >
+        <div id="toast_container" class="position-relative w-100 bg-dark" style="z-index:9999;">
           <?php
-          if(!empty($data_andon_status)) {
-            foreach($data_andon_status as $row) {
-          ?>
-          <div class="alert text-center <?=$row["bgcolor"].' '.$row["text_color"]?>" role="alert" id="<?=$row["line_id"]."_".$row["mach_id"]."_".$row["andon_id"]?>" style="display: none;">
-            <h1 class="display-3 w-100"><?=$row["mach_id"]?> <?=$row["desc"]?> <span class="align-content-end" id="<?=$row["line_id"]."_".$row["mach_id"]."_".$row["andon_id"]?>_timer">00:00</span></h1>
-          </div>
-          <?php
+          if (!empty($data_andon_status)) {
+            foreach ($data_andon_status as $row) {
+              ?>
+              <div class="alert text-center <?= $row["bgcolor"] . ' ' . $row["text_color"] ?>" role="alert"
+                id="<?= $row["line_id"] . "_" . $row["mach_id"] . "_" . $row["andon_id"] ?>" style="display: none;">
+                <h1 class="display-3 w-100">
+                  <?= $row["mach_id"] ?>
+                  <?= $row["desc"] ?> <span class="align-content-end"
+                    id="<?= $row["line_id"] . "_" . $row["mach_id"] . "_" . $row["andon_id"] ?>_timer">00:00</span>
+                </h1>
+              </div>
+              <?php
             }
-          } 
+          }
           ?>
         </div>
       </div>
-        
+
       <div class="card mb-5">
         <div class="card-body">
           <div class="container-fluid text-center">
@@ -63,21 +68,23 @@
       </div>
       <!-- <div class="card mb-3">
         <div class="card-body"> -->
+      <marquee class="text-center h2" style="width: 100%;color: #19A7CE;font-size:50px">MODEL : <span
+          id="material_name">
+          <?= $material_name ?>
+        </span></marquee>
       <div class="container-fluid p-0">
         <div class="table-responsive">
           <table class="table table-bordered">
             <tbody>
-              <tr>
-                <td colspan="3" class="text-center h2" style="width: 100%;color: #19A7CE;font-size:50px">MODEL : <span id="material_name"><?= $material_name ?></span></td>
-              </tr>
+              <!-- <tr> -->
+              <!-- </tr> -->
               <tr>
                 <td class="text-center h1" style="width: 60%;color: #002E94;font-size:60px">TARGET QTY</td>
                 <td class="text-right align-middle h1 border-right-0" id="pln_qty"
                   style="width: 25%;color: #002E94;font-size:60px">
                   <?= $pln_qty ?>
                 </td>
-                <td class="text-left align-middle h1 border-left-0" 
-                  style="width: 15%;color: #002E94;font-size:60px">
+                <td class="text-left align-middle h1 border-left-0" style="width: 15%;color: #002E94;font-size:60px">
                 </td>
               </tr>
               <tr>
@@ -86,8 +93,7 @@
                   style="width: 25%;color: #19A7CE;font-size:60px">
                   <?= $prd_qty ?>
                 </td>
-                <td class="text-left align-middle h1 border-left-0" 
-                  style="width: 15%;color: #19A7CE;font-size:60px">
+                <td class="text-left align-middle h1 border-left-0" style="width: 15%;color: #19A7CE;font-size:60px">
                 </td>
               </tr>
               <tr>
@@ -96,8 +102,7 @@
                   style="width: 25%;color: #002E94;font-size:60px">
                   <?= $balance ?>
                 </td>
-                <td class="text-left align-middle h1 border-left-0" 
-                  style="width: 15%;color: #002E94;font-size:60px">
+                <td class="text-left align-middle h1 border-left-0" style="width: 15%;color: #002E94;font-size:60px">
                 </td>
               </tr>
               <tr>
@@ -106,8 +111,7 @@
                   style="width: 25%;color: #19A7CE;font-size:60px">
                   <?= $achieve ?>
                 </td>
-                <td class="text-left align-middle h1 border-left-0" 
-                  style="width: 15%;color: #19A7CE;font-size:60px">
+                <td class="text-left align-middle h1 border-left-0" style="width: 15%;color: #19A7CE;font-size:60px">
                   %
                 </td>
               </tr>
@@ -117,8 +121,7 @@
                   style="width: 25%;color: #002E94;font-size:60px">
                   <?= $stop_dies ?>
                 </td>
-                <td class="text-left align-middle h1 border-left-0" 
-                  style="width: 15%;color: #002E94;font-size:60px">
+                <td class="text-left align-middle h1 border-left-0" style="width: 15%;color: #002E94;font-size:60px">
                   s
                 </td>
               </tr>
@@ -128,8 +131,7 @@
                   style="width: 25%;color: #19A7CE;font-size:60px">
                   <?= $stop_mesin ?>
                 </td>
-                <td class="text-left align-middle h1 border-left-0" 
-                  style="width: 15%;color: #19A7CE;font-size:60px">
+                <td class="text-left align-middle h1 border-left-0" style="width: 15%;color: #19A7CE;font-size:60px">
                   s
                 </td>
               </tr>
@@ -139,8 +141,7 @@
                   style="width: 25%;color: #002E94;font-size:60px">
                   <?= $stop_qas ?>
                 </td>
-                <td class="text-left align-middle h1 border-left-0" 
-                  style="width: 15%;color: #002E94;font-size:60px">
+                <td class="text-left align-middle h1 border-left-0" style="width: 15%;color: #002E94;font-size:60px">
                   s
                 </td>
               </tr>
@@ -150,8 +151,7 @@
                     style="width: 25%;color: #19A7CE;font-size:60px">
                     <?= $dandori ?>
                   </span></td>
-                <td class="text-left h1 border-left-0"><span 
-                    style="width: 15%;color: #19A7CE;font-size:60px">
+                <td class="text-left h1 border-left-0"><span style="width: 15%;color: #19A7CE;font-size:60px">
                     s
                   </span></td>
               </tr>
@@ -161,8 +161,7 @@
                     style="width: 25%;color: #002E94;font-size:60px">
                     <?= $ril ?>
                   </span></td>
-                <td class="text-left h1 border-left-0"><span 
-                    style="width: 15%;color: #002E94;font-size:60px">
+                <td class="text-left h1 border-left-0"><span style="width: 15%;color: #002E94;font-size:60px">
                     %
                   </span></td>
               </tr>
@@ -210,11 +209,11 @@
       </div>
     </div>
     <input type="hidden" id="line_id" value="<?= $_GET["line_id"] ?>">
-  </main>  
-      
+  </main>
+
   <?php include 'common/t_js.php'; ?>
   <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
       setInterval(updateDashboard, 1000);
       setInterval(dateTime, 1000);
     });
@@ -261,7 +260,7 @@
       toggleFullscreen();
     }
     */
-      
+
     var options = {
       // series: [<?= $eff ?>, {
       //   color: function({value}) {
@@ -378,42 +377,42 @@
 
       $("#date").html(date);
       $("#time").html(time);
-      
+
       updateAndonStatus();
     }
-    
+
     function updateAndonStatus() {
       var className = document.getElementsByClassName('alert');
       var classnameCount = className.length;
       var toast_id = new Array();
-      for(var j = 0; j < classnameCount; j++){
+      for (var j = 0; j < classnameCount; j++) {
         toast_id.push(className[j].id);
       }
-      
+
       var line_id = $("#line_id").val();
-      if(line_id.length > 0) {
-        $.getJSON("?action=api_get_andon_status",{line_id:line_id},function(result){
-          if(result.status == true) {
+      if (line_id.length > 0) {
+        $.getJSON("?action=api_get_andon_status", { line_id: line_id }, function (result) {
+          if (result.status == true) {
             //show alert
             //$('.toast').toast('hide');
             var data = result.data;
-            $.each(toast_id, function(row, value){
+            $.each(toast_id, function (row, value) {
               var toast_show = false;
-              $.each(data, function(row, value2){
-                toast_id_single = value2.line_id+"_"+value2.mach_id+"_"+value2.andon_id;
-                $("#"+value2.line_id+"_"+value2.mach_id+"_"+value2.andon_id+"_timer").html(value2.diff);
-                if(toast_id_single == value) {
+              $.each(data, function (row, value2) {
+                toast_id_single = value2.line_id + "_" + value2.mach_id + "_" + value2.andon_id;
+                $("#" + value2.line_id + "_" + value2.mach_id + "_" + value2.andon_id + "_timer").html(value2.diff);
+                if (toast_id_single == value) {
                   toast_show = true;
                   return false;
                 }
               });
-              if(toast_show === true) {
-                $("#"+value).show();
+              if (toast_show === true) {
+                $("#" + value).show();
               } else {
-                $("#"+value).hide();
+                $("#" + value).hide();
               }
             });
-            
+
           } else {
             $('.alert').hide();
           }
