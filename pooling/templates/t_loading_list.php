@@ -77,9 +77,14 @@ and open the template in the editor.
                             <?php
                             if (!empty($list)) {
                               foreach ($list as $row) {
+                                if ($row["stats"] == "UNCOMPLETED") {
+                                  $isDisable = "disabled";
+                                } else {
+                                  $isDisable = "";
+                                }
                                 echo
                                   "<tr>"
-                                  . "<td class='align-middle chkbox pl-2'><input name='chk_id[]' type='checkbox' value='" . $row["ldnum"] . "' style='height: 18px; width: 18px;' /></td>"
+                                  . "<td class='align-middle chkbox pl-2'><input name='chk_id[]' type='checkbox' value='" . $row["ldnum"] . "' style='height: 18px; width: 18px;' " . $isDisable . "/></td>"
                                   . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
                                   . "<td class='align-middle'>" . $row["pdsno"] . "</td>"
                                   . "<td class='align-middle'>" . $row["customer"] . "</td>"
@@ -203,7 +208,7 @@ and open the template in the editor.
       } else if ($(this).html() == 'NOT DELIVERED') {
         $(this).css('color', 'red');
       } else if ($(this).html() == 'DELIVERED') {
-        $(this).css('color', 'greeb');
+        $(this).css('color', 'green');
       }
     });
 

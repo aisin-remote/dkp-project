@@ -16,8 +16,19 @@ if ($action == "t_loading_list") {
 
     if (isset($_POST["chg_status"])) {
         $all_id = $_POST["chk_id"];
+        // $ldnum = array();
+        // foreach ($all_id as $id) {
+        //     $stats = $class->getById($id);
+        //     if ($stats["stats"] == "C") {
+        //         $ldnum[] = $id;
+        //     } 
+        //     if ($stats["stats"] == "N") {
+        //         header("Location: ?action=" . $action . "?error=Pulling Statis Uncompleted!");
+        //         die();
+        //     }
+        // }
+        
         $extract_id = implode("','", $all_id);
-
         $update = $class->updateStatus($extract_id);
         $update2 = $class->updateStatus2($extract_id);
         $update3 = $class->updateStatus3($extract_id);

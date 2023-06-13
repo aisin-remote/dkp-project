@@ -43,6 +43,26 @@ class Transaction
         return $return;
     }
 
+    public function getById($ldnum)
+    {
+        $return = array();
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "SELECT a.*, a.ldnum, a.pdsno, a.cycle1, to_char(a.lddat, 'DD-MM-YYYY') as date_only, "
+            . " to_char(a.lddat, 'HH24:MI') as time_only, a.stats, "
+            . " (select name1 from m_io_lfa1 where lifnr = a.lifnr) as customer "
+            . " FROM t_io_ldlist_h a  "
+            . " WHERE a.ldnum = '$ldnum' ";
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $return[] = $row;
+            }
+        }
+        $stmt = null;
+        $conn = null;
+        return $return;
+    }
+
     public function updateStatus($extract_id)
     {
         $return = array();
