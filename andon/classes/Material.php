@@ -239,6 +239,25 @@ class Material {
     return $return;
   }
 
+  public function getMatsPrd($line_id) {
+    $return = array();
+    $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
+    $sql = "SELECT a.*, b.name1 as mat_type, c.name1 as mat_group FROM wms.m_mara a "
+            . " LEFT JOIN wms.m_mtart b ON b.mtart = a.mtart "
+            . " LEFT JOIN wms.m_matkl c ON c.matkl = a.matkl "
+            . "WHERE 1=1 and c.matkl = '$line_id' and a.mtart = 'FIN' ";
+    $sql .= " ORDER BY matnr ASC ";
+    $stmt = $conn->prepare($sql);
+    if($stmt->execute()) {
+      while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
 }
 
 ?>

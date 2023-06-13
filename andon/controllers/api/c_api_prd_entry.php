@@ -98,7 +98,7 @@ if ($action == "api_prd_entry") {
             $shift_list = $class->getListShift();
             $shift_count = $class->getShiftCount($shift);
             $dies_list = $dies->getListDies($line, "A");
-            $matlist = $material->getListMaterial();
+            $matlist = $material->getMatsPrd($line);
             $shift_ori = $class->getShiftOri();
             $group = $member->getListGroup($line);
             require(TEMPLATE_PATH . "/t_production_entry_new.php");

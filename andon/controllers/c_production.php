@@ -214,7 +214,7 @@ if ($action == "daily_production_entry") {
           $shift_list = $class->getListShift();
           $shift_count = $class->getShiftCount($shift);
           $dies_list = $dies->getListDies($line, "A");
-          $matlist = $material->getListMaterial();
+          $matlist = $material->getMatsPrd($line);
           $group = $member->getListGroup($line_data["line_id"]);
           require(TEMPLATE_PATH . "/t_production_entry_step1.php");
         }
