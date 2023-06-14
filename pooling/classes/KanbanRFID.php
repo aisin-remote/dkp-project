@@ -25,7 +25,10 @@ class KanbanRFID {
   public function getById($id) {
     $return = array();
     $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-    $sql = "SELECT * FROM m_io_kanban_rfid WHERE rfid_tag = :id";
+    $sql = "SELECT a.*, b.matn1, b.name1, c.name1 as cust_name FROM m_io_kanban_rfid a "
+            . "left join m_io_mara b ON b.matnr = a.matnr "
+            . "left join m_io_lfa1 c ON c.lifnr = a.lifnr "
+            . "WHERE a.rfid_tag = :id";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":id", strtoupper($id), PDO::PARAM_STR);
     if($stmt->execute()) {
@@ -89,7 +92,7 @@ class KanbanRFID {
       }
       
       if (!empty($insertQuery)) {
-        $sql .= implode(', ', $insertQuery)." ON CONFLICT DO NOTHING";
+        $sql .= implode(', ', $insertQuery)." CONFLICT(rfid_tag) DO UPDATE SET lifnr = EXCLUDED.lifnr, matnr = EXCLUDED.matnr, crt_by = EXCLUDED.crt_by, crt_dt = CURRENT_TIMESTAMP";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute($insertData)) {
           $return["status"] = true;
