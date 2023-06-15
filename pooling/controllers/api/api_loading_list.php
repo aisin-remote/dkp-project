@@ -233,7 +233,10 @@ if($action == "api_save_ldlist_s") {
   }
   //insert avicenna 
   $interlock = $cAvic->getInterlockAvicenna();
-  $data_kanban_i = $cAvic->explodeKanbanInternal($data_kanban["kanban_i"]);
+  $str_kanban = $data_kanban["kanban_i"];
+  $str_kanban = str_replace(";"," ",$str_kanban);
+  $str_kanban = str_replace(".","",$str_kanban);
+  $data_kanban_i = $cAvic->explodeKanbanInternal($str_kanban);
   
   if($interlock == "1") {
 
@@ -321,7 +324,10 @@ if($action == "api_check_kanban_i") {
   $class = new LoadingList();
   $cAvc = new Avicenna();
   
-  $data_kanban_i = $cAvc->explodeKanbanInternal($kanban_i);
+  $str_kanban = $kanban_i;
+  $str_kanban = str_replace(";"," ",$str_kanban);
+  $str_kanban = str_replace(".","",$str_kanban);
+  $data_kanban_i = $cAvc->explodeKanbanInternal($str_kanban);
   
   $kanban_i_srl = $data_kanban_i[10];
   $matnr = ltrim($data_kanban_i[4], '0');;

@@ -50,7 +50,7 @@ and open the template in the editor.
                             <td><input type="date" class="form-control form-control-sm" name="tanggal" id="tanggal" value="<?=$tanggal?>"></td>
                             <td><label class="col-form-label">Shift</label></td>
                             <td><select class="custom-select custom-select-sm" name="shift" id="shift"><?php foreach($data_shift as $row) {$selected = ""; if($row["code"] == $shift){$selected = "selected";} echo "<option value='".$row["code"]."' $selected>".$row["name"]."</option>";} ?></select></td>
-                            <td><button class="btn btn-block btn-primary btn-sm" type="submit" name="save">Refresh Data</button></td>
+                            <td><button class="btn btn-block btn-primary btn-sm" type="button" onclick="updateDashboard()">Refresh Data</button></td>
                           </tr>
                         </table>
                       </form>
@@ -99,13 +99,7 @@ and open the template in the editor.
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
       var options = {
-        series: [
-          {            
-            data: []
-              <?php /*echo json_encode($data_main, JSON_NUMERIC_CHECK); */?>
-            
-          }
-        ],
+        series:[],
         tooltip: {
           x: {
             format: "HH:mm"
@@ -118,7 +112,8 @@ and open the template in the editor.
         plotOptions: {
           bar: {
             horizontal: true,
-            barHeight: '80%'
+            barHeight: '80%',
+            rangeBarGroupRows: true,
           }
         },
         xaxis: {
@@ -137,8 +132,7 @@ and open the template in the editor.
           colors: ["#cfcfcf"],
         },
         legend: {
-          position: 'top',
-          horizontalAlign: 'left'
+          show: false
         },
         /*annotations: {
           xaxis: [
@@ -160,13 +154,13 @@ and open the template in the editor.
       chart.render();
 
       $(document).ready(function () {
-        updateDashboard();
-        updateAnnotation();
+        /*updateDashboard();*/
+        /*updateAnnotation();*/
       });
       
       setInterval(function(){
         updateDashboard();
-        updateAnnotation();        
+        //updateAnnotation();        
       },10000);
       
       function updateAnnotation() {
@@ -208,9 +202,14 @@ and open the template in the editor.
           function(data) {
             //var data_per_jam = data.data_per_jam;
             $("#lead_time").val(data.lead_time);
-            chart.updateSeries([{
+            /*chart.updateSeries([{
+              name : "pulling",
               data: data.data_chart
-            }]);
+            }]);*/
+          
+            chart.updateOptions({
+              series: data.data_chart
+            });
           });
       }
       

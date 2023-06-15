@@ -148,14 +148,16 @@ class Avicenna {
       $return["message"] = "Paramenter Empty";
     } else {
       $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-      $sql = "INSERT INTO t_api_log (api_url, api_body, api_response, crt_by, app_id) VALUES (:api_url, :api_body, :api_response, :crt_by, '".APP."')";
+      $sql = "INSERT INTO t_api_log (api_url, api_body, api_response, crt_by, app_id) VALUES ('".$param["api_url"]."', '".$param["api_body"]."', '".$param["api_response"]."', '".$param["crt_by"]."', '".APP."')";
+      //$sql = "INSERT INTO t_api_log (api_url, api_body, api_response, crt_by, app_id) VALUES (:api_url, :api_body, :api_response, :crt_by, '".APP."')";
+      
       $stmt = $conn->prepare($sql);
-      $stmt->bindValue(":api_url", $param["api_url"], PDO::PARAM_STR);
-      $stmt->bindValue(":api_body", $param["api_body"], PDO::PARAM_STR);
-      $stmt->bindValue(":api_response", $param["api_response"], PDO::PARAM_STR);
-      $stmt->bindValue(":crt_by", $param["crt_by"], PDO::PARAM_STR);
+      /*$stmt->bindValue(":api_url", $param["api_url"]);
+      $stmt->bindValue(":api_body", $param["api_body"]);
+      $stmt->bindValue(":api_response", $param["api_response"]);
+      $stmt->bindValue(":crt_by", $param["crt_by"]);*/
       $stmt = $conn->prepare($sql);
-      if ($stmt->execute()) {
+      if ($stmt->execute() or die($stmt->errorInfo()[2])) {
         $return["status"] = true;
       } else {
         $error = $stmt->errorInfo();

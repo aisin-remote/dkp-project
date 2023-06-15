@@ -21,7 +21,9 @@ if($action == "home") {
   $data_shift[1]["name"] = "Shift 2";
   $data_shift[2]["code"] = "3";
   $data_shift[2]["name"] = "Shift 3";
-  
+  $tanggal = date("Y-m-d");
+  $today = date("Ymd");
+  /*
   $tanggal = date("Y-m-d");
   $today = date("Ymd");
   $next_day = date("Ymd",strtotime(date("Y-m-d")." +1 day"));
@@ -130,13 +132,16 @@ if($action == "home") {
           $color = "#b5b5b5";
         }
       }
-      $data_main[$i]["x"] = $row["customer_name"];
-      $data_main[$i]["y"] = [$js_time1,$js_time2];
-      $data_main[$i]["fillColor"] = $color;
+      $data_chart = [];
+      $data_chart["x"] = $row["customer_name"];
+      $data_chart["y"] = [$js_time1,$js_time2];
+      $data_chart["fillColor"] = $color;
+      $data_main[$i]["name"] = $row["ldnum"];
+      $data_main[$i]["data"] = $data_chart;
       $i++;
     }
   }
-    
+  */  
   require( TEMPLATE_PATH . "/t_home.php" );
 }
 ?>

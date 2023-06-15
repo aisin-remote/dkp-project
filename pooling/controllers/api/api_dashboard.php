@@ -63,7 +63,7 @@ if($action == "api_dashboard_pooling") {
          ."WHERE chr_ngp_syukka+''+chr_tim_syukka BETWEEN '".$today.$time_start."' AND '".$next_day.$time_end."' "
          ."ORDER BY dt_time asc ";
   $stmt = $conn_sql_srv->prepare($sql);
-  $return["sql"] = $sql;
+  //$return["sql"] = $sql;
   $data_main = [];
   $i = 0;
   $js_ms = 1000;
@@ -127,9 +127,12 @@ if($action == "api_dashboard_pooling") {
           $color = "#b5b5b5";
         }
       }
-      $data_main[$i]["x"] = $row["customer_name"];
-      $data_main[$i]["y"] = [$js_time1,$js_time2];
-      $data_main[$i]["fillColor"] = $color;
+      $data = [];
+      $data[0]["x"] = $row["customer_name"];
+      $data[0]["y"] = [$js_time1,$js_time2];
+      $data[0]["fillColor"] = $color;
+      $data_main[$i]["name"] = $row["ldnum"];
+      $data_main[$i]["data"] = $data;
       $i++;
     }
   }
