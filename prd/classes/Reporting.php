@@ -221,7 +221,18 @@ class Reporting
         sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'ROL7')) as ng_rol7,
         sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'ROL8')) as ng_rol8,
         sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'ROL9')) as ng_rol9,
-        sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'ROL10')) as ng_rol10
+        sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'ROL10')) as ng_rol10,
+        sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'RIL1')) as ng_ril1,
+        sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'RIL2')) as ng_ril2,
+        sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'RIL3')) as ng_ril3,
+        sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'RIL4')) as ng_ril4,
+        sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'RIL5')) as ng_ril5,
+        sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'RIL6')) as ng_ril6,
+        sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'RIL7')) as ng_ril7,
+        sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'RIL8')) as ng_ril8,
+        sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'RIL9')) as ng_ril9,
+        sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'RIL10')) as ng_ril10,
+		sum((select coalesce(sum(ng_qty),0) FROM t_prd_daily_ng WHERE prd_dt = a.prd_dt AND shift = a.shift AND line_id = a.line_id AND prd_seq = a.prd_seq AND ng_type = 'RIL12')) as ng_ril12
         from t_prd_daily_i a 
         inner join m_prd_line b ON b.line_id = a.line_id
         inner join m_dm_dies_asset c on c.dies_id = CAST(a.dies_id as bigint)
