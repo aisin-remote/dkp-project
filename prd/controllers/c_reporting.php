@@ -56,9 +56,9 @@ if ($action == "daily_production") {
     $spreadsheet->getActiveSheet()->setCellValue('F7', "Pos 2");
     $spreadsheet->getActiveSheet()->setCellValue('G7', ": " . $data_header["op2_name"]);
     $spreadsheet->getActiveSheet()->setCellValue('F8', "Pos 3");
-    $spreadsheet->getActiveSheet()->setCellValue('G8', ": " . $data_header["op2_name"]);
+    $spreadsheet->getActiveSheet()->setCellValue('G8', ": " . $data_header["op3_name"]);
     $spreadsheet->getActiveSheet()->setCellValue('F9', "Pos 4");
-    $spreadsheet->getActiveSheet()->setCellValue('G9', ": " . $data_header["op2_name"]);
+    $spreadsheet->getActiveSheet()->setCellValue('G9', ": " . $data_header["op4_name"]);
 
     $spreadsheet->getActiveSheet()->setCellValue('I4', "Model");
     foreach ($dies_list as $key => $value) {
@@ -123,11 +123,17 @@ if ($action == "daily_production") {
     $spreadsheet->getActiveSheet()->setCellValue("S11", "Tool Injury")->getStyle("S11")->getAlignment()->setWrapText(true);
     $spreadsheet->getActiveSheet()->setCellValue("T11", "Yakitsuki");
     $spreadsheet->getActiveSheet()->setCellValue("U11", "Scratch");
-    $spreadsheet->getActiveSheet()->setCellValue("V11", "Mikui");
+    $spreadsheet->getActiveSheet()->setCellValue("V11", "NG Marking");
+    $spreadsheet->getActiveSheet()->setCellValue("W11", "Mikui");
+    $spreadsheet->getActiveSheet()->setCellValue("X11", "Gompal");
+    $spreadsheet->getActiveSheet()->setCellValue("Y11", "Die Crack");
+    $spreadsheet->getActiveSheet()->setCellValue("Z11", "Mengelupas");
+    $spreadsheet->getActiveSheet()->setCellValue("AA11", "Over Kikir");
+    $spreadsheet->getActiveSheet()->setCellValue("AB11", "GAP Tebal (Thickness NG)")->getStyle("AB11")->getAlignment()->setWrapText(true);
 
     $j = 0;
     foreach ($data2["list"] as $key => $value) {
-      $spreadsheet->getActiveSheet()->setCellValue('K' . ($key + $j + 12), $value["group_id"] . " " . $value["model_id"]);
+      $spreadsheet->getActiveSheet()->setCellValue('K' . ($key + $j + 12), $value["group_id"] . " " . $value["model_id"] . " " . $value["dies_no"]);
       $spreadsheet->getActiveSheet()->setCellValue('L' . ($key + $j + 12), $value["ng_ril1"]);
       $spreadsheet->getActiveSheet()->setCellValue('M' . ($key + $j + 12), $value["ng_ril2"]);
       $spreadsheet->getActiveSheet()->setCellValue('N' . ($key + $j + 12), $value["ng_ril3"]);
@@ -138,9 +144,21 @@ if ($action == "daily_production") {
       $spreadsheet->getActiveSheet()->setCellValue('S' . ($key + $j + 12), $value["ng_ril8"]);
       $spreadsheet->getActiveSheet()->setCellValue('T' . ($key + $j + 12), $value["ng_ril9"]);
       $spreadsheet->getActiveSheet()->setCellValue('U' . ($key + $j + 12), $value["ng_ril10"]);
-      $spreadsheet->getActiveSheet()->setCellValue('V' . ($key + $j + 12), $value["ng_ril12"]);
+      $spreadsheet->getActiveSheet()->setCellValue('V' . ($key + $j + 12), $value["ng_ril11"]);
+      $spreadsheet->getActiveSheet()->setCellValue('W' . ($key + $j + 12), $value["ng_ril12"]);
+      $spreadsheet->getActiveSheet()->setCellValue('X' . ($key + $j + 12), $value["ng_ril13"]);
+      $spreadsheet->getActiveSheet()->setCellValue('Y' . ($key + $j + 12), $value["ng_ril14"]);
+      $spreadsheet->getActiveSheet()->setCellValue('Z' . ($key + $j + 12), $value["ng_ril15"]);
+      $spreadsheet->getActiveSheet()->setCellValue('AA' . ($key + $j + 12), $value["ng_ril16"]);
+      $spreadsheet->getActiveSheet()->setCellValue('AB' . ($key + $j + 12), $value["ng_ril17"]);
       $j++;
     }
+
+    // $dataRange = "K11:V22";
+    // $data = $spreadsheet->getActiveSheet()->rangeToArray($dataRange, null, true, true, true);
+    // $transposedData = array_map(null, ...$data);
+    // $transposedRange = "K11:" . $spreadsheet->getActiveSheet()->getCellByColumnAndRow(count($transposedData), count($transposedData[0]))->getCoordinate();
+    // $spreadsheet->getActiveSheet()->fromArray($transposedData, null, "K11");
 
     $spreadsheet->getActiveSheet()->mergeCells("A" . ($i + 13) . ":A" . ($i + 14) . "")->setCellValue('A' . ($i + 13), "Model");
     $spreadsheet->getActiveSheet()->mergeCells("B" . ($i + 13) . ":B" . ($i + 14) . "")->setCellValue('B' . ($i + 13), "Dies");
@@ -157,11 +175,11 @@ if ($action == "daily_production") {
     $spreadsheet->getActiveSheet()->setCellValue('L' . ($i + 14), "Steuchi Setup");
     $spreadsheet->getActiveSheet()->setCellValue('M' . ($i + 14), "Steuchi Trouble");
     $spreadsheet->getActiveSheet()->setCellValue('N' . ($i + 14), "Steuchi Dandori");
-    $spreadsheet->getActiveSheet()->setCellValue('O' . ($i + 14), "Produk Jatuh");
-    $spreadsheet->getActiveSheet()->setCellValue('P' . ($i + 14), "Produk Numpuk");
-    $spreadsheet->getActiveSheet()->setCellValue('Q' . ($i + 14), "Sample");
-    $spreadsheet->getActiveSheet()->setCellValue('R' . ($i + 14), "Kekotanso");
-    $spreadsheet->getActiveSheet()->setCellValue('S' . ($i + 14), "Lot Out");
+    $spreadsheet->getActiveSheet()->setCellValue('O' . ($i + 14), "Lot Out");
+    $spreadsheet->getActiveSheet()->setCellValue('P' . ($i + 14), "Produk Jatuh");
+    $spreadsheet->getActiveSheet()->setCellValue('Q' . ($i + 14), "Produk Numpuk");
+    $spreadsheet->getActiveSheet()->setCellValue('R' . ($i + 14), "Sample");
+    $spreadsheet->getActiveSheet()->setCellValue('S' . ($i + 14), "Kekotanso");
     $spreadsheet->getActiveSheet()->setCellValue('T' . ($i + 14), "DLL");
     $spreadsheet->getActiveSheet()->mergeCells('U' . ($i + 13) . ':U' . ($i + 14) . '')->setCellValue('U' . ($i + 13), "WIP");
     $spreadsheet->getActiveSheet()->mergeCells('V' . ($i + 13) . ':V' . ($i + 14) . '')->setCellValue('V' . ($i + 13), "Efficiency %");
@@ -183,14 +201,14 @@ if ($action == "daily_production") {
       $spreadsheet->getActiveSheet()->setCellValue('I' . ($i + 15 + $key), $value["ng_ril"]);
       $spreadsheet->getActiveSheet()->setCellValue('J' . ($i + 15 + $key), $value["ng_rol1"]);
       $spreadsheet->getActiveSheet()->setCellValue('K' . ($i + 15 + $key), $value["ng_rol2"]);
-      $spreadsheet->getActiveSheet()->setCellValue('L' . ($i + 15 + $key), $value["ng_rol3"]);
+      $spreadsheet->getActiveSheet()->setCellValue('L' . ($i + 15 + $key), $value["ng_rol6"]);
       $spreadsheet->getActiveSheet()->setCellValue('M' . ($i + 15 + $key), $value["ng_rol4"]);
       $spreadsheet->getActiveSheet()->setCellValue('N' . ($i + 15 + $key), $value["ng_rol5"]);
-      $spreadsheet->getActiveSheet()->setCellValue('O' . ($i + 15 + $key), $value["ng_rol7"]);
-      $spreadsheet->getActiveSheet()->setCellValue('P' . ($i + 15 + $key), $value["ng_rol8"]);
-      $spreadsheet->getActiveSheet()->setCellValue('Q' . ($i + 15 + $key), $value["ng_rol9"]);
-      $spreadsheet->getActiveSheet()->setCellValue('R' . ($i + 15 + $key), $value["ng_rol10"]);
-      $spreadsheet->getActiveSheet()->setCellValue('S' . ($i + 15 + $key), $value["ng_rol6"]);
+      $spreadsheet->getActiveSheet()->setCellValue('O' . ($i + 15 + $key), $value["ng_rol3"]);
+      $spreadsheet->getActiveSheet()->setCellValue('P' . ($i + 15 + $key), $value["ng_rol7"]);
+      $spreadsheet->getActiveSheet()->setCellValue('Q' . ($i + 15 + $key), $value["ng_rol8"]);
+      $spreadsheet->getActiveSheet()->setCellValue('R' . ($i + 15 + $key), $value["ng_rol9"]);
+      $spreadsheet->getActiveSheet()->setCellValue('S' . ($i + 15 + $key), $value["ng_rol10"]);
       $spreadsheet->getActiveSheet()->setCellValue('U' . ($i + 15 + $key), $value["wip"]);
       $spreadsheet->getActiveSheet()->setCellValue('V' . ($i + 15 + $key), $value["eff"]);
       $spreadsheet->getActiveSheet()->setCellValue('W' . ($i + 15 + $key), $value["loss%"]);
@@ -201,25 +219,25 @@ if ($action == "daily_production") {
       $spreadsheet->getActiveSheet()->getStyle('A' . ($i + 15 + $key) . ':AA' . ($i + 15 + $key))->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     }
 
-
     $spreadsheet->getActiveSheet()->getStyle('A1')->getFont()->setBold(true)->setSize(24);
     $spreadsheet->getActiveSheet()->getStyle('A11:I11')->getFont()->setBold(true);
     $spreadsheet->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal('center');
     $spreadsheet->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal('center');
+    $spreadsheet->getActiveSheet()->getStyle('AB')->getAlignment()->setHorizontal('center');
     $spreadsheet->getActiveSheet()->getStyle('I4:J8')->getAlignment()->setHorizontal('center');
     $spreadsheet->getActiveSheet()->getStyle('I' . ($i + 13))->getAlignment()->setHorizontal('center');
     $spreadsheet->getActiveSheet()->getStyle('I12:I' . ($i + 11))->getAlignment()->setWrapText(true);
-    $spreadsheet->getActiveSheet()->getStyle('A11:AA' . ($i + 15))->getAlignment()->setVertical('center')->setHorizontal('center');
+    $spreadsheet->getActiveSheet()->getStyle('A11:AA' . ($i + 16))->getAlignment()->setVertical('center')->setHorizontal('center');
     $spreadsheet->getActiveSheet()->getStyle('A4:D6')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('F4:G9')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('A12:I' . ($i + 11))->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('A12:I' . ($i + 11))->getBorders()->getVertical()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-    $spreadsheet->getActiveSheet()->getStyle('K12:V' . ($i + 11))->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-    $spreadsheet->getActiveSheet()->getStyle('K12:V' . ($i + 11))->getBorders()->getVertical()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+    $spreadsheet->getActiveSheet()->getStyle('K12:AB' . ($i + 11))->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+    $spreadsheet->getActiveSheet()->getStyle('K12:AB' . ($i + 11))->getBorders()->getVertical()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('A' . ($i + 13) . ':AA' . ($i + 14))->getFont()->setBold(true);
     $spreadsheet->getActiveSheet()->getStyle('A' . ($i + 13) . ':AA' . ($i + 14))->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('A11:I11')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-    $spreadsheet->getActiveSheet()->getStyle('K11:V11')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+    $spreadsheet->getActiveSheet()->getStyle('K11:AB11')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('I4:J8')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
     $spreadsheet->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
@@ -239,6 +257,7 @@ if ($action == "daily_production") {
     $spreadsheet->getActiveSheet()->getColumnDimension('N')->setAutoSize(true);
     $spreadsheet->getActiveSheet()->getColumnDimension('O')->setAutoSize(true);
     $spreadsheet->getActiveSheet()->getColumnDimension('P')->setAutoSize(true);
+    $spreadsheet->getActiveSheet()->getColumnDimension('Q')->setAutoSize(true);
     $spreadsheet->getActiveSheet()->getColumnDimension('K')->setAutoSize(true);
     $spreadsheet->getActiveSheet()->getColumnDimension('L')->setAutoSize(true);
     $spreadsheet->getActiveSheet()->getColumnDimension('V')->setAutoSize(true);
@@ -247,6 +266,7 @@ if ($action == "daily_production") {
     $spreadsheet->getActiveSheet()->getColumnDimension('Y')->setAutoSize(true);
     $spreadsheet->getActiveSheet()->getColumnDimension('Z')->setAutoSize(true);
     $spreadsheet->getActiveSheet()->getColumnDimension('AA')->setAutoSize(true);
+    $spreadsheet->getActiveSheet()->getColumnDimension('AB')->setWidth(20);
 
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     header('Content-Disposition: attachment;filename="DailyProductionReport_' . $prd_dt . '_' . $shift . '_' . $data_header["line_name"] . '.xlsx"');
