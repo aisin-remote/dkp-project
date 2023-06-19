@@ -92,7 +92,7 @@ class KanbanRFID {
       }
       
       if (!empty($insertQuery)) {
-        $sql .= implode(', ', $insertQuery)." CONFLICT(rfid_tag) DO UPDATE SET lifnr = EXCLUDED.lifnr, matnr = EXCLUDED.matnr, crt_by = EXCLUDED.crt_by, crt_dt = CURRENT_TIMESTAMP";
+        $sql .= implode(', ', $insertQuery)." ON CONFLICT(rfid_tag) DO UPDATE SET lifnr = EXCLUDED.lifnr, matnr = EXCLUDED.matnr, crt_by = EXCLUDED.crt_by, crt_dt = CURRENT_TIMESTAMP";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute($insertData)) {
           $return["status"] = true;
