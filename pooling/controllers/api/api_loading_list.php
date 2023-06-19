@@ -238,8 +238,8 @@ if($action == "api_save_ldlist_s") {
   $str_kanban = str_replace(".","",$str_kanban);
   $data_kanban_i = $cAvic->explodeKanbanInternal($str_kanban);
   
+  $data_header = $class->getHeaderById($data_kanban["ldnum"]);
   if($interlock == "1") {
-
     $param_avc["kanban_serial"] = substr($data_kanban_i[10], -4);
     $param_avc["back_number"] = $data_kanban_i[9];
     $param_avc["cycle"] = $data_header["cycle1"];
@@ -304,7 +304,6 @@ if($action == "api_save_ldlist_s") {
   
   //cek apakah semua qty sudah terpenuhi
   $data_header = $class->getHeaderById($data_kanban["ldnum"]);
-  
   if($data_header["wmeng"] >= $data_header["menge"]) {
     $class->updateStatus($data_kanban["ldnum"], "C");
   }
