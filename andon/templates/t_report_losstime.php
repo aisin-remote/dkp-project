@@ -112,6 +112,21 @@ and open the template in the editor.
               <label class="col-form-label px-3">to</label>
               <div class="col"><input type="text" name="date_to" class="form-control datepicker" value="<?php echo $date_to; ?>"></div>
             </div>
+            <div class="row my-2">
+              <div class="col-4"><label class="col-form-label">Line</label></div>
+              <div class="col">
+                <select name="line_id" id="line_id" class="form-control select2" style="width: 300px">
+                  <option value="" selected>Pilih Line</option>
+                  <?php
+                  foreach ($line as $group) {
+                    ?>
+                    <option value="<?php echo $group["line_id"]; ?>"><?php echo $group["name1"]; ?></option>
+                    <?php
+                  }
+                  ?>
+                </select>
+              </div>
+            </div>
             <!-- <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Year</label></div>
               <div class="col"><input type="text" name="prd_year" class="form-control" value="<?php echo $prd_year; ?>"></div>

@@ -156,7 +156,17 @@ and open the template in the editor.
             </div>
             <div class="row my-2">
               <div class="col-4"><label class="col-form-label">Line</label></div>
-              <div class="col"><input type="text" name="line_id" class="form-control" value="<?php echo $line_id; ?>">
+              <div class="col">
+                <select name="line_id" id="line_id" class="form-control select2" style="width: 300px">
+                  <option value="" selected>Pilih Line</option>
+                  <?php
+                  foreach ($line as $group) {
+                    ?>
+                    <option value="<?php echo $group["line_id"]; ?>"><?php echo $group["name1"]; ?></option>
+                    <?php
+                  }
+                  ?>
+                </select>
               </div>
             </div>
             <!-- <div class="row my-2">

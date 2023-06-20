@@ -71,6 +71,7 @@ and open the template in the editor.
                             <th class="text-nowrap">Material Document</th>
                             <th class="text-nowrap">Year</th>
                             <th class="text-nowrap">Posting Date</th>
+                            <th class="text-nowrap">Posting Time</th>
                             <th class="text-nowrap">Item No</th>
                             <th class="text-nowrap">Plant</th>
                             <th class="text-nowrap">Plant Desc</th>
@@ -94,6 +95,7 @@ and open the template in the editor.
                               . "<td class='text-center text-nowrap'>".$list["mblnr"]."</td>"
                               . "<td class='text-center text-nowrap'>".$list["mjahr"]."</td>"
                               . "<td class='text-center text-nowrap'>".$list["posting_date"]."</td>"
+                              . "<td class='text-center text-nowrap'>".$list["posting_time"]."</td>"
                               . "<td class='text-center text-nowrap'>".$list["mblpo"]."</td>"
                               . "<td class='text-center text-nowrap'>".$list["werks"]."</td>"
                               . "<td class='text-nowrap'>".$list["plant_name"]."</td>"
