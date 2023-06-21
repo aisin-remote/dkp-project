@@ -162,7 +162,7 @@ if ($action == "api_approve_daily_i") {
   echo json_encode($return);
 }
 
-if ($action == "api_get_ok_qty") {
+if ($action == "api_get_qty") {
   $return = array();
   $prd_dt = $_REQUEST["date"];
   // echo $prd_dt;
