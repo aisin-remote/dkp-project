@@ -168,7 +168,7 @@ if ($action == "api_get_qty") {
   // echo $prd_dt;
   // die();
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-  $query = "select t.line_name, TO_CHAR(t.prd_dt, 'DD-MM-YYYY') as date, t.ok_qty,
+  $query = "select t.line_name, TO_CHAR(t.prd_dt, 'DD-MM-YYYY') as date, t.pval1 as shift, t.ok_qty,
   (select coalesce(sum(ng_qty),0) as ng_qty FROM t_prd_daily_ng WHERE prd_dt = t.prd_dt AND shift = t.shift AND line_id = t.line_id), 
   round((t.ok_qty * t.cctime / 60 / t.prd_time * 100)::numeric, 2) as eff from 
   (select TO_CHAR(a.prd_dt, 'YYYY') as prd_year, TO_CHAR(a.prd_dt,'MM') as prd_month, f.pval1,
