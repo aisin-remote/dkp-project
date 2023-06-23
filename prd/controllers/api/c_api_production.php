@@ -168,20 +168,26 @@ if ($action == "api_get_qty") {
   // echo $prd_dt;
   // die();
   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-  $query = "select t.line_name, TO_CHAR(t.prd_dt, 'DD-MM-YYYY') as date, t.pval1 as shift, t.ok_qty,
-  (select coalesce(sum(ng_qty),0) as ng_qty FROM t_prd_daily_ng WHERE prd_dt = t.prd_dt AND shift = t.shift AND line_id = t.line_id), 
-  round((t.ok_qty * t.cctime / 60 / t.prd_time * 100)::numeric, 2) as eff from 
-  (select TO_CHAR(a.prd_dt, 'YYYY') as prd_year, TO_CHAR(a.prd_dt,'MM') as prd_month, f.pval1,
-  a.prd_dt, a.line_id, b.name1 as line_name, a.shift, d.name1 as ld_name, e.name1 as jp_name,
-  AVG(a.cctime) as cctime, sum(a.prd_time) as prd_time, sum(a.pln_qty) as pln_qty, sum(a.prd_qty) as ok_qty
+  // $query = "select t.line_name, TO_CHAR(t.prd_dt, 'DD-MM-YYYY') as date, t.pval1 as shift, t.ok_qty,
+  // (select coalesce(sum(ng_qty),0) as ng_qty FROM t_prd_daily_ng WHERE prd_dt = t.prd_dt AND shift = t.shift AND line_id = t.line_id), 
+  // round((t.ok_qty * t.cctime / 60 / t.prd_time * 100)::numeric, 2) as eff from 
+  // (select TO_CHAR(a.prd_dt, 'YYYY') as prd_year, TO_CHAR(a.prd_dt,'MM') as prd_month, f.pval1,
+  // a.prd_dt, a.line_id, b.name1 as line_name, a.shift, d.name1 as ld_name, e.name1 as jp_name,
+  // AVG(a.cctime) as cctime, sum(a.prd_time) as prd_time, sum(a.pln_qty) as pln_qty, sum(a.prd_qty) as ok_qty
+  // from t_prd_daily_i a 
+  // inner join m_prd_line b ON b.line_id = a.line_id and b.line_ty = 'DM'
+  // inner join t_prd_daily_h c on c.prd_dt = a.prd_dt and c.line_id = a.line_id and c.shift = a.shift
+  // left join m_prd_operator d on d.empid = c.ldid
+  // left join m_prd_operator e on e.empid = c.jpid
+  // inner join m_param f on f.pid = 'SHIFT' and f.seq = a.shift
+  // where 1=1 and TO_CHAR(a.prd_dt, 'DD-MM-YYYY') = '$prd_dt'
+  // group by 1,2,3,4,5,6,7,8,9) t";
+  $query = "select b.name1 as line_name, TO_CHAR(a.prd_dt, 'DD-MM-YYYY') as date, SUM(a.prd_qty) as ok_qty, SUM(c.ng_qty) as ng_qty 
   from t_prd_daily_i a 
   inner join m_prd_line b ON b.line_id = a.line_id and b.line_ty = 'DM'
-  inner join t_prd_daily_h c on c.prd_dt = a.prd_dt and c.line_id = a.line_id and c.shift = a.shift
-  left join m_prd_operator d on d.empid = c.ldid
-  left join m_prd_operator e on e.empid = c.jpid
-  inner join m_param f on f.pid = 'SHIFT' and f.seq = a.shift
-  where 1=1 and TO_CHAR(a.prd_dt, 'DD-MM-YYYY') = '$prd_dt'
-  group by 1,2,3,4,5,6,7,8,9) t";
+  left join t_prd_daily_ng c on c.line_id = a.line_id and c.prd_dt = a.prd_dt
+  where a.prd_dt = '2023-06-22'
+  group by 1,2";
   $stmt = $conn->prepare($query);
   if ($stmt->execute()) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
