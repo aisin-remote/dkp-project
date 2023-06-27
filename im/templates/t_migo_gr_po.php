@@ -157,6 +157,7 @@ and open the template in the editor.
                           <td>
                             <input type="number" name="menge[]" class="form-control menge" step="any" min="0" value=""
                               placeholder="0" required="required">
+                            <input type="hidden" name="date[]" class="form-control menge" value="">
                           </td>
                           <!-- <td>
                             <input type="number" name="ng[]" class="form-control menge" step="any" min="0" value=""
@@ -339,32 +340,45 @@ and open the template in the editor.
           var menges = $("input[name='menge[]']");
           var chargs = $("input[name='charg[]']");
           var lgorts = $("select[name='lgort[]']");
+          var date = $("input[name='date[]']");
           if (matnrs[matnrs.length - 1].value == "") {
             matnrs[matnrs.length - 1].value = matnr;
             menges[matnrs.length - 1].value = menge;
             chargs[matnrs.length - 1].value = matnr; /*charg;*/
             lgorts[matnrs.length - 1].value = lgort;
+            date[matnrs.length - 1].value = charg;
           } else {
+
             if (matnrs[matnrs.length - 1].value != matnr) {
-              addItem();
-              matnrs = $("select[name='matnr[]']");
-              menges = $("input[name='menge[]']");
-              chargs = $("input[name='charg[]']");
-              lgorts = $("select[name='lgort[]']");
-              matnrs[matnrs.length - 1].value = matnr;
-              menges[matnrs.length - 1].value = menge;
-              chargs[matnrs.length - 1].value = matnr; /*charg;*/
-              lgorts[matnrs.length - 1].value = lgort;
+              if (date[matnrs.length - 1].value == charg) {
+                alert("Kanban sudah discan!");
+              } else {
+                addItem();
+                matnrs = $("select[name='matnr[]']");
+                menges = $("input[name='menge[]']");
+                chargs = $("input[name='charg[]']");
+                lgorts = $("select[name='lgort[]']");
+                matnrs[matnrs.length - 1].value = matnr;
+                menges[matnrs.length - 1].value = menge;
+                chargs[matnrs.length - 1].value = matnr; /*charg;*/
+                lgorts[matnrs.length - 1].value = lgort;
+                date[matnrs.length - 1].value = charg;
+              }
             } else {
-              // addItem();
-              matnrs = $("select[name='matnr[]']");
-              menges = $("input[name='menge[]']");
-              chargs = $("input[name='charg[]']");
-              lgorts = $("select[name='lgort[]']");
-              matnrs[matnrs.length - 1].value = matnr;
-              menges[matnrs.length - 1].value = parseInt(menges[matnrs.length - 1].value) + menge;
-              chargs[matnrs.length - 1].value = matnr; /*charg;*/
-              lgorts[matnrs.length - 1].value = lgort;
+              if (date[matnrs.length - 1].value == charg) {
+                alert("Kanban sudah discan!");
+              } else {
+                // addItem();
+                matnrs = $("select[name='matnr[]']");
+                menges = $("input[name='menge[]']");
+                chargs = $("input[name='charg[]']");
+                lgorts = $("select[name='lgort[]']");
+                matnrs[matnrs.length - 1].value = matnr;
+                menges[matnrs.length - 1].value = parseInt(menges[matnrs.length - 1].value) + menge;
+                chargs[matnrs.length - 1].value = matnr; /*charg;*/
+                lgorts[matnrs.length - 1].value = lgort;
+                date[matnrs.length - 1].value = charg;
+              }
             }
           }
 
