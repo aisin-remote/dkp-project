@@ -16,7 +16,7 @@ if (!isset($_SESSION[LOGIN_SESSION])) {
       break;
     }
   }
-  if ($action == "logout" || $action == "home" || $action == "profile" || $action == "login") {
+  if ($action == "logout" || $action == "home" || $action == "home_realtime" || $action == "profile" || $action == "login") {
     $cek_auth = true;
   }
   if ($cek_auth == false) {

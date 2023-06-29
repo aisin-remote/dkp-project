@@ -33,7 +33,7 @@ and open the template in the editor.
                   <a href="?action=home" class="btn btn-sm btn-primary mr-2">Pershift</a>
                   <a href="?action=home_realtime" class="btn btn-sm btn-primary">Realtime</a>
                 </div>
-                <div class="row">
+                  <div class="row">
                   <div class="col-12 d-none container-fluid" id="btn-exit-fullscreen">
                     <div class="row">
                       <div class="col-3">
@@ -55,69 +55,9 @@ and open the template in the editor.
                     </div>
                   </div>
                   <div class="col-12">
-                    <form method="get" action="#">
-                      <table class="table table-sm border-bottom py-1 ">
-                        <tr>
-                          <td><label class="col-form-label">Tanggal</label></td>
-                          <td><input type="date" class="form-control form-control-sm" name="tanggal" id="tanggal"
-                              value="<?= $tanggal ?>"></td>
-                          <td><label class="col-form-label">Shift</label></td>
-                          <td><select class="custom-select custom-select-sm" name="shift" id="shift">
-                              <?php foreach ($data_shift as $row) {
-                                $selected = "";
-                                if ($row["code"] == $shift) {
-                                  $selected = "selected";
-                                }
-                                echo "<option value='" . $row["code"] . "' $selected>" . $row["name"] . "</option>";
-                              } ?>
-                            </select></td>
-                          <td><button class="btn btn-block btn-primary btn-sm" type="button"
-                              onclick="updateDashboard()">Refresh Data</button></td>
-                        </tr>
-                      </table>
-                    </form>
-                  </div>
-                  <div class="col-12">
                     <div id="chart"></div>
                   </div>
                   <div class="col-12">
-                    <table class="table">
-                      <tr>
-                        <th colspan="4">Legend</th>
-                      </tr>
-                      <tr>
-                        <td style="background-color: #b5b5b5;">
-                          <div style="width: 40px;"></div>
-                        </td>
-                        <td>Order Open (On Progress Pulling)</td>
-                        <td style="background-color: #00E396;">
-                          <div style="width: 40px;"></div>
-                        </td>
-                        <td>Pulling Finish, Not Delivered</td>
-                      </tr>
-                      <tr>
-                        <td style="background-color: #FEB019;">
-                          <div style="width: 40px;"></div>
-                        </td>
-                        <td>Pulling Progress</td>
-                        <td style="background-color: #FF4560;">
-                          <div style="width: 40px;"></div>
-                        </td>
-                        <td>Delivery time has passed</td>
-                      </tr>
-                      <tr>
-                        <td style="background-color: #03adfc;">
-                          <div style="width: 40px;"></div>
-                        </td>
-                        <td>Delivered</td>
-                        <td style="background-color: #FFF;">
-                          <div style="width: 40px;"></div>
-                        </td>
-                        <td></td>
-                      </tr>
-                    </table>
-                  </div>
-                  <!-- <div class="col-12">
                     <table class="table">
                       <tr>
                         <th colspan="4">Legend</th>
@@ -153,7 +93,7 @@ and open the template in the editor.
                         <td></td>
                       </tr>
                     </table>
-                  </div> -->
+                  </div>
                 </div>
 
               </div>
@@ -243,7 +183,7 @@ and open the template in the editor.
 
     setInterval(function () {
       updateDashboard();
-      updateAnnotation();        
+      updateAnnotation();
     }, 10000);
 
     function updateAnnotation() {
@@ -280,8 +220,8 @@ and open the template in the editor.
 
     function updateDashboard() {
       $.getJSON(
-        "?action=api_dashboard_pooling",
-        { device_id: '<?= $_SERVER["REMOTE_ADDR"] ?>', tanggal: $("#tanggal").val(), shift: $("#shift").val() },
+        "?action=api_dashboard_realtime",
+        { device_id: '<?= $_SERVER["REMOTE_ADDR"] ?>' },
         function (data) {
           //var data_per_jam = data.data_per_jam;
           $("#lead_time").val(data.lead_time);
