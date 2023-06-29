@@ -66,6 +66,43 @@ and open the template in the editor.
                         <td style="background-color: #b5b5b5;">
                           <div style="width: 40px;"></div>
                         </td>
+                        <td>Order Open (On Progress Pulling)</td>
+                        <td style="background-color: #00E396;">
+                          <div style="width: 40px;"></div>
+                        </td>
+                        <td>Pulling Finish, Not Delivered</td>
+                      </tr>
+                      <tr>
+                        <td style="background-color: #FEB019;">
+                          <div style="width: 40px;"></div>
+                        </td>
+                        <td>Pulling Progress</td>
+                        <td style="background-color: #FF4560;">
+                          <div style="width: 40px;"></div>
+                        </td>
+                        <td>Delivery time has passed</td>
+                      </tr>
+                      <tr>
+                        <td style="background-color: #03adfc;">
+                          <div style="width: 40px;"></div>
+                        </td>
+                        <td>Delivered</td>
+                        <td style="background-color: #FFF;">
+                          <div style="width: 40px;"></div>
+                        </td>
+                        <td></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <!-- <div class="col-12">
+                    <table class="table">
+                      <tr>
+                        <th colspan="4">Legend</th>
+                      </tr>
+                      <tr>
+                        <td style="background-color: #b5b5b5;">
+                          <div style="width: 40px;"></div>
+                        </td>
                         <td>Order Open (On Progres Pulling)</td>
                         <td style="background-color: #00E396;">
                           <div style="width: 40px;"></div>
@@ -93,7 +130,7 @@ and open the template in the editor.
                         <td></td>
                       </tr>
                     </table>
-                  </div>
+                  </div> -->
                 </div>
 
               </div>
