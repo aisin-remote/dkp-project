@@ -309,10 +309,13 @@ if($action == "api_save_ldlist_s") {
   }
   
   //setelah semua OK kembalikan return true dan quantity total
+  
+  $data_itm = $class->getItemById($data_kanban["ldnum"]);
   $return["status"] = true;
   $return["menge"] = $data_header["menge"];
   $return["wmeng"] = $data_header["wmeng"];
   $return["message"] = "Data Save OK [Server]";
+  $return["itm"] = $data_itm;
   echo json_encode($return); die();
 }
 

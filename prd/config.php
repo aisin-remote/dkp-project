@@ -13,9 +13,9 @@ define("PAGE_TITLE", "DC PRODUCTION");
 define("FOOTER", "2022 &copy; PT. Aisin Indonesia Automotive");
 define("APP_DIR", "prd");
 
-$dbhost = "localhost";
-$dbpass = "AisinBisaBanget@2023";
-define("DB_DSN", "pgsql:host=$dbhost;port=5432;dbname=prd_report");
+$dbhost = "5.181.217.2";
+$dbpass = "Ega2021";
+define("DB_DSN", "pgsql:host=$dbhost;port=5432;dbname=db_aisin_main");
 define("DB_USERNAME", "postgres");
 define("DB_PASSWORD", $dbpass);
 //10.80.27.196\\in_GIE,21433

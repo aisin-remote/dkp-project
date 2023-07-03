@@ -31,3 +31,121 @@ FATAL:  password authentication failed for user "postgres"
 [01-Mar-2023 14:26:29 Asia/Jakarta] Call to a member function modify() on bool
 [07-Mar-2023 15:04:48 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_report_detail.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aiia_prod_report\prd\controllers\c_reporting.php on line 194
 [07-Mar-2023 15:05:04 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_report_detail.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\aiia_prod_report\prd\controllers\c_reporting.php on line 194
+[07-Mar-2023 19:28:10 Asia/Jakarta] ERROR:  invalid input syntax for integer: ""
+LINE 1: ...) - '0', stk6k = coalesce(stk6k,0) - '0' WHERE dies_id = '' 
+                                                                    ^ SQL Trace :UPDATE m_dm_dies_asset SET stktot = coalesce(stktot,0) - '0', stkrun = coalesce(stkrun,0) - '0', stk2k = coalesce(stk2k,0) - '0', stk6k = coalesce(stk6k,0) - '0' WHERE dies_id = '' 
+[07-Mar-2023 19:28:22 Asia/Jakarta] ERROR:  invalid input syntax for integer: ""
+LINE 1: ...) - '0', stk6k = coalesce(stk6k,0) - '0' WHERE dies_id = '' 
+                                                                    ^ SQL Trace :UPDATE m_dm_dies_asset SET stktot = coalesce(stktot,0) - '0', stkrun = coalesce(stkrun,0) - '0', stk2k = coalesce(stk2k,0) - '0', stk6k = coalesce(stk6k,0) - '0' WHERE dies_id = '' 
+[07-Mar-2023 19:37:08 Asia/Jakarta] ERROR:  invalid input syntax for integer: ""
+LINE 1: ...,0) - '', stk6k = coalesce(stk6k,0) - '' WHERE dies_id = '' 
+                                                                    ^ SQL Trace :UPDATE m_dm_dies_asset SET stktot = coalesce(stktot,0) - '', stkrun = coalesce(stkrun,0) - '', stk2k = coalesce(stk2k,0) - '', stk6k = coalesce(stk6k,0) - '' WHERE dies_id = '' 
+[05-Apr-2023 16:46:35 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+[14-Apr-2023 08:48:28 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[14-Apr-2023 08:48:29 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[14-Apr-2023 08:48:30 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[14-Apr-2023 08:48:30 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[14-Apr-2023 08:48:31 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[14-Apr-2023 08:48:31 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[14-Apr-2023 08:56:57 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 13:31:37 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 13:31:38 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 13:31:40 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 13:31:42 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 13:31:45 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 13:46:41 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 13:46:42 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 13:46:44 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 13:46:45 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 13:46:46 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 14:07:57 Asia/Jakarta] Call to undefined function var_dum()
+[19-Apr-2023 20:06:17 Asia/Jakarta] ERROR:  inconsistent types deduced for parameter $1
+LINE 1: ...e_start,time_end,cctime,pln_qty,prd_time) values ($1,$2,$3,(...
+                                                             ^
+DETAIL:  text versus character varying
+[19-Apr-2023 20:18:52 Asia/Jakarta] ERROR:  inconsistent types deduced for parameter $1
+LINE 1: ...e_start,time_end,cctime,pln_qty,prd_time) values ($1,$2,$3,(...
+                                                             ^
+DETAIL:  text versus character varying
+[19-Apr-2023 20:24:12 Asia/Jakarta] ERROR:  syntax error at or near "4254"
+LINE 1: 4254
+        ^
+[19-Apr-2023 20:25:44 Asia/Jakarta] ERROR:  syntax error at or near "4234"
+LINE 1: 4234
+        ^
+[19-Apr-2023 20:27:12 Asia/Jakarta] ERROR:  syntax error at or near "4233"
+LINE 1: 4233
+        ^
+[19-Apr-2023 20:31:18 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 20:31:19 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 20:31:21 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 20:31:22 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-Apr-2023 20:31:23 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[05-May-2023 14:26:25 Asia/Jakarta] SQLSTATE[08006] [7] FATAL:  database "db_aisin_main2" does not exist
+[05-May-2023 14:29:10 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[05-May-2023 14:29:10 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[05-May-2023 14:29:11 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[05-May-2023 14:29:13 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[05-May-2023 14:29:13 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[05-May-2023 14:29:14 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^

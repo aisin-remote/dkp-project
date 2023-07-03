@@ -19,3 +19,22 @@ DETAIL:  Key (empid)=() already exists.
 
 [21-Feb-2023 15:09:44 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_io_cust_pkey"
 DETAIL:  Key (lifnr)=(7A00016) already exists.
+[10-Mar-2023 18:18:11 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_io_cust_pkey"
+DETAIL:  Key (lifnr)=(7A00016) already exists.
+[10-Mar-2023 18:18:13 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_io_mara_pkey"
+DETAIL:  Key (matnr)=(243202-10710) already exists.
+[13-Mar-2023 10:07:01 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_io_cust_pkey"
+DETAIL:  Key (lifnr)=(7A00026) already exists.
+[13-Mar-2023 10:09:22 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_io_cust_pkey"
+DETAIL:  Key (lifnr)=(7A00003) already exists.
+[13-Mar-2023 11:47:58 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_io_kanban_rfid_pkey"
+DETAIL:  Key (rfid_tag)=(00000000000D403501120108) already exists.
+[12-May-2023 17:03:50 Asia/Jakarta] SQLSTATE[08001]: [Microsoft][ODBC Driver 17 for SQL Server]TCP Provider: The wait operation timed out.
+
+[12-May-2023 17:07:28 Asia/Jakarta] SQLSTATE[28000]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user 'root'.
+[12-May-2023 17:08:03 Asia/Jakarta] SQLSTATE[28000]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user 'SA'.
+[12-May-2023 17:08:16 Asia/Jakarta] SQLSTATE[28000]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user 'SA'.
+[12-May-2023 17:08:33 Asia/Jakarta] SQLSTATE[28000]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Login failed for user 'SA'.
+[19-May-2023 17:13:26 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_io_cust_pkey"
+DETAIL:  Key (lifnr)=(7A00034) already exists.
+[03-Jul-2023 12:25:27 Asia/Jakarta] Non-static method Menu::getListApi() cannot be called statically

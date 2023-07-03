@@ -9,3 +9,186 @@ DETAIL:  Key (shift_id, time_id, srna_id)=(2, 2, 3002) already exists.
 could not connect to server: Connection refused (0x0000274D/10061)
 	Is the server running on host "localhost" (127.0.0.1) and accepting
 	TCP/IP connections on port 5432?
+[19-Mar-2023 15:41:19 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+[19-Mar-2023 15:41:34 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+[19-Mar-2023 15:42:06 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+[21-Mar-2023 22:22:09 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 11:20:18 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 11:41:46 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection timed out (0x0000274C/10060)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 11:41:46 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 11:41:46 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 11:41:46 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 11:41:46 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:25 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:25 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:25 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:25 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:25 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:34 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:34 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:34 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:34 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:34 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:34 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:34 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:34 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:34 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:34 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:34 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:36 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:36 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:36 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:37 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:40 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:40 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:40 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:41 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:41 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:42 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:45 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:45 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:45 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:46 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Network is unreachable (0x00002743/10051)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:48 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:48 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:48 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:49 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:50 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:51 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:51 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:52 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:55 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:55 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:55 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:56 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:02:56 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[22-Mar-2023 17:39:10 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Software caused connection abort (0x00002745/10053)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[24-Mar-2023 14:17:52 Asia/Jakarta] PHP Fatal error:  Cannot use [] for reading in C:\xampp\htdocs\1DEV\AISIN\main\andon\controllers\api\c_api_dashboard.php on line 68
+[24-Mar-2023 14:18:25 Asia/Jakarta] PHP Fatal error:  Cannot use [] for reading in C:\xampp\htdocs\1DEV\AISIN\main\andon\controllers\api\c_api_dashboard.php on line 68
+[24-Mar-2023 14:18:27 Asia/Jakarta] PHP Fatal error:  Cannot use [] for reading in C:\xampp\htdocs\1DEV\AISIN\main\andon\controllers\api\c_api_dashboard.php on line 68
+[24-Mar-2023 14:18:33 Asia/Jakarta] PHP Fatal error:  Cannot use [] for reading in C:\xampp\htdocs\1DEV\AISIN\main\andon\controllers\api\c_api_dashboard.php on line 68
+[24-Mar-2023 14:18:37 Asia/Jakarta] PHP Fatal error:  Cannot use [] for reading in C:\xampp\htdocs\1DEV\AISIN\main\andon\controllers\api\c_api_dashboard.php on line 68
+[24-Mar-2023 14:18:43 Asia/Jakarta] PHP Fatal error:  Cannot use [] for reading in C:\xampp\htdocs\1DEV\AISIN\main\andon\controllers\api\c_api_dashboard.php on line 68
