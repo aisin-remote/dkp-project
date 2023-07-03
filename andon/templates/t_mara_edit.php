@@ -57,13 +57,13 @@ and open the template in the editor.
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Type</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
                         <select name="mtart" class="form-control">
-                          <?php 
-                          if(!empty($data["mtarts"])) {
-                            foreach($data["mtarts"] as $grp) {
-                              if($grp["mtart"] == $data["data"]["mtart"]) {
-                                echo "<option value='".$grp["mtart"]."' selected>".$grp["mtart"]." - ".$grp["name1"]."</option>";
+                          <?php
+                          if (!empty($data["mtarts"])) {
+                            foreach ($data["mtarts"] as $grp) {
+                              if ($grp["mtart"] == $data["data"]["mtart"]) {
+                                echo "<option value='" . $grp["mtart"] . "' selected>" . $grp["mtart"] . " - " . $grp["name1"] . "</option>";
                               } else {
-                                echo "<option value='".$grp["mtart"]."'>".$grp["mtart"]." - ".$grp["name1"]."</option>";
+                                echo "<option value='" . $grp["mtart"] . "'>" . $grp["mtart"] . " - " . $grp["name1"] . "</option>";
                               }
                             }
                           }
@@ -71,19 +71,19 @@ and open the template in the editor.
                         </select>
                       </div>
                     </div>
-                    
+
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Group</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
                         <select name="matkl" class="form-control">
                           <option value='' selected>SELECT MATERIAL GROUP</option>
-                          <?php 
-                          if(!empty($data["matkls"])) {
-                            foreach($data["matkls"] as $grp) {
-                              if($grp["matkl"] == $data["data"]["matkl"]) {
-                                echo "<option value='".$grp["matkl"]."' selected>".$grp["matkl"]." - ".$grp["name1"]."</option>";
+                          <?php
+                          if (!empty($data["matkls"])) {
+                            foreach ($data["matkls"] as $grp) {
+                              if ($grp["matkl"] == $data["data"]["matkl"]) {
+                                echo "<option value='" . $grp["matkl"] . "' selected>" . $grp["matkl"] . " - " . $grp["name1"] . "</option>";
                               } else {
-                                echo "<option value='".$grp["matkl"]."'>".$grp["matkl"]." - ".$grp["name1"]."</option>";
+                                echo "<option value='" . $grp["matkl"] . "'>" . $grp["matkl"] . " - " . $grp["name1"] . "</option>";
                               }
                             }
                           }
@@ -91,41 +91,77 @@ and open the template in the editor.
                         </select>
                       </div>
                     </div>
-                    
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Default Str.Location</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <select name="lgort" class="form-control">
+                          <option value='' selected>SELECT STORE LOCATION</option>
+                          <?php
+                          if (!empty($data["lgorts"])) {
+                            foreach ($data["lgorts"] as $grp) {
+                              if ($grp["lgort"] == $data["data"]["lgort"]) {
+                                echo "<option value='" . $grp["lgort"] . "' selected>" . $grp["lgort"] . " - " . $grp["name1"] . "</option>";
+                              } else {
+                                echo "<option value='" . $grp["lgort"] . "'>" . $grp["lgort"] . " - " . $grp["name1"] . "</option>";
+                              }
+                            }
+                          }
+                          ?>
+                        </select>
+                      </div>
+                    </div>
+
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Material No.</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
-                        <input type="text" name="matnr" class="form-control" maxlength="40" value="<?php echo $data["data"]["matnr"]; ?>" <?php if(!empty($data["data"]["matnr"])) {echo "readonly";} ?>>
+                        <input type="text" name="matnr" class="form-control" maxlength="40"
+                          value="<?php echo $data["data"]["matnr"]; ?>" <?php if (!empty($data["data"]["matnr"])) {
+                               echo "readonly";
+                             } ?>>
                       </div>
                     </div>
-                    
+
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">External Material No.</label>
                       <div class="col-lg-3 col-md-5 col-sm-12">
-                        <input type="text" name="ematn" class="form-control" maxlength="40" value="<?php echo $data["data"]["ematn"]; ?>">
+                        <input type="text" name="ematn" class="form-control" maxlength="40"
+                          value="<?php echo $data["data"]["ematn"]; ?>">
                       </div>
                     </div>
-                    
+
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Material Description</label>
                       <div class="col-lg-5 col-md-6 col-sm-12">
-                        <input type="text" name="name1" class="form-control" maxlength="255" value="<?php echo $data["data"]["name1"]; ?>">
+                        <input type="text" name="name1" class="form-control" maxlength="255"
+                          value="<?php echo $data["data"]["name1"]; ?>">
                       </div>
-                    </div>                    
-                    
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Back Number</label>
+                      <div class="col-lg-5 col-md-6 col-sm-12">
+                        <input type="text" name="backno" class="form-control" maxlength="10"
+                          value="<?php echo $data["data"]["backno"]; ?>">
+                      </div>
+                    </div>
+
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Unit of Measure</label>
                       <div class="col-lg-2 col-md-4 col-sm-12">
-                        <input type="text" name="meins" class="form-control" maxlength="5" value="<?php echo $data["data"]["meins"]; ?>" >
+                        <input type="text" name="meins" class="form-control" maxlength="5"
+                          value="<?php echo $data["data"]["meins"]; ?>">
                       </div>
                     </div>
-                    
+
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Cycle Time (Second)</label>
                       <div class="col-lg-2 col-md-5 col-sm-12">
-                        <input type="number" name="cctime" step="any" class="form-control" value="<?php echo $data["data"]["cctime"]; ?>">
+                        <input type="number" name="cctime" step="any" class="form-control"
+                          value="<?php echo $data["data"]["cctime"]; ?>">
                       </div>
                     </div>
+                    
                   </div>
                 </div>
               </div>              

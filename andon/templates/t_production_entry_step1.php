@@ -272,8 +272,13 @@ and open the template in the editor.
                             <select name="dies_id" id="dies_id" class="form-control select2">
                               <?php
                               foreach ($matlist as $row) {
+                                if (!empty($row["backno"])) {
+                                  $backno = " (" . $row["backno"] . ")";
+                                } else {
+                                  $backno = "";
+                                }
                                 ?>
-                                <option value="<?php echo $row["matnr"]; ?>"><?php echo $row["matnr"] . " - " . $row["mtart"] . " - " . $row["name1"]; ?></option>
+                                <option value="<?php echo $row["matnr"]; ?>"><?php echo $row["matnr"] . " - " . $row["mtart"] . " - " . $row["name1"] . $backno; ?></option>
                                 <?php
                               }
                               ?>
@@ -284,7 +289,7 @@ and open the template in the editor.
                         <div class="form-group row">
                           <label class="col-form-label col-lg-4 col-md-1 col-sm-12">Cycle Time</label>
                           <div class="col-lg-8 col-md-2 col-sm-12">
-                            <input type="number" name="cctime" id="cctime" step="1" min="0" class="form-control"
+                            <input type="number" name="cctime" id="cctime" step="any" min="0" class="form-control"
                               required>
                           </div>
                         </div>

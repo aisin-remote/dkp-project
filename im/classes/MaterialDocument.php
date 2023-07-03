@@ -21,7 +21,7 @@ class MaterialDocument {
   public function getList($budat_from = null, $budat_to = null, $matnr = null, $werks = null, $lgort = null) {
     $return = [];
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT TO_CHAR(a.budat,'DD-MM-YYYY') as posting_date, TO_CHAR(a.crt_dt,'HH24:MI:SS') as posting_time, a.*, i.*, b.name1 as maktx, c.name1 as plant_name, d.name1 as sloc_name FROM wms.t_mkpf a "
+    $sql = "SELECT TO_CHAR(a.budat,'DD-MM-YYYY') as posting_date, TO_CHAR(a.crt_dt,'HH24:MI:SS') as posting_time, a.*, i.*, b.*, b.name1 as maktx, c.name1 as plant_name, d.name1 as sloc_name FROM wms.t_mkpf a "
             . "INNER JOIN wms.t_mseg i ON i.mblnr = a.mblnr AND i.mjahr = a.mjahr "
             . "INNER JOIN wms.m_mara b ON b.matnr = i.matnr "
             . "INNER JOIN wms.m_werks c ON c.werks = i.werks "

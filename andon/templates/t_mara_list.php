@@ -73,6 +73,7 @@ and open the template in the editor.
                           <th>Material No.</th>
                           <th>External Material No.</th>
                           <th>Material Description</th>
+                          <th>Back No.</th>
                           <th>UoM</th>
                           <th>Cycle Time</th>
                           <th class="text-center">Edit</th>
@@ -89,6 +90,7 @@ and open the template in the editor.
                             . "<td>".$list["matnr"]."</td>"
                             . "<td>".$list["ematn"]."</td>"
                             . "<td>".$list["name1"]."</td>"                                 
+                            . "<td>".$list["backno"]."</td>"                                 
                             . "<td>".$list["meins"]."</td>"                                
                             . "<td class='text-center'>".$list["cctime"]."</td>"
                             . "<td class='text-center'><a href='?action=$action&id=".$list["matnr"]."' class='btn btn-outline-secondary btn-xs'><i class='material-icons'>edit</i></a></td>"

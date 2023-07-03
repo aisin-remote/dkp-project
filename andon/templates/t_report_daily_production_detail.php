@@ -162,10 +162,15 @@ and open the template in the editor.
                         <select name="dies_id" id="dies_id" class="form-control select2" data-live-search="true" disabled>
                           <?php
                           foreach ($matlist as $row) {
+                            if (!empty($row["backno"])) {
+                              $backno = " (" . $row["backno"] . ")";
+                            } else {
+                              $backno = "";
+                            }
                               ?>
                                                                     <option value="<?php echo $row["matnr"]; ?>" <?php if ($row["matnr"] == $data_item_dtl["dies_id"]) {
                                                                            echo "selected";
-                                                                       } ?>><?php echo $row["mtart"] .  " - " . $row["name1"]; ?></option>
+                                                                       } ?>><?php echo $row["mtart"] .  " - " . $row["name1"] . $backno; ?></option>
                                                                     <?php
                           }
                           ?>

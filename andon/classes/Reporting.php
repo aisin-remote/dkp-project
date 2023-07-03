@@ -126,7 +126,7 @@ class Reporting
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "SELECT a.line_id, a.prd_dt, a.shift, a.prd_seq, a.time_start, a.time_end, a.cctime, 
         a.pln_qty, coalesce(a.prd_qty, 0) as prd_qty, a.prd_time, a.apr_by, b.name1 as apr_name, 
-        c.name1, c.mtart, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time, coalesce(SUM(x.ng_qty), 0) as steuchi, coalesce(a.wip, 0) as wip, a.real_dt 
+        c.name1, c.mtart, c.backno, coalesce(d.ng_qty, 0) as tot_ng, coalesce(f.ng_qty, 0) as tot_ng2, coalesce(e.stop_time, 0) as loss_time, coalesce(SUM(x.ng_qty), 0) as steuchi, coalesce(a.wip, 0) as wip, a.real_dt 
         FROM t_prd_daily_i a 
         LEFT JOIN m_user b ON a.apr_by = b.usrid 
         LEFT JOIN wms.m_mara c ON a.dies_id = c.matnr
@@ -161,7 +161,7 @@ class Reporting
                         GROUP BY 1,2,3,4,5
                     ) x ON a.line_id = x.line_id AND a.prd_dt = x.prd_dt AND a.shift = x.shift
                     WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift'
-                    GROUP BY 1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17
+                    GROUP BY 1,2,3,4,5,6,7,9,10,11,12,13,14,15,16,17,18
                     ORDER BY a.real_dt, a.time_start asc ";
 
         $stmt = $conn->prepare($sql);
@@ -297,7 +297,7 @@ class Reporting
         return $return;
     }
 
-    public function getReportDetail($date_from = "*", $date_to = "*", $shift = null, $line_id = null, $ldid = null, $jpid = null)
+    public function getReportDetail($date_from = "*", $date_to = "*", $shift = null, $line_id = null, $ldid = null, $jpid = null, $time_start = null, $time_end = null)
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
@@ -330,8 +330,11 @@ class Reporting
             $sql .= " AND a.jpid = '$jpid' ";
         }
 
-        $sql .= " ORDER BY a.real_dt, a.time_start asc";
+        if (!empty($time_start) && !empty($time_end)) {
+            $sql .= " AND a.time_start between '$time_start' AND '$time_end' ";
+        }
 
+        $sql .= " ORDER BY a.real_dt, a.time_start asc";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
             $tot_pln_qty = 0;
@@ -474,6 +477,22 @@ class Reporting
                 } else if ($row["status"] == "N") {
                     $row["status"] = "New";
                 }
+                $return[] = $row;
+            }
+        }
+        $stmt = null;
+        $conn = null;
+        return $return;
+    }
+
+    public function getTimeShift()
+    {
+        $return = array();
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "select time_start from m_prd_shift where shift_id IN('1','2','3') and app_id = 'AISIN_ADN' order by time_start";
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $return[] = $row;
             }
         }

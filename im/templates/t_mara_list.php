@@ -68,14 +68,15 @@ and open the template in the editor.
                     <table class="table table-sm" id="data-table-x">
                       <thead>
                         <tr>
-                          <th>Material Type</th>
-                          <th>Material Group</th>
-                          <th>Default S.Loc</th>
-                          <th>Material No.</th>
-                          <th>External Material No.</th>
-                          <th>Material Description</th>
-                          <th>UoM</th>
-                          <th>Cycle Time</th>
+                          <th class="text-nowrap">Material Type</th>
+                          <th class="text-nowrap">Material Group</th>
+                          <th class="text-nowrap">Default S.Loc</th>
+                          <th class="text-nowrap">Material No.</th>
+                          <th class="text-nowrap">External Material No.</th>
+                          <th class="text-nowrap">Material Description</th>
+                          <th class="text-nowrap">Back No.</th>
+                          <th class="text-nowrap">UoM</th>
+                          <th class="text-nowrap">Cycle Time</th>
                           <th class="text-center">Edit</th>
                           <th class="text-center">Delete</th>
                         </tr>
@@ -84,13 +85,14 @@ and open the template in the editor.
                         <?php 
                         if(!empty($data["list"])) {
                           foreach($data["list"] as $list) {
-                            echo "<tr>"
+                            echo "<tr class=''>"
                             . "<td>".$list["mtart"]." - ".$list["mat_type"]."</td>"
                             . "<td>".$list["matkl"]." - ".$list["mat_group"]."</td>"
                             . "<td>".$list["lgort"]."</td>"
                             . "<td>".$list["matnr"]."</td>"
                             . "<td>".$list["ematn"]."</td>"
                             . "<td>".$list["name1"]."</td>"                                 
+                            . "<td>".$list["backno"]."</td>"                                 
                             . "<td>".$list["meins"]."</td>"                                
                             . "<td class='text-center'>".$list["cctime"]."</td>"
                             . "<td class='text-center'><a href='?action=$action&id=".$list["matnr"]."' class='btn btn-outline-secondary btn-xs'><i class='material-icons'>edit</i></a></td>"

@@ -91,6 +91,11 @@ and open the template in the editor.
                           <?php 
                           if(!empty($data["list"])) {
                             foreach($data["list"] as $list) {
+                              if (!empty($list["backno"])) {
+                                $backno = " (" . $list["backno"] . ")";
+                              } else {
+                                $backno = "";
+                              }
                               echo "<tr>"
                               . "<td class='text-center text-nowrap'>".$list["mblnr"]."</td>"
                               . "<td class='text-center text-nowrap'>".$list["mjahr"]."</td>"
@@ -102,7 +107,7 @@ and open the template in the editor.
                               . "<td class='text-center text-nowrap'>".$list["lgort"]."</td>"
                               . "<td class='text-nowrap'>".$list["sloc_name"]."</td>"
                               . "<td class='text-center text-nowrap'>".$list["matnr"]."</td>"
-                              . "<td class='text-nowrap'>".$list["maktx"]."</td>"
+                              . "<td class='text-nowrap'>".$list["maktx"] .$backno."</td>"
                               . "<td class='text-center text-nowrap'>".$list["charg"]."</td>"                                 
                               . "<td class='text-right text-nowrap'>".$list["menge"]."</td>"                                
                               . "<td class='text-center text-nowrap'>".$list["bwart"]."</td>"
@@ -197,11 +202,16 @@ and open the template in the editor.
                       <?php 
                       if(!empty($data["materials"])) {
                         foreach($data["materials"] as $grp) {
+                          if (!empty($grp["backno"])) {
+                            $backno = " (" . $grp["backno"] . ")";
+                          } else {
+                            $backno = "";
+                          }
                           $selected = "";
                           if($grp["matnr"] == $matnr) {
                             $selected = "selected";
                           }
-                          echo "<option value='".$grp["matnr"]."' $selected>".$grp["matnr"]." - ".$grp["name1"]."</option>";                              
+                          echo "<option value='".$grp["matnr"]."' $selected>".$grp["matnr"]." - ".$grp["name1"].$backno."</option>";                              
                         }
                       }
                       ?>

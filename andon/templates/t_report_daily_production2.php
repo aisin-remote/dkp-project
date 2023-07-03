@@ -168,8 +168,13 @@ and open the template in the editor.
                                             <?php
                                             if (!empty($data["list"])) {
                                                 foreach ($data["list"] as $list) {
+                                                    if (!empty($list["backno"])) {
+                                                        $backno = " (" . $list["backno"] . ")";
+                                                      } else {
+                                                        $backno = "";
+                                                      }
                                                     echo "<tr>"
-                                                        . "<td class='text-nowrap'>" . $list["name1"] . "</td>"
+                                                        . "<td class='text-nowrap'>" . $list["name1"] . $backno . "</td>"
                                                         . "<td class='text-nowrap'>" . $list["time_start"] . " - " . $list["time_end"] . "</td>"
                                                         . "<td class='text-nowrap'>" . $list["cctime"] . "</td>"
                                                         . "<td class='text-nowrap'>" . $list["pln_qty"] . "</td>"

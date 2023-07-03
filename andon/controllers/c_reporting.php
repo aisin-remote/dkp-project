@@ -213,10 +213,13 @@ if ($action == "report_detail") {
   $line_id = $_GET["line_id"];
   $ldid = $_GET["ldid"];
   $jpid = $_GET["jpid"];
+  $time_start = $_GET["start_time"];
+  $time_end = $_GET["end_time"];
 
   $shiftlist = $param->getListShift();  
   $line = $dies->getLineByType();
-  $data["list"] = $report->getReportDetail($date_from, $date_to, $shift, $line_id, $ldid, $jpid);
+  $time = $report->getTimeShift();
+  $data["list"] = $report->getReportDetail($date_from, $date_to, $shift, $line_id, $ldid, $jpid, $time_start, $time_end);
   require(TEMPLATE_PATH . "/t_report_detail.php");
 }
 

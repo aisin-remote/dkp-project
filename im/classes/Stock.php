@@ -5,7 +5,7 @@ class Stock {
   public function getList($matnr = null, $werks = null, $lgort = null) {
     $return = [];
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT a.*, b.name1 as maktx, c.name1 as plant_name, d.name1 as sloc_name FROM wms.t_mchb a "
+    $sql = "SELECT a.*, b.*, b.name1 as maktx, c.name1 as plant_name, d.name1 as sloc_name FROM wms.t_mchb a "
             . "INNER JOIN wms.m_mara b ON b.matnr = a.matnr "
             . "INNER JOIN wms.m_werks c ON c.werks = a.werks "
             . "INNER JOIN wms.m_lgort d ON d.werks = a.werks AND d.lgort = a.lgort "

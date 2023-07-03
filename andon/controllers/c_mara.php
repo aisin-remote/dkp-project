@@ -4,6 +4,7 @@ if ($action == "mara") {
   $template["group"] = "Master Data";
   $template["menu"] = "Master Material";
   $class = new Material();
+  $cSloc = new StoreLocation();
   if (isset($_GET["id"])) {
     $id = $_GET["id"];
     if (isset($_POST["save"])) {
@@ -48,6 +49,7 @@ if ($action == "mara") {
       }
       $data["mtarts"] = $class->getType();
       $data["matkls"] = $class->getGroup();
+      $data["lgorts"] = $cSloc->getList("JE10");
       require( TEMPLATE_PATH . "/t_mara_edit.php" );
     }
   } else if (isset($_GET['upload'])) {

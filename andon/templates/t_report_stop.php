@@ -78,11 +78,16 @@ and open the template in the editor.
                       <tbody>
                         <?php if (!empty($data["list"])) {
                           foreach ($data["list"] as $list) {
+                            if (!empty($list["backno"])) {
+                              $backno = " (" . $list["backno"] . ")";
+                            } else {
+                              $backno = "";
+                            }
                             echo "<tr>" . "<td class='text-nowrap'>" . $list["prd_dt"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["pval1"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["line_name"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["operator"] . "</td>"
-                              . "<td class='text-nowrap'>" . $list["dies_name"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["dies_name"] . $backno . "</td>"
                               . "<td class='text-nowrap'>" . $list["time_start"] . " - " . $list["time_end"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["start_time"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["end_time"] . "</td>"

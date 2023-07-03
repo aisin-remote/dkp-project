@@ -117,7 +117,12 @@ and open the template in the editor.
                               <?php 
                               if(!empty($data["materials"])) {
                                 foreach($data["materials"] as $grp) {
-                                  echo "<option value='".$grp["matnr"]."'>".$grp["matnr"]." - ".$grp["name1"]."</option>";                              
+                                  if (!empty($grp["backno"])) {
+                                    $backno = " (" . $grp["backno"] . ")";
+                                  } else {
+                                    $backno = "";
+                                  }
+                                  echo "<option value='".$grp["matnr"]."'>".$grp["matnr"]." - ".$grp["name1"].$backno."</option>";                              
                                 }
                               }
                               ?>
