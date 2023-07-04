@@ -186,7 +186,7 @@ if ($action == "api_get_qty") {
   from t_prd_daily_i a 
   inner join m_prd_line b ON b.line_id = a.line_id and b.line_ty = 'DM'
   left join t_prd_daily_ng c on c.line_id = a.line_id and c.prd_dt = a.prd_dt
-  where a.prd_dt = '2023-06-22'
+  where a.prd_dt = '$prd_dt'
   group by 1,2";
   $stmt = $conn->prepare($query);
   if ($stmt->execute()) {
