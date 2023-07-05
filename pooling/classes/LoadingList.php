@@ -27,7 +27,7 @@ class LoadingList {
             . "LEFT JOIN m_io_lfa1 b ON b.lifnr = a.lifnr "
             . "WHERE a.ldnum = :id";
     $stmt = $conn->prepare($sql);
-    $stmt->bindValue(":id", $id, PDO::PARAM_STR);
+    $stmt->bindValue(":id", trim($id), PDO::PARAM_STR);
     if($stmt->execute()) {
       while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
         $return = $row;

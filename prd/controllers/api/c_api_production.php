@@ -187,8 +187,7 @@ if ($action == "api_get_qty") {
   (select sum(ng_qty) from t_prd_daily_ng where line_id = a.line_id and prd_dt = a.prd_dt and prd_seq = a.prd_seq) as ng_qty 
   from t_prd_daily_i a 
   inner join m_prd_line b ON b.line_id = a.line_id and b.line_ty = 'DM' 
-  where a.prd_dt = '$prd_dt') t group by 1,2 
-  group by 1,2";
+  where a.prd_dt = '$prd_dt') t group by 1,2 ";
   $stmt = $conn->prepare($query);
   if ($stmt->execute()) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {

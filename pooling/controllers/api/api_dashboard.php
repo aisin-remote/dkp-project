@@ -107,7 +107,7 @@ if ($action == "api_dashboard_pooling") {
           $color = "#b5b5b5";
         }
         //jika sudah delivery biru
-        if ($cek_ldlist["dstats"] == "D") {
+        if ($cek_ldlist["dstat"] == "D") {
           $color = "#03adfc";
         }
       } else {
@@ -221,7 +221,7 @@ if ($action == "api_dashboard_realtime") {
           $color = "#b5b5b5";
         }
         //jika sudah delivery biru
-        if ($cek_ldlist["dstats"] == "D") {
+        if ($cek_ldlist["dstat"] == "D") {
           $color = "#03adfc";
         }
       } else {
