@@ -182,11 +182,12 @@ if ($action == "api_get_qty") {
   // inner join m_param f on f.pid = 'SHIFT' and f.seq = a.shift
   // where 1=1 and TO_CHAR(a.prd_dt, 'DD-MM-YYYY') = '$prd_dt'
   // group by 1,2,3,4,5,6,7,8,9) t";
-  $query = "select b.name1 as line_name, TO_CHAR(a.prd_dt, 'DD-MM-YYYY') as date, SUM(a.prd_qty) as ok_qty, SUM(c.ng_qty) as ng_qty 
+  $query = "select line_name, date, coalesce(sum(ok_qty),0) as ok_qty, coalesce(sum(ng_qty),0) as ng_qty FROM ( 
+  select b.name1 as line_name, a.prd_seq, TO_CHAR(a.prd_dt, 'DD-MM-YYYY') as date, a.prd_qty as ok_qty, 
+  (select sum(ng_qty) from t_prd_daily_ng where line_id = a.line_id and prd_dt = a.prd_dt and prd_seq = a.prd_seq) as ng_qty 
   from t_prd_daily_i a 
-  inner join m_prd_line b ON b.line_id = a.line_id and b.line_ty = 'DM'
-  left join t_prd_daily_ng c on c.line_id = a.line_id and c.prd_dt = a.prd_dt
-  where a.prd_dt = '$prd_dt'
+  inner join m_prd_line b ON b.line_id = a.line_id and b.line_ty = 'DM' 
+  where a.prd_dt = '$prd_dt') t group by 1,2 
   group by 1,2";
   $stmt = $conn->prepare($query);
   if ($stmt->execute()) {
