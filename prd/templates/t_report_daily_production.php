@@ -68,6 +68,8 @@ and open the template in the editor.
                           <th class="text-center align-middle">Prod. Qty</th>
                           <th class="text-center align-middle">NG Qty</th>
                           <th class="text-center align-middle">Lost Time(m)</th>
+                          <th class="text-center align-middle">RIL (%)</th>
+                          <th class="text-center align-middle">ROL (%)</th>
                           <th class="text-center align-middle">Efficiency (%)</th>
                           <th class="text-center align-middle">Details</th>
                         </tr>
@@ -86,6 +88,8 @@ and open the template in the editor.
                               . "<td class='text-center pr-3 align-middle'>" . $list["prd_qty"] . "</td>"
                               . "<td class='text-center pr-3 align-middle'>" . $list["ng_tot"] . "</td>"
                               . "<td class='text-center pr-3 align-middle'>" . $list["stop_time"] . "</td>"
+                              . "<td class='text-center pr-3 align-middle'>" . $list["ril%"] . "</td>"
+                              . "<td class='text-center pr-3 align-middle'>" . $list["rol%"] . "</td>"
                               . "<td class='text-center pr-3 align-middle'>" . $list["eff"] . "</td>"
                               . "<td class='text-center pr-3'>"
                               . "<a href='?action=$action&id=" . $list["line_id"] . "&id2=" . $list["prd_dt"] . "&id3=" . $list["shift"] . "&step=2" . "' class='btn btn-outline-dark btn-xs text-center mb-1'><i class='material-icons'>visibility</i> </a>"

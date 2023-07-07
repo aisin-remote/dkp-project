@@ -93,6 +93,13 @@ class Reporting
                 $ng_qty = floatval($row["ng_qty"]);
                 $cctime = floatval($row["cctime"]);
                 $prd_time = floatval($row["prd_time"]);
+                $ril = $row["ng_ril"];
+                $rol = $row["ng_rol"];
+
+                $persen_ril = $ril * $cctime / 60 / $row["prd_time"] * 100;
+                $roundril = round($persen_ril, 2);
+                $persen_rol = $rol * $cctime / 60 / $row["prd_time"] * 100;
+                $roundrol = round($persen_rol, 2);
 
                 if ($prd_time == 0) {
                     $efficiency = 0;
@@ -103,6 +110,8 @@ class Reporting
                 $roundEff = round($efficiency, 3);
                 $totalEff = $roundEff * 100;
 
+                $row["ril%"] = $roundril;
+                $row["rol%"] = $roundrol;
                 // $row["eff"] = $totalEff;
                 $return[] = $row;
             }

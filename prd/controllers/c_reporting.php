@@ -47,10 +47,10 @@ if ($action == "daily_production") {
     $spreadsheet->getActiveSheet()->setCellValue('C4', "Cycle Time");
     $spreadsheet->getActiveSheet()->setCellValue('D4', ": " . $data["list"][0]["cctime"]);
 
-    $spreadsheet->getActiveSheet()->setCellValue('F4', "JP");
-    $spreadsheet->getActiveSheet()->setCellValue('G4', ": " . $data_header["jp_name"]);
-    $spreadsheet->getActiveSheet()->setCellValue('F5', "Lastman");
-    $spreadsheet->getActiveSheet()->setCellValue('G5', ": " . $data_header["ld_name"]);
+    $spreadsheet->getActiveSheet()->setCellValue('F4', "Leader");
+    $spreadsheet->getActiveSheet()->setCellValue('G4', ": " . $data_header["ld_name"]);
+    $spreadsheet->getActiveSheet()->setCellValue('F5', "JP");
+    $spreadsheet->getActiveSheet()->setCellValue('G5', ": " . $data_header["jp_name"]);
     $spreadsheet->getActiveSheet()->setCellValue('F6', "Pos 1");
     $spreadsheet->getActiveSheet()->setCellValue('G6', ": " . $data_header["op1_name"]);
     $spreadsheet->getActiveSheet()->setCellValue('F7', "Pos 2");
