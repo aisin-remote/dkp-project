@@ -130,6 +130,7 @@ if ($action == "daily_production") {
     $spreadsheet->getActiveSheet()->setCellValue("Z11", "Mengelupas");
     $spreadsheet->getActiveSheet()->setCellValue("AA11", "Over Kikir");
     $spreadsheet->getActiveSheet()->setCellValue("AB11", "GAP Tebal (Thickness NG)")->getStyle("AB11")->getAlignment()->setWrapText(true);
+    $spreadsheet->getActiveSheet()->setCellValue("AC11", "DLL")->getStyle("AC11")->getAlignment()->setWrapText(true);
 
     $j = 0;
     foreach ($data2["list"] as $key => $value) {
@@ -151,6 +152,7 @@ if ($action == "daily_production") {
       $spreadsheet->getActiveSheet()->setCellValue('Z' . ($key + $j + 12), $value["ng_ril15"]);
       $spreadsheet->getActiveSheet()->setCellValue('AA' . ($key + $j + 12), $value["ng_ril16"]);
       $spreadsheet->getActiveSheet()->setCellValue('AB' . ($key + $j + 12), $value["ng_ril17"]);
+      $spreadsheet->getActiveSheet()->setCellValue('AC' . ($key + $j + 12), $value["ng_ril999"]);
       $j++;
     }
 
@@ -227,17 +229,17 @@ if ($action == "daily_production") {
     $spreadsheet->getActiveSheet()->getStyle('I4:J8')->getAlignment()->setHorizontal('center');
     $spreadsheet->getActiveSheet()->getStyle('I' . ($i + 13))->getAlignment()->setHorizontal('center');
     $spreadsheet->getActiveSheet()->getStyle('I12:I' . ($i + 11))->getAlignment()->setWrapText(true);
-    $spreadsheet->getActiveSheet()->getStyle('A11:AA' . ($i + 16))->getAlignment()->setVertical('center')->setHorizontal('center');
+    $spreadsheet->getActiveSheet()->getStyle('A11:AC' . ($i + 16))->getAlignment()->setVertical('center')->setHorizontal('center');
     $spreadsheet->getActiveSheet()->getStyle('A4:D6')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('F4:G9')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('A12:I' . ($i + 11))->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('A12:I' . ($i + 11))->getBorders()->getVertical()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-    $spreadsheet->getActiveSheet()->getStyle('K12:AB' . ($i + 11))->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-    $spreadsheet->getActiveSheet()->getStyle('K12:AB' . ($i + 11))->getBorders()->getVertical()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+    $spreadsheet->getActiveSheet()->getStyle('K12:AC' . ($i + 11))->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+    $spreadsheet->getActiveSheet()->getStyle('K12:AC' . ($i + 11))->getBorders()->getVertical()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('A' . ($i + 13) . ':AA' . ($i + 14))->getFont()->setBold(true);
     $spreadsheet->getActiveSheet()->getStyle('A' . ($i + 13) . ':AA' . ($i + 14))->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('A11:I11')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-    $spreadsheet->getActiveSheet()->getStyle('K11:AB11')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+    $spreadsheet->getActiveSheet()->getStyle('K11:AC11')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('I4:J8')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
 
     $spreadsheet->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
