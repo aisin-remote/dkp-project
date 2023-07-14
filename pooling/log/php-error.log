@@ -38,3 +38,70 @@ DETAIL:  Key (rfid_tag)=(00000000000D403501120108) already exists.
 [19-May-2023 17:13:26 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_io_cust_pkey"
 DETAIL:  Key (lifnr)=(7A00034) already exists.
 [03-Jul-2023 12:25:27 Asia/Jakarta] Non-static method Menu::getListApi() cannot be called statically
+[05-Jul-2023 09:38:44 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:22:04 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:25:52 Asia/Jakarta] SQLSTATE[08006] [7] SSL SYSCALL error: Connection reset by peer (0x00002746/10054)
+could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:25:52 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:25:52 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:25:52 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:25:52 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:25:52 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:25:58 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:26:09 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:26:18 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:26:28 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:26:38 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:26:48 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:26:59 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:27:09 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:27:50 Asia/Jakarta] SQLSTATE[HY000]: General error: 7 server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+[05-Jul-2023 10:43:29 Asia/Jakarta] SQLSTATE[57P01]: Admin shutdown: 7 FATAL:  terminating connection due to administrator command
+SSL connection has been closed unexpectedly
+[05-Jul-2023 10:43:49 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection timed out (0x0000274C/10060)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[05-Jul-2023 10:44:35 Asia/Jakarta] SQLSTATE[08001]: [Microsoft][ODBC Driver 17 for SQL Server]Named Pipes Provider: Could not open a connection to SQL Server [53]. 
+[05-Jul-2023 11:57:41 Asia/Jakarta] SQLSTATE[08006] [7] timeout expired
+[05-Jul-2023 12:54:35 Asia/Jakarta] SQLSTATE[08006] [7] timeout expired
+[05-Jul-2023 13:14:04 Asia/Jakarta] SQLSTATE[08006] [7] timeout expired
