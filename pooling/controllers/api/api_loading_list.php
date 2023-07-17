@@ -223,8 +223,21 @@ if($action == "api_save_ldlist_s") {
     $return["message"] = "Data Kanban Kosong";
     echo json_encode($return); die();
   }
-  //cek dulu apakah di loading_list_dtl sudah penuh?
+  
   $data_kanban = json_decode($_REQUEST["data_kanban"],true);
+  
+  //cek apakah loading list sudah penuh semua
+  $data_header = $class->getHeaderById($data_kanban["ldnum"]);
+  $return["menge"] = $data_header["menge"];
+  $return["wmeng"] = $data_header["wmeng"];
+  if($data_header["wmeng"] >= $data_header["menge"]) {
+    $class->updateStatus($data_kanban["ldnum"], "C");
+    $return["status"] = false;
+    $return["message"] = "Loading List Sudah Terpenuhi";
+    echo json_encode($return); die();
+  }
+  
+  //cek dulu apakah di loading_list_dtl sudah penuh?  
   $loading_list = $class->getItemById($data_kanban["ldnum"],$data_kanban["ldseq"]);
   if($loading_list[0]["wmeng"] >= $loading_list[0]["menge"]) {
     $return["status"] = false;
