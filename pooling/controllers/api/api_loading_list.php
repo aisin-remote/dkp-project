@@ -231,6 +231,8 @@ if($action == "api_save_ldlist_s") {
   $return["menge"] = $data_header["menge"];
   $return["wmeng"] = $data_header["wmeng"];
   if($data_header["wmeng"] >= $data_header["menge"]) {
+    $data_itm = $class->getItemById($data_kanban["ldnum"]);
+    $return["itm"] = $data_itm;
     $class->updateStatus($data_kanban["ldnum"], "C");
     $return["status"] = false;
     $return["message"] = "Loading List Sudah Terpenuhi";
@@ -240,6 +242,8 @@ if($action == "api_save_ldlist_s") {
   //cek dulu apakah di loading_list_dtl sudah penuh?  
   $loading_list = $class->getItemById($data_kanban["ldnum"],$data_kanban["ldseq"]);
   if($loading_list[0]["wmeng"] >= $loading_list[0]["menge"]) {
+    $data_itm = $class->getItemById($data_kanban["ldnum"]);
+    $return["itm"] = $data_itm;
     $return["status"] = false;
     $return["message"] = "Loading List [".$data_kanban["ldnum"]."], Item No [".$data_kanban["ldseq"]."], Part Number [".$loading_list[0]["matnr"]."]<BR>Quantity sudah terpenuhi!";
     echo json_encode($return); die();
@@ -276,6 +280,8 @@ if($action == "api_save_ldlist_s") {
   
   $is_exist = $class->isDetailExist($data_kanban["ldnum"],$data_kanban["ldseq"], $data_kanban["kanban_i"]);
   if($is_exist > 0) {
+    $data_itm = $class->getItemById($data_kanban["ldnum"]);
+    $return["itm"] = $data_itm;
     $return["status"] = false;
     $return["message"] = "Kanban Internal Sudah Pernah Di Scan!";
     echo json_encode($return); die();
@@ -284,6 +290,8 @@ if($action == "api_save_ldlist_s") {
   if($data_kanban["is_rfid"] == "X") {
     $is_scanned = $class->isKanbanRFIDScanned($data_kanban["ldnum"], $data_kanban["kanban_e"]);
     if($is_scanned > 0) {
+      $data_itm = $class->getItemById($data_kanban["ldnum"]);
+      $return["itm"] = $data_itm;
       $return["status"] = false;
       $return["message"] = "Kanban RFID Customer Sudah Pernah Di Scan!";
       echo json_encode($return); die();
