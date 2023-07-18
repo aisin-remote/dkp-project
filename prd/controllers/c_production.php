@@ -256,7 +256,13 @@ if ($action == "daily_production_entry") {
               $param_item[$i]["prd_time"] = $prd_time;
               //di formulasikan lagi dari production time
               $target_per_jam = ($prd_time * 60) / floatval($cctime);
+              // $target_per_jam = 0;
               $param_item[$i]["pln_qty"] = round($target_per_jam, 0, PHP_ROUND_HALF_UP);
+              if ($param_item[$i]["pln_qty"] == 0) {
+                $class->rollBackHeader($line, $date, $shift);
+                header("Location: ?action=daily_production_entry&date=" . $date . "&shift=" . $shift . "&line=" . $line . "&error=Planning Qty tidak boleh 0");
+                die();
+              }
               $i++;
             }
             $save_item = $class->insertItem($param_item);
