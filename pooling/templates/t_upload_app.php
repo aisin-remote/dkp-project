@@ -66,7 +66,8 @@ and open the template in the editor.
                     <div class="form-group row">
                       <div class="col-lg-3 col-md-3 col-sm-12 d-sm-none d-md-block"></div>
                       <div class="col-lg-5 col-md-5 col-sm-12">
-                        <button type="submit" name="save" value="save" class="btn btn-dark-blue"><span class="material-icons">save</span> Save</button>
+                        <button type="submit" name="save" value="save" class="btn btn-dark-blue"><span class="material-icons">send</span> Upload</button>
+                        <a href="android/app.apk" class="btn btn-info ml-2">Download App</a>
                       </div>
                     </div>
                     
