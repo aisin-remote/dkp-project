@@ -230,7 +230,7 @@ if($action == "api_save_ldlist_s") {
   $data_header = $class->getHeaderById($data_kanban["ldnum"]);
   $return["menge"] = floatval($data_header["menge"]);
   $return["wmeng"] = floatval($data_header["wmeng"]);
-  if($data_header["wmeng"] >= $data_header["menge"]) {
+  if(floatval($data_header["wmeng"]) >= floatval($data_header["menge"])) {
     $data_itm = $class->getItemById($data_kanban["ldnum"]);
     $return["itm"] = $data_itm;
     $class->updateStatus($data_kanban["ldnum"], "C");
@@ -241,7 +241,7 @@ if($action == "api_save_ldlist_s") {
   
   //cek dulu apakah di loading_list_dtl sudah penuh?  
   $loading_list = $class->getItemById($data_kanban["ldnum"],$data_kanban["ldseq"]);
-  if($loading_list[0]["wmeng"] >= $loading_list[0]["menge"]) {
+  if(floatval($loading_list[0]["wmeng"]) >= floatval($loading_list[0]["menge"])) {
     $data_itm = $class->getItemById($data_kanban["ldnum"]);
     $return["itm"] = $data_itm;
     $return["status"] = false;
@@ -319,13 +319,13 @@ if($action == "api_save_ldlist_s") {
   
   //cek apakah qty loading list item sudah tepenuhi
   $data_detail = $class->getItemById($data_kanban["ldnum"],$data_kanban["ldseq"]);
-  if($data_detail[0]["wmeng"] >= $data_detail[0]["menge"]) {
+  if(floatval($data_detail[0]["wmeng"]) >= floatval($data_detail[0]["menge"])) {
     $class->updateStatusItem($data_kanban["ldnum"],$data_kanban["ldseq"], "C");
   }
   
   //cek apakah semua qty sudah terpenuhi
   $data_header = $class->getHeaderById($data_kanban["ldnum"]);
-  if($data_header["wmeng"] >= $data_header["menge"]) {
+  if(floatval($data_header["wmeng"]) >= floatval($data_header["menge"])) {
     $class->updateStatus($data_kanban["ldnum"], "C");
   }
   
