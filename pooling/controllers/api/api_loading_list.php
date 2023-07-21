@@ -228,8 +228,8 @@ if($action == "api_save_ldlist_s") {
   
   //cek apakah loading list sudah penuh semua
   $data_header = $class->getHeaderById($data_kanban["ldnum"]);
-  $return["menge"] = $data_header["menge"];
-  $return["wmeng"] = $data_header["wmeng"];
+  $return["menge"] = floatval($data_header["menge"]);
+  $return["wmeng"] = floatval($data_header["wmeng"]);
   if($data_header["wmeng"] >= $data_header["menge"]) {
     $data_itm = $class->getItemById($data_kanban["ldnum"]);
     $return["itm"] = $data_itm;
@@ -333,8 +333,8 @@ if($action == "api_save_ldlist_s") {
   
   $data_itm = $class->getItemById($data_kanban["ldnum"]);
   $return["status"] = true;
-  $return["menge"] = $data_header["menge"];
-  $return["wmeng"] = $data_header["wmeng"];
+  $return["menge"] = floatval($data_header["menge"]);
+  $return["wmeng"] = floatval($data_header["wmeng"]);
   $return["message"] = "Data Save OK [Server]";
   $return["itm"] = $data_itm;
   echo json_encode($return); die();
