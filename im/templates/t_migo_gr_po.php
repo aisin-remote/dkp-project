@@ -324,6 +324,8 @@ and open the template in the editor.
       });
     }
 
+    let qrcodes = [];
+
     function validateQrCodeKanbanRecv(qrcode) {
       var arr_code = qrcode.split(/\s+/);
       var matnr = arr_code[3].substring(9);
@@ -338,6 +340,11 @@ and open the template in the editor.
         dataType: "json",
         data: { matnr: matnr },
         success: function (data) {
+          // if (localStorage.getItem("seri")) {
+          //   localStorage.setItem("seri", JSON.stringify([...JSON.parse(localStorage.getItem("seri")), qrcode]))
+          // } else {
+          //   localStorage.setItem("seri", JSON.stringify([qrcode]))
+          // }
           if (data.lgort) {
             lgort = data.lgort;
           }
@@ -345,48 +352,57 @@ and open the template in the editor.
           var menges = $("input[name='menge[]']");
           var chargs = $("input[name='charg[]']");
           var lgorts = $("select[name='lgort[]']");
-          var date = $("input[name='date[]']");
+          // var date = $("input[name='date[]']");
           if (matnrs[matnrs.length - 1].value == "") {
             matnrs[matnrs.length - 1].value = matnr;
             menges[matnrs.length - 1].value = menge;
             chargs[matnrs.length - 1].value = matnr; /*charg;*/
             lgorts[matnrs.length - 1].value = lgort;
-            date[matnrs.length - 1].value = charg;
+            qrcodes.push(qrcode);
+            // date[matnrs.length - 1].value = charg;
           } else {
-
+            // var seri = JSON.parse(localStorage.getItem("seri"));
             if (matnrs[matnrs.length - 1].value != matnr) {
-              if (date[matnrs.length - 1].value == charg) {
-                alert("Kanban sudah discan!");
-              } else {
-                addItem();
-                matnrs = $("select[name='matnr[]']");
-                menges = $("input[name='menge[]']");
-                chargs = $("input[name='charg[]']");
-                lgorts = $("select[name='lgort[]']");
-                matnrs[matnrs.length - 1].value = matnr;
-                menges[matnrs.length - 1].value = menge;
-                chargs[matnrs.length - 1].value = matnr; /*charg;*/
-                lgorts[matnrs.length - 1].value = lgort;
-                date[matnrs.length - 1].value = charg;
-              }
+              qrcodes.map(function (item) {
+                if (item == qrcode) {
+                  alert("Kanban sudah discan!");
+                  throw new Error("Kanban sudah discan!");
+                } else {
+                }
+              });
+              addItem();
+              matnrs = $("select[name='matnr[]']");
+              menges = $("input[name='menge[]']");
+              chargs = $("input[name='charg[]']");
+              lgorts = $("select[name='lgort[]']");
+              matnrs[matnrs.length - 1].value = matnr;
+              menges[matnrs.length - 1].value = menge;
+              chargs[matnrs.length - 1].value = matnr; /*charg;*/
+              lgorts[matnrs.length - 1].value = lgort;
+              // date[matnrs.length - 1].value = charg;
+              qrcodes.push(qrcode);
             } else {
-              if (date[matnrs.length - 1].value == charg) {
-                alert("Kanban sudah discan!");
-              } else {
-                // addItem();
-                matnrs = $("select[name='matnr[]']");
-                menges = $("input[name='menge[]']");
-                chargs = $("input[name='charg[]']");
-                lgorts = $("select[name='lgort[]']");
-                matnrs[matnrs.length - 1].value = matnr;
-                menges[matnrs.length - 1].value = parseInt(menges[matnrs.length - 1].value) + menge;
-                chargs[matnrs.length - 1].value = matnr; /*charg;*/
-                lgorts[matnrs.length - 1].value = lgort;
-                date[matnrs.length - 1].value = charg;
-              }
+              qrcodes.map(function (item) {
+                if (item == qrcode) {
+                  alert("Kanban sudah discan!");
+                  throw new Error("Kanban sudah discan!");
+                } else {
+                }
+              });
+              // addItem();
+              matnrs = $("select[name='matnr[]']");
+              menges = $("input[name='menge[]']");
+              chargs = $("input[name='charg[]']");
+              lgorts = $("select[name='lgort[]']");
+              matnrs[matnrs.length - 1].value = matnr;
+              menges[matnrs.length - 1].value = parseInt(menges[matnrs.length - 1].value) + menge;
+              chargs[matnrs.length - 1].value = matnr; /*charg;*/
+              lgorts[matnrs.length - 1].value = lgort;
+              // date[matnrs.length - 1].value = charg;
+              qrcodes.push(qrcode);
             }
           }
-
+          console.log(qrcodes)
           $('#modal_02').modal("hide");
         },
         error: function () {
