@@ -263,7 +263,7 @@ and open the template in the editor.
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["loss_time"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["tot_qty"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["prd_qty"] . "</td>"
-                                                            . "<td class='pl-4 align-middle text-center'>" . $list["ril"] . "</td>"
+                                                            . "<td class='pl-4 align-middle text-center'>" . $list["ng_ril"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol1"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol2"] . "</td>"
                                                             . "<td class='pl-4 align-middle text-center'>" . $list["rol6"] . "</td>"

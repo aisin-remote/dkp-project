@@ -509,10 +509,10 @@ class Production
     return $return;
   }
 
-  public function getNGType()
+  public function getNGType($id)
   {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT pval1 as ng_type, pval2 as name1, pval3 as ng_group FROM m_param WHERE pid = 'NG_TYPE'";
+    $sql = "SELECT * FROM m_prd_ng_type WHERE line_id = '$id'";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -523,13 +523,27 @@ class Production
     $conn = null;
     return $return;
   }
+  // public function getNGType()
+  // {
+  //   $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+  //   $sql = "SELECT pval1 as ng_type, pval2 as name1, pval3 as ng_group FROM m_param WHERE pid = 'NG_TYPE'";
+  //   $stmt = $conn->prepare($sql);
+  //   if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+  //     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+  //       $return[] = $row;
+  //     }
+  //   }
+  //   $stmt = null;
+  //   $conn = null;
+  //   return $return;
+  // }
 
   public function getNGList($line_id, $prd_dt, $shift, $prd_seq)
   {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.*, c.name1 as crt_by_name "
       . "FROM t_prd_daily_ng a "
-      . "LEFT JOIN m_prd_ng_type b ON b.ng_type_id = a.ng_type and b.app_id = 'AISIN_ADN' "
+      . "LEFT JOIN m_prd_ng_type b ON b.ng_type_id = a.ng_type and b.app_id = 'AISIN_ADN' and b.line_id = '$line_id' "
       . "LEFT JOIN m_user c ON c.usrid = a.crt_by "
       . "WHERE a.line_id = '$line_id' AND TO_CHAR(a.prd_dt,'YYYYMMDD') = '$prd_dt' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq'";
     $stmt = $conn->prepare($sql);

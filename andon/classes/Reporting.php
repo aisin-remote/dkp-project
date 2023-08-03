@@ -500,4 +500,23 @@ class Reporting
         $conn = null;
         return $return;
     }
+
+    public function getTemp($date_from = "*", $date_to = "*") {
+        $return = array();
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "select *, to_char(dats, 'DD-MM-YYYY HH24:MI:SS') as date from t_temp where 1=1 ";
+        if ($date_from !== "*" && $date_to !== "*") {
+            $sql .= " AND TO_CHAR(dats, 'YYYYMMDD') between '$date_from' AND '$date_to' ";
+        }
+        $sql .= " order by dats desc ";
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $return[] = $row;
+            }
+        }
+        $stmt = null;
+        $conn = null;
+        return $return;
+    }
 }

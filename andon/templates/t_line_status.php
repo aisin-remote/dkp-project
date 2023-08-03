@@ -38,6 +38,7 @@
                 <div class="col">
                     <div class="my-2 float-right" id="prd-btn"></div>
                     <div class="my-2 float-right mr-2" id="buzzer"></div>
+                    <div class="my-2 float-right mr-2" id="scw"></div>
                 </div>
             </div>
         </div>
@@ -237,7 +238,9 @@
                         </div>
                         <?php
                         foreach ($ng as $n) {
-                            echo "<button type='button' onclick='handleNG(\"" . $n["ng_type_id"] . "\")' class='text-center btn btn-primary mx-1 text-white'>" . $n["name1"] . "</button>";
+                            if ($n["line_id"] == $_GET['line_id']) {
+                                echo "<button type='button' onclick='handleNG(\"" . $n["ng_type_id"] . "\")' class='text-center btn btn-primary mb-2 mx-1 text-white'>" . $n["name1"] . "</button>";
+                            }
                         }
                         ?>
                     </div>
@@ -455,7 +458,7 @@
                     var btn = data.btn
                     var sts = data.status
                     var buzz = data.buzz
-                    // console.log(data.mach)
+                    console.log(btn)
                     $("#cctime").html(head?.cctime ? head?.cctime : 0);
                     $("#shift").html(head?.shift ? head?.pval1 : "");
                     $("#shift_hidden").val(head?.shift ? head?.shift : 0);
@@ -465,6 +468,21 @@
                         $("#prd-btn").html("<a href='?action=api_prd_entry&line=<?= $result[0]["lineid"] ?>&shift=" + $("#shift_hidden").val() + "&date=<?= date('Ymd') ?>' class='btn btn-lg bg-red-blink text-white font-weight-bold'>Create Production</a>")
                         $("#shift").html("")
                     }
+
+                    var scw = "";
+                    $.each(btn, function (index, item) {
+                        if (item.line_id == "<?= $_GET["line_id"] ?>" && item.andon_id == 8 && item.btn_sts == 1) {
+                            console.log("scw");
+                            scw += "<button class='btn btn-lg bg-red-blink text-white font-weight-bold'>SCW</button>";
+                        }
+                    });
+                    $("#scw").html(scw);
+
+                    // if (btn.andon_id == 8 && btn.btn_sts == 1 && btn.line_id = <?= $_GET["line_id"] ?>) {
+                    //     $("#scw").html("<button class='btn btn-lg bg-warning-blink text-white font-weight-bold'>SCW</button>")
+                    // } else {
+                    //     $("#scw").html("");
+                    // }
 
                     if ((buzz.buzzred > 0 || buzz.buzzgreen > 0 || buzz.buzzyellow > 0) && buzz.buzzjp == 1) {
                             $("#buzzer").html("<button class='btn btn-lg bg-warning-blink text-white font-weight-bold' onclick='offBuzz(\""+$("#line_id").val()+"\")'>Silent Buzzer</button>")

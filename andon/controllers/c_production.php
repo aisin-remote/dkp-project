@@ -73,7 +73,7 @@ if ($action == "daily_production_entry") {
         $data_item_dtl["scn_qty_ng"] = $data_scn["ngQty"];
       }*/
 
-      $list_ng_type = $class->getNGType();
+      $list_ng_type = $class->getNGType($line);
       $data_ng = $class->getNGList($line, $date, $shift, $seq);
       $template["submenu"] = $data_item_dtl["line_name"];
 

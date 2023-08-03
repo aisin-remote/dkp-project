@@ -484,7 +484,7 @@ and open the template in the editor.
                     if (!empty($list_ng_type)) {
                       foreach ($list_ng_type as $row) {
                         ?>
-                        <option value="<?php echo $row["ng_type"]; ?>"><?php echo $row["ng_group"] . " - " . $row["name1"]; ?></option>
+                        <option value="<?php echo $row["ng_type_id"]; ?>"><?php echo $row["ng_type_grp"] . " - " . $row["name1"]; ?></option>
                         <?php
                       }
                     }

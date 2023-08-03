@@ -166,7 +166,7 @@ if ($action == "daily_production") {
         $data_item_dtl = $class2->getItemById($line, $prd_dt, $shift, $seq);
         $data_stop = $class2->getStopList($line, $prd_dt, $shift, $seq);
 
-        $list_ng_type = $class2->getNGType();
+        $list_ng_type = $class2->getNGType($line);
         $data_ng = $class2->getNGList($line, $prd_dt, $shift, $seq);
         $template["submenu"] = $data_item_dtl["line_name"];
 
@@ -271,4 +271,23 @@ if ($action == "r_losstime") {
   $line = $dies->getLineByType();
   $data["list"] = $report->getLossTime($date_from, $date_to);
   require(TEMPLATE_PATH . "/t_report_losstime.php");
+}
+
+if ($action == "r_temp") {
+  $template["group"] = "Report";
+  $template["menu"] = "Temperature";
+  $report = new Reporting();
+
+  $date_from = date('Ymd');
+  if (!empty($_GET["date_from"])) {
+    $date_from = $_GET["date_from"];
+  }
+
+  $date_to = date('Ymd');
+  if (!empty($_GET["date_to"])) {
+    $date_to = $_GET["date_to"];
+  }
+
+  $data["list"] = $report->getTemp($date_from, $date_to);
+  require(TEMPLATE_PATH . "/t_report_temp.php");
 }
