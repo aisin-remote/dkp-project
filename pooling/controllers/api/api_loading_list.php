@@ -279,12 +279,28 @@ if($action == "api_save_ldlist_s") {
   $param_dtl[0]["is_rfid"] = $data_kanban["is_rfid"];
   
   $is_exist = $class->isDetailExist($data_kanban["ldnum"],$data_kanban["ldseq"], $data_kanban["kanban_i"]);
-  if($is_exist > 0) {
-    $data_itm = $class->getItemById($data_kanban["ldnum"]);
-    $return["itm"] = $data_itm;
-    $return["status"] = false;
-    $return["message"] = "Kanban Internal Sudah Pernah Di Scan!";
-    echo json_encode($return); die();
+  
+  if($is_exist["cnt"] > 0) {
+    //cek dulu apakah sudah lebih dari x - jam
+    $int_kanban_i = $cAvic->getInterlockKanbanI() * 60;
+    if($int_kanban_i > 0) {
+      $sekarang = strtotime(date("Y-m-d H:i:s"));
+      $last_kanban_i = strtotime($is_exist["crt_dt"]);
+      $selisih = $sekarang - $last_kanban_i;
+      if($selisih <= $int_kanban_i) {
+        $data_itm = $class->getItemById($data_kanban["ldnum"]);
+        $return["itm"] = $data_itm;
+        $return["status"] = false;
+        $return["message"] = "Kanban Internal Sudah Pernah Di Scan!";
+        echo json_encode($return); die();
+      }
+    } else {
+      $data_itm = $class->getItemById($data_kanban["ldnum"]);
+      $return["itm"] = $data_itm;
+      $return["status"] = false;
+      $return["message"] = "Kanban Internal Sudah Pernah Di Scan!";
+      echo json_encode($return); die();
+    }
   }
   
   if($data_kanban["is_rfid"] == "X") {

@@ -171,6 +171,21 @@ class Avicenna {
     
     return $return;
   }
+  
+  public function getInterlockKanbanI() {
+    $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
+    $sql = "SELECT * FROM m_param WHERE pid = 'CEK_KANBAN_I' AND seq = '1' ";
+    $status = 0;
+    $stmt = $conn->prepare($sql);
+    if($stmt->execute()) {
+      while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+        $status = intval($row["pval1"]);
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $status;
+  }
 }
 
 ?>

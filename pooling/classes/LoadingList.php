@@ -300,14 +300,16 @@ class LoadingList {
   public function isDetailExist($ldnum, $ldseq, $kanban_i) {
     $return = 0;
     $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-    $sql = "SELECT count(*) as cnt FROM t_io_ldlist_dtl WHERE ldnum = :ldnum AND ldseq = :ldseq AND kanban_i = :kanban_i";
+    $sql = "SELECT count(*) as cnt, crt_dt FROM t_io_ldlist_dtl WHERE ldnum = :ldnum AND ldseq = :ldseq AND kanban_i = :kanban_i "
+            . " group by crt_dt "
+            . " order by crt_dt asc ";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":ldnum", $ldnum, PDO::PARAM_STR);
     $stmt->bindValue(":ldseq", $ldseq, PDO::PARAM_STR);
     $stmt->bindValue(":kanban_i", $kanban_i, PDO::PARAM_STR);
     if($stmt->execute()) {
       while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
-        $return = $row["cnt"];
+        $return = $row;
       }
     }
     $stmt = null;
