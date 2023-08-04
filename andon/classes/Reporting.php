@@ -501,7 +501,50 @@ class Reporting
         return $return;
     }
 
-    public function getTemp($date_from = "*", $date_to = "*") {
+    public function getMatsExcel($line_id, $prd_dt, $shift)
+    {
+        $return = array();
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "select c.name1, c.backno, 
+        coalesce(sum(a.pln_qty),0) as pln_qty
+        from t_prd_daily_i a 
+        inner join m_prd_line b ON b.line_id = a.line_id
+        inner join wms.m_mara c on c.matnr = a.dies_id
+        where a.prd_dt = '$prd_dt' and a.shift = '$shift' AND a.line_id = '$line_id'
+        group by 1,2 ";
+
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $return[] = $row;
+            }
+        }
+        $stmt = null;
+        $conn = null;
+        return $return;
+    }
+
+    public function getNGList($line_id, $date, $shift, $prd_seq)
+    {
+        $return = array();
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "select a.*, b.*
+        from t_prd_daily_ng a
+        left join m_prd_ng_type b on b.ng_type_id = a.ng_type and b.line_id = '$line_id' and b.app_id = 'AISIN_ADN'
+        where a.prd_dt = '$date' and a.line_id = '$line_id' and a.shift = '$shift' and a.prd_seq = '$prd_seq' ";
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $return[] = $row;
+            }
+        }
+        $stmt = null;
+        $conn = null;
+        return $return;
+    }
+
+    public function getTemp($date_from = "*", $date_to = "*")
+    {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "select *, to_char(dats, 'DD-MM-YYYY HH24:MI:SS') as date from t_temp where 1=1 ";

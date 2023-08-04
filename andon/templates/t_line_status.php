@@ -442,6 +442,7 @@
         }
 
         setInterval(updateDashboard, 3000);
+        setInterval(isScw, 3000);
         setInterval(updateQty, 1000);
         setInterval(dateTime, 1000);
 
@@ -469,20 +470,14 @@
                         $("#shift").html("")
                     }
 
-                    var scw = "";
-                    $.each(btn, function (index, item) {
-                        if (item.line_id == "<?= $_GET["line_id"] ?>" && item.andon_id == 8 && item.btn_sts == 1) {
-                            console.log("scw");
-                            scw += "<button class='btn btn-lg bg-red-blink text-white font-weight-bold'>SCW</button>";
-                        }
-                    });
-                    $("#scw").html(scw);
-
-                    // if (btn.andon_id == 8 && btn.btn_sts == 1 && btn.line_id = <?= $_GET["line_id"] ?>) {
-                    //     $("#scw").html("<button class='btn btn-lg bg-warning-blink text-white font-weight-bold'>SCW</button>")
-                    // } else {
-                    //     $("#scw").html("");
-                    // }
+                    // var scw = "";
+                    // $.each(mach, function (index, item) {
+                    //     if (item.line_id == "<?= $_GET["line_id"] ?>" && item.stats == 8) {
+                    //         console.log("scw");
+                    //         scw += "<button class='btn btn-lg bg-red-blink text-white font-weight-bold'>SCW</button>";
+                    //     }
+                    // });
+                    // $("#scw").html(scw);
 
                     if ((buzz.buzzred > 0 || buzz.buzzgreen > 0 || buzz.buzzyellow > 0) && buzz.buzzjp == 1) {
                             $("#buzzer").html("<button class='btn btn-lg bg-warning-blink text-white font-weight-bold' onclick='offBuzz(\""+$("#line_id").val()+"\")'>Silent Buzzer</button>")
@@ -508,6 +503,24 @@
                     }
                 }
             );
+        }
+
+        function isScw() {
+            $.getJSON("?action=api_get_andon_status", {
+                line_id: '<?= $_GET["line_id"] ?>',
+            }, function (data) {
+                if (data.status == true) {
+                    console.log(data)
+                    if (data.data[0].andon_id == 8) {
+                        console.log("masuk scw")
+                        $("#scw").html("<button class='btn btn-lg bg-red-blink text-white font-weight-bold'>SCW</button>")
+                    } else {
+                        $("#scw").html("");
+                    }
+                } else {
+                    $("#scw").html("");
+                }
+            });
         }
 
         function offBuzz(line_id) {
