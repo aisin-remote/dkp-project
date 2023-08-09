@@ -235,7 +235,7 @@ if ($action == "dashboard_line") {
   $shift = "0"; //initialize shift
   $material_name = "";
   $cctime = 0;
-  if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+  if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $shift = $row["shift"];
       $cctime = $row["cctime"];
@@ -261,7 +261,7 @@ if ($action == "dashboard_line") {
 
     $stmt = $conn->prepare($query);
     $prd_seq = "0";
-    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $prd_seq = $row["prd_seq"];
       }
@@ -271,7 +271,7 @@ if ($action == "dashboard_line") {
     $stmt = $conn->prepare($query);
     $time_start = "";
     $prd_dt = "";
-    if ($stmt->execute() or die("Query 3 ".$stmt->errorInfo()[2])) {
+    if ($stmt->execute() or die("Query 3 ".$stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $time_start = $row["time_start"];
         $prd_dt = $row["prd_dt"];
@@ -288,7 +288,7 @@ if ($action == "dashboard_line") {
               AND a.shift = '$shift'";
     $stmt = $conn->prepare($query);
     $prd_qty = 0;
-    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $prd_qty = $row["prd_qty"];
       }
@@ -304,7 +304,7 @@ if ($action == "dashboard_line") {
               AND a.shift = '$shift'";
     $stmt = $conn->prepare($query);
     $ng_qty = 0;
-    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $ng_qty = $row["ng_qty"];
       }
@@ -324,7 +324,7 @@ if ($action == "dashboard_line") {
               and app_id = '".APP."'";
     $stmt = $conn->prepare($query);
     $stop_dies = 0;
-    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $top_dies = $row["stop_part"] * 60;
       }
@@ -338,7 +338,7 @@ if ($action == "dashboard_line") {
               and app_id = '".APP."'";
     $stmt = $conn->prepare($query);
     $stop_mesin = 0;
-    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $stop_mesin = $row["stop_mesin"] * 60;
       }
@@ -352,7 +352,7 @@ if ($action == "dashboard_line") {
               and app_id = '".APP."'";
     $stmt = $conn->prepare($query);
     $stop_qas = 0;
-    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $stop_qas = $row["stop_qas"] * 60;
       }
@@ -367,7 +367,7 @@ if ($action == "dashboard_line") {
     $stmt = $conn->prepare($query);
     $dandori = 0;
     $stop_dandori = 0;
-    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $stop_dandori = $row["stop_dandori"];
       }
