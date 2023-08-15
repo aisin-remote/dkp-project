@@ -70,6 +70,7 @@ and open the template in the editor.
                         <tr>
                           <th class="text-nowrap">Material Type</th>
                           <th class="text-nowrap">Material Group</th>
+                          <th class="text-nowrap">Material Class</th>
                           <th class="text-nowrap">Default S.Loc</th>
                           <th class="text-nowrap">Material No.</th>
                           <th class="text-nowrap">External Material No.</th>
@@ -88,6 +89,7 @@ and open the template in the editor.
                             echo "<tr class=''>"
                             . "<td>".$list["mtart"]." - ".$list["mat_type"]."</td>"
                             . "<td>".$list["matkl"]." - ".$list["mat_group"]."</td>"
+                            . "<td>". strtoupper($list["class"]) ."</td>"
                             . "<td>".$list["lgort"]."</td>"
                             . "<td>".$list["matnr"]."</td>"
                             . "<td>".$list["ematn"]."</td>"

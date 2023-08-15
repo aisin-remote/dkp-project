@@ -105,8 +105,8 @@ and open the template in the editor.
                       <div class="col-lg-3 col-md-5 col-sm-12">
                         <select name="class" class="form-control">
                           <option value='' selected>SELECT MATERIAL CLASS</option>
-                          <option value="board">BOARD</option>
-                          <option value="nonboard">NON BOARD</option>
+                          <option value="board" <?= ($data["data"]["class"] == "board") ? "selected" : "" ?>>BOARD</option>
+                          <option value="nonboard" <?= ($data["data"]["class"] == "nonboard") ? "selected" : "" ?>>NON BOARD</option>
                         </select>
                       </div>
                     </div>
