@@ -35,7 +35,7 @@ if ($action == "migo_gr_po") {
       foreach ($matnr as $row) {
         //coba masukkan stok dulu
         if (empty($chargs[$i])) {
-          $charg = $cStock->generateBatchNumber(); //batch number di generate otomatis by system
+          $charg = $row;
         } else {
           $charg = $chargs[$i];
         }

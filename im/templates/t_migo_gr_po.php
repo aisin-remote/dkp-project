@@ -329,7 +329,7 @@ and open the template in the editor.
     function validateQrCodeKanbanRecv(qrcode) {
       var arr_code = qrcode.split(/\s+/);
       var matnr = arr_code[3].substring(9);
-      var menge = parseInt(arr_code[8].substring(0, 7));
+      var menge = parseInt(arr_code[7].substring(0, 7));
       var charg = arr_code[9];
       var lgort = "MSTR";
       $("#qrcode2").val("");

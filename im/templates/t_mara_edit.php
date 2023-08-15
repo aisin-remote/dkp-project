@@ -100,6 +100,16 @@ and open the template in the editor.
                         </select>
                       </div>
                     </div>
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Class</label>
+                      <div class="col-lg-3 col-md-5 col-sm-12">
+                        <select name="class" class="form-control">
+                          <option value='' selected>SELECT MATERIAL CLASS</option>
+                          <option value="board">BOARD</option>
+                          <option value="nonboard">NON BOARD</option>
+                        </select>
+                      </div>
+                    </div>
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Default Str.Location</label>
@@ -152,6 +162,13 @@ and open the template in the editor.
                       <div class="col-lg-5 col-md-6 col-sm-12">
                         <input type="text" name="backno" class="form-control" maxlength="10"
                           value="<?php echo $data["data"]["backno"]; ?>">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-form-label col-lg-2 col-md-3 col-sm-12">Quantity Persheet</label>
+                      <div class="col-lg-5 col-md-6 col-sm-12">
+                        <input type="number" name="qty_persheet" class="form-control" maxlength="10"
+                          value="<?php echo $data["data"]["qty_persheet"]; ?>">
                       </div>
                     </div>
 

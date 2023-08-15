@@ -96,7 +96,7 @@ if($action == "vl01n") {
   } 
   
   $data["plants"] = $cPlant->getList();
-  $data["materials"] = $cMara->getList();
+  $data["materials"] = $cMara->getListByType("FIN");
   require( TEMPLATE_PATH . "/t_migo_gi_do.php" );
 }
 ?>

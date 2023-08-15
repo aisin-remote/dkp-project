@@ -2,7 +2,7 @@
 
 class Stock {
   //put your code here
-  public function getList($matnr = null, $werks = null, $lgort = null) {
+  public function getList($matnr = null, $werks = null, $lgort = null, $type = null) {
     $return = [];
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.*, b.name1 as maktx, c.name1 as plant_name, d.name1 as sloc_name FROM wms.t_mchb a "
@@ -18,6 +18,9 @@ class Stock {
     }
     if(!empty($lgort)) {
       $sql .= " AND a.lgort = '$lgort' ";
+    }
+    if(!empty($type)) {
+      $sql .= " AND b.mtart = '$type' ";
     }
     $stmt = $conn->prepare($sql);
     if ($stmt->execute()) {

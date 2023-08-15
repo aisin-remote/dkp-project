@@ -24,8 +24,12 @@ if($action == "mmbe") {
   if(isset($_GET["lgort"])) {
     $lgort = $_GET["lgort"];
   }
+  $type = null;
+  if(isset($_GET["type"])) {
+    $type = $_GET["type"];
+  }
   
-  $data["list"] = $class->getList($matnr, $werks, $lgort);
+  $data["list"] = $class->getList($matnr, $werks, $lgort, $type);
   require( TEMPLATE_PATH . "/t_mmbe.php" );
 }
 ?>

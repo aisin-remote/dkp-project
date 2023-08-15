@@ -32,8 +32,12 @@ if($action == "mb51") {
   if(isset($_GET["lgort"])) {
     $lgort = $_GET["lgort"];
   }
+  $type = null;
+  if(isset($_GET["type"])) {
+    $type = $_GET["type"];
+  }
   
-  $data["list"] = $class->getList($budat_from, $budat_to, $matnr, $werks, $lgort);
+  $data["list"] = $class->getList($budat_from, $budat_to, $matnr, $werks, $lgort, $type);
   require( TEMPLATE_PATH . "/t_mb51.php" );
   unset($data["list"]);
 }

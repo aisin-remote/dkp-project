@@ -145,7 +145,9 @@ and open the template in the editor.
                       </div>
                       <div class="col-md-3 col-sm-12">
                         <div class="row align-items-center">
-                          <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 1' : 'Operator 1'; ?></div>
+                          <div class="col-4">
+                            <?= ($_GET["line"] == 'E14') ? 'POS 1' : 'Operator 1'; ?>
+                          </div>
                           <div class="col-1">:</div>
                           <div class="col-6 mb-1 px-0">
                             <?php
@@ -167,7 +169,9 @@ and open the template in the editor.
                             }
                             ?>
                           </div>
-                          <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 2' : 'Operator 2'; ?></div>
+                          <div class="col-4">
+                            <?= ($_GET["line"] == 'E14') ? 'POS 2' : 'Operator 2'; ?>
+                          </div>
                           <div class="col-1">:</div>
                           <div class="col-6 mb-1 px-0">
                             <?php
@@ -189,7 +193,9 @@ and open the template in the editor.
                             }
                             ?>
                           </div>
-                          <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 3' : 'Operator 3'; ?></div>
+                          <div class="col-4">
+                            <?= ($_GET["line"] == 'E14') ? 'POS 3' : 'Operator 3'; ?>
+                          </div>
                           <div class="col-1">:</div>
                           <div class="col-6 mb-1 px-0">
                             <?php
@@ -211,7 +217,9 @@ and open the template in the editor.
                             }
                             ?>
                           </div>
-                          <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 4' : 'Operator 4'; ?></div>
+                          <div class="col-4">
+                            <?= ($_GET["line"] == 'E14') ? 'POS 4' : 'Operator 4'; ?>
+                          </div>
                           <div class="col-1">:</div>
                           <div class="col-6 px-0">
                             <?php
@@ -237,7 +245,9 @@ and open the template in the editor.
                       </div>
                       <div class="col-md-3 col-sm-12">
                         <div class="row align-items-center">
-                          <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 5' : 'Operator 5'; ?></div>
+                          <div class="col-4">
+                            <?= ($_GET["line"] == 'E14') ? 'POS 5' : 'Operator 5'; ?>
+                          </div>
                           <div class="col-1">:</div>
                           <div class="col-6 mb-1 px-0">
                             <?php
@@ -259,7 +269,9 @@ and open the template in the editor.
                             }
                             ?>
                           </div>
-                          <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 6' : 'Operator 6'; ?></div>
+                          <div class="col-4">
+                            <?= ($_GET["line"] == 'E14') ? 'POS 6' : 'Operator 6'; ?>
+                          </div>
                           <div class="col-1">:</div>
                           <div class="col-6 mb-1 px-0">
                             <?php
@@ -281,7 +293,9 @@ and open the template in the editor.
                             }
                             ?>
                           </div>
-                          <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 7' : 'Operator 7'; ?></div>
+                          <div class="col-4">
+                            <?= ($_GET["line"] == 'E14') ? 'POS 7' : 'Operator 7'; ?>
+                          </div>
                           <div class="col-1">:</div>
                           <div class="col-6 mb-1 px-0">
                             <?php
@@ -303,7 +317,9 @@ and open the template in the editor.
                             }
                             ?>
                           </div>
-                          <div class="col-4"><?= ($_GET["line"] == 'E14') ? 'POS 8' : 'Operator 8'; ?></div>
+                          <div class="col-4">
+                            <?= ($_GET["line"] == 'E14') ? 'POS 8' : 'Operator 8'; ?>
+                          </div>
                           <div class="col-1">:</div>
                           <div class="col-6 px-0">
                             <?php
@@ -367,6 +383,10 @@ and open the template in the editor.
                         if (!empty($data_item)) {
                           foreach ($data_item as $list) {
                             $efficiency = round(($list["prd_qty"] * $list["cctime"] / 60) / $list["prd_time"] * 100, 2);
+                            if (empty($list["real_dt"])) {
+                              $isDisable = "disabled";
+                            }
+                            $efficiency = round(($list["prd_qty"] * $list["cctime"] / 60) / $list["prd_time"] * 100, 2);
                             if ($efficiency > 100 || $efficiency < 0 || $list["pln_qty"] < 0) {
                               $warna = "table-danger";
                             } else {
@@ -391,7 +411,8 @@ and open the template in the editor.
                               . "<td class='text-right'>" . $list["prd_time"] . "</td>"
                               . "<td class='text-right'>" . $efficiency . "</td>"
                               . "<td class='text-center'>"
-                              . "<a href='?action=$action&line=" . $list["line_id"] . "&date=" . $list["xdate"] . "&shift=" . $list["shift"] . "&prd_seq=" . $list["prd_seq"] . "' class='btn btn-link btn-sm text-center text-dark'><i class='material-icons'>edit_square</i></a>"
+                              . "<a data-toggle='tooltip' data-placement='top' title='Edit' href='?action=$action&line=" . $list["line_id"] . "&date=" . $list["xdate"] . "&shift=" . $list["shift"] . "&prd_seq=" . $list["prd_seq"] . "' class='btn btn-secondary btn-sm'><i class='material-icons'>edit_square</i></a>"
+                              . "<button data-toggle='tooltip' data-placement='top' title='Dandori' onclick='openModalDandori(\"" . $list["time_start"] . "\",\"" . $list["time_end"] . "\",\"" . $list["line_id"] . "\",\"" . $list["xdate"] . "\",\"" . $list["shift"] . "\",\"" . $list["prd_seq"] . "\")' class='ml-2 btn btn-warning btn-sm' $isDisable><i class='material-icons'>splitscreen</i></a>"
                               . "</td>";
                             if ($op_role == "LEADER") {
                               echo "<td class='text-center'>$btn_approve</td>";
@@ -413,6 +434,57 @@ and open the template in the editor.
           </div>
         </div>
       </main>
+      <!-- Modal -->
+      <div class="modal fade" id="modal_dandori" data-backdrop="static" data-keyboard="false"
+        aria-labelledby="modal_dandori_label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <form class="modal-content" method="get" id="dandori_form">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_dandori_label">Dandori</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group row">
+                <label for="dandori_time" class="col-3 col-form-label">Dandori Time</label>
+                <div class="col-3">
+                  <input type="text" class="form-control" id="dandori_time" name="dandori_time">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="dandori_time" class="col-3 col-form-label">Material</label>
+                <div class="col-6">
+                  <select name="dies_id" id="dies_id" class="form-control select2" data-live-search="true">
+                    <?php
+                    foreach ($matlist as $row) {
+                      if (!empty($row["backno"])) {
+                        $backno = " (" . $row["backno"] . ")";
+                      } else {
+                        $backno = "";
+                      }
+                      ?>
+                      <option value="<?php echo $row["matnr"]; ?>"><?php echo $row["name1"] . $backno; ?></option>
+                      <?php
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+              <input type="hidden" name="action" id="action" value="<?= $action ?>">
+              <input type="hidden" name="line" id="d_line" value="">
+              <input type="hidden" name="date" id="d_date" value="">
+              <input type="hidden" name="shift" id="d_shift" value="">
+              <input type="hidden" name="prd_seq" id="d_seq" value="">
+              <input type="hidden" name="dandori" value="true">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Dandori</button>
+            </div>
+          </form>
+        </div>
+      </div>
       <?php include 'common/t_footer.php'; ?>
       <input type="hidden" name="action" id="action" value="<?= $action ?>">
     </div>
@@ -428,6 +500,35 @@ and open the template in the editor.
         $(".btn").attr("disabled", "disabled");
         window.location = "?action=" + $("#action").val() + "&line=<?= $_GET["line"] ?>&date=<?= $date ?>&shift=<?= $_GET["shift"] ?>&delete=true";
       }
+    }
+
+    $("#dandori_form").submit(function (event) {
+      if ($("#dandori_time").val() == "") {
+        alert("Please input dandori time.");
+        return false;
+      } else {
+        $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+        $(".btn").attr("disabled", "disabled");
+      }
+    });
+
+    function openModalDandori(time_start, time_end, line, date, shift, seq) {
+      $("#dandori_time").flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        minTime: time_start,
+        maxTime: time_end,
+        defaultHour: time_start.split(":")[0],
+        defaultMinute: time_start.split(":")[1],
+        disableMobile: "true",
+      });
+      $("#d_line").val(line);
+      $("#d_date").val(date);
+      $("#d_shift").val(shift);
+      $("#d_seq").val(seq);
+      $("#modal_dandori").modal('show');
     }
 
     function approveDailyI(line_id, shift, prd_dt, prd_seq) {

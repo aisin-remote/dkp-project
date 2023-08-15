@@ -509,6 +509,21 @@ class Production
     return $return;
   }
 
+  public function getNGTypeList()
+  {
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT * FROM m_prd_ng_type WHERE app_id = 'AISIN_ADN' ";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
   public function getNGType($id)
   {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
@@ -518,6 +533,43 @@ class Production
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $return[] = $row;
       }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function insertNGType($param)
+  {
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "INSERT INTO m_prd_ng_type (ng_type_id, ng_type_grp, name1, app_id) 
+    values ('" . $param["ng_type_id"] . "', '" . $param["ng_type_grp"] . "', '" . $param["name1"] . "', 'AISIN_ADN')";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function updateNGType($param)
+  {
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "UPDATE m_prd_ng_type SET ng_type_grp = '" . $param["ng_type_grp"] . "', name1 = '" . $param["name1"] . "' WHERE ng_type_id = '" . $param["ng_type_id"] . "' AND app_id = 'AISIN_ADN'";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
     }
     $stmt = null;
     $conn = null;
@@ -797,6 +849,44 @@ class Production
       $return["status"] = false;
     }
     $conn = null;
+    return $return;
+  }
+
+  public function appendItem($param = array())
+  {
+    $return = array();
+    if (empty($param)) {
+      $return["status"] = false;
+      $return["message"] = "Data Empty";
+    } else {
+      $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+      $sql = "INSERT INTO t_prd_daily_i (line_id,prd_dt,shift,prd_seq,dies_id,time_start,time_end,cctime,pln_qty,prd_time,real_dt) "
+        . "VALUES ('" . $param["line_id"] . "','" . $param["prd_dt"] . "','" . $param["shift"] . "',"
+        . "(SELECT max(prd_seq)+1 as prd_seq FROM t_prd_daily_i WHERE line_id='" . $param["line_id"] . "' AND prd_dt = '" . $param["prd_dt"] . "' AND shift = '" . $param["shift"] . "'),"
+        . "'" . $param["dies_id"] . "','" . $param["time_start"] . "','" . $param["time_end"] . "'," . $param["cctime"] . "," . $param["pln_qty"] . "," . $param["prd_time"] . ", '" . $param["real_dt"] . "')";
+      // echo $sql;
+      // die();
+      $stmt = $conn->prepare($sql);
+      /*$stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
+      $stmt->bindValue(":prd_dt", $param["prd_dt"], PDO::PARAM_STR);
+      $stmt->bindValue(":shift", $param["shift"], PDO::PARAM_STR);
+      $stmt->bindValue(":dies_id", $param["dies_id"], PDO::PARAM_STR);
+      $stmt->bindValue(":time_start", $param["time_start"], PDO::PARAM_STR);
+      $stmt->bindValue(":time_end", $param["time_end"], PDO::PARAM_STR);
+      $stmt->bindValue(":cctime", $param["cctime"], PDO::PARAM_STR);
+      $stmt->bindValue(":pln_qty", $param["pln_qty"], PDO::PARAM_STR);
+      $stmt->bindValue(":prd_time", $param["prd_time"], PDO::PARAM_STR);*/
+      if ($stmt->execute()) {
+        $return["status"] = true;
+      } else {
+        $error = $stmt->errorInfo();
+        $return["status"] = false;
+        $return["message"] = trim(str_replace("\n", " ", $error[2] . "<br>" . $sql));
+        error_log($error[2]);
+      }
+      $stmt = null;
+      $conn = null;
+    }
     return $return;
   }
 

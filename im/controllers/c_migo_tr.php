@@ -91,7 +91,7 @@ if($action == "migo_tr") {
           //continue process
         } else {
           $cMatDoc->rollBackMaterialDocument($mblnr, $mjahr);
-          $cStock->reduceStockStock($mchb2);
+          $cStock->reduceStock($mchb2);
           $message = $insert_mseg["message"];
           header("Location: ?action=$action&error=$message");
           die();
