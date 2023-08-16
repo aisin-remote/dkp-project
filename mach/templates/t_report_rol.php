@@ -62,7 +62,7 @@ and open the template in the editor.
                           <th class="text-nowrap align-middle" rowspan="2">Model</th>
                           <th class="text-nowrap align-middle" rowspan="2">Dies</th>
                           <th class="text-nowrap align-middle" rowspan="2">Hour</th>
-                          <th class="text-nowrap align-middle" rowspan="2">LOT</th>
+                          <!-- <th class="text-nowrap align-middle" rowspan="2">LOT</th> -->
                           <th class="text-nowrap align-middle" rowspan="2">Qty NG ROL (PCS)</th>
                           <th class="text-nowrap align-middle" rowspan="2">Leak General</th>
                           <th class="text-nowrap align-middle" rowspan="2">Leak OP</th>
@@ -95,7 +95,7 @@ and open the template in the editor.
                               . "<td class='text-nowrap'>" . $list["group_id"] . " - " . $list["model_id"] . " - " . explode(" ", $list["dies_name"])[2] . "</td>"
                               . "<td class='text-nowrap'>" . $list["dies_no"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["time_start"] . " - " . $list["time_end"] . "</td>"
-                              . "<td class='text-nowrap text-center'> - </td>"
+                              // . "<td class='text-nowrap text-center'> - </td>"
                               . "<td class='text-nowrap text-center'>" . $list["ng_rol"] . "</td>"
                               . "<td class='text-nowrap text-center'>" . $list["ng_rol7"] . "</td>"
                               . "<td class='text-nowrap text-center'>" . $list["ng_rol5"] . "</td>"
