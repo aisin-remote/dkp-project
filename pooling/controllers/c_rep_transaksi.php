@@ -22,7 +22,7 @@ if ($action == "r_transaksi_scanner") {
 
         if (isset($_GET["seq"])) {
             $seq = $_GET["seq"];
-            $list = $class->getList3($id);
+            $list = $class->getList3($id, $seq);
             require(TEMPLATE_PATH . "/t_rep_trans3.php");
         } else {
             $list = $class->getList2($id);

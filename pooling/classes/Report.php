@@ -74,15 +74,15 @@ class Report
         return $return;
     }
 
-    public function getList3($id)
+    public function getList3($id, $seq)
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "SELECT a.*, to_char(a.dstat_dats, 'DD-MM-YYYY') as date_only, to_char(a.dstat_dats, 'HH24:MI') as time_only, to_char(a.crt_dt, 'DD-MM-YYYY') as scan_date, b.*, c.name1
+        $sql = "SELECT a.*, to_char(a.dstat_dats, 'DD-MM-YYYY') as date_only, to_char(a.dstat_dats, 'HH24:MI') as time_only, to_char(a.crt_dt, 'DD-MM-YYYY') as scan_date, to_char(a.crt_dt, 'HH24:MI:SS') as scan_time, b.*, c.name1
                 from t_io_ldlist_dtl a
                 left join t_io_ldlist_i b on b.ldnum = a.ldnum AND b.ldseq = a.ldseq
                 left join m_io_mara c on c.matnr = b.matnr
-                where a.ldnum = '$id' ";
+                where a.ldnum = '$id' AND a.ldseq = '$seq' ";
         $sql .= " ORDER by a.ldseq ASC ";
         // echo $sql;
         // die();

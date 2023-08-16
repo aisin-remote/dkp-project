@@ -59,7 +59,7 @@ and open the template in the editor.
                         <table class="table table-sm" id="data-table-x">
                           <thead>
                             <tr>
-                              <th class=''>Item No.</th>
+                              <th class='text-center'>Item No.</th>
                               <th class=''>Loading List Number</th>
                               <th class=''>Parts No.</th>
                               <th class=''>Cust. Parts No.</th>
@@ -111,36 +111,40 @@ and open the template in the editor.
     <div class="modal fade" id="modal_filter" data-backdrop="static" data-keyboard="false" tabindex="-1"
          aria-labelledby="modal_filter_label" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
-        <form method="post" action="?action=<?php echo $action; ?>?delete=true">
-          <div class="modal-content">
+
+        <div class="modal-content">
+          <form id="my_form" method="post" action="?action=<?php echo $action; ?>">
             <div class="modal-header">
-              <h5 class="modal-title" id="modal_filter_label"><span class="material-icons">delete</span>
-                Delete Log</h5>
+              <h5 class="modal-title" id="modal_filter_label"><span class="material-icons">checklist_rtl</span>
+                Complete Manual Loading List</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <div class="row my-2">
-                <div class="col-1"><label class="col-form-label">Date</label></div>
-                <div class="col"><input type="text" name="date_from" class="form-control datepicker"></div>
-                <label class="col-form-label px-3">to</label>
-                <div class="col"><input type="text" name="date_to" class="form-control datepicker"></div>
-              </div>
+              <input type="hidden" name="set_complete" value="true">
+              <input type="hidden" name="ldnum" value="<?=$_GET["id"]?>">
+              <label for="remarks" class="col-form-label">Remarks</label>
+              <textarea id="remarks" name="remarks" class="form-control" maxlength="500" required></textarea>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-outline-danger" name="delete_log"
-                      value="filter">Delete</button>
+              <button type="submit" class="btn btn-outline-primary" name="btn_set_complete" value="true">Submit</button>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
+
       </div>
     </div>
 
     <?php include 'common/t_js.php'; ?>
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
+      $("#my_form").submit(function(){
+        $(".btn").html('<div class="spinner-border spinner-border-sm" role="status"></div> Please Wait...');
+        $(".btn").attr("disabled","disabled");
+      });
+      
       $(document).ready(function () {
         // $('.collapse').collapse();
         $(".datepicker").flatpickr({
@@ -157,16 +161,12 @@ and open the template in the editor.
                   "<'row'<'col-sm-12'tr>>" +
                   "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
           buttons: [{
-              extend: 'csv',
               title: "Detail Loading List",
               className: 'btn btn-success btn-sm',
-              text: '<i class="material-icons">text_snippet</i> CSV',
-            },
-            {
-              extend: 'excel',
-              title: "Detail Loading List",
-              className: 'btn btn-outline-success btn-sm',
-              text: '<i class="material-icons">download</i> Excel',
+              text: '<i class="material-icons">text_snippet</i> Set Complete',
+              action: function () {
+                $("#modal_filter").modal("show");
+              }
             }
           ]
         });

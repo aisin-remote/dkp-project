@@ -23,7 +23,10 @@ and open the template in the editor.
                 <a href="?action=<?=$action?>"><?php echo $template["group"]; ?></a>
               </li>
               <li class="breadcrumb-item active">
-                <?php echo $template["menu"]; ?>
+                <a href="?action=<?=$action?>&id=<?=$_GET["id"]?>"><?php echo $template["menu"]; ?></a>
+              </li>
+              <li class="breadcrumb-item active">
+                Scanned Item
               </li>
             </ol>
 
@@ -59,17 +62,20 @@ and open the template in the editor.
                         <table class="table table-sm" id="data-table-x">
                           <thead>
                             <tr>
+                              <th class=''>No.</th>
                               <th class=''>Item No.</th>
-                              <th class=''>Loading List Number</th>
-                              <th class=''>Parts No.</th>
-                              <th class=''>Cust. Parts No.</th>
-                              <th class=''>Kanban Qty</th>
-                              <th class=''>Actual Qty</th>
-                              <th class=''>Delivered Qty</th>
-                              <th class=''>Qty/Pack</th>
-                              <th class=''>Qty</th>
+                              <th class='text-nowrap'>Loading List Number</th>
+                              <th class='text-nowrap'>Serial Kanban Internal</th>
+                              <th class='text-nowrap'>Kanban External</th>
+                              <th class='text-nowrap'>Part Name</th>
+                              <th class='text-nowrap'>Scan Date</th>
+                              <th class='text-nowrap'>Scan Time</th>
+                              <th class='text-nowrap'>Delivered Date</th>
+                              <th class='text-nowrap'>Delivered Time</th>
+                              <!-- <th class=''>Delivery Date</th>
                               <th class=''>Status</th>
-                              <th class=''>Delivery Status</th>
+                              <th class='text-center'>Action</th> -->
+                              <!-- <th class='text-center'>Device Antenna</th> -->
                             </tr>
                           </thead>
                           <tbody>
@@ -78,17 +84,16 @@ and open the template in the editor.
                               foreach ($list as $row) {
                                 echo
                                 "<tr>"
-                                . "<td class='align-middle text-center'><a href='?action=$action&id=" . $row["ldnum"] . "&seq=" . $row["ldseq"] . "' class=''>" . $row["ldseq"] . "</a></td>"
-                                . "<td class='align-middle'><a href='?action=$action&id=" . $row["ldnum"] . "&seq=" . $row["ldseq"] . "' class=''>" . $row["ldnum"] . "</a></td>"
-                                . "<td class='align-middle'><a href='?action=$action&id=" . $row["ldnum"] . "&seq=" . $row["ldseq"] . "' class=''>" . $row["matnr"] . "</a></td>"
-                                . "<td class='align-middle'><a href='?action=$action&id=" . $row["ldnum"] . "&seq=" . $row["ldseq"] . "' class=''>" . $row["custpart"] . "</a></td>"
-                                . "<td class='align-middle'>" . $row["menge"] . "</td>"
-                                . "<td class='align-middle'>" . $row["wmeng"] . "</td>"
-                                . "<td class='align-middle'>" . $row["dlv_qty"] . "</td>"
-                                . "<td class='align-middle'>" . $row["perpack"] . "</td>"
-                                . "<td class='align-middle'>" . $row["totqty"] . "</td>"
-                                . "<td class='align-middle'>" . $row["stats"] . "</td>"
-                                . "<td class='align-middle'>" . $row["dstat"] . "</td>"
+                                . "<td class='align-middle'>" . $row["trseq"] . "</td>"
+                                . "<td class='align-middle'>" . $row["ldseq"] . "</td>"
+                                . "<td class='align-middle'>" . $row["ldnum"] . "</td>"
+                                . "<td class='align-middle'>" . $row["kanban_i_srl"] . "</td>"
+                                . "<td class='align-middle'>" . $row["kanban_e"] . "</td>"
+                                . "<td class='align-middle text-nowrap'>" . $row["name1"] . "</td>"
+                                . "<td class='align-middle'>" . $row["scan_date"] . "</td>"
+                                . "<td class='align-middle'>" . $row["scan_time"] . "</td>"
+                                . "<td class='align-middle'>" . $row["date_only"] . "</td>"
+                                . "<td class='align-middle'>" . $row["time_only"] . "</td>"
                                 . "</tr>";
                               }
                             }
@@ -153,22 +158,6 @@ and open the template in the editor.
           order: [
             [0, 'asc']
           ],
-          dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-2'l><'col-sm-12 col-md-4'f>>" +
-                  "<'row'<'col-sm-12'tr>>" +
-                  "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-          buttons: [{
-              extend: 'csv',
-              title: "Detail Loading List",
-              className: 'btn btn-success btn-sm',
-              text: '<i class="material-icons">text_snippet</i> CSV',
-            },
-            {
-              extend: 'excel',
-              title: "Detail Loading List",
-              className: 'btn btn-outline-success btn-sm',
-              text: '<i class="material-icons">download</i> Excel',
-            }
-          ]
         });
 
         $('td').each(function () {

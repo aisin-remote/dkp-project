@@ -209,7 +209,7 @@ and open the template in the editor.
             $('#modal_filter').modal("show");
 
           }
-        },
+        }/*,
         {
           extend: 'csv',
           title: "Loading List",
@@ -221,7 +221,7 @@ and open the template in the editor.
           title: "Loading List",
           className: 'btn btn-outline-success btn-sm',
           text: '<i class="material-icons">download</i> Excel',
-        }
+        }*/
         ]
       });
 
