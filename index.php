@@ -9,7 +9,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
   <link href="font/custom_font.css" rel="stylesheet" type="text/css" />
   <link href="font/material_icons.css" rel="stylesheet" type="text/css" />
-  <link href="css/ega.css?time=<?php echo date("Ymdhis"); ?>" rel="stylesheet" type="text/css" />
+  <link href="css/ega.css?time=<?=date("Ymdhis"); ?>" rel="stylesheet" type="text/css" />
   <title>AISIN DIGITALIZATION</title>
 </head>
 
