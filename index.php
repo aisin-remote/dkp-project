@@ -18,7 +18,7 @@
     <img src="img/AISIN_CORPORATION_LOGO 1.png" alt="" />
     <h4 class="tagline mb-5">UNIT PLANT DIGITALIZATION (Die Casting, Machining, Assy Line & Electrical Line)</h4>
     <div class="row">
-      <div class="col">
+      <div class="col-6">
         <div class="card bg-transparent border-secondary h-100">
           <div class="card-body ">
             <div class="card-title font-weight-bold py-0"><h3>DIE CASTING</h3></div>
@@ -35,7 +35,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-6">
         <div class="card bg-transparent border-secondary h-100">
           <div class="card-body ">
           <div class="card-title font-weight-bold py-0"><h3>ELECTRICAL</h3></div>
@@ -45,6 +45,30 @@
             </a>
             <a href="im">
               <h4 class="link"><i class="material-icons-outlined">inventory</i> INVENTORY MANAGEMENT</h4>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mt-4">
+        <div class="card bg-transparent border-secondary h-100">
+          <div class="card-body ">
+            <div class="card-title font-weight-bold py-0"><h3>QUALITY CONTROL</h3></div>
+            <hr class="bg-secondary">
+            <a href="qa">
+              <h4 class="link"><i class="material-icons-outlined">plumbing</i> MEASUREMENT INSPECTION</h4>
+            </a>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 mt-4">
+        <div class="card bg-transparent border-secondary h-100">
+          <div class="card-body ">
+            <div class="card-title font-weight-bold py-0"><h3>MACHINING</h3></div>
+            <hr class="bg-secondary">
+            <a href="mach">
+              <h4 class="link"><i class="material-icons-outlined">settings</i> PRODUCTION</h4>
+            </a>
             </a>
           </div>
         </div>

@@ -144,8 +144,8 @@ and open the template in the editor.
                                                             . "<h5 class='text-left text-dark m-0 font-weight-bold'>" . $dies["dies_no"] . "</h5>"
                                                             . "</div>"
                                                             . "<div class='col-6 pl-1 pr-3'>"
-                                                            . "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #10A19D'>" . $formatted_number = number_format($dies["stkrun"], 0, ',', '.') . "</span></p>"
-                                                            . "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #1746A2'>" . $formatted_number = number_format($dies["stk6k"], 0, ',', '.') . "</span></p>"
+                                                            . "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #10A19D'>" . number_format($dies["stkrun"]) . "</span></p>"
+                                                            . "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #1746A2'>" . number_format($dies["stk6k"]) . "</span></p>"
                                                             . "</div>"
                                                             . "</div>"
                                                             . "</a>"
@@ -229,7 +229,7 @@ and open the template in the editor.
         $(document).ready(function () {
             // closeFullscreen();
         });
-
+        const numberFormatter = Intl.NumberFormat('en-US');
         function updateDashboard() {
             $.getJSON(
                 "?action=api_dashboard_dm", {},
@@ -264,8 +264,8 @@ and open the template in the editor.
                                                 append_dataTCC += "<h5 class='text-center text-dark m-0 font-weight-bold'>" + data_dies[x].dies_no + "</h5>";
                                                 append_dataTCC += "</div>";
                                                 append_dataTCC += "<div class='col-6 pr-3 pl-1'>";
-                                                append_dataTCC += "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #10A19D'>" + data_dies[x].stkrun + "</span></p>";
-                                                append_dataTCC += "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #1746A2'>" + data_dies[x].stk6k + "</span></p>";
+                                                append_dataTCC += "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #10A19D'>" + numberFormatter.format(data_dies[x].stkrun) + "</span></p>";
+                                                append_dataTCC += "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #1746A2'>" + numberFormatter.format(data_dies[x].stk6k) + "</span></p>";
                                                 append_dataTCC += "</div>";
                                                 append_dataTCC += "</div>";
                                                 append_dataTCC += "</a>";
@@ -300,8 +300,8 @@ and open the template in the editor.
                                                 append_dataOPN += "<h5 class='text-center text-dark m-0 font-weight-bold'>" + data_dies[x].dies_no + "</h5>";
                                                 append_dataOPN += "</div>";
                                                 append_dataOPN += "<div class='col-6 pr-3 pl-1'>";
-                                                append_dataOPN += "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #10A19D'>" + data_dies[x].stkrun + "</span></p>";
-                                                append_dataOPN += "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #1746A2'>" + data_dies[x].stk6k + "</span></p>";
+                                                append_dataOPN += "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #10A19D'>" + numberFormatter.format(data_dies[x].stkrun) + "</span></p>";
+                                                append_dataOPN += "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #1746A2'>" + numberFormatter.format(data_dies[x].stk6k) + "</span></p>";
                                                 append_dataOPN += "</div>";
                                                 append_dataOPN += "</div>";
                                                 append_dataOPN += "</a>";
@@ -336,8 +336,8 @@ and open the template in the editor.
                                                 append_dataCSH += "<h5 class='text-center text-dark m-0 font-weight-bold'>" + data_dies[x].dies_no + "</h5>";
                                                 append_dataCSH += "</div>";
                                                 append_dataCSH += "<div class='col-6 pr-3 pl-1'>";
-                                                append_dataCSH += "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #10A19D'>" + data_dies[x].stkrun + "</span></p>";
-                                                append_dataCSH += "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #1746A2'>" + data_dies[x].stk6k + "</span></p>";
+                                                append_dataCSH += "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #10A19D'>" + numberFormatter.format(data_dies[x].stkrun) + "</span></p>";
+                                                append_dataCSH += "<p class='m-0 text-dark text-right text-nowrap font-weight-bold'><span style='color: #1746A2'>" + numberFormatter.format(data_dies[x].stk6k) + "</span></p>";
                                                 append_dataCSH += "</div>";
                                                 append_dataCSH += "</div>";
                                                 append_dataCSH += "</a>";

@@ -1,0 +1,12 @@
+{
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.29",
+        "mpdf/mpdf": "^8.1",
+        "tecnickcom/tcpdf": "^6.6"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    }
+}

@@ -10,3 +10,7 @@ pooling/config.php
 pooling/config_off.php
 /test.php
 /pooling/test.php
+mach/config.php
+qa/config.php
+andon/config.php
+im/config.php

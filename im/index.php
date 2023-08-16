@@ -19,8 +19,8 @@ if($action == APP_DIR) {
  */
 
 $action = isset($_GET["action"]) ? strtolower($_GET["action"]) : "home";
-
-$api_list = Menu::getListApi();
+$menu = new Menu();
+$api_list = $menu->getListApi();
 $in_api = array_search($action,$api_list,true);
 if($in_api === false) {
   include "web.php";

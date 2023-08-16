@@ -26,8 +26,7 @@ class Stop
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
     $sql = "SELECT a.*, b.pval2 as type1_text, c.pval2 as type2_text FROM m_prd_stop_reason_action a "
       . "LEFT JOIN m_param b ON b.pval1 = a.type1 AND b.pid = 'SRNA_TYPE' "
-      . "LEFT JOIN m_param c ON c.pval1 = a.type2 AND c.pid = 'SRNA_TYPE2' "
-      . "WHERE a.app_id = '" . APP . "' ";
+      . "LEFT JOIN m_param c ON c.pval1 = a.type2 AND c.pid = 'SRNA_TYPE2' ";
     if (!empty($type)) {
       $sql .= " AND a.type1 = '$type' ";
     }
@@ -172,6 +171,27 @@ class Stop
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $return[] = $row;
       }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function insertMass($param = array()) {
+    // print_r("<pre>" . print_r($param, true) . "</pre>");;
+    // die();
+    $return = array();
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "INSERT into m_prd_stop_reason_action (srna_id, type1, type2, name1, app_id, type3)
+    values ('".$param["srna_id"]."', '".$param["type1"]."', '".$param["type2"]."', '".$param["name1"]."', '".$param["app_id"]."', '".$param["type3"]."')";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute()) {
+      $return["status"] = true;
+    } else {
+      $error = $stmt->errorInfo();
+      $return["status"] = false;
+      $return["message"] = trim(str_replace("\n", " ", $error[2]));
+      error_log($error[2]);
     }
     $stmt = null;
     $conn = null;

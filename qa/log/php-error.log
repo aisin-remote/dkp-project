@@ -1,0 +1,348 @@
+[20-Feb-2023 12:09:12 Asia/Jakarta] PHP Fatal error:  require(): Failed opening required 'templates/t_login.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\1DEV\AISIN\andon\controllers\c_login.php on line 26
+[28-Feb-2023 11:59:32 Asia/Jakarta] Class 'Dashboard' not found
+[28-Feb-2023 12:00:21 Asia/Jakarta] Call to a member function getLine() on null
+[28-Feb-2023 15:37:06 Asia/Jakarta] ERROR:  duplicate key value violates unique constraint "m_prd_shift_stop_pkey"
+DETAIL:  Key (shift_id, time_id, srna_id)=(2, 2, 3002) already exists.
+[15-Mar-2023 15:38:27 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+[19-May-2023 16:32:36 Asia/Jakarta] ERROR:  INSERT has more expressions than target columns
+LINE 1: ...1,TO_DATE($2,'YYYYMMDD'),$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$1...
+                                                             ^
+[19-May-2023 16:39:41 Asia/Jakarta] ERROR:  invalid input syntax for type double precision: ""
+[19-May-2023 16:41:21 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-May-2023 16:41:21 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-May-2023 16:41:23 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-May-2023 16:41:24 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-May-2023 16:41:24 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[19-May-2023 16:41:25 Asia/Jakarta] ERROR:  syntax error at end of input
+LINE 1: ...id, prd_dt, shift, prd_seq, empid, app_id, stop_seq) VALUES 
+                                                                       ^
+[23-May-2023 10:00:52 Asia/Jakarta] Non-static method Menu::getListApi() cannot be called statically
+[23-May-2023 10:01:21 Asia/Jakarta] could not find driver
+[23-May-2023 10:01:32 Asia/Jakarta] could not find driver
+[23-May-2023 11:20:58 Asia/Jakarta] could not find driver
+[23-May-2023 11:26:46 Asia/Jakarta] Class "License" not found
+[23-May-2023 11:27:09 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[23-May-2023 11:28:37 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[23-May-2023 21:41:10 Asia/Jakarta] implode(): Argument #1 ($pieces) must be of type array, string given
+[23-May-2023 21:41:46 Asia/Jakarta] implode(): Argument #1 ($pieces) must be of type array, string given
+[23-May-2023 23:39:30 Asia/Jakarta] Call to a member function insertHeader() on null
+[24-May-2023 00:01:20 Asia/Jakarta] SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "m_tmpl_h" does not exist
+LINE 1: insert into m_tmpl_h (name1, tmpfl, crtdt, crtby)
+                    ^
+[24-May-2023 00:24:01 Asia/Jakarta] Path cannot be empty
+[24-May-2023 00:25:17 Asia/Jakarta] Path cannot be empty
+[24-May-2023 00:25:33 Asia/Jakarta] Path cannot be empty
+[24-May-2023 00:26:50 Asia/Jakarta] Path cannot be empty
+[24-May-2023 00:29:05 Asia/Jakarta] Path cannot be empty
+[24-May-2023 00:29:22 Asia/Jakarta] Path cannot be empty
+[24-May-2023 00:44:18 Asia/Jakarta] Cannot access offset of type string on string
+[24-May-2023 09:26:02 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[24-May-2023 10:09:08 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near "desc"
+LINE 1: insert into qas.m_tmpl_i (tmpid, desc, grupid, img) values (...
+                                         ^
+[24-May-2023 10:11:34 Asia/Jakarta] SQLSTATE[42883]: Undefined function: 7 ERROR:  operator does not exist: text + integer
+LINE 1: ...x(tmpid)+1 from qas.m_tmpl_h), (select max(grupid)+1 from qa...
+                                                             ^
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+[24-May-2023 10:16:06 Asia/Jakarta] SQLSTATE[22001]: String data, right truncated: 7 ERROR:  value too long for type character varying(10)
+[24-May-2023 10:20:25 Asia/Jakarta] SQLSTATE[22001]: String data, right truncated: 7 ERROR:  value too long for type character varying(20)
+[24-May-2023 11:06:27 Asia/Jakarta] Call to undefined function imagecreatefromstring()
+[24-May-2023 11:10:21 Asia/Jakarta] Call to undefined function imagecreatefromstring()
+[24-May-2023 11:10:51 Asia/Jakarta] Call to undefined function imagecreatefromstring()
+[24-May-2023 11:12:28 Asia/Jakarta] file_get_contents(): Argument #1 ($filename) must be of type string, array given
+[24-May-2023 11:12:42 Asia/Jakarta] file_get_contents(): Argument #1 ($filename) must be of type string, array given
+[24-May-2023 11:18:28 Asia/Jakarta] Call to a member function updateHeader() on null
+[24-May-2023 11:46:09 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...pl_h set name1 = 'Model Handle', tmpfl = '1' where tmpid =  
+                                                                       ^
+[24-May-2023 11:48:34 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...GNDaGFpbi54bWxQSwUGAAAAAGkAaQB4GwAAF+sOAAAA' where tmpid =  
+                                                                       ^
+[24-May-2023 11:49:16 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...GNDaGFpbi54bWxQSwUGAAAAAGkAaQB4GwAAF+sOAAAA' where tmpid =  
+                                                                       ^
+[24-May-2023 11:49:44 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...GNDaGFpbi54bWxQSwUGAAAAAGkAaQB4GwAAF+sOAAAA' where tmpid =  
+                                                                       ^
+[24-May-2023 11:51:04 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...GNDaGFpbi54bWxQSwUGAAAAAGkAaQB4GwAAF+sOAAAA' where tmpid =  
+                                                                       ^
+[24-May-2023 11:51:37 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...GNDaGFpbi54bWxQSwUGAAAAAGkAaQB4GwAAF+sOAAAA' where tmpid =  
+                                                                       ^
+[24-May-2023 11:53:00 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...GNDaGFpbi54bWxQSwUGAAAAAGkAaQB4GwAAF+sOAAAA' where tmpid =  
+                                                                       ^
+[24-May-2023 11:54:34 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...GNDaGFpbi54bWxQSwUGAAAAAGkAaQB4GwAAF+sOAAAA' where tmpid =  
+                                                                       ^
+[24-May-2023 11:55:18 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...GNDaGFpbi54bWxQSwUGAAAAAGkAaQB4GwAAF+sOAAAA' where tmpid =  
+                                                                       ^
+[24-May-2023 11:57:19 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...GNDaGFpbi54bWxQSwUGAAAAAGkAaQB4GwAAF+sOAAAA' where tmpid =  
+                                                                       ^
+[24-May-2023 11:57:32 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...GNDaGFpbi54bWxQSwUGAAAAAGkAaQB4GwAAF+sOAAAA' where tmpid =  
+                                                                       ^
+[24-May-2023 12:00:49 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...GNDaGFpbi54bWxQSwUGAAAAAGkAaQB4GwAAF+sOAAAA' where tmpid =  
+                                                                       ^
+[24-May-2023 12:02:06 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...pl_h set name1 = 'Model Handle', tmpfl = '1' where tmpid =  
+                                                                       ^
+[24-May-2023 12:02:35 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...GNDaGFpbi54bWxQSwUGAAAAAGkAaQB4GwAAF+sOAAAA' where tmpid =  
+                                                                       ^
+[24-May-2023 12:06:07 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...GNDaGFpbi54bWxQSwUGAAAAAGkAaQB4GwAAF+sOAAAA' where tmpid =  
+                                                                       ^
+[24-May-2023 13:03:03 Asia/Jakarta] Cannot access offset of type string on string
+[24-May-2023 13:03:38 Asia/Jakarta] Cannot access offset of type string on string
+[24-May-2023 15:08:35 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection timed out (0x0000274C/10060)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[24-May-2023 15:08:58 Asia/Jakarta] Object of class Param could not be converted to string
+[24-May-2023 15:09:39 Asia/Jakarta] Object of class Param could not be converted to string
+[24-May-2023 15:10:00 Asia/Jakarta] Object of class Param could not be converted to string
+[24-May-2023 15:55:03 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[24-May-2023 20:31:54 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[24-May-2023 20:39:23 Asia/Jakarta] Failed opening required 'templates/t_temp_model_edit_item.php' (include_path='C:\xampp\php\PEAR')
+[24-May-2023 20:45:12 Asia/Jakarta] count(): Argument #1 ($value) must be of type Countable|array, null given
+[24-May-2023 20:46:50 Asia/Jakarta] count(): Argument #1 ($value) must be of type Countable|array, null given
+[24-May-2023 20:47:44 Asia/Jakarta] count(): Argument #1 ($value) must be of type Countable|array, null given
+[24-May-2023 20:49:03 Asia/Jakarta] count(): Argument #1 ($value) must be of type Countable|array, null given
+[24-May-2023 20:50:28 Asia/Jakarta] count(): Argument #1 ($value) must be of type Countable|array, null given
+[24-May-2023 21:07:02 Asia/Jakarta] SQLSTATE[42883]: Undefined function: 7 ERROR:  operator does not exist: character varying = integer
+LINE 1: select * from qas.m_tmpl_i where grupid = 1 order by grupid ...
+                                                ^
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+[24-May-2023 22:00:23 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: ...as.m_tmpl_map (tmpid, grupid, seq, desc1, cell_map ) values 
+                                                                       ^
+[24-May-2023 22:22:29 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[24-May-2023 22:50:56 Asia/Jakarta] SQLSTATE[23502]: Not null violation: 7 ERROR:  null value in column "cellid" violates not-null constraint
+DETAIL:  Failing row contains (8, 1, Handle 1, AC2, 1, null).
+[24-May-2023 22:56:24 Asia/Jakarta] SQLSTATE[42703]: Undefined column: 7 ERROR:  column "ac2" does not exist
+LINE 1: ...ct max(tmpid) from qas.m_tmpl_h), '1', 'panjang', AC2, '1', ...
+                                                             ^
+[25-May-2023 00:46:45 Asia/Jakarta] Unmatched '}'
+[25-May-2023 00:53:24 Asia/Jakarta] PHP Fatal error:  Cannot use [] for reading in C:\xampp\htdocs\aiia_prod_report\qa\controllers\c_measure.php on line 18
+[25-May-2023 01:01:08 Asia/Jakarta] SQLSTATE[42703]: Undefined column: 7 ERROR:  column "operator" of relation "t_tmpl_h" does not exist
+LINE 1: insert into qas.t_tmpl_h (prd_dt, shift, tmpid, operator) va...
+                                                        ^
+[25-May-2023 10:21:13 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[25-May-2023 10:35:39 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: select * from qas.m_tmpl_h where tmpid = Array 
+                                                       ^
+[25-May-2023 10:36:24 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: select * from qas.m_tmpl_h where tmpid =  
+                                                  ^
+[25-May-2023 10:37:31 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: select * from qas.m_tmpl_h where tmpid =  
+                                                  ^
+[25-May-2023 11:07:29 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near ","
+LINE 1: select * from qas.m_tmpl_i where tmpid = 13, grupid = '1' or...
+                                                   ^
+[25-May-2023 11:08:39 Asia/Jakarta] SQLSTATE[23502]: Not null violation: 7 ERROR:  null value in column "cellid" violates not-null constraint
+DETAIL:  Failing row contains (13, 1, panjang, BC2, 1, null).
+[25-May-2023 11:44:58 Asia/Jakarta] SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "t_tmpl_map_pkey"
+DETAIL:  Key (tmpid, prd_dt, shift, inspector, grupid, cellid)=(8, 2023-05-25 00:00:00, 1, 000011, 2, ) already exists.
+[25-May-2023 12:05:33 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[25-May-2023 12:05:46 Asia/Jakarta] SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "t_tmpl_map_pkey"
+DETAIL:  Key (tmpid, prd_dt, shift, inspector, grupid, cellid)=(8, 2023-05-25 00:00:00, 1, 000011, , ) already exists.
+[25-May-2023 12:06:53 Asia/Jakarta] SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "t_tmpl_map_pkey"
+DETAIL:  Key (prd_dt, shift, inspector, grupid, cellid)=(2023-05-25 00:00:00, 1, 000011, , ) already exists.
+[25-May-2023 12:09:18 Asia/Jakarta] SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "t_tmpl_h_pkey"
+DETAIL:  Key (inspector, tmpid, shift, prd_dt)=(000011, 8, 1, 2023-05-25 00:00:00) already exists.
+[25-May-2023 12:11:34 Asia/Jakarta] SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "t_tmpl_h_pkey"
+DETAIL:  Key (inspector, tmpid, shift, prd_dt)=(000011, 8, 1, 2023-05-25 00:00:00) already exists.
+[25-May-2023 12:16:07 Asia/Jakarta] SQLSTATE[08006] [7] timeout expired
+[25-May-2023 12:16:28 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection timed out (0x0000274C/10060)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
+[25-May-2023 12:18:34 Asia/Jakarta] SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "t_tmpl_h_pkey"
+DETAIL:  Key (inspector, tmpid, shift, prd_dt)=(000011, 8, 1, 2023-05-25 00:00:00) already exists.
+[25-May-2023 13:00:37 Asia/Jakarta] SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "t_tmpl_h_pkey"
+DETAIL:  Key (inspector, tmpid, shift, prd_dt)=(000011, 8, 1, 2023-05-25 00:00:00) already exists.
+[25-May-2023 13:35:21 Asia/Jakarta] SQLSTATE[22007]: Invalid datetime format: 7 ERROR:  invalid input syntax for type timestamp: "1"
+LINE 5:         where a.prd_dt = '1' and a.shift = '20230525' and a....
+                                 ^
+[25-May-2023 13:50:38 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[25-May-2023 13:53:14 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[25-May-2023 21:21:09 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[25-May-2023 22:52:29 Asia/Jakarta] SQLSTATE[22008]: Datetime field overflow: 7 ERROR:  date/time field value out of range: "25-05-2023"
+LINE 5:         where a.prd_dt = '25-05-2023' and a.shift = '' and a...
+                                 ^
+HINT:  Perhaps you need a different "datestyle" setting.
+[25-May-2023 22:55:39 Asia/Jakarta] date(): Argument #2 ($timestamp) must be of type ?int, string given
+[25-May-2023 22:57:41 Asia/Jakarta] date(): Argument #2 ($timestamp) must be of type ?int, string given
+[25-May-2023 22:58:59 Asia/Jakarta] date_format(): Argument #1 ($object) must be of type DateTimeInterface, string given
+[26-May-2023 09:23:50 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[26-May-2023 09:24:27 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near ")"
+LINE 1: ...) values(8, '20230526', '1', '000011', '1', '1a', ),(8, '202...
+                                                             ^
+[26-May-2023 09:26:53 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near ")"
+LINE 1: ...) values(8, '20230526', '1', '000011', '2', '16', ),(8, '202...
+                                                             ^
+[26-May-2023 11:05:45 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near ")"
+LINE 1: ...) values(8, '20230526', '1', '000011', '1', '1a', ),(8, '202...
+                                                             ^
+[26-May-2023 11:10:01 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[26-May-2023 15:26:51 Asia/Jakarta] file_get_contents(): Argument #1 ($filename) must not contain any null bytes
+[26-May-2023 15:29:23 Asia/Jakarta] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Reader\Excel5.php on line 1928
+[26-May-2023 15:47:42 Asia/Jakarta] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Reader\Excel5.php on line 1928
+[26-May-2023 15:52:18 Asia/Jakarta] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Reader\Excel5.php on line 1991
+[26-May-2023 15:55:07 Asia/Jakarta] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Reader\Excel5.php on line 2549
+[26-May-2023 15:56:00 Asia/Jakarta] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Reader\Excel5.php on line 2808
+[26-May-2023 15:57:07 Asia/Jakarta] syntax error, unexpected token "}"
+[26-May-2023 16:02:14 Asia/Jakarta] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Reader\Excel5.php on line 3886
+[26-May-2023 16:02:47 Asia/Jakarta] PHP Fatal error:  Can't use function return value in write context in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Reader\Excel5.php on line 3909
+[26-May-2023 16:04:40 Asia/Jakarta] PHP Fatal error:  Can't use function return value in write context in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Reader\Excel5.php on line 3909
+[26-May-2023 16:07:12 Asia/Jakarta] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Reader\Excel5.php on line 2891
+[26-May-2023 16:08:34 Asia/Jakarta] Class "ZipArchive" not found
+[26-May-2023 16:10:12 Asia/Jakarta] Class "ZipArchive" not found
+[26-May-2023 16:26:29 Asia/Jakarta] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Reader\Excel5.php on line 1928
+[26-May-2023 16:27:25 Asia/Jakarta] Class "ZipArchive" not found
+[26-May-2023 16:32:39 Asia/Jakarta] Class "ZipArchive" not found
+[26-May-2023 16:34:01 Asia/Jakarta] Class "ZipArchive" not found
+[26-May-2023 16:36:24 Asia/Jakarta] Class name must be a valid object or a string
+[26-May-2023 16:37:01 Asia/Jakarta] Class "ZIPARCHIVE" not found
+[26-May-2023 16:38:24 Asia/Jakarta] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Calculation\Functions.php on line 324
+[26-May-2023 16:38:39 Asia/Jakarta] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Calculation\Functions.php on line 324
+[26-May-2023 16:39:47 Asia/Jakarta] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Calculation\Functions.php on line 561
+[26-May-2023 16:40:06 Asia/Jakarta] PHP Fatal error:  Array and string offset access syntax with curly braces is no longer supported in C:\xampp\htdocs\aiia_prod_report\qa\classes\PHPExcel\Calculation\Functions.php on line 611
+[29-May-2023 11:20:10 Asia/Jakarta] implode(): Argument #1 ($pieces) must be of type array, string given
+[29-May-2023 11:20:35 Asia/Jakarta] SQLSTATE[22001]: String data, right truncated: 7 ERROR:  value too long for type character varying(20)
+[29-May-2023 11:33:19 Asia/Jakarta] SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "t_tmpl_h_pkey"
+DETAIL:  Key (inspector, tmpid, shift, prd_dt)=(000011, 8, 1, 2023-05-29 00:00:00) already exists.
+[29-May-2023 11:34:37 Asia/Jakarta] SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "t_tmpl_i_pkey"
+DETAIL:  Key (prd_dt, shift, tmpid, inspector, grupid)=(2023-05-29 00:00:00, 1, 8, 000011, 1) already exists.
+[29-May-2023 11:39:18 Asia/Jakarta] SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "t_tmpl_i_pkey"
+DETAIL:  Key (prd_dt, shift, tmpid, inspector, grupid)=(2023-05-29 00:00:00, 1, 8, 000011, 1) already exists.
+[29-May-2023 12:45:41 Asia/Jakarta] Too few arguments to function Measure::insertItem(), 5 passed in C:\xampp\htdocs\aiia_prod_report\qa\controllers\c_measure.php on line 68 and exactly 6 expected
+[29-May-2023 15:03:13 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[29-May-2023 15:53:40 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[29-May-2023 17:35:31 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[29-May-2023 17:35:54 Asia/Jakarta] SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "qas.m_tmpl_h_partno" does not exist
+[30-May-2023 14:23:09 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[30-May-2023 14:23:22 Asia/Jakarta] SQLSTATE[42703]: Undefined column: 7 ERROR:  column "tmpid" does not exist
+LINE 1: select * from qas.m_tmpl_h where tmpid = 0 
+                                         ^
+HINT:  Perhaps you meant to reference the column "m_tmpl_h.tmpfl".
+[30-May-2023 14:44:39 Asia/Jakarta] SQLSTATE[55000]: Object not in prerequisite state: 7 ERROR:  lastval is not yet defined in this session
+[30-May-2023 14:48:28 Asia/Jakarta] SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "partno" does not exist
+[30-May-2023 15:01:05 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at end of input
+LINE 1: select * from qas.m_tmpl_h where partno =  
+                                                   ^
+[30-May-2023 15:01:33 Asia/Jakarta] SQLSTATE[42883]: Undefined function: 7 ERROR:  operator does not exist: character varying = integer
+LINE 1: select * from qas.m_tmpl_h where partno = 423110-14360 
+                                                ^
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+[30-May-2023 17:06:22 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  INSERT has more expressions than target columns
+LINE 1: ..., img) VALUES ('423110-14360', '1', '', 'Grup 1', '/9j/4AAQS...
+                                                             ^
+[30-May-2023 20:53:07 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[30-May-2023 22:05:49 Asia/Jakarta] SQLSTATE[42703]: Undefined column: 7 ERROR:  column "seq" of relation "m_tmpl_map" does not exist
+LINE 1: ... qas.m_tmpl_map (partno, grupid, desc1, cell_map, seq, celli...
+                                                             ^
+[30-May-2023 22:10:43 Asia/Jakarta] SQLSTATE[42703]: Undefined column: 7 ERROR:  column "tmpid" does not exist
+LINE 1: select * from qas.m_tmpl_map where tmpid = 423110-14360 orde...
+                                           ^
+[30-May-2023 22:11:43 Asia/Jakarta] SQLSTATE[42883]: Undefined function: 7 ERROR:  operator does not exist: character varying = integer
+LINE 1: select * from qas.m_tmpl_map where partno = 423110-14360
+                                                  ^
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+[30-May-2023 23:21:44 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near ","
+LINE 1: ..., doc_no, status) values (current_timestamp, '1', , '000011'...
+                                                             ^
+[30-May-2023 23:25:03 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near ","
+LINE 1: ..., doc_no, status) values (current_timestamp, '1', , '000011'...
+                                                             ^
+[30-May-2023 23:26:04 Asia/Jakarta] SQLSTATE[42703]: Undefined column: 7 ERROR:  column "tmpid" of relation "t_tmpl_i" does not exist
+LINE 1: insert into qas.t_tmpl_i (prd_dt, shift, tmpid, inspector, g...
+                                                 ^
+[30-May-2023 23:27:26 Asia/Jakarta] SQLSTATE[22001]: String data, right truncated: 7 ERROR:  value too long for type character varying(10)
+[30-May-2023 23:28:32 Asia/Jakarta] SQLSTATE[42703]: Undefined column: 7 ERROR:  column "doc_no" of relation "t_tmpl_map" does not exist
+LINE 1: ...partno, prd_dt, shift, inspector, grupid, cellid, doc_no) va...
+                                                             ^
+[30-May-2023 23:30:50 Asia/Jakarta] Too few arguments to function Measure::insertItem(), 5 passed in C:\xampp\htdocs\aiia_prod_report\qa\controllers\c_measure.php on line 77 and exactly 6 expected
+[30-May-2023 23:31:50 Asia/Jakarta] SQLSTATE[42703]: Undefined column: 7 ERROR:  column b.tmpid does not exist
+LINE 3:         left join qas.m_tmpl_h b on b.tmpid = a.tmpid
+                                            ^
+HINT:  Perhaps you meant to reference the column "b.tmpfl".
+[30-May-2023 23:41:13 Asia/Jakarta] SQLSTATE[42703]: Undefined column: 7 ERROR:  column "seq" does not exist
+LINE 1: ...re partno = '423110-14360' and grupid = '1' order by seq asc
+                                                                ^
+[30-May-2023 23:43:38 Asia/Jakarta] SQLSTATE[42703]: Undefined column: 7 ERROR:  column "doc_no" of relation "t_tmpl_map" does not exist
+LINE 1: ... prd_dt, shift, inspector, grupid, cellid, value, doc_no) va...
+                                                             ^
+[30-May-2023 23:45:56 Asia/Jakarta] SQLSTATE[42703]: Undefined column: 7 ERROR:  column b.tmpid does not exist
+LINE 2:         left join qas.m_tmpl_h b on b.tmpid = a.tmpid
+                                            ^
+HINT:  Perhaps you meant to reference the column "b.tmpfl".
+[31-May-2023 09:23:27 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[31-May-2023 09:43:04 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near ")"
+LINE 1: ...423110-14360', current_timestamp, '1', '000011', '1', '2', )
+                                                                      ^
+[31-May-2023 10:44:19 Asia/Jakarta] SQLSTATE[23502]: Not null violation: 7 ERROR:  null value in column "doc_no" violates not-null constraint
+DETAIL:  Failing row contains (2023-05-31 10:44:20.080725, 1, 423110-14360, 1, 1a, null, 000011, null).
+[31-May-2023 11:02:04 Asia/Jakarta] SQLSTATE[42703]: Undefined column: 7 ERROR:  column a.pdoc_no does not exist
+LINE 3:         where a.pdoc_no = '2305310001' and a.grupid = '1' 
+                      ^
+HINT:  Perhaps you meant to reference the column "a.doc_no".
+[31-May-2023 11:04:43 Asia/Jakarta] SQLSTATE[23502]: Not null violation: 7 ERROR:  null value in column "doc_no" violates not-null constraint
+DETAIL:  Failing row contains (2023-05-31 11:04:44.524117, 1, 2305310001, 2, , 0.1, 000011, null).
+[31-May-2023 11:44:52 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  INSERT has more expressions than target columns
+LINE 1: ..., current_timestamp, '1', '000011', '2', '', 0.2, '230531000...
+                                                             ^
+[31-May-2023 13:47:50 Asia/Jakarta] Cannot access offset of type string on string
+[02-Jun-2023 10:57:25 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[02-Jun-2023 11:19:17 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near ")"
+LINE 1: ...tmpl_map (partno, grupid, cellid, desc1, cell_map) values ()
+                                                                      ^
+[02-Jun-2023 11:20:44 Asia/Jakarta] SQLSTATE[42601]: Syntax error: 7 ERROR:  syntax error at or near ")"
+LINE 1: ...tmpl_map (partno, grupid, cellid, desc1, cell_map) values ()
+                                                                      ^
+[02-Jun-2023 11:29:55 Asia/Jakarta] SQLSTATE[22001]: String data, right truncated: 7 ERROR:  value too long for type character varying(30)
+[05-Jun-2023 10:26:50 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[05-Jun-2023 17:17:09 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[26-Jun-2023 19:05:13 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[04-Jul-2023 17:06:07 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[25-Jul-2023 13:09:58 Asia/Jakarta] array_map() expects at least 2 arguments, 1 given
+[26-Jul-2023 09:45:40 Asia/Jakarta] imagejpeg(): Argument #1 ($image) must be of type GdImage, bool given
+[26-Jul-2023 09:55:45 Asia/Jakarta] imagejpeg(): Argument #1 ($image) must be of type GdImage, bool given
+[26-Jul-2023 09:56:53 Asia/Jakarta] imagejpeg(): Argument #1 ($image) must be of type GdImage, bool given
+[26-Jul-2023 13:50:29 Asia/Jakarta] Invalid page format:  
+[27-Jul-2023 12:23:56 Asia/Jakarta] SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "m_tmpl_map_pkey"
+DETAIL:  Key (partno, grupid, cellid)=(61253, 61253, 0) already exists.
+[27-Jul-2023 15:36:15 Asia/Jakarta] could not find driver
+[27-Jul-2023 15:37:23 Asia/Jakarta] could not find driver
+[27-Jul-2023 15:37:26 Asia/Jakarta] could not find driver
+[27-Jul-2023 15:37:28 Asia/Jakarta] could not find driver
+[27-Jul-2023 15:49:48 Asia/Jakarta] ERROR:  ON CONFLICT DO UPDATE requires inference specification or constraint name
+LINE 3:         on conflict do update set cell_map = 'S63' 
+                ^
+HINT:  For example, ON CONFLICT (column_name).
+[27-Jul-2023 15:49:48 Asia/Jakarta] ERROR:  ON CONFLICT DO UPDATE requires inference specification or constraint name
+LINE 3:         on conflict do update set cell_map = 'B63' 
+                ^
+HINT:  For example, ON CONFLICT (column_name).
+[10-Aug-2023 14:02:35 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: No route to host (0x00002751/10065)
+	Is the server running on host "5.181.217.2" and accepting
+	TCP/IP connections on port 5432?
