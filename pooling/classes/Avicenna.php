@@ -61,6 +61,8 @@ class Avicenna {
       curl_setopt($curl, CURLOPT_TIMEOUT, 10);
       curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
       curl_setopt($curl, CURLOPT_POSTFIELDS, $body);
+      curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+      curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
       
       $result = curl_exec($curl);
       $param_log = [];
@@ -125,6 +127,8 @@ class Avicenna {
       curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 5);
       curl_setopt($curl, CURLOPT_TIMEOUT, 5);
       curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+      curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+      curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
       
       $result = curl_exec($curl);
       $param_log = [];
