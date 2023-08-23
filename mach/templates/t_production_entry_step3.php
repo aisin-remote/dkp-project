@@ -539,7 +539,7 @@ and open the template in the editor.
                     if (!empty($ng_pos_list)) {
                       foreach ($ng_pos_list as $row) {
                         ?>
-                        <option value="<?php echo $row["ng_pos_id"]; ?>"><?php echo $row["desc1"]; ?></option>
+                        <option value="<?php echo $row["ng_pos_id"]; ?>"><?= $row["ng_pos_no"] ?>. <?php echo $row["desc1"]; ?></option>
                         <?php
                       }
                     }

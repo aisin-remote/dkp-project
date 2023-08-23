@@ -159,7 +159,7 @@ if ($action == "daily_production_entry") {
       $dies_list = $dies->getListDies($line, "A");
       $exe_stop = $class->getStopExe($line, $date, $shift, $seq);
       $model_list = $dies->getListModel();
-      $ng_pos_list = $class->getNGPos();
+      $ng_pos_list = $class->getNGPosByGroup($data_item_dtl["group_id"]);
       $list_cat = $class->getCatStop();
       $mach_list = $class->getListMach($line);
 

@@ -682,6 +682,20 @@ class Production
     return $return;
   }
 
+  public function getNGPosByGroup($group) {
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT * from mach.m_ng_pos WHERE group_id = '$group' order by ng_pos_no::integer";
+    $stmt = $conn->prepare($sql);
+    if ($stmt->execute() or die($stmt->errorInfo()[2])) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $return[] = $row;
+      }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
   public function getNGPosById($id)
   {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
@@ -693,6 +707,27 @@ class Production
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $return[] = $row;
       }
+    }
+    $stmt = null;
+    $conn = null;
+    return $return;
+  }
+
+  public function isExist($group)
+  {
+    $return = false;
+    $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+    $sql = "SELECT count(*) as cnt FROM mach.m_ng_pos WHERE ng_pos_id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(":id", $group, PDO::PARAM_STR);
+    $count = 0;
+    if ($stmt->execute()) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $count = intval($row["cnt"]);
+      }
+    }
+    if ($count > 0) {
+      $return = true;
     }
     $stmt = null;
     $conn = null;
