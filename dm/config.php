@@ -2,6 +2,7 @@
 ini_set( "error_reporting" , E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED & ~E_WARNING);
 ini_set( "error_log" , "log/php-error.log" );
 ini_set( "display_errors", true );
+ini_set('memory_limit', '10240M');
 
 date_default_timezone_set( "Asia/Jakarta" );  // http://www.php.net/manual/en/timezones.php
 
