@@ -90,7 +90,7 @@ and open the template in the editor.
                       </table> -->
                     </form>
                   </div>
-                  <hr/>
+                  <hr />
                   <div class="col-12">
                     <div class="row">
                       <div class="col-9">
@@ -117,10 +117,10 @@ and open the template in the editor.
   <script src="vendors/apexchart/apexcharts.min.js" type="text/javascript"></script>
   <script>
     setInterval(updateDashboard, 5000);
-    const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Des'];
-    month.map((item, index) => {
-      $("#month").append("<div class='col-6 mb-2'><a href='/' class='btn btn-primary w-100 py-3'>" + item + "</a></div>");
-    });
+    // const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Des'];
+    // month.map((item, index) => {
+    //   $("#month").append("<div class='col-6 mb-2'><a href='/' class='btn btn-primary w-100 py-3'>" + item + "</a></div>");
+    // });
     var options = {
       series: [],
       chart: {
@@ -184,8 +184,29 @@ and open the template in the editor.
           console.log(data);
           let data_series = [];
           let categories = [];
-          data.map((item) => {
-            data_series.push(Math.round(item.rasio));
+          let html = "";
+          data.head.map((item) => {
+            if (!data.data) {
+              data_series.push(0);
+            } else {
+              data.data.map((item2) => {
+                if (item.partno != item2.partno) {
+                  html += "<div class='col-6 mb-2'><a href='?action=measure&id=0' class='btn btn-primary w-100 py-3'>" + item.name1 + "</a></div>";
+                  // $("#month").html("<div class='col-6 mb-2'><a href='/' class='btn btn-primary w-100 py-3'>" + item.name1 + "</a></div>");
+                } else if (item2.rasio == null && item.partno == item2.partno) {
+                  html += "<div class='col-6 mb-2'><a href='?action=measure&id="+item2.doc_no+"' class='btn btn-primary w-100 py-3'>" + item.name1 + "</a></div>";
+                }
+              });
+              $("#month").html(html);
+              let found = data.data.find((element) => {
+                return element.partno == item.partno;
+              });
+              if (found) {
+                data_series.push(found.rasio ? found.rasio : 0);
+              } else {
+                data_series.push(0);
+              }
+            }
             categories.push(item.name1);
           });
           chart.updateSeries([{
@@ -195,6 +216,20 @@ and open the template in the editor.
           chart.updateOptions({
             xaxis: {
               categories: categories
+            },
+            chart: {
+              events: {
+                click: function (chart, chartContext, config) {
+                  try {
+                    console.log(config.seriesIndex);
+                    console.log(config.dataPointIndex);
+                    // console.log(data[config.dataPointIndex]);
+                    window.location.href = "?action=measure&id=" + data.data[config.dataPointIndex].doc_no + "";
+                  } catch (error) {
+                    window.location.href = "?action=measure&id=0";
+                  }
+                }
+              }
             }
           });
         });
