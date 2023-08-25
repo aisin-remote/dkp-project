@@ -81,41 +81,61 @@ and open the template in the editor.
                     <div id="chart"></div>
                   </div>
                   <div class="col-12">
-                    <table class="table">
+                    <table class="table table-sm">
                       <tr>
                         <th colspan="4">Legend</th>
                       </tr>
                       <tr>
                         <td style="background-color: #b5b5b5;">
-                          <div style="width: 40px;"></div>
+                          <div style="width: 20px;"></div>
                         </td>
                         <td>Order Open (On Progress Pulling)</td>
                         <td style="background-color: #00E396;">
-                          <div style="width: 40px;"></div>
+                          <div style="width: 20px;"></div>
                         </td>
                         <td>Pulling Finish, Not Delivered</td>
                       </tr>
                       <tr>
                         <td style="background-color: #FEB019;">
-                          <div style="width: 40px;"></div>
+                          <div style="width: 20px;"></div>
                         </td>
                         <td>Pulling Progress</td>
                         <td style="background-color: #FF4560;">
-                          <div style="width: 40px;"></div>
+                          <div style="width: 20px;"></div>
                         </td>
                         <td>Delivery time has passed</td>
                       </tr>
                       <tr>
                         <td style="background-color: #03adfc;">
-                          <div style="width: 40px;"></div>
+                          <div style="width: 20px;"></div>
                         </td>
                         <td>Delivered</td>
                         <td style="background-color: #FFF;">
-                          <div style="width: 40px;"></div>
+                          <div style="width: 20px;"></div>
                         </td>
                         <td></td>
                       </tr>
                     </table>
+                  </div>
+                  <div class="col-12">
+                    <div class="table-responsive">
+                      <table id="tbl_abnormal" class="table table-sm table-bordered table-striped">
+                        <thead>
+                          <tr>
+                            <th colspan="4">Abnormality</th>
+                          </tr>
+                          <tr>
+                            <th>Customer</th>
+                            <th>Loading List</th>
+                            <th>Shipping DateTime</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody id="dt_abnormal">
+                          
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                   <!-- <div class="col-12">
                     <table class="table">
@@ -187,6 +207,16 @@ and open the template in the editor.
           rangeBarGroupRows: true,
         }
       },
+      /*dataLabels: {
+        enabled: true,
+        formatter: function(val, opts) {
+          var label = val.name;
+          return label;
+        },
+        style: {
+          colors: ['#000', '#000']
+        }
+      },*/
       xaxis: {
         type: 'datetime',
         labels: {
@@ -217,6 +247,7 @@ and open the template in the editor.
       legend: {
         show: false
       },
+      
       /*annotations: {
         xaxis: [
           {
@@ -235,7 +266,9 @@ and open the template in the editor.
 
     var chart = new ApexCharts(document.querySelector("#chart"), options);
     chart.render();
-
+    
+    var abn_tbl = $("#tbl_abnormal").DataTable();
+    
     $(document).ready(function () {
       /*updateDashboard();*/
       /*updateAnnotation();*/
@@ -293,6 +326,19 @@ and open the template in the editor.
           chart.updateOptions({
             series: data.data_chart
           });
+          
+          var data_abnormal = data.data_abnormal;
+          //var append_data = "";
+          abn_tbl.clear();
+          $.each(data_abnormal, function(index, value){
+            if(value.sts == "0") {
+            } else {
+              //append_data += "<tr><td>"+value.ldnum+"</td><td>"+value.status+"</td></tr>";
+              abn_tbl.row.add([value.customer,value.ldnum,value.dtime,value.status]);
+            }
+          });
+          //$("#dt_abnormal").html(append_data);          
+          abn_tbl.draw();
         });
     }
 

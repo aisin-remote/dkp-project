@@ -58,9 +58,12 @@ if ($action == "api_dashboard_pooling") {
     . "chr_tim_syukka AS shipping_time, "
     . "CHR_COD_TOKISAKI AS customer_code, "
     . "CHR_MEI_NOUNYU AS customer_name, "
-    . "chr_ngp_syukka+''+chr_tim_syukka AS dt_time "
+    . "chr_ngp_syukka+''+chr_tim_syukka AS dt_time, "
+    . "int_nub_noubin AS cycle "
     . "FROM tt_gig_sykmeisai "
     . "WHERE chr_ngp_syukka+''+chr_tim_syukka BETWEEN '" . $today . $time_start . "' AND '" . $next_day . $time_end . "' "
+    . "AND CHR_COD_TOKISAKI IN ('7A00016','7A00034','7A00003','7A00031','7A00035') "
+    . "AND CHR_COD_UKEIRE IN ('NR-K','NR','EXP','6I','1L','AA','5B51') "
     . "ORDER BY dt_time asc ";
   $stmt = $conn_sql_srv->prepare($sql);
   //$return["sql"] = $sql;
@@ -71,6 +74,7 @@ if ($action == "api_dashboard_pooling") {
   //jam lead time dalam javascript
   $jam_3p = ((strtotime(date("Y-m-d H:i")) + (60 * $lead_time)) * $js_ms);
   $jam_3m = ((strtotime(date("Y-m-d H:i")) - (60 * $lead_time)) * $js_ms);
+  $data_abnormal = [];
   if ($stmt->execute() or die($sql)) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       //cek apakah loading list sudah pernah ada
@@ -80,8 +84,8 @@ if ($action == "api_dashboard_pooling") {
         . substr($row["shipping_time"], 0, 2) . ":"
         . substr($row["shipping_time"], 2, 2) . ":"
         . substr($row["shipping_time"], 4, 2) . "";
-      $js_time1 = strtotime($str_dat) * $js_ms;
-      $js_time2 = ((strtotime($str_dat) + (60 * 2)) * $js_ms);
+      $js_time1 = ((strtotime($str_dat) - (60 * 30)) * $js_ms);
+      $js_time2 = strtotime($str_dat) * $js_ms;
 
       $color = "#cfcfcf";
       $cek_ldlist = $cLdList->getHeaderById($row["ldnum"]);
@@ -90,53 +94,93 @@ if ($action == "api_dashboard_pooling") {
         //jika loading list complete, warna hijau
         if ($cek_ldlist["stats"] == "C") {
           $color = "#00E396";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "1";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Delay Delivery";
         }
 
         //jika loading list masih N dan tanggal jam loading list lebih dari jam sekarang maka merah
-        if ($cek_ldlist["stats"] == "N" && $jam_now > $js_time1) {
+        if ($cek_ldlist["stats"] == "N" && $jam_now > $js_time2) {
           $color = "#FF4560";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "2";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Delay Pulling";
         }
 
         //jika jam diantara jam sekarang dan lead time dan status loading list masih N maka kuning
-        if ($cek_ldlist["stats"] == "N" && $jam_now < $js_time1 && $js_time1 < $jam_3p) {
+        if ($cek_ldlist["stats"] == "N" && $jam_now < $js_time2 && $js_time2 < $jam_3p) {
           $color = "#FEB019";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "2";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Delay Pulling";
         }
 
         //jika jam ldlist > jam sekarang dan > lead time dan status loading list masih N maka abu2
-        if ($cek_ldlist["stats"] == "N" && $jam_now < $js_time1 && $js_time1 > $jam_3p) {
+        if ($cek_ldlist["stats"] == "N" && $jam_now < $js_time2 && $js_time2 > $jam_3p) {
           $color = "#b5b5b5";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "2";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Delay Pulling";
         }
         //jika sudah delivery biru
         if ($cek_ldlist["dstat"] == "D") {
-          $color = "#03adfc";
+          $color = "#03adfc";$data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "0";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Normal";
         }
       } else {
         //jika belum di scan
         //jika jam sekarang lebih besar dari jam loading list maka merah
-        if ($jam_now > $js_time1) {
+        if ($jam_now > $js_time2) {
           $color = "#FF4560";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "2";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Delay Pulling";
         }
 
         //jika jam diantara jam sekarang dan lead time maka kuning
-        if ($js_time1 > $jam_now && $js_time1 < $jam_3p) {
+        if ($js_time2 > $jam_now && $js_time1 < $jam_3p) {
           $color = "#FEB019";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "2";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Delay Pulling";
         }
 
         //jika jam ldlist > jam sekarang dan > lead time maka abu2
-        if ($js_time1 > $jam_now && $js_time1 > $jam_3p) {
+        if ($js_time2 > $jam_now && $js_time2 > $jam_3p) {
           $color = "#b5b5b5";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "2";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Delay Pulling";
         }
       }
       $data = [];
       $data[0]["x"] = $row["customer_name"];
       $data[0]["y"] = [$js_time1, $js_time2];
       $data[0]["fillColor"] = $color;
-      $data_main[$i]["name"] = $row["ldnum"];
+      $data_main[$i]["name"] = $row["ldnum"]." / Cycle : ".$row["cycle"];
       $data_main[$i]["data"] = $data;
       $i++;
     }
   }
   $return["data_chart"] = $data_main;
+  $return["data_abnormal"] = $data_abnormal;
 
   echo json_encode($return);
 }
@@ -157,7 +201,8 @@ if ($action == "api_dashboard_realtime") {
   $return["lead_time"] = $lead_time;
   $today = date("Ymd");
   // $today = "20230127";
-
+  $date_start = date("YmdHis",strtotime(date("Y-m-d H:i:s")) - (3600 * 6));
+  $date_end = date("YmdHis",strtotime(date("Y-m-d H:i:s")) + (3600 * 6));
   // $sql = "SELECT DISTINCT 
   //           chr_cod_sykmno AS ldnum,             
   //           chr_ngp_syukka AS shipping_date, 
@@ -173,9 +218,12 @@ if ($action == "api_dashboard_realtime") {
     . "chr_tim_syukka AS shipping_time, "
     . "CHR_COD_TOKISAKI AS customer_code, "
     . "CHR_MEI_NOUNYU AS customer_name, "
-    . "chr_ngp_syukka+''+chr_tim_syukka AS dt_time "
+    . "chr_ngp_syukka+''+chr_tim_syukka AS dt_time, "
+    . "int_nub_noubin AS cycle "
     . "FROM tt_gig_sykmeisai "
-    . "WHERE chr_ngp_syukka = '" . $today . "' "
+    . "WHERE chr_ngp_syukka+''+chr_tim_syukka BETWEEN '$date_start' AND '$date_end' "
+    . "AND CHR_COD_TOKISAKI IN ('7A00016','7A00034','7A00003','7A00031','7A00035') "
+    . "AND CHR_COD_UKEIRE IN ('NR-K','NR','EXP','6I','1L','AA','5B51') "
     . "ORDER BY dt_time asc ";
   $stmt = $conn_sql_srv->prepare($sql);
   $data_main = [];
@@ -185,6 +233,7 @@ if ($action == "api_dashboard_realtime") {
   //jam lead time dalam javascript
   $jam_3p = ((strtotime(date("Y-m-d H:i")) + (60 * $lead_time)) * $js_ms);
   $jam_3m = ((strtotime(date("Y-m-d H:i")) - (60 * $lead_time)) * $js_ms);
+  $data_abnormal = [];
   if ($stmt->execute() or die($sql)) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       //cek apakah loading list sudah pernah ada
@@ -194,8 +243,8 @@ if ($action == "api_dashboard_realtime") {
         . substr($row["shipping_time"], 0, 2) . ":"
         . substr($row["shipping_time"], 2, 2) . ":"
         . substr($row["shipping_time"], 4, 2) . "";
-      $js_time1 = strtotime($str_dat) * $js_ms;
-      $js_time2 = ((strtotime($str_dat) + (60 * 2)) * $js_ms);
+      $js_time1 = ((strtotime($str_dat) - (60 * 30)) * $js_ms);
+      $js_time2 = strtotime($str_dat) * $js_ms;
 
       $color = "#cfcfcf";
       $cek_ldlist = $cLdList->getHeaderById($row["ldnum"]);
@@ -204,41 +253,80 @@ if ($action == "api_dashboard_realtime") {
         //jika loading list complete, warna hijau
         if ($cek_ldlist["stats"] == "C") {
           $color = "#00E396";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "1";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Delay Delivery";
         }
 
         //jika loading list masih N dan tanggal jam loading list lebih dari jam sekarang maka merah
-        if ($cek_ldlist["stats"] == "N" && $jam_now > $js_time1) {
+        if ($cek_ldlist["stats"] == "N" && $jam_now > $js_time2) {
           $color = "#FF4560";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "2";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Delay Pulling";
         }
 
         //jika jam diantara jam sekarang dan lead time dan status loading list masih N maka kuning
-        if ($cek_ldlist["stats"] == "N" && $jam_now < $js_time1 && $js_time1 < $jam_3p) {
+        if ($cek_ldlist["stats"] == "N" && $jam_now < $js_time2 && $js_time2 < $jam_3p) {
           $color = "#FEB019";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "2";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Delay Pulling";
         }
 
         //jika jam ldlist > jam sekarang dan > lead time dan status loading list masih N maka abu2
-        if ($cek_ldlist["stats"] == "N" && $jam_now < $js_time1 && $js_time1 > $jam_3p) {
+        if ($cek_ldlist["stats"] == "N" && $jam_now < $js_time2 && $js_time2 > $jam_3p) {
           $color = "#b5b5b5";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "2";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Delay Pulling";
         }
         //jika sudah delivery biru
         if ($cek_ldlist["dstat"] == "D") {
-          $color = "#03adfc";
+          $color = "#03adfc";$data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "0";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Normal";
         }
       } else {
         //jika belum di scan
         //jika jam sekarang lebih besar dari jam loading list maka merah
-        if ($jam_now > $js_time1) {
+        if ($jam_now > $js_time2) {
           $color = "#FF4560";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "2";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Delay Pulling";
         }
 
         //jika jam diantara jam sekarang dan lead time maka kuning
-        if ($js_time1 > $jam_now && $js_time1 < $jam_3p) {
+        if ($js_time2 > $jam_now && $js_time1 < $jam_3p) {
           $color = "#FEB019";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "2";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Delay Pulling";
         }
 
         //jika jam ldlist > jam sekarang dan > lead time maka abu2
-        if ($js_time1 > $jam_now && $js_time1 > $jam_3p) {
+        if ($js_time2 > $jam_now && $js_time2 > $jam_3p) {
           $color = "#b5b5b5";
+          $data_abnormal[$i]["ldnum"] = $row["ldnum"];
+          $data_abnormal[$i]["sts"] = "0";
+          $data_abnormal[$i]["dtime"] = date("Y-m-d H:i",strtotime($str_dat));
+          $data_abnormal[$i]["customer"] = $row["customer_name"];
+          $data_abnormal[$i]["status"] = "Normal";
         }
       }
       // $data_main[$i]["x"] = $row["customer_name"];
@@ -249,12 +337,13 @@ if ($action == "api_dashboard_realtime") {
       $data[0]["x"] = $row["customer_name"];
       $data[0]["y"] = [$js_time1, $js_time2];
       $data[0]["fillColor"] = $color;
-      $data_main[$i]["name"] = $row["ldnum"];
+      $data_main[$i]["name"] = $row["ldnum"]." / Cycle : ".$row["cycle"];
       $data_main[$i]["data"] = $data;
       $i++;
     }
   }
   $return["data_chart"] = $data_main;
+  $return["data_abnormal"] = $data_abnormal;
 
   echo json_encode($return);
 }
