@@ -367,7 +367,7 @@ class LoadingList {
     $stmt->bindValue(":kanban_e", $kanban_e, PDO::PARAM_STR);
     if($stmt->execute()) {
       while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
-        $return = $row["cnt"];
+        $return = intval($row["cnt"]);
       }
     }
     $stmt = null;
