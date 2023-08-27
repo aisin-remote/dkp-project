@@ -252,15 +252,103 @@ and open the template in the editor.
   <script>
     $(document).ready(function () {
       $("#data-table-x").DataTable({
-        stateSave: true,
+        "ordering": false,
         dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-2'l><'col-sm-12 col-md-4'f>>" +
           "<'row'<'col-sm-12'tr>>" +
           "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
         buttons: [{
-          extend: 'excel',
+          extend: 'excelHtml5',
           title: "daily_production_report_detail",
           className: 'btn btn-pale-green btn-sm',
           text: '<i class="material-icons">download</i>Download Excel',
+          customize: function (xlsx) {
+
+            //copy _createNode function from source
+            function _createNode(doc, nodeName, opts) {
+              var tempNode = doc.createElement(nodeName);
+
+              if (opts) {
+                if (opts.attr) {
+                  $(tempNode).attr(opts.attr);
+                }
+
+                if (opts.children) {
+                  $.each(opts.children, function (key, value) {
+                    tempNode.appendChild(value);
+                  });
+                }
+
+                if (opts.text !== null && opts.text !== undefined) {
+                  tempNode.appendChild(doc.createTextNode(opts.text));
+                }
+              }
+
+              return tempNode;
+            }
+
+            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+            var mergeCells = $('mergeCells', sheet);
+            mergeCells[0].children[0].remove(); // remove merge cell 1st row
+
+            var rows = $('row', sheet);
+            rows[0].children[0].remove(); // clear header cell
+
+            // create new cell
+            rows[0].appendChild(_createNode(sheet, 'c', {
+              attr: {
+                t: 'inlineStr',
+                r: 'L1', //address of new cell
+                s: 51 // center style - https://www.datatables.net/reference/button/excelHtml5
+              },
+              children: {
+                row: _createNode(sheet, 'is', {
+                  children: {
+                    row: _createNode(sheet, 't', {
+                      text: 'NG'
+                    })
+                  }
+                })
+              }
+            }));
+
+
+            // set new cell merged
+            mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+              attr: {
+                ref: 'L1:M1' // merge address
+              }
+            }));
+
+            mergeCells.attr('count', mergeCells.attr('count') + 1);
+
+            // create new cell
+            rows[0].appendChild(_createNode(sheet, 'c', {
+              attr: {
+                t: 'inlineStr',
+                r: 'N1', //address of new cell
+                s: 51 // center style - https://www.datatables.net/reference/button/excelHtml5
+              },
+              children: {
+                row: _createNode(sheet, 'is', {
+                  children: {
+                    row: _createNode(sheet, 't', {
+                      text: 'Losstime (m)'
+                    })
+                  }
+                })
+              }
+            }));
+
+
+            // set new cell merged
+            mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+              attr: {
+                ref: 'N1:O1' // merge address
+              }
+            }));
+
+            mergeCells.attr('count', mergeCells.attr('count') + 1);
+          }
         },
         {
           className: 'btn btn-pale-green-outlined btn-sm',

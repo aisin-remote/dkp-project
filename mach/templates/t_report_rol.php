@@ -62,17 +62,17 @@ and open the template in the editor.
                           <th class="text-nowrap align-middle" rowspan="2">Model</th>
                           <th class="text-nowrap align-middle" rowspan="2">Dies</th>
                           <th class="text-nowrap align-middle" rowspan="2">Hour</th>
-                          <th class="text-nowrap align-middle" rowspan="2">LOT</th>
+                          <!-- <th class="text-nowrap align-middle" rowspan="2">LOT</th> -->
                           <th class="text-nowrap align-middle" rowspan="2">Qty NG ROL (PCS)</th>
-                          <th class="text-nowrap align-middle" rowspan="2">Leak General</th>
-                          <th class="text-nowrap align-middle" rowspan="2">Leak OP</th>
-                          <th class="text-nowrap align-middle" rowspan="2">Leak WP</th>
-                          <th class="text-nowrap align-middle" rowspan="2">Kurokawa</th>
-                          <th class="text-nowrap align-middle" rowspan="2">Kontaminasi</th>
-                          <th class="text-nowrap align-middle" rowspan="2">Peeling</th>
-                          <th class="text-nowrap align-middle" rowspan="2">Crack</th>
-                          <th class="text-nowrap align-middle" rowspan="2">Burrysasi</th>
-                          <th class="text-nowrap align-middle" rowspan="2">Trial</th>
+                          <th class="text-nowrap text-center" colspan="6">Leak General</th>
+                          <th class="text-nowrap text-center" colspan="6">Leak OP</th>
+                          <th class="text-nowrap text-center" colspan="6">Leak WP</th>
+                          <th class="text-nowrap text-center" colspan="6">Kurokawa</th>
+                          <th class="text-nowrap text-center" colspan="6">Kontaminasi</th>
+                          <th class="text-nowrap text-center" colspan="6">Peeling</th>
+                          <th class="text-nowrap text-center" colspan="6">Crack</th>
+                          <th class="text-nowrap text-center" colspan="6">Burrysasi</th>
+                          <th class="text-nowrap text-center" colspan="6">Trial</th>
                           <th class="text-nowrap text-center" colspan="6">Porosity</th>
                           <th class="text-nowrap align-middle" rowspan="2">Others</th>
                           <th class="text-nowrap align-middle" rowspan="2">Keterangan</th>
@@ -84,35 +84,134 @@ and open the template in the editor.
                           <th>OIL PUMP</th>
                           <th>WATER PUMP</th>
                           <th>OTHERS</th>
+                          <th>NE SENSOR</th>
+                          <th>H/C</th>
+                          <th>OIL SEAL</th>
+                          <th>OIL PUMP</th>
+                          <th>WATER PUMP</th>
+                          <th>OTHERS</th>
+                          <th>NE SENSOR</th>
+                          <th>H/C</th>
+                          <th>OIL SEAL</th>
+                          <th>OIL PUMP</th>
+                          <th>WATER PUMP</th>
+                          <th>OTHERS</th>
+                          <th>NE SENSOR</th>
+                          <th>H/C</th>
+                          <th>OIL SEAL</th>
+                          <th>OIL PUMP</th>
+                          <th>WATER PUMP</th>
+                          <th>OTHERS</th>
+                          <th>NE SENSOR</th>
+                          <th>H/C</th>
+                          <th>OIL SEAL</th>
+                          <th>OIL PUMP</th>
+                          <th>WATER PUMP</th>
+                          <th>OTHERS</th>
+                          <th>NE SENSOR</th>
+                          <th>H/C</th>
+                          <th>OIL SEAL</th>
+                          <th>OIL PUMP</th>
+                          <th>WATER PUMP</th>
+                          <th>OTHERS</th>
+                          <th>NE SENSOR</th>
+                          <th>H/C</th>
+                          <th>OIL SEAL</th>
+                          <th>OIL PUMP</th>
+                          <th>WATER PUMP</th>
+                          <th>OTHERS</th>
+                          <th>NE SENSOR</th>
+                          <th>H/C</th>
+                          <th>OIL SEAL</th>
+                          <th>OIL PUMP</th>
+                          <th>WATER PUMP</th>
+                          <th>OTHERS</th>
+                          <th>NE SENSOR</th>
+                          <th>H/C</th>
+                          <th>OIL SEAL</th>
+                          <th>OIL PUMP</th>
+                          <th>WATER PUMP</th>
+                          <th>OTHERS</th>
+                          <th>NE SENSOR</th>
+                          <th>H/C</th>
+                          <th>OIL SEAL</th>
+                          <th>OIL PUMP</th>
+                          <th>WATER PUMP</th>
+                          <th>OTHERS</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php if (!empty($data["list"])) {
-                          foreach ($data["list"] as $list) {
+                          foreach ($data["list"] as $index => $list) {
                             echo "<tr>" . "<td class='text-nowrap'>" . $list["prd_dt"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["pval1"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["line_name"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["group_id"] . " - " . $list["model_id"] . " - " . explode(" ", $list["dies_name"])[2] . "</td>"
                               . "<td class='text-nowrap'>" . $list["dies_no"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["time_start"] . " - " . $list["time_end"] . "</td>"
-                              . "<td class='text-nowrap text-center'> - </td>"
+                              // . "<td class='text-nowrap text-center'> - </td>"
                               . "<td class='text-nowrap text-center'>" . $list["ng_rol"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol7"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol5"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol6"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol3"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol4"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol2"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol8"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol9"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol10"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol1"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol12"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol13"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol14"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol15"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol16"] . "</td>"
-                              . "<td class='text-nowrap text-center'>" . $list["ng_rol11"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["nesensor1"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["hc1"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilseal1"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilpump1"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["waterpump1"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["other1"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["nesensor2"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["hc2"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilseal2"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilpump2"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["waterpump2"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["other2"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["nesensor3"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["hc3"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilseal3"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilpump3"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["waterpump3"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["other3"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["nesensor4"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["hc4"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilseal4"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilpump4"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["waterpump4"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["other4"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["nesensor5"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["hc5"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilseal5"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilpump5"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["waterpump5"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["other5"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["nesensor6"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["hc6"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilseal6"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilpump6"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["waterpump6"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["other6"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["nesensor7"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["hc7"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilseal7"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilpump7"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["waterpump7"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["other7"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["nesensor8"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["hc8"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilseal8"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilpump8"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["waterpump8"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["other8"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["nesensor9"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["hc9"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilseal9"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilpump9"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["waterpump9"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["other9"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["nesensor10"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["hc10"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilseal10"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["oilpump10"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["waterpump10"] . "</td>"
+                              . "<td class='text-nowrap text-center'>" . $list["other10"] . "</td>"
+                              . "<td class='text-nowrap'>" . $list["desc1"] . "</td>"
                               . "<td class='text-nowrap'>" . $list["desc1"] . "</td>"
                               . "</tr>";
                           }
@@ -248,18 +347,320 @@ and open the template in the editor.
   <script>
     $(document).ready(function () {
       $("#data-table-x").DataTable({
-        stateSave: true,
-        order: [
-          [0, 'desc']
-        ],
+        "ordering": false,
         dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-2'l><'col-sm-12 col-md-4'f>>" +
           "<'row'<'col-sm-12'tr>>" +
           "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
         buttons: [{
-          extend: 'excel',
-          title: "daily_production_report_content_stop",
+          extend: 'excelHtml5',
+          title: "daily_production_report_ng_rol",
           className: 'btn btn-pale-green btn-sm',
-          text: '<i class="material-icons">download</i>Download Excel'
+          text: '<i class="material-icons">download</i>Download Excel',
+          customize: function (xlsx) {
+
+            //copy _createNode function from source
+            function _createNode(doc, nodeName, opts) {
+              var tempNode = doc.createElement(nodeName);
+
+              if (opts) {
+                if (opts.attr) {
+                  $(tempNode).attr(opts.attr);
+                }
+
+                if (opts.children) {
+                  $.each(opts.children, function (key, value) {
+                    tempNode.appendChild(value);
+                  });
+                }
+
+                if (opts.text !== null && opts.text !== undefined) {
+                  tempNode.appendChild(doc.createTextNode(opts.text));
+                }
+              }
+
+              return tempNode;
+            }
+
+            var sheet = xlsx.xl.worksheets['sheet1.xml'];
+            var mergeCells = $('mergeCells', sheet);
+            mergeCells[0].children[0].remove(); // remove merge cell 1st row
+
+            var rows = $('row', sheet);
+            rows[0].children[0].remove(); // clear header cell
+
+            // create new cell
+            rows[0].appendChild(_createNode(sheet, 'c', {
+              attr: {
+                t: 'inlineStr',
+                r: 'H1', //address of new cell
+                s: 51 // center style - https://www.datatables.net/reference/button/excelHtml5
+              },
+              children: {
+                row: _createNode(sheet, 'is', {
+                  children: {
+                    row: _createNode(sheet, 't', {
+                      text: 'Leak General'
+                    })
+                  }
+                })
+              }
+            }));
+
+
+            // set new cell merged
+            mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+              attr: {
+                ref: 'H1:M1' // merge address
+              }
+            }));
+
+            mergeCells.attr('count', mergeCells.attr('count') + 1);
+
+            rows[0].appendChild(_createNode(sheet, 'c', {
+              attr: {
+                t: 'inlineStr',
+                r: 'N1', //address of new cell
+                s: 51 // center style - https://www.datatables.net/reference/button/excelHtml5
+              },
+              children: {
+                row: _createNode(sheet, 'is', {
+                  children: {
+                    row: _createNode(sheet, 't', {
+                      text: 'Leak OP'
+                    })
+                  }
+                })
+              }
+            }));
+
+
+            // set new cell merged
+            mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+              attr: {
+                ref: 'N1:S1' // merge address
+              }
+            }));
+
+            mergeCells.attr('count', mergeCells.attr('count') + 1);
+
+            rows[0].appendChild(_createNode(sheet, 'c', {
+              attr: {
+                t: 'inlineStr',
+                r: 'T1', //address of new cell
+                s: 51 // center style - https://www.datatables.net/reference/button/excelHtml5
+              },
+              children: {
+                row: _createNode(sheet, 'is', {
+                  children: {
+                    row: _createNode(sheet, 't', {
+                      text: 'Leak WP'
+                    })
+                  }
+                })
+              }
+            }));
+
+
+            // set new cell merged
+            mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+              attr: {
+                ref: 'T1:Y1' // merge address
+              }
+            }));
+
+            mergeCells.attr('count', mergeCells.attr('count') + 1);
+
+            rows[0].appendChild(_createNode(sheet, 'c', {
+              attr: {
+                t: 'inlineStr',
+                r: 'Z1', //address of new cell
+                s: 51 // center style - https://www.datatables.net/reference/button/excelHtml5
+              },
+              children: {
+                row: _createNode(sheet, 'is', {
+                  children: {
+                    row: _createNode(sheet, 't', {
+                      text: 'Kurokawa'
+                    })
+                  }
+                })
+              }
+            }));
+
+
+            // set new cell merged
+            mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+              attr: {
+                ref: 'Z1:AE1' // merge address
+              }
+            }));
+
+            mergeCells.attr('count', mergeCells.attr('count') + 1);
+
+            rows[0].appendChild(_createNode(sheet, 'c', {
+              attr: {
+                t: 'inlineStr',
+                r: 'AF1', //address of new cell
+                s: 51 // center style - https://www.datatables.net/reference/button/excelHtml5
+              },
+              children: {
+                row: _createNode(sheet, 'is', {
+                  children: {
+                    row: _createNode(sheet, 't', {
+                      text: 'Kontaminasi'
+                    })
+                  }
+                })
+              }
+            }));
+
+
+            // set new cell merged
+            mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+              attr: {
+                ref: 'AF1:AK1' // merge address
+              }
+            }));
+
+            mergeCells.attr('count', mergeCells.attr('count') + 1);
+
+            rows[0].appendChild(_createNode(sheet, 'c', {
+              attr: {
+                t: 'inlineStr',
+                r: 'AL1', //address of new cell
+                s: 51 // center style - https://www.datatables.net/reference/button/excelHtml5
+              },
+              children: {
+                row: _createNode(sheet, 'is', {
+                  children: {
+                    row: _createNode(sheet, 't', {
+                      text: 'Peeling'
+                    })
+                  }
+                })
+              }
+            }));
+
+
+            // set new cell merged
+            mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+              attr: {
+                ref: 'AL1:AQ1' // merge address
+              }
+            }));
+
+            mergeCells.attr('count', mergeCells.attr('count') + 1);
+
+            rows[0].appendChild(_createNode(sheet, 'c', {
+              attr: {
+                t: 'inlineStr',
+                r: 'AR1', //address of new cell
+                s: 51 // center style - https://www.datatables.net/reference/button/excelHtml5
+              },
+              children: {
+                row: _createNode(sheet, 'is', {
+                  children: {
+                    row: _createNode(sheet, 't', {
+                      text: 'Crack'
+                    })
+                  }
+                })
+              }
+            }));
+
+
+            // set new cell merged
+            mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+              attr: {
+                ref: 'AR1:AW1' // merge address
+              }
+            }));
+
+            mergeCells.attr('count', mergeCells.attr('count') + 1);
+
+            rows[0].appendChild(_createNode(sheet, 'c', {
+              attr: {
+                t: 'inlineStr',
+                r: 'AX1', //address of new cell
+                s: 51 // center style - https://www.datatables.net/reference/button/excelHtml5
+              },
+              children: {
+                row: _createNode(sheet, 'is', {
+                  children: {
+                    row: _createNode(sheet, 't', {
+                      text: 'Burrysasi'
+                    })
+                  }
+                })
+              }
+            }));
+
+
+            // set new cell merged
+            mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+              attr: {
+                ref: 'AX1:BC1' // merge address
+              }
+            }));
+
+            mergeCells.attr('count', mergeCells.attr('count') + 1);
+
+            rows[0].appendChild(_createNode(sheet, 'c', {
+              attr: {
+                t: 'inlineStr',
+                r: 'BD1', //address of new cell
+                s: 51 // center style - https://www.datatables.net/reference/button/excelHtml5
+              },
+              children: {
+                row: _createNode(sheet, 'is', {
+                  children: {
+                    row: _createNode(sheet, 't', {
+                      text: 'Trial'
+                    })
+                  }
+                })
+              }
+            }));
+
+
+            // set new cell merged
+            mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+              attr: {
+                ref: 'BD1:BI1' // merge address
+              }
+            }));
+
+            mergeCells.attr('count', mergeCells.attr('count') + 1);
+
+            rows[0].appendChild(_createNode(sheet, 'c', {
+              attr: {
+                t: 'inlineStr',
+                r: 'BJ1', //address of new cell
+                s: 51 // center style - https://www.datatables.net/reference/button/excelHtml5
+              },
+              children: {
+                row: _createNode(sheet, 'is', {
+                  children: {
+                    row: _createNode(sheet, 't', {
+                      text: 'Porosity'
+                    })
+                  }
+                })
+              }
+            }));
+
+
+            // set new cell merged
+            mergeCells[0].appendChild(_createNode(sheet, 'mergeCell', {
+              attr: {
+                ref: 'BJ1:BO1' // merge address
+              }
+            }));
+
+            mergeCells.attr('count', mergeCells.attr('count') + 1);
+
+            // add another merged cell
+          }
         },
         {
           className: 'btn btn-pale-green-outlined btn-sm',

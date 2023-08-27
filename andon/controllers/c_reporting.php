@@ -69,19 +69,21 @@ if ($action == "daily_production") {
 
     $spreadsheet->getActiveSheet()->setCellValue('A11', "Material");
     $spreadsheet->getActiveSheet()->setCellValue('B11', "Cycle Time");
-    $spreadsheet->getActiveSheet()->setCellValue('C11', "Time");
-    $spreadsheet->getActiveSheet()->setCellValue('D11', "Nett Operation");
-    $spreadsheet->getActiveSheet()->setCellValue('E11', "Target / Actual");
-    $spreadsheet->getActiveSheet()->setCellValue('F11', "Detail NG");
-    $spreadsheet->getActiveSheet()->setCellValue('G11', "NG Qty");
-    $spreadsheet->getActiveSheet()->setCellValue('H11', "Abnormal Content");
-    $spreadsheet->getActiveSheet()->setCellValue('I11', "Duration Stop");
-    $spreadsheet->getActiveSheet()->setCellValue('J11', "Countermeasures");
-    $spreadsheet->getActiveSheet()->setCellValue('K11', "PIC");
-    $spreadsheet->getActiveSheet()->setCellValue('L11', "Target (O/X)");
-    $spreadsheet->getActiveSheet()->setCellValue('M11', "JP Sign");
-    $spreadsheet->getActiveSheet()->setCellValue('N11', "Ldr Sign");
-    $spreadsheet->getActiveSheet()->setCellValue('O11', "SPV Sign");
+    $spreadsheet->getActiveSheet()->setCellValue('C11', "Time Start");
+    $spreadsheet->getActiveSheet()->setCellValue('D11', "Time End");
+    $spreadsheet->getActiveSheet()->setCellValue('E11', "Nett Operation");
+    $spreadsheet->getActiveSheet()->setCellValue('F11', "Target / Actual");
+    $spreadsheet->getActiveSheet()->setCellValue('G11', "Detail NG");
+    $spreadsheet->getActiveSheet()->setCellValue('H11', "NG Qty");
+    $spreadsheet->getActiveSheet()->setCellValue('I11', "Abnormal Content");
+    $spreadsheet->getActiveSheet()->setCellValue('J11', "Duration Stop");
+    $spreadsheet->getActiveSheet()->setCellValue('K11', "Countermeasures");
+    $spreadsheet->getActiveSheet()->setCellValue('L11', "PIC");
+    $spreadsheet->getActiveSheet()->setCellValue('M11', "Target (O/X)");
+    $spreadsheet->getActiveSheet()->setCellValue('N11', "Efficiency");
+    $spreadsheet->getActiveSheet()->setCellValue('O11', "JP Sign");
+    $spreadsheet->getActiveSheet()->setCellValue('P11', "Ldr Sign");
+    $spreadsheet->getActiveSheet()->setCellValue('Q11', "SPV Sign");
 
 
     $i = 0;
@@ -89,36 +91,39 @@ if ($action == "daily_production") {
       $i++;
       $spreadsheet->getActiveSheet()->setCellValue('A' . ($i + 11), $head["name1"] . " (" . $head["backno"] . ") ");
       $spreadsheet->getActiveSheet()->setCellValue('B' . ($i + 11), $head["cctime"]);
-      $spreadsheet->getActiveSheet()->setCellValue('C' . ($i + 11), $head["time_start"] . ' - ' . $head["time_end"]);
-      $spreadsheet->getActiveSheet()->setCellValue('D' . ($i + 11), $head["prd_time"]);
-      $spreadsheet->getActiveSheet()->setCellValue('E' . ($i + 11), $head["pln_qty"] . ' / ' . $head["prd_qty"]);
+      $spreadsheet->getActiveSheet()->setCellValue('C' . ($i + 11), $head["time_start"]);
+      $spreadsheet->getActiveSheet()->setCellValue('D' . ($i + 11), $head["time_end"]);
+      $spreadsheet->getActiveSheet()->setCellValue('E' . ($i + 11), $head["prd_time"]);
+      $spreadsheet->getActiveSheet()->setCellValue('F' . ($i + 11), $head["pln_qty"] . ' / ' . $head["prd_qty"]);
       $data_ng = $class->getNGList($line_id, $prd_dt, $shift, $head["prd_seq"]);
       $ngs = [];
       foreach ($data_ng as $ng) {
         $ngs[] = $ng["name1"] . " (" . $ng["ng_qty"] . ")";
       }
-      $spreadsheet->getActiveSheet()->setCellValue('F' . ($i + 11), implode(", ", $ngs));
-      $spreadsheet->getActiveSheet()->setCellValue('G' . ($i + 11), $head["tot_ng"]);
+      $spreadsheet->getActiveSheet()->setCellValue('G' . ($i + 11), implode(", ", $ngs));
+      $spreadsheet->getActiveSheet()->setCellValue('H' . ($i + 11), $head["tot_ng"]);
+      $spreadsheet->getActiveSheet()->setCellValue('N' . ($i + 11), $head["eff"] . " %");
+
       // $seq1 = $i + 100;
       $data_stop = $class2->getStopList($line_id, $prd_dt, $shift, $head["prd_seq"]);
       $stop_exe = $class2->getStopExeReport($line_id, $prd_dt, $shift, $head["prd_seq"]);
       foreach ($data_stop as $detail) {
         $exec = array();
-        $spreadsheet->getActiveSheet()->setCellValue('H' . ($i + 11), $detail["start_time"] . " - " . $detail["stop_name"]);
+        $spreadsheet->getActiveSheet()->setCellValue('I' . ($i + 11), $detail["start_time"] . " - " . $detail["stop_name"]);
         if ($detail["stop_type"] == "P") {
-          $spreadsheet->getActiveSheet()->setCellValue('I' . ($i + 11), "(" . $detail["stop_time"] . ")");
+          $spreadsheet->getActiveSheet()->setCellValue('J' . ($i + 11), "(" . $detail["stop_time"] . ")");
         } else {
-          $spreadsheet->getActiveSheet()->setCellValue('I' . ($i + 11), $detail["stop_time"]);
+          $spreadsheet->getActiveSheet()->setCellValue('J' . ($i + 11), $detail["stop_time"]);
         }
         // $spreadsheet->getActiveSheet()->setCellValue('G' . ($i + 11), $detail["stop_time"]);
-        $spreadsheet->getActiveSheet()->setCellValue('J' . ($i + 11), ($detail["action_name"] == null) ? $detail["remarks"] : $detail["action_name"]);
+        $spreadsheet->getActiveSheet()->setCellValue('K' . ($i + 11), ($detail["action_name"] == null) ? $detail["remarks"] : $detail["action_name"]);
         foreach ($stop_exe as $exe) {
           if ($exe["stop_seq"] == $detail["stop_seq"] && $exe["prd_seq"] == $detail["prd_seq"]) {
             $exec[] = $exe["name1"];
             // $spreadsheet->getActiveSheet()->setCellValue('J' . ($i + 11), $detail["stop_name"] . " - " . $exe["member_name"]);
           }
         }
-        $spreadsheet->getActiveSheet()->setCellValue('K' . ($i + 11), implode(", ", $exec));
+        $spreadsheet->getActiveSheet()->setCellValue('L' . ($i + 11), implode(", ", $exec));
         $i++;
       }
     }
@@ -148,23 +153,23 @@ if ($action == "daily_production") {
     }
 
     $spreadsheet->getActiveSheet()->getStyle('A1')->getFont()->setBold(true)->setSize(24);
-    $spreadsheet->getActiveSheet()->getStyle('A11:O11')->getFont()->setBold(true);
+    $spreadsheet->getActiveSheet()->getStyle('A11:Q11')->getFont()->setBold(true);
     $spreadsheet->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal('center');
     $spreadsheet->getActiveSheet()->getStyle('A2')->getAlignment()->setHorizontal('center');
     // $spreadsheet->getActiveSheet()->getStyle('AB')->getAlignment()->setHorizontal('center');
     $spreadsheet->getActiveSheet()->getStyle('G4:H8')->getAlignment()->setHorizontal('center');
     // $spreadsheet->getActiveSheet()->getStyle('I' . ($i + 13))->getAlignment()->setHorizontal('center');
     // $spreadsheet->getActiveSheet()->getStyle('I12:I' . ($i + 11))->getAlignment()->setWrapText(true);
-    $spreadsheet->getActiveSheet()->getStyle('A11:O' . ($i + 16))->getAlignment()->setVertical('center')->setHorizontal('center');
+    $spreadsheet->getActiveSheet()->getStyle('A11:Q' . ($i + 16))->getAlignment()->setVertical('center')->setHorizontal('center');
     $spreadsheet->getActiveSheet()->getStyle('A4:B6')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('D4:E8')->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-    $spreadsheet->getActiveSheet()->getStyle('A12:O' . ($i + 11))->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-    $spreadsheet->getActiveSheet()->getStyle('A12:O' . ($i + 11))->getBorders()->getVertical()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+    $spreadsheet->getActiveSheet()->getStyle('A12:Q' . ($i + 11))->getBorders()->getOutline()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+    $spreadsheet->getActiveSheet()->getStyle('A12:Q' . ($i + 11))->getBorders()->getVertical()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('A' . ($i + 13) . ':J' . ($i + 14))->getFont()->setBold(true);
     $spreadsheet->getActiveSheet()->getStyle('A' . ($i + 13) . ':J' . ($i + 14))->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-    $spreadsheet->getActiveSheet()->getStyle('A11:O11')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+    $spreadsheet->getActiveSheet()->getStyle('A11:Q11')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
     $spreadsheet->getActiveSheet()->getStyle('G4:H8')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-    $spreadsheet->getActiveSheet()->getStyle('A12:O' . ($i + 16))->getAlignment()->setWrapText(true);
+    $spreadsheet->getActiveSheet()->getStyle('A12:Q' . ($i + 16))->getAlignment()->setWrapText(true);
 
     $spreadsheet->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
     $spreadsheet->getActiveSheet()->getRowDimension(11)->setRowHeight(35);

@@ -191,13 +191,13 @@ class Dies
       $return["message"] = "Data Empty";
     } else {
       $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-      $sql = "INSERT INTO mach.m_dm_dies_model (model_id, name1, group_id) "
-        . "values (:model_id, :name1, :group_id) ";
+      $sql = "INSERT INTO mach.m_dm_dies_model (model_id, name1, group_id, img) "
+        . "values (:model_id, :name1, :group_id, :img) ";
       $stmt = $conn->prepare($sql);
       $stmt->bindValue(":model_id", strtoupper(trim($param["model_id"])), PDO::PARAM_STR);
       $stmt->bindValue(":name1", $param["name1"], PDO::PARAM_STR);
       $stmt->bindValue(":group_id", $param["group_id"], PDO::PARAM_STR);
-      // $stmt->bindValue(":img", $param["img"], PDO::PARAM_STR);
+      $stmt->bindValue(":img", $param["img"], PDO::PARAM_STR);
       //$stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
 
       if ($stmt->execute()) {

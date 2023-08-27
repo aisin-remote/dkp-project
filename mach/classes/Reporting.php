@@ -368,7 +368,7 @@ class Reporting
             $sql .= " AND c.dies_id = $dies_no ";
         }
 
-        $sql .= " ORDER BY a.real_dt, a.time_start asc ";
+        $sql .= " ORDER BY a.real_dt, a.line_id, a.time_start asc ";
         // echo $sql;
         // die();
         $stmt = $conn->prepare($sql);
@@ -470,7 +470,7 @@ class Reporting
             $sql .= " AND d.dies_id = '$dies_no' ";
         }
 
-        $sql .= " ORDER BY a.shift, a.prd_seq ASC ";
+        $sql .= " ORDER BY a.shift, a.line_id, a.prd_seq ASC ";
 
         $stmt = $conn->prepare($sql);
         if ($stmt->execute()) {
@@ -579,22 +579,66 @@ class Reporting
         (select count(*) as stop_count from mach.t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
         (select SUM(stop_time) as loss_time from mach.t_prd_daily_stop where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq),
         (select SUM(ng_qty) as ng_rol from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type LIKE 'ROL%'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol1 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL1'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol2 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL2'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol3 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL3'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol4 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL4'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol5 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL5'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol6 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL6'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol7 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol8 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL8'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol9 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL9'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol10 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL10'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol11 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL11'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol12 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL12'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol13 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL13'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol14 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL14'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol15 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL15'),
-        (select COALESCE(SUM(ng_qty), 0) as ng_rol16 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL16')
+        (select COALESCE(SUM(ng_qty), 0) as nesensor1 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x = 'POS3'),
+		(select COALESCE(SUM(ng_qty), 0) as hc1 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x IN('POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as oilseal1 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x = 'POS2'),
+		(select COALESCE(SUM(ng_qty), 0) as oilpump1 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x IN('POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48')),
+		(select COALESCE(SUM(ng_qty), 0) as waterpump1 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x = 'POS1'),
+		(select COALESCE(SUM(ng_qty), 0) as other1 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x NOT IN('POS3','POS1','POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48','POS2','POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as nesensor2 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL5' and loc_x = 'POS3'),
+		(select COALESCE(SUM(ng_qty), 0) as hc2 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL5' and loc_x IN('POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as oilseal2 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL5' and loc_x = 'POS2'),
+		(select COALESCE(SUM(ng_qty), 0) as oilpump2 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL5' and loc_x IN('POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48')),
+		(select COALESCE(SUM(ng_qty), 0) as waterpump2 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL5' and loc_x = 'POS1'),
+		(select COALESCE(SUM(ng_qty), 0) as other2 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x NOT IN('POS3','POS1','POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48','POS2','POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as nesensor3 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL6' and loc_x = 'POS3'),
+		(select COALESCE(SUM(ng_qty), 0) as hc3 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL6' and loc_x IN('POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as oilseal3 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL6' and loc_x = 'POS2'),
+		(select COALESCE(SUM(ng_qty), 0) as oilpump3 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL6' and loc_x IN('POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48')),
+		(select COALESCE(SUM(ng_qty), 0) as waterpump3 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL6' and loc_x = 'POS1'),
+		(select COALESCE(SUM(ng_qty), 0) as other3 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x NOT IN('POS3','POS1','POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48','POS2','POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as nesensor4 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL3' and loc_x = 'POS3'),
+		(select COALESCE(SUM(ng_qty), 0) as hc4 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL3' and loc_x IN('POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as oilseal4 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL3' and loc_x = 'POS2'),
+		(select COALESCE(SUM(ng_qty), 0) as oilpump4 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL3' and loc_x IN('POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48')),
+		(select COALESCE(SUM(ng_qty), 0) as waterpump4 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL3' and loc_x = 'POS1'),
+		(select COALESCE(SUM(ng_qty), 0) as other4 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x NOT IN('POS3','POS1','POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48','POS2','POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as nesensor5 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL4' and loc_x = 'POS3'),
+		(select COALESCE(SUM(ng_qty), 0) as hc5 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL4' and loc_x IN('POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as oilseal5 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL4' and loc_x = 'POS2'),
+		(select COALESCE(SUM(ng_qty), 0) as oilpump5 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL4' and loc_x IN('POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48')),
+		(select COALESCE(SUM(ng_qty), 0) as waterpump5 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL4' and loc_x = 'POS1'),
+		(select COALESCE(SUM(ng_qty), 0) as other5 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x NOT IN('POS3','POS1','POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48','POS2','POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as nesensor6 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL2' and loc_x = 'POS3'),
+		(select COALESCE(SUM(ng_qty), 0) as hc6 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL2' and loc_x IN('POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as oilseal6 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL2' and loc_x = 'POS2'),
+		(select COALESCE(SUM(ng_qty), 0) as oilpump6 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL2' and loc_x IN('POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48')),
+		(select COALESCE(SUM(ng_qty), 0) as waterpump6 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL2' and loc_x = 'POS1'),
+		(select COALESCE(SUM(ng_qty), 0) as other6 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x NOT IN('POS3','POS1','POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48','POS2','POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as nesensor7 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL8' and loc_x = 'POS3'),
+		(select COALESCE(SUM(ng_qty), 0) as hc7 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL8' and loc_x IN('POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as oilseal7 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL8' and loc_x = 'POS2'),
+		(select COALESCE(SUM(ng_qty), 0) as oilpump7 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL8' and loc_x IN('POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48')),
+		(select COALESCE(SUM(ng_qty), 0) as waterpump7 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL8' and loc_x = 'POS1'),
+		(select COALESCE(SUM(ng_qty), 0) as other7 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x NOT IN('POS3','POS1','POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48','POS2','POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as nesensor8 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL9' and loc_x = 'POS3'),
+		(select COALESCE(SUM(ng_qty), 0) as hc8 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL9' and loc_x IN('POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as oilseal8 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL9' and loc_x = 'POS2'),
+		(select COALESCE(SUM(ng_qty), 0) as oilpump8 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL9' and loc_x IN('POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48')),
+		(select COALESCE(SUM(ng_qty), 0) as waterpump8 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL9' and loc_x = 'POS1'),
+		(select COALESCE(SUM(ng_qty), 0) as other8 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x NOT IN('POS3','POS1','POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48','POS2','POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as nesensor9 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL10' and loc_x = 'POS3'),
+		(select COALESCE(SUM(ng_qty), 0) as hc9 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL10' and loc_x IN('POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as oilseal9 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL10' and loc_x = 'POS2'),
+		(select COALESCE(SUM(ng_qty), 0) as oilpump9 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL10' and loc_x IN('POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48')),
+		(select COALESCE(SUM(ng_qty), 0) as waterpump9 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL10' and loc_x = 'POS1'),
+		(select COALESCE(SUM(ng_qty), 0) as other9 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x NOT IN('POS3','POS1','POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48','POS2','POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as nesensor10 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL1' and loc_x = 'POS3'),
+		(select COALESCE(SUM(ng_qty), 0) as hc10 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL1' and loc_x IN('POS34','POS35','POS36','POS37','POS38','POS39','POS40')),
+		(select COALESCE(SUM(ng_qty), 0) as oilseal10 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL1' and loc_x = 'POS2'),
+		(select COALESCE(SUM(ng_qty), 0) as oilpump10 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL1' and loc_x IN('POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48')),
+		(select COALESCE(SUM(ng_qty), 0) as waterpump10 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL1' and loc_x = 'POS1'),
+		(select COALESCE(SUM(ng_qty), 0) as other10 from mach.t_prd_daily_ng where line_id = a.line_id AND prd_dt = a.prd_dt AND shift = a.shift and prd_seq = a.prd_seq and ng_type = 'ROL7' and loc_x NOT IN('POS3','POS1','POS27','POS28','POS29','POS30','POS31','POS32','POS33','POS48','POS2','POS34','POS35','POS36','POS37','POS38','POS39','POS40'))
         from mach.t_prd_daily_i a
         inner join mach.t_prd_daily_h b on b.prd_dt = a.prd_dt and b.shift = a.shift and b.line_id = a.line_id
         right join mach.t_prd_daily_ng c on c.prd_dt = a.prd_dt and c.shift = a.shift and c.line_id = a.line_id and c.prd_seq = a.prd_seq and ng_type LIKE 'ROL%'

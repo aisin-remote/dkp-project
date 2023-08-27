@@ -120,7 +120,7 @@ and open the template in the editor.
                         } ?>">
                         <div class="custom-file mt-2">
                           <input type="file" name="img01" accept="image/*" onchange="loadFile(event)">
-                          <input type="hidden" name="img01x" value="<?php echo $data["data"]["img01"]; ?>">
+                          <input type="hidden" name="img01x" value="<?php echo $data["data"]["img"]; ?>">
                         </div>
                       </div>
                     </div>

@@ -95,7 +95,7 @@ if ($action == "daily_production") {
         $exec = array();
         $spreadsheet->getActiveSheet()->setCellValue('F' . ($i + 11), $detail["start_time"] . " - " . $detail["stop_name"]);
         if ($detail["stop_type"] == "P") {
-          $spreadsheet->getActiveSheet()->setCellValue('G' . ($i + 11), "(".$detail["stop_time"].")");
+          $spreadsheet->getActiveSheet()->setCellValue('G' . ($i + 11), "(" . $detail["stop_time"] . ")");
         } else {
           $spreadsheet->getActiveSheet()->setCellValue('G' . ($i + 11), $detail["stop_time"]);
         }
@@ -479,7 +479,32 @@ if ($action == "report_detail") {
 
   $line = $dies->getLineByType();
   $shiftlist = $report->getListShift();
-  $report_detail = $report->getReportDetail($date_from, $date_to, $shift, $line_id, $group_id, $model_id, $dies_no);
+  $report_detail = array();
+  $report_detail_temp = $report->getReportDetail($date_from, $date_to, $shift, $line_id, $group_id, $model_id, $dies_no);
+  $prev_dt_temp = "";
+  $prev_shift_temp = "";
+  $prev_line_temp = "";
+
+  foreach ($report_detail_temp as $index => $value) {
+    $dt_temp = $value["prd_dt"];
+    $shift_temp = $value["pval1"];
+    $line_temp = $value["line_name"];
+
+    if ($index > 0 && ($dt_temp != $prev_dt_temp || $shift_temp != $prev_shift_temp || $line_temp != $prev_line_temp)) {
+      $empty_row = array(
+        "prd_dt" => "",
+        "pval1" => "",
+        "line_name" => ""
+      );
+      array_push($report_detail, $empty_row);
+    }
+
+    array_push($report_detail, $value);
+
+    $prev_dt_temp = $dt_temp;
+    $prev_shift_temp = $shift_temp;
+    $prev_line_temp = $line_temp;
+  }
   // print_r($report_detail);
   // die();
   require(TEMPLATE_PATH . "/t_report_detail.php");
@@ -530,7 +555,32 @@ if ($action == "report_stop") {
 
   $line = $dies->getLineByType();
   $shiftlist = $report->getListShift();
-  $data["list"] = $report->getReportStop($date_from, $date_to, $shift, $line_id, $group_id, $model_id, $dies_no);
+  $data["list"] = array();
+  $data["temp"] = $report->getReportStop($date_from, $date_to, $shift, $line_id, $group_id, $model_id, $dies_no);
+  $prev_dt_temp = "";
+  $prev_shift_temp = "";
+  $prev_line_temp = "";
+
+  foreach ($data["temp"] as $index => $value) {
+    $dt_temp = $value["prd_dt"];
+    $shift_temp = $value["pval1"];
+    $line_temp = $value["line_name"];
+
+    if ($index > 0 && ($dt_temp != $prev_dt_temp || $shift_temp != $prev_shift_temp || $line_temp != $prev_line_temp)) {
+      $empty_row = array(
+        "prd_dt" => "",
+        "pval1" => "",
+        "line_name" => ""
+      );
+      array_push($data["list"], $empty_row);
+    }
+
+    array_push($data["list"], $value);
+
+    $prev_dt_temp = $dt_temp;
+    $prev_shift_temp = $shift_temp;
+    $prev_line_temp = $line_temp;
+  }
   require(TEMPLATE_PATH . "/t_report_stop.php");
 }
 
@@ -578,7 +628,56 @@ if ($action == "r_ng_ril") {
 
   $line = $dies->getLineByType();
   $shiftlist = $report->getListShift();
-  $data["list"] = $report->getReportRIL($date_from, $date_to, $shift, $line_id, $group_id, $model_id, $dies_no);
+  $data["list"] = array();
+  $data["temp"] = $report->getReportRIL($date_from, $date_to, $shift, $line_id, $group_id, $model_id, $dies_no);
+  $prev_dt_temp = "";
+  $prev_shift_temp = "";
+  $prev_line_temp = "";
+
+  foreach ($data["temp"] as $index => $value) {
+    $dt_temp = $value["prd_dt"];
+    $shift_temp = $value["pval1"];
+    $line_temp = $value["line_name"];
+
+    if ($index > 0 && ($dt_temp != $prev_dt_temp || $shift_temp != $prev_shift_temp || $line_temp != $prev_line_temp)) {
+      $empty_row = array(
+        "prd_dt" => "",
+        "pval1" => "",
+        "line_name" => "",
+        "group_id" => "",
+        "model_id" => "",
+        "dies_no" => "",
+        "tot_qty" => "",
+        "tot_ng" => "",
+        "ng_ril" => "",
+        "ng_ril1" => "",
+        "ng_ril2" => "",
+        "ng_ril3" => "",
+        "ng_ril4" => "",
+        "ng_ril5" => "",
+        "ng_ril6" => "",
+        "ng_ril7" => "",
+        "ng_ril8" => "",
+        "ng_ril9" => "",
+        "ng_ril10" => "",
+        "ng_ril11" => "",
+        "wip" => "",
+        "eff" => "",
+        "loss%" => "",
+        "ril%" => "",
+        "rol%" => "",
+        "wip%" => "",
+        "total%" => ""
+      );
+      array_push($data["list"], $empty_row);
+    }
+
+    array_push($data["list"], $value);
+
+    $prev_dt_temp = $dt_temp;
+    $prev_shift_temp = $shift_temp;
+    $prev_line_temp = $line_temp;
+  }
   require(TEMPLATE_PATH . "/t_report_ril.php");
 }
 
@@ -626,6 +725,54 @@ if ($action == "r_ng_rol") {
 
   $line = $dies->getLineByType();
   $shiftlist = $report->getListShift();
-  $data["list"] = $report->getReportROL($date_from, $date_to, $shift, $line_id, $group_id, $model_id, $dies_no);
+  $data["list"] = array();
+  $data["temp"] = $report->getReportROL($date_from, $date_to, $shift, $line_id, $group_id, $model_id, $dies_no);
+  $prev_dt_temp = "";
+  $prev_shift_temp = "";
+  $prev_line_temp = "";
+
+  foreach ($data["temp"] as $index => $value) {
+    $dt_temp = $value["prd_dt"];
+    $shift_temp = $value["pval1"];
+    $line_temp = $value["line_name"];
+
+    if ($index > 0 && ($dt_temp != $prev_dt_temp || $shift_temp != $prev_shift_temp || $line_temp != $prev_line_temp)) {
+      $empty_row = array(
+        "prd_dt" => "",
+        "pval1" => "",
+        "line_name" => "",
+        "group_id" => "",
+        "model_id" => "",
+        "dies_no" => "",
+        "tot_qty" => "",
+        "tot_ng" => "",
+        "ng_rol1" => "",
+        "ng_rol2" => "",
+        "ng_rol3" => "",
+        "ng_rol4" => "",
+        "ng_rol5" => "",
+        "ng_rol6" => "",
+        "ng_rol7" => "",
+        "ng_rol8" => "",
+        "ng_rol9" => "",
+        "ng_rol10" => "",
+        "ng_rol11" => "",
+        "wip" => "",
+        "eff" => "",
+        "loss%" => "",
+        "ril%" => "",
+        "rol%" => "",
+        "wip%" => "",
+        "total%" => ""
+      );
+      array_push($data["list"], $empty_row);
+    }
+
+    array_push($data["list"], $value);
+
+    $prev_dt_temp = $dt_temp;
+    $prev_shift_temp = $shift_temp;
+    $prev_line_temp = $line_temp;
+  }
   require(TEMPLATE_PATH . "/t_report_rol.php");
 }
