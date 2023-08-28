@@ -12,7 +12,7 @@ if($action == "videotron") {
   if (!empty($data_dies)) {
     $i = 0;
     foreach ($data_dies as $row) {
-      $data_dies[$i]["bg_color"] = "bg-light";
+      $data_dies[$i]["bg_color"] = "";
       if (floatval($row["stkrun"]) >= floatval($row["ewstk"])) {
         $data_dies[$i]["bg_color"] = "bg-yellow";
       }
