@@ -125,7 +125,7 @@ and open the template in the editor.
                             <?= ($_GET["line"] == 'E14') ? 'POS 1' : 'Operator 1'; ?>
                           </label>
                           <div class="col-lg-8 col-md-2 col-sm-12">
-                            <select name="op1id" id="op1id" class="form-control select2">
+                            <select name="op1id" id="op1id" class="form-control select2 g_opr">
                               <option value="">None</option>
                               <?php
                               foreach ($op_list as $row) {
@@ -143,7 +143,7 @@ and open the template in the editor.
                             <?= ($_GET["line"] == 'E14') ? 'POS 2' : 'Operator 2'; ?>
                           </label>
                           <div class="col-lg-8 col-md-2 col-sm-12">
-                            <select name="op2id" id="op2id" class="form-control select2">
+                            <select name="op2id" id="op2id" class="form-control select2 g_opr">
                               <option value="">None</option>
                               <?php
                               foreach ($op_list as $row) {
@@ -161,7 +161,7 @@ and open the template in the editor.
                             <?= ($_GET["line"] == 'E14') ? 'POS 3' : 'Operator 3'; ?>
                           </label>
                           <div class="col-lg-8 col-md-2 col-sm-12">
-                            <select name="op3id" id="op3id" class="form-control select2">
+                            <select name="op3id" id="op3id" class="form-control select2 g_opr">
                               <option value="">None</option>
                               <?php
                               foreach ($op_list as $row) {
@@ -179,7 +179,7 @@ and open the template in the editor.
                             <?= ($_GET["line"] == 'E14') ? 'POS 4' : 'Operator 4'; ?>
                           </label>
                           <div class="col-lg-8 col-md-2 col-sm-12">
-                            <select name="op4id" id="op4id" class="form-control select2">
+                            <select name="op4id" id="op4id" class="form-control select2 g_opr">
                               <option value="">None</option>
                               <?php
                               foreach ($op_list as $row) {
@@ -199,7 +199,7 @@ and open the template in the editor.
                             <?= ($_GET["line"] == 'E14') ? 'POS 5' : 'Operator 5'; ?>
                           </label>
                           <div class="col-lg-8 col-md-2 col-sm-12">
-                            <select name="op5id" id="op5id" class="form-control select2">
+                            <select name="op5id" id="op5id" class="form-control select2 g_opr">
                               <option value="">None</option>
                               <?php
                               foreach ($op_list as $row) {
@@ -217,7 +217,7 @@ and open the template in the editor.
                             <?= ($_GET["line"] == 'E14') ? 'POS 6' : 'Operator 6'; ?>
                           </label>
                           <div class="col-lg-8 col-md-2 col-sm-12">
-                            <select name="op6id" id="op6id" class="form-control select2">
+                            <select name="op6id" id="op6id" class="form-control select2 g_opr">
                               <option value="">None</option>
                               <?php
                               foreach ($op_list as $row) {
@@ -235,7 +235,7 @@ and open the template in the editor.
                             <?= ($_GET["line"] == 'E14') ? 'POS 7' : 'Operator 7'; ?>
                           </label>
                           <div class="col-lg-8 col-md-2 col-sm-12">
-                            <select name="op7id" id="op7id" class="form-control select2">
+                            <select name="op7id" id="op7id" class="form-control select2 g_opr">
                               <option value="">None</option>
                               <?php
                               foreach ($op_list as $row) {
@@ -253,7 +253,7 @@ and open the template in the editor.
                             <?= ($_GET["line"] == 'E14') ? 'POS 8' : 'Operator 8'; ?>
                           </label>
                           <div class="col-lg-8 col-md-2 col-sm-12">
-                            <select name="op8id" id="op8id" class="form-control select2">
+                            <select name="op8id" id="op8id" class="form-control select2 g_opr">
                               <option value="">None</option>
                               <?php
                               foreach ($op_list as $row) {
@@ -399,6 +399,7 @@ and open the template in the editor.
 
     $("#group").change(function () {
       var groupid = $("#group").val();
+      $(".g_opr").val("").trigger("change");
       $.ajax({
         type: 'GET',
         url: '?action=api_get_opr',

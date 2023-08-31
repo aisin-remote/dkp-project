@@ -206,8 +206,8 @@ and open the template in the editor.
                 <div class="col-lg-10 col-md-9 col-sm-12">
                   <select name="type" class="form-control modal_select2" id="type">
                     <option value="">Please Select Type</option>
-                    <option value="RAW">RAW</option>
-                    <option value="FIN">Finish Goods</option>
+                    <option value="RAW" <?=($type == "RAW")?"selected":""?>>RAW</option>
+                    <option value="FIN" <?=($type == "FIN")?"selected":""?>>Finish Goods</option>
                   </select>
                 </div>
               </div>

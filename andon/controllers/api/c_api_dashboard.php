@@ -190,6 +190,7 @@ if ($action == "dashboard_line") {
 
 
   $today = date("Y-m-d");
+  $prd_dt = $today;
   //$today = "2023-01-25";
   $jam_now = intval(date("H"));
   $min_now = intval(date("i"));
@@ -225,7 +226,7 @@ if ($action == "dashboard_line") {
   
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
   //$jam_end = "18";
-  $query = "select a.line_id, a.shift, a.cctime, a.prd_seq, b.name1 from t_prd_daily_i a 
+  $query = "select a.prd_dt, a.line_id, a.shift, a.cctime, a.prd_seq, b.name1 from t_prd_daily_i a 
             left join wms.m_mara b ON b.matnr = a.dies_id 
             where a.line_id = '$line_id' 
             AND a.prd_dt = '$today' 
@@ -240,6 +241,7 @@ if ($action == "dashboard_line") {
       $shift = $row["shift"];
       $cctime = $row["cctime"];
       $material_name = $row["name1"];
+      $prd_dt = $row["prd_dt"];
     }
   }
   //initialize variable
@@ -256,7 +258,7 @@ if ($action == "dashboard_line") {
     //dapatkan prd_seq yang pertama
     $query = "select min(a.prd_seq) as prd_seq from t_prd_daily_i a 
               where a.line_id = '$line_id' 
-              AND a.prd_dt = '$today' 
+              AND a.prd_dt = '$prd_dt' 
               AND a.shift = '$shift' ";
 
     $stmt = $conn->prepare($query);
@@ -267,7 +269,7 @@ if ($action == "dashboard_line") {
       }
     }
 
-    $query = "SELECT a.prd_dt, a.time_start FROM t_prd_daily_i a WHERE a.line_id = '$line_id' AND a.prd_dt = '$today' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq' ";
+    $query = "SELECT a.prd_dt, a.time_start FROM t_prd_daily_i a WHERE a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' AND a.shift = '$shift' AND a.prd_seq = '$prd_seq' ";
     $stmt = $conn->prepare($query);
     $time_start = "";
     $prd_dt = "";
@@ -284,7 +286,7 @@ if ($action == "dashboard_line") {
     //get production qty
     $query = "select coalesce(sum(a.prd_qty),0) as prd_qty FROM t_prd_daily_i a 
               where a.line_id = '$line_id' 
-              AND a.prd_dt = '$today'  
+              AND a.prd_dt = '$prd_dt'  
               AND a.shift = '$shift'";
     $stmt = $conn->prepare($query);
     $prd_qty = 0;
@@ -293,14 +295,36 @@ if ($action == "dashboard_line") {
         $prd_qty = $row["prd_qty"];
       }
     }
-
+    
+    //get planned stop
+    $query = "select a.prd_dt, a.stop_id, a.start_time, a.end_time, a.stop_time, b.type1, b.type2, c.real_dt from t_prd_daily_stop a 
+              inner join m_prd_stop_reason_action b ON b.srna_id = a.stop_id 
+              inner join t_prd_daily_i c ON c.line_id = a.line_id AND c.prd_dt = a.prd_dt AND c.shift = a.shift AND c.prd_seq = a.prd_seq 
+              where a.line_id = '$line_id' and a.prd_dt = '$prd_dt' AND a.shift = '$shift' and b.type2 = 'P' and b.app_id = '".APP."'";
+    
+    $pengurang_detik = 0;
+    $stmt = $conn->prepare($query);
+    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $pengurang_detik = 0;
+        $str_time = strtotime($row["real_dt"]." ".$row["start_time"].":00");
+        $end_time = strtotime($row["real_dt"]." ".$row["end_time"].":00");
+        if($current_time >= $end_time) {
+          $pengurang_detik = $row["stop_time"] * 60;
+        } else if($current_time >= $str_time && $current_time < $end_time) {
+          $pengurang_detik = $current_time - $str_time;
+        }
+        $diff -= $pengurang_detik;
+      }
+    }
+    
     $pln_qty = 0;
     $pln_qty = round( ($diff / floatval($cctime)), 0, PHP_ROUND_HALF_UP);
 
     //get NG
     $query = "select coalesce(sum(a.ng_qty),0) as ng_qty FROM t_prd_daily_ng a 
               where a.line_id = '$line_id' 
-              AND a.prd_dt = '$today'  
+              AND a.prd_dt = '$prd_dt'  
               AND a.shift = '$shift'";
     $stmt = $conn->prepare($query);
     $ng_qty = 0;
@@ -320,8 +344,8 @@ if ($action == "dashboard_line") {
               from t_prd_daily_i a
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'PART'
-              where a.line_id = '$line_id' AND a.prd_dt = '$today' and a.shift = '$shift'   
-              and app_id = '".APP."'";
+              where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'   
+              and c.app_id = '".APP."'";
     $stmt = $conn->prepare($query);
     $stop_dies = 0;
     if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
@@ -335,7 +359,7 @@ if ($action == "dashboard_line") {
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'MESIN'
               where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'  
-              and app_id = '".APP."'";
+              and c.app_id = '".APP."'";
     $stmt = $conn->prepare($query);
     $stop_mesin = 0;
     if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
@@ -348,8 +372,8 @@ if ($action == "dashboard_line") {
               from t_prd_daily_i a
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2002'
-              where a.line_id = '$line_id' AND a.prd_dt = '$today' and a.shift = '$shift'   
-              and app_id = '".APP."'";
+              where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'   
+              and c.app_id = '".APP."'";
     $stmt = $conn->prepare($query);
     $stop_qas = 0;
     if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
@@ -362,8 +386,8 @@ if ($action == "dashboard_line") {
               from t_prd_daily_i a
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2005'
-              where a.line_id = '$line_id' AND a.prd_dt = '$today' and a.shift = '$shift'   
-              and app_id = '".APP."'";
+              where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'   
+              and c.app_id = '".APP."'";
     $stmt = $conn->prepare($query);
     $dandori = 0;
     $stop_dandori = 0;
@@ -398,6 +422,7 @@ if ($action == "dashboard_line") {
 if ($action == "api_dashboard_adn_single") {
   $line_id = $_REQUEST["line_id"];
   $today = date("Y-m-d");
+  $prd_dt = $today;
   /*$today = "2023-01-25";*/
   $jam_now = intval(date("H"));
   $min_now = intval(date("i"));
@@ -440,69 +465,8 @@ if ($action == "api_dashboard_adn_single") {
     $today = date(strtotime($today . "- 1 days"), "Y-m-d");
   }
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
-  /*$jam_end = "18";*/
-  /*$query = "select a.line_id, b.name1 as line_name, a.cctime, a.pln_qty, a.prd_time, coalesce(a.prd_qty,0) as prd_qty, 
-            (select coalesce(sum(pln_qty),0) as tot_pln_qty FROM t_prd_daily_i WHERE line_id = a.line_id AND prd_dt = a.prd_dt and shift = a.shift), 
-            (select coalesce(sum(prd_qty),0) as tot_prd_qty FROM t_prd_daily_i WHERE line_id = a.line_id AND prd_dt = a.prd_dt and shift = a.shift),
-            (select coalesce(sum(prd_time),0) as tot_prd_time FROM t_prd_daily_i WHERE line_id = a.line_id AND prd_dt = a.prd_dt and shift = a.shift),
-            (select coalesce(sum(ng_qty),0) as ril_qty from t_prd_daily_ng 
-            WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and SUBSTRING(ng_type,1,3) = 'RIL'), 
-            (select coalesce(sum(ng_qty),0) as rol_qty from t_prd_daily_ng 
-            WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift and SUBSTRING(ng_type,1,3) = 'ROL'),
-            (select coalesce(sum(ng_qty),0) as ng_qty from t_prd_daily_ng 
-            WHERE line_id = a.line_id and prd_dt = a.prd_dt and shift = a.shift),
-            (select sum(b.stop_time)
-            from t_prd_daily_i a
-            inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
-            inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'MESIN'
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
-            and app_id = 'AISIN_ADN') as stop_mesin, 
-            (select sum(b.stop_time)
-            from t_prd_daily_i a
-            inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
-            inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'PART'
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
-            and app_id = 'AISIN_ADN') as stop_part, 
-            (select sum(b.stop_time)
-            from t_prd_daily_i a
-            inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
-            inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2005'
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' 
-            and app_id = 'AISIN_ADN') as stop_dandori 
-            from t_prd_daily_i a 
-            inner join m_prd_line b ON b.line_id = a.line_id AND b.line_ty = 'ECU'
-            where a.line_id = '$line_id' AND a.prd_dt = '$today' and TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end' ";
-
-  $stmt = $conn->prepare($query);
-  $pln_qty = 0;
-  $prd_qty = 0;
-  $balance = 0;
-  $achieve = 0;
-  $cctime = 0;
-  $stop_dies = 0;
-  $stop_mesin = 0;
-  $eff = 0;
-  $ril = 0;
-  $rol = 0;
-  $dandori = 0;
-
-  if ($stmt->execute() or die($stmt->errorInfo()[2])) {
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      //$line_name = $row["line_name"];
-      $pln_qty = $row["tot_pln_qty"];
-      $prd_qty = $row["tot_prd_qty"] + $row["ng_qty"];
-      $balance = $row["tot_pln_qty"] - $prd_qty;
-      $achieve = round((($row["tot_prd_qty"] * $row["cctime"] / 60) / $row["tot_prd_time"]) * 100, 1);
-      $cctime = $row["cctime"];
-      $stop_dies = $row["stop_part"] * 60;
-      $stop_mesin = $row["stop_mesin"] * 60;
-      $dandori = $row["stop_dandori"] * 60;
-      $eff = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
-      $ril = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
-      $rol = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 1);
-    }
-  }*/
-  $query = "select a.line_id, a.shift, a.cctime, a.prd_seq, b.name1 from t_prd_daily_i a 
+  
+  $query = "select a.prd_dt, a.line_id, a.shift, a.cctime, a.prd_seq, b.name1 from t_prd_daily_i a 
             left join wms.m_mara b ON b.matnr = a.dies_id 
             where a.line_id = '$line_id'
             AND TO_CHAR(a.real_dt,'YYYY-MM-DD') = '$today' 
@@ -516,6 +480,7 @@ if ($action == "api_dashboard_adn_single") {
       $shift = $row["shift"];
       $cctime = $row["cctime"];
       $material_name = $row["name1"];
+      $prd_dt = $row["prd_dt"];
     }
   }
 //initialize variable
@@ -559,7 +524,7 @@ if ($action == "api_dashboard_adn_single") {
     //get production qty
     $query = "select coalesce(sum(a.prd_qty),0) as prd_qty FROM t_prd_daily_i a 
               where a.line_id = '$line_id' 
-              AND a.prd_dt = '$today'  
+              AND a.prd_dt = '$prd_dt'  
               AND a.shift = '$shift'";
     $stmt = $conn->prepare($query);
     $prd_qty = 0;
@@ -568,14 +533,37 @@ if ($action == "api_dashboard_adn_single") {
         $prd_qty = $row["prd_qty"];
       }
     }
-
+    //get planned stop
+    $query = "select a.prd_dt, a.stop_id, a.start_time, a.end_time, a.stop_time, b.type1, b.type2, c.real_dt from t_prd_daily_stop a 
+              inner join m_prd_stop_reason_action b ON b.srna_id = a.stop_id 
+              inner join t_prd_daily_i c ON c.line_id = a.line_id AND c.prd_dt = a.prd_dt AND c.shift = a.shift AND c.prd_seq = a.prd_seq 
+              where a.line_id = '$line_id' and a.prd_dt = '$prd_dt' AND a.shift = '$shift' and b.type2 = 'P' and b.app_id = '".APP."'";
+    
+    $pengurang_detik = 0;
+    $total_pengurang = 0;
+    $stmt = $conn->prepare($query);
+    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $pengurang_detik = 0;
+        $str_time = strtotime($row["real_dt"]." ".$row["start_time"].":00");
+        $end_time = strtotime($row["real_dt"]." ".$row["end_time"].":00");
+        if($current_time >= $end_time) {
+          $pengurang_detik = $row["stop_time"] * 60;          
+        } else if($current_time >= $str_time && $current_time < $end_time) {
+          $pengurang_detik = $current_time - $str_time;
+        }
+        $total_pengurang += $pengurang_detik;
+        $diff -= $pengurang_detik;
+      }
+    }
+    
     $pln_qty = 0;
     $pln_qty = round( ($diff / floatval($cctime)), 0, PHP_ROUND_HALF_UP);
 
     //get NG
     $query = "select coalesce(sum(a.ng_qty),0) as ng_qty FROM t_prd_daily_ng a 
               where a.line_id = '$line_id' 
-              AND a.prd_dt = '$today'  
+              AND a.prd_dt = '$prd_dt'  
               AND a.shift = '$shift'";
     $stmt = $conn->prepare($query);
     $ng_qty = 0;
@@ -595,8 +583,8 @@ if ($action == "api_dashboard_adn_single") {
               from t_prd_daily_i a
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'PART'
-              where a.line_id = '$line_id' AND a.prd_dt = '$today' and a.shift = '$shift'   
-              and app_id = '".APP."'";
+              where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'   
+              and c.app_id = '".APP."'";
     $stmt = $conn->prepare($query);
     $stop_dies = 0;
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
@@ -610,7 +598,7 @@ if ($action == "api_dashboard_adn_single") {
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'MESIN'
               where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'  
-              and app_id = '".APP."'";
+              and c.app_id = '".APP."'";
     $stmt = $conn->prepare($query);
     $stop_mesin = 0;
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
@@ -623,8 +611,8 @@ if ($action == "api_dashboard_adn_single") {
               from t_prd_daily_i a
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2002'
-              where a.line_id = '$line_id' AND a.prd_dt = '$today' and a.shift = '$shift'   
-              and app_id = '".APP."'";
+              where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'   
+              and c.app_id = '".APP."'";
     $stmt = $conn->prepare($query);
     $stop_qas = 0;
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
@@ -637,8 +625,8 @@ if ($action == "api_dashboard_adn_single") {
               from t_prd_daily_i a
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2005'
-              where a.line_id = '$line_id' AND a.prd_dt = '$today' and a.shift = '$shift'   
-              and app_id = '".APP."'";
+              where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'   
+              and c.app_id = '".APP."'";
     $stmt = $conn->prepare($query);
     $dandori = 0;
     $stop_dandori = 0;
