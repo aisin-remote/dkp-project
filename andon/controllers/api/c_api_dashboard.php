@@ -226,7 +226,7 @@ if ($action == "dashboard_line") {
   
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
   //$jam_end = "18";
-  $query = "select a.prd_dt, a.line_id, a.shift, a.cctime, a.prd_seq, b.name1 from t_prd_daily_i a 
+  $query = "select a.prd_dt, a.line_id, a.shift, a.cctime, a.prd_seq, b.name1, b.backno from t_prd_daily_i a 
             left join wms.m_mara b ON b.matnr = a.dies_id 
             where a.line_id = '$line_id' 
             AND a.prd_dt = '$today' 
@@ -240,7 +240,7 @@ if ($action == "dashboard_line") {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $shift = $row["shift"];
       $cctime = $row["cctime"];
-      $material_name = $row["name1"];
+      $material_name = $row["name1"]."(".$row["backno"].")";
       $prd_dt = $row["prd_dt"];
     }
   }
@@ -466,7 +466,7 @@ if ($action == "api_dashboard_adn_single") {
   }
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
   
-  $query = "select a.prd_dt, a.line_id, a.shift, a.cctime, a.prd_seq, b.name1 from t_prd_daily_i a 
+  $query = "select a.prd_dt, a.line_id, a.shift, a.cctime, a.prd_seq, b.name1, b.backno from t_prd_daily_i a 
             left join wms.m_mara b ON b.matnr = a.dies_id 
             where a.line_id = '$line_id'
             AND TO_CHAR(a.real_dt,'YYYY-MM-DD') = '$today' 
@@ -479,7 +479,7 @@ if ($action == "api_dashboard_adn_single") {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $shift = $row["shift"];
       $cctime = $row["cctime"];
-      $material_name = $row["name1"];
+      $material_name = $row["name1"]." (".$row["backno"].")";
       $prd_dt = $row["prd_dt"];
     }
   }
