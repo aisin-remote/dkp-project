@@ -648,6 +648,46 @@ class Production
     }
     return $return;
   }
+  
+  public function updateNG($param = array())
+  {
+    $return = array();
+    if (empty($param)) {
+      $return["status"] = false;
+      $return["message"] = "Data Empty";
+    } else {
+      $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+      $sql = "UPDATE t_prd_daily_ng SET ng_type = :ng_type, loc_x = :loc_x, loc_y = loc_y "
+              . "WHERE line_id = :line_id "
+              . "AND prd_dt = :prd_dt "
+              . "AND shift = :shift "
+              . "AND prd_seq = :prd_seq "
+              . "AND ng_seq = :ng_seq ";
+      $stmt = $conn->prepare($sql);
+      $stmt->bindValue(":line_id", $param["line_id"], PDO::PARAM_STR);
+      $stmt->bindValue(":prd_dt", $param["prd_dt"], PDO::PARAM_STR);
+      $stmt->bindValue(":shift", $param["shift"], PDO::PARAM_STR);
+      $stmt->bindValue(":prd_seq", $param["prd_seq"], PDO::PARAM_STR);
+      $stmt->bindValue(":ng_seq", $param["ng_seq"], PDO::PARAM_STR);
+
+      $stmt->bindValue(":ng_type", $param["ng_type"], PDO::PARAM_STR);
+      $stmt->bindValue(":loc_x", $param["loc_x"], PDO::PARAM_STR);
+      $stmt->bindValue(":loc_y", $param["loc_y"], PDO::PARAM_STR);
+      $stmt->bindValue(":crt_by", $param["crt_by"], PDO::PARAM_STR);
+
+      if ($stmt->execute()) {
+        $return["status"] = true;
+      } else {
+        $error = $stmt->errorInfo();
+        $return["status"] = false;
+        $return["message"] = trim(str_replace("\n", " ", $error[2]));
+        error_log($error[2]);
+      }
+      $stmt = null;
+      $conn = null;
+    }
+    return $return;
+  }
 
   public function deleteNG($line_id, $date, $shift, $prd_seq, $ng_seq)
   {

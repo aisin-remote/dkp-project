@@ -14,27 +14,84 @@ if ($action == "api_insert_daily_stop") {
   $param["stop_time"] = $menit;
   //end of recalculate stop_time
   if (!empty($param["line_id"])) {
-    //cek dulu tipe stop apakah planned atau unplanned,
-    //jika planned maka recalculate production time dan planned qty
-    $cek_data = $stop->getById($param["stop_id"]);
-    if ($cek_data["type2"] == "P") {
-      $fdate = str_replace("-", "", $param["prd_dt"]);
-      $daily_i = $class->getItemById($param["line_id"], $fdate, $param["shift"], $param["prd_seq"]);
-      $cctime = $daily_i["cctime"];
-      $prd_time = floatval($daily_i["prd_time"]);
-      $prd_time -= floatval($param["stop_time"]);
-      $target_per_jam = ($prd_time * 60) / floatval($cctime);
-      $pln_qty = round($target_per_jam, 0, PHP_ROUND_HALF_UP);
-      $save = $class->updateTargetDailyI($param["line_id"], $param["prd_dt"], $param["shift"], $param["prd_seq"], $prd_time, $pln_qty);
-      if ($save["status"] == true) {
-        $save = $class->insertStop($param);
+    //cek dulu apakah data update atau baru
+    if($param["save_type"] == "N") {
+      //cek dulu tipe stop apakah planned atau unplanned,
+      //jika planned maka recalculate production time dan planned qty
+      $cek_data = $stop->getById($param["stop_id"]);
+      if ($cek_data["type2"] == "P") {
+        $fdate = str_replace("-", "", $param["prd_dt"]);
+        $daily_i = $class->getItemById($param["line_id"], $fdate, $param["shift"], $param["prd_seq"]);
+        $cctime = $daily_i["cctime"];
+        $prd_time = floatval($daily_i["prd_time"]);
+        $prd_time -= floatval($param["stop_time"]);
+        $target_per_jam = ($prd_time * 60) / floatval($cctime);
+        $pln_qty = round($target_per_jam, 0, PHP_ROUND_HALF_UP);
+        $save = $class->updateTargetDailyI($param["line_id"], $param["prd_dt"], $param["shift"], $param["prd_seq"], $prd_time, $pln_qty);
+        if ($save["status"] == true) {
+          $save = $class->insertStop($param);
+        } else {
+          echo json_encode($save);
+          die();
+        }
       } else {
-        echo json_encode($save);
-        die();
+        $save = $class->insertStop($param);
       }
     } else {
-      $save = $class->insertStop($param);
+      $process_id = explode("|",$param["process_id"]);
+      //cek data lama
+      $line_id = $process_id[0];
+      $prd_dt = $process_id[1];
+      $shift = $process_id[2];
+      $prd_seq = $process_id[3];
+      $stop_seq = $process_id[4];
+      $cek_data = $class->getPrdStop($line_id, $prd_dt, $shift, $prd_seq, $stop_seq);
+      if ($cek_data["type2"] == "P") {
+        //re-calculate production time dan planning Qty
+        $fdate = str_replace("-", "", $prd_dt);
+        $daily_i = $class->getItemById($line_id, $fdate, $shift, $prd_seq);
+        $cctime = $daily_i["cctime"];
+        $prd_time = floatval($daily_i["prd_time"]);
+        $prd_time += floatval($cek_data["stop_time"]);
+        $target_per_jam = ($prd_time * 60) / floatval($cctime);
+        $pln_qty = round($target_per_jam, 0, PHP_ROUND_HALF_UP);
+        $del = $class->updateTargetDailyI($line_id, $prd_dt, $shift, $prd_seq, $prd_time, $pln_qty);
+        if ($del["status"] == true) {
+          $del = $class->deleteStop($line_id, $prd_dt, $shift, $prd_seq, $stop_seq);
+          $del = $class->deleteExeStop($line_id, $prd_dt, $shift, $prd_seq, $stop_seq);
+        } else {
+          echo json_encode($del);
+          die();
+        }
+      } else {
+        $del = $class->deleteStop($line_id, $prd_dt, $shift, $prd_seq, $stop_seq);
+        $del = $class->deleteExeStop($line_id, $prd_dt, $shift, $prd_seq, $stop_seq);
+      }
+      
+      //insert data baru
+      //cek dulu tipe stop apakah planned atau unplanned,
+      //jika planned maka recalculate production time dan planned qty
+      $cek_data = $stop->getById($param["stop_id"]);
+      if ($cek_data["type2"] == "P") {
+        $fdate = str_replace("-", "", $param["prd_dt"]);
+        $daily_i = $class->getItemById($param["line_id"], $fdate, $param["shift"], $param["prd_seq"]);
+        $cctime = $daily_i["cctime"];
+        $prd_time = floatval($daily_i["prd_time"]);
+        $prd_time -= floatval($param["stop_time"]);
+        $target_per_jam = ($prd_time * 60) / floatval($cctime);
+        $pln_qty = round($target_per_jam, 0, PHP_ROUND_HALF_UP);
+        $save = $class->updateTargetDailyI($param["line_id"], $param["prd_dt"], $param["shift"], $param["prd_seq"], $prd_time, $pln_qty);
+        if ($save["status"] == true) {
+          $save = $class->insertStop($param);
+        } else {
+          echo json_encode($save);
+          die();
+        }
+      } else {
+        $save = $class->insertStop($param);
+      }
     }
+      
   }
   echo json_encode($save);
 }
@@ -83,7 +140,14 @@ if ($action == "api_insert_daily_ng") {
   }
   $save = array();
   if (!empty($param["line_id"])) {
-    $save = $class->insertNG($param);
+    if($param["save_type"] == "N") {
+      $save = $class->insertNG($param);
+    } else {
+      $arr_pid = explode("|",$param["process_id"]);
+      $param["ng_seq"] = $arr_pid[4];
+      $save = $class->updateNG($param);
+    }
+    
   }
   echo json_encode($save);
 }

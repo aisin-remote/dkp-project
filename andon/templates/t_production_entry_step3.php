@@ -284,7 +284,8 @@ and open the template in the editor.
                       <th>Konten Penanganan (Action)</th>
                       <th>Remarks</th>
                       <th style="width: 20%;">Eksekutor</th>
-                      <th class='text-center'>Action</th>
+                      <th class='text-center'>Edit</th>
+                      <th class='text-center'>Delete</th>
                     </tr>
                   </thead>
                   <tbody id="data_stop">
@@ -293,8 +294,17 @@ and open the template in the editor.
                       foreach ($data_stop as $row) {
                         $button_del = "";
                         //if ($row["stop_type"] == "U") {
-                        $button_del = "<button type='button' class='btn btn-xs btn-outline-dark' onclick='delStop(\"" . $row["line_id"] . "\",\"" . $row["prd_dt"] . "\",\"" . $row["shift"] . "\",\"" . $row["prd_seq"] . "\",\"" . $row["stop_seq"] . "\")'><i class='material-icons'>delete</i></button>";
+                        $button_del = "<button type='button' class='btn btn-sm btn-link' onclick='delStop(\"" . $row["line_id"] . "\",\"" . $row["prd_dt"] . "\",\"" . $row["shift"] . "\",\"" . $row["prd_seq"] . "\",\"" . $row["stop_seq"] . "\")'><i class='material-icons'>delete</i></button>";
                         //}
+                        $filtered_exe_stop = [];
+                        foreach ($exe_stop as $exe) {
+                          if ($exe["stop_seq"] == $row["stop_seq"] && $exe["prd_seq"] == $row["prd_seq"]) {
+                            $filtered_exe_stop[] = $exe["empid"];
+                          }
+                        }
+                        $button_edit = "<button type='button' class='btn btn-sm btn-link' onclick='openModal01Edit(\"" . $row["line_id"] . "|" . $row["prd_dt"] . "|" . $row["shift"] . "|" . $row["prd_seq"] . "|" . $row["stop_seq"] . "\", \"".$row["stop_id"]."\", \"".$row["action_id"]."\",\"".$row["remarks"]."\",\"".implode(";",$filtered_exe_stop)."\",\"" . $row["start_time"] . "\", \"" . $row["end_time"] . "\", \"" . $row["stop_time"] . "\")'><i class='material-icons'>edit</i></button>";
+                        
+                        
                         echo "<tr>"
                           . "<td>" . $row["start_time"] . "</td>"
                           . "<td>" . $row["end_time"] . "</td>"
@@ -310,6 +320,7 @@ and open the template in the editor.
                             }
                           }
                           echo "</td>"
+                          . "<td class='text-center'>$button_edit</td>"
                           . "<td class='text-center'>$button_del</td>"
                           . "</tr>";
                       }
@@ -333,7 +344,8 @@ and open the template in the editor.
                       <th class='text-center'>NG Visualization</th>
                       <th class='text-center'>Quantity</th>
                       <th>Created By</th>
-                      <th class='text-center'>Action</th>
+                      <th class='text-center'>Edit</th>
+                      <th class='text-center'>Delete</th>
                     </tr>
                   </thead>
                   <tbody id="data_ng">
@@ -341,13 +353,16 @@ and open the template in the editor.
                     if (!empty($data_ng)) {
                       foreach ($data_ng as $row) {
                         $button_del = "";
-                        $button_del = "<button type='button' class='btn btn-xs btn-outline-dark' onclick='delNG(\"" . $row["line_id"] . "\",\"" . $row["prd_dt"] . "\",\"" . $row["shift"] . "\",\"" . $row["prd_seq"] . "\",\"" . $row["ng_seq"] . "\")'><i class='material-icons'>delete</i></button>";
+                        $button_del = "<button type='button' class='btn btn-sm btn-link' onclick='delNG(\"" . $row["line_id"] . "\",\"" . $row["prd_dt"] . "\",\"" . $row["shift"] . "\",\"" . $row["prd_seq"] . "\",\"" . $row["ng_seq"] . "\")'><i class='material-icons'>delete</i></button>";
+                        $button_edit = "";
+                        $button_edit = "<button type='button' class='btn btn-sm btn-link' onclick='openModal02Edit(\"" . $row["line_id"] . "|" . $row["prd_dt"] . "|" . $row["shift"] . "|" . $row["prd_seq"] . "|" . $row["ng_seq"] . "\", \"" . $row["ng_type"] . "\", \"" . $row["loc_x"] . "\", \"" . $row["loc_y"] . "\", \"" . $row["ng_qty"] . "\")'><i class='material-icons'>edit</i></button>";
                         echo "<tr>"
                           . "<td>" . $row["ng_seq"] . "</td>"
                           . "<td>" . $row["name1"] . "</td>"
                           . "<td class='text-center'>" . $row["loc_x"] . "," . $row["loc_y"] . "</td>"
                           . "<td class='text-center'>" . $row["ng_qty"] . "</td>"
                           . "<td>" . $row["crt_by_name"] . "</td>"
+                          . "<td class='text-center'>$button_edit</td>"
                           . "<td class='text-center'>$button_del</td>"
                           . "</tr>";
                       }
@@ -419,7 +434,7 @@ and open the template in the editor.
                 <label for="action_id" class="col-sm-3 col-form-label">Eksekutor</label>
                 <div class="col-sm-9">
                   <select id="exe_empid" name="exe_empid[]" class="form-control modalSelect01" multiple="" data-live-search="true">
-                    <option value="">Select Eksekutor</option>
+                    <option value="" disabled>Select Eksekutor</option>
                     <?php
                     if (!empty($list_person)) {
                       foreach ($list_person as $row) {
@@ -457,13 +472,15 @@ and open the template in the editor.
 
             </div>
             <div class="modal-footer">
+              <input type="hidden" id="stop_save_type" value="">
+              <input type="hidden" id="process_id_stop" value="">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary" onclick="saveDataStop()">Submit</button>
             </div>
           </div>
         </div>
       </div>
-
+            
       <div class="modal fade" id="mymodal02" data-backdrop="static" data-keyboard="false" tabindex="-1"
         aria-labelledby="mymodal02Label" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -510,6 +527,8 @@ and open the template in the editor.
               </div>
             </div>
             <div class="modal-footer">
+              <input type="hidden" id="ng_save_type" value="">
+              <input type="hidden" id="process_id_ng" value="">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary" onclick="saveDataNG()">Submit</button>
             </div>
@@ -569,16 +588,75 @@ and open the template in the editor.
     });
 
     function openModal01() {
+      $("#stop_save_type").val("N");
+      $("#process_id_stop").val("");
+      $("#stop_id").val("");
+      $("#action_id").val("");
+      $("#remarks").val("");
+      $.each($("#exe_empid option:selected"), function () {
+        $(this).prop('selected', false); // <-- HERE
+      });
+      $("#start_time").val("");
+      $("#end_time").val("");
+      $("#stop_time").val("");
+      $('#mymodal01').modal({
+        keyboard: false
+      });      
+      $('.modalSelect01').trigger("change");
+    }
+    
+    function openModal01Edit(id, stop_id, action_id, remarks, exe_empid, start_time, end_time, stop_time) {
+      $("#stop_save_type").val("E");
+      $("#process_id_stop").val(id);
+      $("#stop_id").val(stop_id);
+      $("#action_id").val(action_id);
+      $("#remarks").val(remarks);
+      $.each($("#exe_empid option:selected"), function () {
+        $(this).prop('selected', false); // <-- HERE
+      });
+      var arr_empid = exe_empid.split(";");
+      if(arr_empid.length > 0) {
+        $.each(arr_empid, function(row, value) {
+          console.log("Stop ID = ".value);
+          $("#exe_empid option[value='" + value + "']").prop("selected", true);
+        });
+      }      
+      $("#start_time").val(start_time);
+      $("#end_time").val(end_time);
+      $("#stop_time").val(stop_time);
       $('#mymodal01').modal({
         keyboard: false
       });
+      $('.modalSelect01').trigger("change");
     }
 
     function openModal02() {
+      $("#ng_save_type").val("N");
+      $("#ng_type").val("");
+      $("#loc_x").val("");
+      $("#loc_y").val("");
+      $("#ng_qty").val("");
+      $("#ng_qty").removeAttr("readonly");
       $('#mymodal02').modal({
         keyboard: false
       });
+      $('.modalSelect02').trigger("change");
     }
+    
+    function openModal02Edit(pid, ng_type, loc_x, loc_y, qty) {
+      $("#ng_save_type").val("E");
+      $("#process_id_ng").val(pid);
+      $("#ng_type").val(ng_type);
+      $("#loc_x").val(loc_x);
+      $("#loc_y").val(loc_y);
+      $("#ng_qty").val(qty);
+      $("#ng_qty").attr("readonly","readonly");
+      $('#mymodal02').modal({
+        keyboard: false
+      });
+      $('.modalSelect02').trigger("change");
+    }
+    
     $("#start_time").change(function () {
       calculateDate();
     });
@@ -610,6 +688,8 @@ and open the template in the editor.
             type: 'POST',
             url: '?action=api_insert_daily_stop',
             data: {
+              save_type: $("#stop_save_type").val(),
+              process_id: $("#process_id_stop").val(),
               line_id: $("#line_id").val(),
               prd_dt: $("#prd_dt").val(),
               shift: $("#shift").val(),
@@ -650,6 +730,8 @@ and open the template in the editor.
         type: 'POST',
         url: '?action=api_insert_daily_ng',
         data: {
+          save_type:$("#ng_save_type").val(),
+          process_id:$("#process_id_ng").val(),
           line_id: $("#line_id").val(),
           prd_dt: $("#prd_dt").val(),
           shift: $("#shift").val(),
@@ -678,57 +760,63 @@ and open the template in the editor.
     }
 
     function delStop(line_id, prd_dt, shift, prd_seq, stop_seq) {
-      $.ajax({
-        type: 'POST',
-        url: '?action=api_delete_daily_stop',
-        data: {
-          line_id: line_id,
-          prd_dt: prd_dt,
-          shift: shift,
-          prd_seq: prd_seq,
-          stop_seq: stop_seq
-        },
-        success: function (response) {
-          // handle the response here
-          if (response.status == true) {
-            location.reload();
-          } else {
-            alert(response.message);
-          }
-        },
-        error: function (error) {
-          // handle the error here
-          alert(error.status);
-        },
-        dataType: 'json'
-      });
+      var cfm = confirm("Apakah anda yakin akan menghapus data stop ini?");
+      if(cfm === true) {
+        $.ajax({
+          type: 'POST',
+          url: '?action=api_delete_daily_stop',
+          data: {
+            line_id: line_id,
+            prd_dt: prd_dt,
+            shift: shift,
+            prd_seq: prd_seq,
+            stop_seq: stop_seq
+          },
+          success: function (response) {
+            // handle the response here
+            if (response.status == true) {
+              location.reload();
+            } else {
+              alert(response.message);
+            }
+          },
+          error: function (error) {
+            // handle the error here
+            alert(error.status);
+          },
+          dataType: 'json'
+        });
+      }
     }
 
     function delNG(line_id, prd_dt, shift, prd_seq, ng_seq) {
-      $.ajax({
-        type: 'POST',
-        url: '?action=api_delete_daily_ng',
-        data: {
-          line_id: line_id,
-          prd_dt: prd_dt,
-          shift: shift,
-          prd_seq: prd_seq,
-          ng_seq: ng_seq
-        },
-        success: function (response) {
-          // handle the response here
-          if (response.status == true) {
-            location.reload();
-          } else {
-            alert(response.message);
-          }
-        },
-        error: function (error) {
-          // handle the error here
-          alert(error);
-        },
-        dataType: 'json'
-      });
+      var cfm = confirm("Apakah anda yakin akan menghapus data NG ini?");
+      if(cfm === true) {
+        $.ajax({
+          type: 'POST',
+          url: '?action=api_delete_daily_ng',
+          data: {
+            line_id: line_id,
+            prd_dt: prd_dt,
+            shift: shift,
+            prd_seq: prd_seq,
+            ng_seq: ng_seq
+          },
+          success: function (response) {
+            // handle the response here
+            if (response.status == true) {
+              location.reload();
+            } else {
+              alert(response.message);
+            }
+          },
+          error: function (error) {
+            // handle the error here
+            alert(error);
+          },
+          dataType: 'json'
+        });
+      }
     }
 
     function getStopTime() {
@@ -752,9 +840,9 @@ and open the template in the editor.
             calculateDate();
           } else {
             //alert(response.message);
-            $("#start_time").val("");
+            /*$("#start_time").val("");
             $("#end_time").val("");
-            $("#stop_time").val("");
+            $("#stop_time").val("");*/
           }
         },
         error: function (error) {
