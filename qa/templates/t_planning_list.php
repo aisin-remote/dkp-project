@@ -50,7 +50,7 @@ and open the template in the editor.
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-body" style="background-color: #F0F0F0;">
+                                <div class="card-body">
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-12">
                                             <!-- filter placement -->
@@ -59,7 +59,7 @@ and open the template in the editor.
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="d-flex justify-content-end">
                                                 <!-- button placement -->
-                                                <a class="btn btn-pale-green"
+                                                <a class="btn btn-primary"
                                                     href="?action=<?php echo $action ?>&id=0"><span
                                                         class="material-icons">add</span>New</a>
                                             </div>
@@ -117,6 +117,36 @@ and open the template in the editor.
             <?php include 'common/t_footer.php'; ?>
         </div>
     </div>
+    <div class="modal fade" id="modal_upload" data-backdrop="static" data-keyboard="false" tabindex="-1"
+        aria-labelledby="modal_upload_label" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="POST" action="?action=<?php echo $action; ?>&upload=excel" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modal_upload_label"><span class="material-icons">upload_file</span>
+                            Upload Data Planning</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <a href="media/template/template-planning.xlsx">Download Template</a>
+                        <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="excel" name="excel"
+                                    accept=".xls, .xlsx">
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-outline-primary">Upload</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <?php include 'common/t_js.php'; ?>
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
@@ -132,8 +162,15 @@ and open the template in the editor.
                 buttons: [{
                     extend: 'excel',
                     title: "Member/Operator List",
-                    className: 'btn btn-pale-green btn-sm',
+                    className: 'btn btn-primary btn-sm',
                     text: '<i class="material-icons">download</i>Download Excel',
+                }, {
+                    className: 'btn btn-outline-primary btn-sm',
+                    text: '<i class="material-icons">upload_file</i> Upload by Excel',
+                    action: function () {
+                        $('#modal_upload').modal("show");
+
+                    }
                 },]
             });
         });
@@ -142,6 +179,11 @@ and open the template in the editor.
             $("#empid").val(empid);
             $("#modal_delete").modal("show");
         }
+
+        $('input[type="file"]').change(function (e) {
+            var fileName = e.target.files[0].name;
+            $('.custom-file-label').html(fileName);
+        });
 
         $('td').each(function () {
             if ($(this).html() == 'Active') {
