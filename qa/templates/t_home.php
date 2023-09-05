@@ -191,10 +191,10 @@ and open the template in the editor.
             } else {
               data.data.map((item2) => {
                 if (item.partno != item2.partno) {
-                  html += "<div class='col-6 mb-2'><a href='?action=measure&id=0' class='btn btn-primary w-100 py-3'>" + item.name1 + "</a></div>";
+                  html += "<div class='col-6 mb-2'><a href='?action=measure&id=0' class='btn btn-primary w-100 py-3 text-truncate'><small>" + item.name1 + "</small></a></div>";
                   // $("#month").html("<div class='col-6 mb-2'><a href='/' class='btn btn-primary w-100 py-3'>" + item.name1 + "</a></div>");
                 } else if (item2.rasio == null && item.partno == item2.partno) {
-                  html += "<div class='col-6 mb-2'><a href='?action=measure&id="+item2.doc_no+"' class='btn btn-primary w-100 py-3'>" + item.name1 + "</a></div>";
+                  html += "<div class='col-6 mb-2'><a href='?action=measure&id="+item2.doc_no+"' class='btn btn-primary w-100 py-3 text-truncate'><small>" + item.name1 + "</small></a></div>";
                 }
               });
               $("#month").html(html);

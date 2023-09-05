@@ -1,6 +1,8 @@
 <?php
-class Planning {
-    public function getList() {
+class Planning
+{
+    public function getList()
+    {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "select a.partno, b.name1, a.month from qas.m_planning a
@@ -15,7 +17,8 @@ class Planning {
         return $return;
     }
 
-    public function getPlanById($partno, $month) {
+    public function getPlanById($partno, $month)
+    {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "select a.partno, b.name1, a.month from qas.m_planning a
@@ -30,7 +33,8 @@ class Planning {
         return $return;
     }
 
-    public function insert($param) {
+    public function insert($param)
+    {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "insert into qas.m_planning (partno, month, crtdt, crtby) values (:partno, :month, current_timestamp, :crtby)";
@@ -48,7 +52,8 @@ class Planning {
         return $return;
     }
 
-    public function update($param) {
+    public function update($param)
+    {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $sql = "update qas.m_planning set partno = :partno, month = :month where partno = :partno and month = :month";
@@ -62,6 +67,28 @@ class Planning {
             $return["status"] = false;
             $return["message"] = $stmt->errorInfo();
         }
+        return $return;
+    }
+
+    public function isExist($id, $month)
+    {
+        $return = false;
+        $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
+        $sql = "SELECT count(*) as cnt FROM qas.m_planning WHERE partno = :id and month = :month";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(":id", $id, PDO::PARAM_STR);
+        $stmt->bindValue(":month", $month, PDO::PARAM_STR);
+        $count = 0;
+        if ($stmt->execute()) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $count = intval($row["cnt"]);
+            }
+        }
+        if ($count > 0) {
+            $return = true;
+        }
+        $stmt = null;
+        $conn = null;
         return $return;
     }
 }
