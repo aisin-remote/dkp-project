@@ -84,6 +84,32 @@ and open the template in the editor.
                                         <div class="form-group row">
                                             <div class="col-6">
                                                 <div class="row">
+                                                    <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Rasio Field</label>
+                                                    <div class="col-lg-7 col-md-6 col-sm-12">
+                                                        <input type="text" name="rasio"
+                                                            class="form-control form-control-md"
+                                                            value="" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6"></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-6">
+                                                <div class="row">
+                                                    <label class="col-form-label col-lg-4 col-md-3 col-sm-12">Signature Field</label>
+                                                    <div class="col-lg-7 col-md-6 col-sm-12">
+                                                        <input type="text" name="sign"
+                                                            class="form-control form-control-md"
+                                                            value="" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6"></div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-6">
+                                                <div class="row">
                                                     <label class="col-form-label col-lg-4 col-md-3 col-sm-12">File Model
                                                         (Excel)</label>
                                                     <div class="col-lg-7 col-md-6 col-sm-12">

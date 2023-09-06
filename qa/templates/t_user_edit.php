@@ -156,7 +156,7 @@ and open the template in the editor.
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="date2" class="col-lg-2 col-form-label">Gambar TTD</label>
+                      <label for="date2" class="col-lg-2 col-form-label">Sign Image</label>
                       <div class="col-lg-4">
                         <a class="btn btn-primary text-white" onclick="openFile()"><i
                             class="material-icons">folder_open</i> Browse File</a>

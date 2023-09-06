@@ -95,8 +95,8 @@ class TempModel
     {
         $return = array();
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-        $sql = "insert into qas.m_tmpl_h (partno, name1, crtby, tmpfl)
-            values ('" . $param["partno"] . "', '" . $param["partname"] . "', '" . LOGIN_SESSION . "', '" . $param["excel"] . "') returning partno";
+        $sql = "insert into qas.m_tmpl_h (partno, name1, crtby, tmpfl, sign_pos, rasio_pos)
+            values ('" . $param["partno"] . "', '" . $param["partname"] . "', '" . LOGIN_SESSION . "', '" . $param["excel"] . "', '" . $param["sign"] . "', '" . $param["rasio"] . "') returning partno";
         // echo $sql;
         // die();
         $stmt = $conn->prepare($sql);

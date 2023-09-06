@@ -46,7 +46,7 @@ and open the template in the editor.
           <div class="row">
             <div class="col-12">
               <div class="card">
-                <div class="card-body" style="background-color: #F0F0F0;">
+                <div class="card-body">
                   <div class="row">
                     <div class="col-lg-6 col-sm-12">
                       <!-- filter placement -->
@@ -55,7 +55,7 @@ and open the template in the editor.
                     <div class="col-lg-6 col-sm-12">
                       <div class="d-flex justify-content-end">
                         <!-- button placement -->
-                        <a class="btn btn-pale-green" href="?action=<?php echo $action ?>&id=0"><span class="material-icons">add</span>New</a>
+                        <a class="btn btn-primary" href="?action=<?php echo $action ?>&id=0"><span class="material-icons">add</span>New</a>
                       </div>
                     </div>
                   </div>
@@ -157,7 +157,7 @@ and open the template in the editor.
         buttons: [{
           extend: 'excel',
           title: "Member/Operator List",
-          className: 'btn btn-pale-green btn-sm',
+          className: 'btn btn-primary btn-sm',
           text: '<i class="material-icons">download</i>Download Excel',
           exportOptions: {
             columns: [0, 1, 2]
