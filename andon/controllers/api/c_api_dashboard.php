@@ -46,19 +46,19 @@ if ($action == "api_dashboard_adn") {
   $data_rol = [];
   $data_line_name = [];
   $data_eff = [];
-  if ($stmt->execute()){
+  if ($stmt->execute()) {
     $i = 0;
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $row["eff"] = 0;
-      $data_ril[$i] = 0; 
+      $data_ril[$i] = 0;
       $data_rol[$i] = 0;
-      if($row["prd_time"] != 0) {
+      if ($row["prd_time"] != 0) {
         $row["eff"] = round((($row["prd_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
         $data_ril[$i] = round((($row["ril_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
         $data_rol[$i] = round((($row["rol_qty"] * $row["cctime"] / 60) / $row["prd_time"]) * 100, 2);
-      }        
-      $data_per_jam[] = $row;          
-      
+      }
+      $data_per_jam[] = $row;
+
       $data_line_name[$i]["line"] = $row["line_name"];
       $data_line_name[$i]["dies"] = $row["dies_name"];
       if ($row["gstat"] == 'P') {
@@ -131,7 +131,7 @@ if ($action == "api_dashboard_adn") {
   $data_ril_sum = [];
   $data_rol_sum = [];
   $data_line_name_sum = [];
-  if ($stmt->execute() OR die(print_r($stmt->errorInfo()))) {
+  if ($stmt->execute() or die(print_r($stmt->errorInfo()))) {
     $i = 0;
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $eff_sum = round((($row["prd_qty"] * $row["cctime"] / $row["per_jam"]) / $row["prd_time"]) * 100, 2);
@@ -223,7 +223,7 @@ if ($action == "dashboard_line") {
     $shift = "3";
     $today = date(strtotime($today . "- 1 days"), "Y-m-d");
   }
-  
+
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
   //$jam_end = "18";
   $query = "select a.prd_dt, a.line_id, a.shift, a.cctime, a.prd_seq, b.name1, b.backno from t_prd_daily_i a 
@@ -231,16 +231,16 @@ if ($action == "dashboard_line") {
             where a.line_id = '$line_id' 
             AND a.prd_dt = '$today' 
             AND TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end'";
-  
+
   $stmt = $conn->prepare($query);
   $shift = "0"; //initialize shift
   $material_name = "";
   $cctime = 0;
-  if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
+  if ($stmt->execute() or die($stmt->errorInfo()[2] . PHP_EOL . "Full Query : " . $query)) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $shift = $row["shift"];
       $cctime = $row["cctime"];
-      $material_name = $row["name1"]."(".$row["backno"].")";
+      $material_name = $row["name1"] . "(" . $row["backno"] . ")";
       $prd_dt = $row["prd_dt"];
     }
   }
@@ -254,7 +254,7 @@ if ($action == "dashboard_line") {
   $dandori = 0;
   $ril = 0;
   $eff = 0;
-  if(!empty($shift)) {
+  if (!empty($shift)) {
     //dapatkan prd_seq yang pertama
     $query = "select min(a.prd_seq) as prd_seq from t_prd_daily_i a 
               where a.line_id = '$line_id' 
@@ -263,7 +263,7 @@ if ($action == "dashboard_line") {
 
     $stmt = $conn->prepare($query);
     $prd_seq = "0";
-    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2] . PHP_EOL . "Full Query : " . $query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $prd_seq = $row["prd_seq"];
       }
@@ -273,14 +273,14 @@ if ($action == "dashboard_line") {
     $stmt = $conn->prepare($query);
     $time_start = "";
     $prd_dt = "";
-    if ($stmt->execute() or die("Query 3 ".$stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
+    if ($stmt->execute() or die("Query 3 " . $stmt->errorInfo()[2] . PHP_EOL . "Full Query : " . $query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $time_start = $row["time_start"];
         $prd_dt = $row["prd_dt"];
       }
     }
 
-    $start_time = strtotime($prd_dt." ".$time_start.":00");
+    $start_time = strtotime($prd_dt . " " . $time_start . ":00");
     $time_now = strtotime(date("Y-m-d H:i:s"));
     $diff = $time_now - $start_time;
     //get production qty
@@ -290,36 +290,36 @@ if ($action == "dashboard_line") {
               AND a.shift = '$shift'";
     $stmt = $conn->prepare($query);
     $prd_qty = 0;
-    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2] . PHP_EOL . "Full Query : " . $query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $prd_qty = $row["prd_qty"];
       }
     }
-    
+
     //get planned stop
     $query = "select a.prd_dt, a.stop_id, a.start_time, a.end_time, a.stop_time, b.type1, b.type2, c.real_dt from t_prd_daily_stop a 
               inner join m_prd_stop_reason_action b ON b.srna_id = a.stop_id 
               inner join t_prd_daily_i c ON c.line_id = a.line_id AND c.prd_dt = a.prd_dt AND c.shift = a.shift AND c.prd_seq = a.prd_seq 
-              where a.line_id = '$line_id' and a.prd_dt = '$prd_dt' AND a.shift = '$shift' and b.type2 = 'P' and b.app_id = '".APP."'";
-    
+              where a.line_id = '$line_id' and a.prd_dt = '$prd_dt' AND a.shift = '$shift' and b.type2 = 'P' and b.app_id = '" . APP . "'";
+
     $pengurang_detik = 0;
     $stmt = $conn->prepare($query);
-    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2] . PHP_EOL . "Full Query : " . $query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $pengurang_detik = 0;
-        $str_time = strtotime($row["real_dt"]." ".$row["start_time"].":00");
-        $end_time = strtotime($row["real_dt"]." ".$row["end_time"].":00");
-        if($current_time >= $end_time) {
+        $str_time = strtotime($row["real_dt"] . " " . $row["start_time"] . ":00");
+        $end_time = strtotime($row["real_dt"] . " " . $row["end_time"] . ":00");
+        if ($current_time >= $end_time) {
           $pengurang_detik = $row["stop_time"] * 60;
-        } else if($current_time >= $str_time && $current_time < $end_time) {
+        } else if ($current_time >= $str_time && $current_time < $end_time) {
           $pengurang_detik = $current_time - $str_time;
         }
         $diff -= $pengurang_detik;
       }
     }
-    
+
     $pln_qty = 0;
-    $pln_qty = round( ($diff / floatval($cctime)), 0, PHP_ROUND_HALF_UP);
+    $pln_qty = round(($diff / floatval($cctime)), 0, PHP_ROUND_HALF_UP);
 
     //get NG
     $query = "select coalesce(sum(a.ng_qty),0) as ng_qty FROM t_prd_daily_ng a 
@@ -328,16 +328,17 @@ if ($action == "dashboard_line") {
               AND a.shift = '$shift'";
     $stmt = $conn->prepare($query);
     $ng_qty = 0;
-    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2] . PHP_EOL . "Full Query : " . $query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $ng_qty = $row["ng_qty"];
       }
     }
-    $ril = round((($ng_qty * ($cctime / 60)) / ($diff / 60)) * 100, 1);;
+    $ril = round((($ng_qty * ($cctime / 60)) / ($diff / 60)) * 100, 1);
+    ;
     $rol = 0;
 
     $balance = $pln_qty - ($prd_qty + $ng_qty);
-    $achieve = round( (($prd_qty + $ng_qty) / $pln_qty * 100), 1 );
+    $achieve = round((($prd_qty + $ng_qty) / $pln_qty * 100), 1);
 
     //get stop part
     $query = "select coalesce(sum(b.stop_time),0) as stop_part 
@@ -345,10 +346,10 @@ if ($action == "dashboard_line") {
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'PART'
               where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'   
-              and c.app_id = '".APP."'";
+              and c.app_id = '" . APP . "'";
     $stmt = $conn->prepare($query);
     $stop_dies = 0;
-    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2] . PHP_EOL . "Full Query : " . $query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $top_dies = $row["stop_part"] * 60;
       }
@@ -359,10 +360,10 @@ if ($action == "dashboard_line") {
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'MESIN'
               where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'  
-              and c.app_id = '".APP."'";
+              and c.app_id = '" . APP . "'";
     $stmt = $conn->prepare($query);
     $stop_mesin = 0;
-    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2] . PHP_EOL . "Full Query : " . $query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $stop_mesin = $row["stop_mesin"] * 60;
       }
@@ -373,10 +374,10 @@ if ($action == "dashboard_line") {
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2002'
               where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'   
-              and c.app_id = '".APP."'";
+              and c.app_id = '" . APP . "'";
     $stmt = $conn->prepare($query);
     $stop_qas = 0;
-    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2] . PHP_EOL . "Full Query : " . $query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $stop_qas = $row["stop_qas"] * 60;
       }
@@ -387,11 +388,11 @@ if ($action == "dashboard_line") {
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2005'
               where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'   
-              and c.app_id = '".APP."'";
+              and c.app_id = '" . APP . "'";
     $stmt = $conn->prepare($query);
     $dandori = 0;
     $stop_dandori = 0;
-    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2] . PHP_EOL . "Full Query : " . $query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $stop_dandori = $row["stop_dandori"];
       }
@@ -401,14 +402,14 @@ if ($action == "dashboard_line") {
   } else {
     //berarti production belum dibuat
   }
-  
-  
+
+
   $sql_get_andon = "SELECT a.*, b.name1 as mach_name, c.\"desc\", c.bgcolor, c.text_color FROM public.m_prd_mach_btn a 
                     inner join public.m_prd_mach b ON b.line_id = a.line_id and b.mach_id = a.mach_id 
                     inner join public.m_andon_status c ON c.andon_id = a.andon_id 
-                    WHERE a.line_id = '$line_id' and a.app_id = '".APP."' 
+                    WHERE a.line_id = '$line_id' and a.app_id = '" . APP . "' 
                     ORDER by mach_id, andon_id";
-  
+
   $stmt = $conn->prepare($sql_get_andon);
   $data_andon_status = [];
   if ($stmt->execute() or die($stmt->errorInfo()[2])) {
@@ -465,7 +466,7 @@ if ($action == "api_dashboard_adn_single") {
     $today = date(strtotime($today . "- 1 days"), "Y-m-d");
   }
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
-  
+
   $query = "select a.prd_dt, a.line_id, a.shift, a.cctime, a.prd_seq, b.name1, b.backno from t_prd_daily_i a 
             left join wms.m_mara b ON b.matnr = a.dies_id 
             where a.line_id = '$line_id'
@@ -479,11 +480,11 @@ if ($action == "api_dashboard_adn_single") {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $shift = $row["shift"];
       $cctime = $row["cctime"];
-      $material_name = $row["name1"]." (".$row["backno"].")";
+      $material_name = $row["name1"] . " (" . $row["backno"] . ")";
       $prd_dt = $row["prd_dt"];
     }
   }
-//initialize variable
+  //initialize variable
   $pln_qty = 0;
   $prd_qty = 0;
   $balance = 0;
@@ -493,7 +494,7 @@ if ($action == "api_dashboard_adn_single") {
   $dandori = 0;
   $ril = 0;
   $eff = 0;
-  if(!empty($shift)) {
+  if (!empty($shift)) {
     //dapatkan prd_seq yang pertama
     $query = "select min(a.prd_seq) as prd_seq from t_prd_daily_i a 
               where a.line_id = '$line_id' 
@@ -518,7 +519,7 @@ if ($action == "api_dashboard_adn_single") {
       }
     }
 
-    $start_time = strtotime($prd_dt." ".$time_start.":00");
+    $start_time = strtotime($prd_dt . " " . $time_start . ":00");
     $time_now = strtotime(date("Y-m-d H:i:s"));
     $diff = $time_now - $start_time;
     //get production qty
@@ -537,28 +538,28 @@ if ($action == "api_dashboard_adn_single") {
     $query = "select a.prd_dt, a.stop_id, a.start_time, a.end_time, a.stop_time, b.type1, b.type2, c.real_dt from t_prd_daily_stop a 
               inner join m_prd_stop_reason_action b ON b.srna_id = a.stop_id 
               inner join t_prd_daily_i c ON c.line_id = a.line_id AND c.prd_dt = a.prd_dt AND c.shift = a.shift AND c.prd_seq = a.prd_seq 
-              where a.line_id = '$line_id' and a.prd_dt = '$prd_dt' AND a.shift = '$shift' and b.type2 = 'P' and b.app_id = '".APP."'";
-    
+              where a.line_id = '$line_id' and a.prd_dt = '$prd_dt' AND a.shift = '$shift' and b.type2 = 'P' and b.app_id = '" . APP . "'";
+
     $pengurang_detik = 0;
     $total_pengurang = 0;
     $stmt = $conn->prepare($query);
-    if ($stmt->execute() or die($stmt->errorInfo()[2].PHP_EOL."Full Query : ".$query)) {
+    if ($stmt->execute() or die($stmt->errorInfo()[2] . PHP_EOL . "Full Query : " . $query)) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $pengurang_detik = 0;
-        $str_time = strtotime($row["real_dt"]." ".$row["start_time"].":00");
-        $end_time = strtotime($row["real_dt"]." ".$row["end_time"].":00");
-        if($current_time >= $end_time) {
-          $pengurang_detik = $row["stop_time"] * 60;          
-        } else if($current_time >= $str_time && $current_time < $end_time) {
+        $str_time = strtotime($row["real_dt"] . " " . $row["start_time"] . ":00");
+        $end_time = strtotime($row["real_dt"] . " " . $row["end_time"] . ":00");
+        if ($current_time >= $end_time) {
+          $pengurang_detik = $row["stop_time"] * 60;
+        } else if ($current_time >= $str_time && $current_time < $end_time) {
           $pengurang_detik = $current_time - $str_time;
         }
         $total_pengurang += $pengurang_detik;
         $diff -= $pengurang_detik;
       }
     }
-    
+
     $pln_qty = 0;
-    $pln_qty = round( ($diff / floatval($cctime)), 0, PHP_ROUND_HALF_UP);
+    $pln_qty = round(($diff / floatval($cctime)), 0, PHP_ROUND_HALF_UP);
 
     //get NG
     $query = "select coalesce(sum(a.ng_qty),0) as ng_qty FROM t_prd_daily_ng a 
@@ -572,11 +573,12 @@ if ($action == "api_dashboard_adn_single") {
         $ng_qty = $row["ng_qty"];
       }
     }
-    $ril = round((($ng_qty * ($cctime / 60)) / ($diff / 60)) * 100, 1);;
+    $ril = round((($ng_qty * ($cctime / 60)) / ($diff / 60)) * 100, 1);
+    ;
     $rol = 0;
 
     $balance = $pln_qty - ($prd_qty + $ng_qty);
-    $achieve = round( (($prd_qty + $ng_qty) / $pln_qty * 100), 1 );
+    $achieve = round((($prd_qty + $ng_qty) / $pln_qty * 100), 1);
 
     //get stop part
     $query = "select coalesce(sum(b.stop_time),0) as stop_part 
@@ -584,7 +586,7 @@ if ($action == "api_dashboard_adn_single") {
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'PART'
               where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'   
-              and c.app_id = '".APP."'";
+              and c.app_id = '" . APP . "'";
     $stmt = $conn->prepare($query);
     $stop_dies = 0;
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
@@ -598,7 +600,7 @@ if ($action == "api_dashboard_adn_single") {
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and c.type3 = 'MESIN'
               where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'  
-              and c.app_id = '".APP."'";
+              and c.app_id = '" . APP . "'";
     $stmt = $conn->prepare($query);
     $stop_mesin = 0;
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
@@ -612,7 +614,7 @@ if ($action == "api_dashboard_adn_single") {
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2002'
               where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'   
-              and c.app_id = '".APP."'";
+              and c.app_id = '" . APP . "'";
     $stmt = $conn->prepare($query);
     $stop_qas = 0;
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
@@ -626,7 +628,7 @@ if ($action == "api_dashboard_adn_single") {
               inner join t_prd_daily_stop b on b.line_id = a.line_id and b.prd_dt = a.prd_dt and b.shift = a.shift and b.prd_seq = a.prd_seq
               inner join m_prd_stop_reason_action c on c.srna_id = b.stop_id and b.stop_id = '2005'
               where a.line_id = '$line_id' AND a.prd_dt = '$prd_dt' and a.shift = '$shift'   
-              and c.app_id = '".APP."'";
+              and c.app_id = '" . APP . "'";
     $stmt = $conn->prepare($query);
     $dandori = 0;
     $stop_dandori = 0;
@@ -637,6 +639,14 @@ if ($action == "api_dashboard_adn_single") {
     }
     $dandori = $stop_dandori * 60;
     $eff = round((($prd_qty * $cctime / 60) / ($diff / 60)) * 100, 1);
+  }
+  $query_dt = "select TO_CHAR(current_timestamp, 'Day, DD-MM-YYYY') as date, TO_CHAR(current_timestamp, 'HH24.MI AM') as time";
+  $stmt = $conn->prepare($query_dt);
+  if ($stmt->execute()) {
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $date = $row["date"];
+      $time = $row["time"];
+    }
   }
   $return = [];
   $return["line_name"] = $line_name;
@@ -654,11 +664,13 @@ if ($action == "api_dashboard_adn_single") {
   $return["ril"] = $ril;
   $return["rol"] = $rol;
   $return["dandori"] = $dandori;
+  $return["date"] = $date;
+  $return["time"] = $time;
 
   echo json_encode($return);
 }
 
-if($action == "api_get_andon_status") {
+if ($action == "api_get_andon_status") {
   $line_id = $_GET["line_id"];
   $sql = "SELECT a.*, TO_CHAR(a.start_time,'YYYY-MM-DD HH24:MI:SS') as start_timex, b.name1 as mach_name, c.\"desc\" as andon_desc, c.bgcolor, c.text_color 
           FROM public.t_stop_time a 
@@ -673,7 +685,7 @@ if($action == "api_get_andon_status") {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       $start_date = new DateTime($row["start_timex"]);
       $since_start = $start_date->diff(new DateTime(date("Y-m-d H:i:s")));
-      $diff = $since_start->h.":".$since_start->i.":".$since_start->s;
+      $diff = $since_start->h . ":" . $since_start->i . ":" . $since_start->s;
       $row["diff"] = $diff;
       $data[] = $row;
     }

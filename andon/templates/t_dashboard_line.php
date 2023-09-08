@@ -215,7 +215,7 @@
   <script>
     $(document).ready(function () {
       setInterval(updateDashboard, 1000);
-      setInterval(dateTime, 1000);
+      // setInterval(dateTime, 1000);
     });
     // Detect fullscreen support
     /*var fullscreenEnabled = document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled;
@@ -340,7 +340,8 @@
         { line_id: $("#line_id").val() },
         function (data) {
           console.log(typeof data.prd_qty)
-
+          $("#date").html(data.date);
+          $("#time").html(data.time);
           /*update series per line*/
           chart_line.updateSeries([data.eff]);
           $(".line_name").html(data.line_name);
@@ -359,6 +360,7 @@
           $("#data_rol").html(data.rol);
         }
       );
+      updateAndonStatus();
     }
 
     function dateTime() {
@@ -378,7 +380,6 @@
       $("#date").html(date);
       $("#time").html(time);
 
-      updateAndonStatus();
     }
 
     function updateAndonStatus() {
