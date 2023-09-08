@@ -221,7 +221,7 @@ if ($action == "dashboard_line") {
     $shift = "3";
   } else if ($current_time >= $shift4_s && $current_time <= $shift4_e) {
     $shift = "3";
-    $today = date(strtotime($today . "- 1 days"), "Y-m-d");
+    $today = date( "Y-m-d", strtotime($today . " - 1 days"));
   }
 
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
@@ -463,7 +463,7 @@ if ($action == "api_dashboard_adn_single") {
     $shift = "3";
   } else if ($current_time >= $shift4_s && $current_time <= $shift4_e) {
     $shift = "3";
-    $today = date(strtotime($today . "- 1 days"), "Y-m-d");
+    $today = date( "Y-m-d", strtotime($today . " - 1 days"));
   }
   $jam_end = str_pad($jam_now, 2, "0", STR_PAD_LEFT);
 
