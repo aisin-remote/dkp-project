@@ -1,0 +1,11 @@
+[11-Sep-2023 12:38:15 Asia/Jakarta] Class "Menu" not found
+[11-Sep-2023 12:41:45 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+[11-Sep-2023 12:43:58 Asia/Jakarta] SQLSTATE[08006] [7] FATAL:  password authentication failed for user "postgres"
+FATAL:  password authentication failed for user "postgres"
+[11-Sep-2023 12:44:13 Asia/Jakarta] SQLSTATE[08006] [7] FATAL:  database "prd_report" does not exist
+[11-Sep-2023 17:36:09 Asia/Jakarta] Failed opening required 'templates/t_menu_list.php' (include_path='C:\xampp_8_0\php\PEAR')

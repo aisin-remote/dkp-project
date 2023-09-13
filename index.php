@@ -55,7 +55,10 @@
             <div class="card-title font-weight-bold py-0"><h3>QUALITY CONTROL</h3></div>
             <hr class="bg-secondary">
             <a href="qa">
-              <h4 class="link"><i class="material-icons-outlined">plumbing</i> MEASUREMENT INSPECTION</h4>
+              <h4 class="link"><i class="material-icons-outlined">door_sensor</i> DOOR HANDLE</h4>
+            </a>
+            <a href="qa_ant">
+              <h4 class="link"><i class="material-icons-outlined">settings_input_antenna</i> ANTENNA</h4>
             </a>
             </a>
           </div>

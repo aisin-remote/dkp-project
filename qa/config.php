@@ -9,9 +9,9 @@ define("CLIENT", "001");
 define("APP", "AISIN_CLP");
 define("MACHINE", gethostname());
 define("LOGIN_SESSION", "aisin-id");
-define("PAGE_TITLE", "MEASUREMENT INSPECTION SYSTEM");
+define("PAGE_TITLE", "MEASUREMENT INSPECTION SYSTEM (DOOR HANDLE)");
 define("FOOTER", "2023 &copy; PT. Aisin Indonesia Automotive");
-define("APP_DIR", "andon");
+define("APP_DIR", "qa");
 
 $dbhost = "localhost";
 $dbpass = "AisinBisaBanget@2023";
