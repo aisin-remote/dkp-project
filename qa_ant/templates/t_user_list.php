@@ -18,13 +18,13 @@ and open the template in the editor.
     <div id="layoutSidenav_content">
       <main>
         <div class="container-fluid">
-          <ol class="breadcrumb mb-4 mt-4">
+          <ol class="breadcrumb mb-2 mt-2 bg-transparent">
             <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
             <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
           </ol>
           <?php
           if (isset($_GET["success"])) {
-            echo '<div class="alert alert-success" alert-dismissible fade show" role="alert">
+            echo '<div class="alert alert-success mb-2" alert-dismissible fade show" role="alert">
                       ' . $_GET["success"] . '
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -32,59 +32,49 @@ and open the template in the editor.
                     </div>';
           }
           ?>
+          <?php 
+            if(isset($_GET["error"])) {
+              echo '<div class="alert alert-danger mb-2" alert-dismissible fade show" role="alert">
+                      '.$_GET["error"].'
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>';
+            }
+          ?>
           <div class="row">
             <div class="col-12">
               <div class="card">
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-lg-6 col-sm-12">
-                      <!-- filter placement -->
-
-                    </div>
-                    <div class="col-lg-6 col-sm-12">
-                      <div class="d-flex justify-content-end">
-                        <!-- button placement -->
-                        <a class="btn btn-primary" href="?action=<?php echo $action ?>&id=0"><span class="material-icons">add</span>New</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="card mt-2">
-                <div class="card-body">
                   <!-- Edit Here -->
-                  <table class="table table-sm" id="data-table-x">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>User Name</th>
-                        <th>Phone</th>
-                        <th>Roles</th>
-                        <th>Status</th>
-                        <th class="text-center">Edit</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                      if (!empty($data["list"])) {
-                        foreach ($data["list"] as $list) {
-                          echo "<tr>"
-                            . "<td>" . $list["usrid"] . "</td>"
-                            . "<td>" . $list["name1"] . "</td>"
-                            . "<td>" . $list["phone"] . "</td>"
-                            . "<td>" . $list["roles"] . "</td>"
-                            . "<td>" . $list["status_text"] . "</td>"
-                            . "<td class='text-center'><a href='?action=$action&id=" . $list["usrid"] . "' class='btn btn-outline-primary btn-sm'>edit</a></td>"
-                            . "</tr>";
+                  <div class="table-responsive">
+                    <table class="table" id="data-table-x">
+                      <thead class="bg-light text-uppercase">
+                        <tr>
+                          <th>User Id</th>
+                          <th>User Name</th>
+                          <th>Phone</th>
+                          <th>Roles</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        if (!empty($data["list"])) {
+                          foreach ($data["list"] as $list) {
+                            echo "<tr>"
+                              . "<td><a href='?action=$action&id=" . $list["usrid"] . "'><u>" . $list["usrid"] . "</u></a></td>"
+                              . "<td>" . $list["name1"] . "</td>"
+                              . "<td>" . $list["phone"] . "</td>"
+                              . "<td>" . $list["roles"] . "</td>"
+                              . "<td>" . $list["status_text"] . "</td>"
+                              . "</tr>";
+                          }
                         }
-                      }
-                      ?>
-                    </tbody>
-                  </table>
+                        ?>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -98,34 +88,6 @@ and open the template in the editor.
     </div>
   </div>
 
-  <div class="modal fade" id="modal_upload" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_upload_label" aria-hidden="true">
-    <div class="modal-dialog">
-      <form method="POST" action="?action=<?php echo $action; ?>&upload=excel" enctype="multipart/form-data">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modal_upload_label"><span class="material-icons">upload_file</span> Upload Data User</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <a href="media/template/template-user.xlsx">Download Template</a>
-            <div class="input-group mb-3">
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="excel" name="excel" accept=".xls, .xlsx">
-                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-outline-primary">Upload</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-
   <?php include 'common/t_js.php'; ?>
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script>
@@ -133,7 +95,7 @@ and open the template in the editor.
       $("#data-table-x").DataTable({
         stateSave: true,
         order: [
-          [0, 'desc']
+          [0, 'asc']
         ],
         dom: "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-2'l><'col-sm-12 col-md-4'f>>" +
           "<'row'<'col-sm-12'tr>>" +
@@ -144,25 +106,19 @@ and open the template in the editor.
             className: 'btn btn-success btn-sm',
             text: '<i class="material-icons">download</i>Download Excel',
             exportOptions: {
-              columns: [1, 2, 3, 4]
+              columns: [0, 1, 2, 3, 4]
             }
-          },
-          {
-            className: 'btn btn-outline-success btn-sm',
-            text: '<i class="material-icons">upload_file</i> Upload by Excel',
+          },{
+            className: 'btn btn-primary btn-sm',
+            text: '<i class="material-icons">add</i> New',
             action: function() {
-              $('#modal_upload').modal("show");
-
+              window.location.href = '?action=<?php echo $action ?>&id=0';
             }
           }
         ]
       });
     });
 
-    $('input[type="file"]').change(function(e) {
-      var fileName = e.target.files[0].name;
-      $('.custom-file-label').html(fileName);
-    });
   </script>
 </body>
 

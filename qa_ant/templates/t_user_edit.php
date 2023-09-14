@@ -14,10 +14,9 @@ and open the template in the editor.
       background-color: #f8f8f8;
       background-size: cover;
       border: 1px solid #ccc;
-      border-radius: 3px;
-      margin-top: 7px;
+      border-radius: .5rem;
       width: 200px;
-      height: 100px;
+      height: 200px;
     }
   </style>
 </head>
@@ -29,12 +28,15 @@ and open the template in the editor.
     <div id="layoutSidenav_content">
       <main>
         <div class="container-fluid">
-          <ol class="breadcrumb mb-4 mt-4">
+          <ol class="breadcrumb mb-2 mt-2 bg-transparent">
             <li class="breadcrumb-item">
               <?php echo $template["group"]; ?>
             </li>
+            <li class="breadcrumb-item">
+              <a href="?action=<?=$action?>"><?php echo $template["menu"]; ?></a>
+            </li>
             <li class="breadcrumb-item active">
-              <?php echo $template["menu"]; ?>
+              Edit
             </li>
           </ol>
           <?php
@@ -101,7 +103,7 @@ and open the template in the editor.
 
                     <div class="form-group row">
                       <label class="col-form-label col-lg-2 col-md-3 col-sm-12">User Role</label>
-                      <div class="col-lg-4 col-md-9 col-sm-12">
+                      <div class="col-lg-8 col-md-9 col-sm-12">
                         <select name="roles[]" class="form-control select2" multiple="">
                           <?php
                           foreach ($data["role"] as $val) {
@@ -155,7 +157,7 @@ and open the template in the editor.
                         </div>
                       </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row mb-0">
                       <label for="date2" class="col-lg-2 col-form-label">Sign Image</label>
                       <div class="col-lg-4">
                         <a class="btn btn-primary text-white" onclick="openFile()"><i

@@ -2,14 +2,6 @@
   vertical-align: middle;
 }
 
-.btn-group-xs>.btn,
-.btn-xs {
-  padding: .15rem .2rem;
-  font-size: .600rem !important;
-  line-height: .4 !important;
-  border-radius: .2rem;
-}
-
 .datepicker {
   background-color: #ffffff !important;
 }
@@ -18,6 +10,10 @@
 .text-uli-blue a,
 .text-uli-blue i {
   color: #384967 !important;
+}
+
+.text-ega-blue {
+  color : #001a72 !important;
 }
 
 .text-24px {

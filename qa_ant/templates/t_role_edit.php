@@ -16,9 +16,14 @@ and open the template in the editor.
       <div id="layoutSidenav_content">
         <main>
           <div class="container-fluid">
-            <ol class="breadcrumb mb-4 mt-4">
+            <ol class="breadcrumb mb-2 mt-2 bg-transparent">
               <li class="breadcrumb-item"><?php echo $template["group"]; ?></li>
-              <li class="breadcrumb-item active"><?php echo $template["menu"]; ?></li>
+              <li class="breadcrumb-item">
+              <a href="?action=<?=$action?>"><?php echo $template["menu"]; ?></a>
+              </li>
+              <li class="breadcrumb-item active">
+                Edit
+              </li>
             </ol>
             <?php 
             if(isset($_GET["error"])) {
@@ -86,7 +91,7 @@ and open the template in the editor.
                                 }                                  
                               }                                
                             } 
-                            ?>><?php echo $val["name1"]; ?></option>
+                            ?>><?php echo "[".$val["grp_name"]."] ".$val["name1"]; ?></option>
                           <?php
                           }
                           ?>

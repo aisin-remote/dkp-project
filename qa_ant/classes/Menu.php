@@ -3,7 +3,9 @@ class Menu {
   function getList() {
     $return = array();
     $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-    $sql = "SELECT * FROM m_menu WHERE app_id = '".APP."'";
+    $sql = "SELECT a.*, b.pval2 as grp_name FROM m_menu a 
+            LEFT JOIN m_param b ON b.pid = 'MENUGROUP' AND b.pval3 = '".APP."' AND b.pval1 = a.groupid
+            WHERE a.app_id = '".APP."'";
     $stmt = $conn->prepare($sql);
     if($stmt->execute()) {
       while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 

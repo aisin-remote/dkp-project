@@ -6,6 +6,7 @@
     <script src="vendors/bootstrap/js/bootstrap4-toggle.min.js" type="text/javascript"></script>
     
     <script src="vendors/datatable/datatables.min.js" type="text/javascript"></script>
+    <script src="vendors/datatable/dataTables.bootstrap4.min.js" type="text/javascript"></script>
     <script src="vendors/datatable/dataTables.buttons.min.js" type="text/javascript"></script>
     <script src="vendors/datatable/buttons.html5.min.js" type="text/javascript"></script>
     <script src="vendors/datatable/buttons.print.min.js" type="text/javascript"></script>

@@ -9,3 +9,8 @@ could not connect to server: Connection refused (0x0000274D/10061)
 FATAL:  password authentication failed for user "postgres"
 [11-Sep-2023 12:44:13 Asia/Jakarta] SQLSTATE[08006] [7] FATAL:  database "prd_report" does not exist
 [11-Sep-2023 17:36:09 Asia/Jakarta] Failed opening required 'templates/t_menu_list.php' (include_path='C:\xampp_8_0\php\PEAR')
+[13-Sep-2023 20:42:14 Asia/Jakarta] SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "t_logger_pkey"
+DETAIL:  Key (id)=(1) already exists.
+CONTEXT:  SQL statement "insert into t_logger (event, msg, crt_by, crt_dt) values ('UPDATE', var_msg, new.crt_by, CURRENT_TIMESTAMP)"
+PL/pgSQL function f_logger() line 14 at SQL statement
+[13-Sep-2023 23:32:06 Asia/Jakarta] SQLSTATE[HY093]: Invalid parameter number: mixed named and positional parameters

@@ -80,10 +80,6 @@ if ($action == "user") {
 
       $photo = $_FILES["foto_ktp"];
 
-      if (empty($photo)) {
-        $param["foto_ktp"] = $_POST["foto_ktp_ori"];
-      }
-
       if (!empty($photo["tmp_name"])) {
         $outputImage = "media/foto_ktp.jpg";
         if (file_exists($outputImage)) {
@@ -125,6 +121,8 @@ if ($action == "user") {
           $go_save = false;
           $message = "Gambar harus dalam format JPEG atau PNG";
         }
+      } else {
+        $param["foto_ktp"] = $_POST["foto_ktp_ori"];
       }
 
       if ($id == "0") {

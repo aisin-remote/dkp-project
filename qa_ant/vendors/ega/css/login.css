@@ -10,7 +10,7 @@ body {
   align-items: center;
   /*padding-top: 40px;*/
   /*padding-bottom: 40px;*/  
-  background: radial-gradient(50% 50% at 50% 50%, rgba(15, 69, 103, 0.75) 0%, #0F4567 100%);
+  background: radial-gradient(50% 50% at 50% 50%, rgba(15, 69, 103, 0.75) 0%, #1f2937 100%);
 }
 
 .form-signin {

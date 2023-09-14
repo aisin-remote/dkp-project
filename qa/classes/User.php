@@ -144,8 +144,11 @@ class User
       if (!empty($data["stats"])) {
         $sql .= " , stats = '" . $data["stats"] . "' ";
       }
+      if(!empty($data["foto_ktp"])) {
+        $sql .= " , ttd = '" . $data["foto_ktp"] . "' ";
+      }
 
-      $sql .= " , lifnr = '" . $data["lifnr"] . "' , phone='" . $data["phone"] . "', chg_by = '" . $data["chg_by"] . "', chg_dt = CURRENT_TIMESTAMP, ttd = '" . $data["foto_ktp"] . "' ";
+      $sql .= " , lifnr = '" . $data["lifnr"] . "' , phone='" . $data["phone"] . "', chg_by = '" . $data["chg_by"] . "', chg_dt = CURRENT_TIMESTAMP ";
       $sql .= " WHERE usrid = '" . strtoupper($data["usrid"]) . "'";
       $stmt = $conn->prepare($sql);
 
