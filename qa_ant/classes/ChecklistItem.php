@@ -2,10 +2,17 @@
 
 class ChecklistItem {
   //put your code here
-  function getList() {
+  function getList($grp_id = null) {
     $return = array();
     $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-    $sql = "SELECT * FROM qas_ant.m_ckitm ORDER BY itm_id ASC ";
+    $sql = "SELECT a.*, b.name1 as grp_name, b.grp_no, c.name1 as dev_name FROM qas_ant.m_ckitm a "
+            . "INNER JOIN qas_ant.m_ckgrp b ON b.grp_id = a.grp_id "
+            . "INNER JOIN qas_ant.m_mdev c ON c.mdev_id = a.mdev_id "
+            . "WHERE 1=1 ";
+    if(!empty($grp_id)) {
+      $sql .= " AND a.grp_id = '$grp_id' ";
+    }
+    $sql .= "ORDER BY itm_id ASC ";
     $stmt = $conn->prepare($sql);
     if($stmt->execute()) {
       while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
@@ -20,7 +27,10 @@ class ChecklistItem {
   function getById($id) {
     $return = array();
     $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-    $sql = "SELECT * FROM qas_ant.m_ckitm WHERE itm_id = :id ";
+    $sql = "SELECT a.*, b.name1 as grp_name, b.grp_no, c.name1 as dev_name FROM qas_ant.m_ckitm a "
+            . "INNER JOIN qas_ant.m_ckgrp b ON b.grp_id = a.grp_id "
+            . "INNER JOIN qas_ant.m_mdev c ON c.mdev_id = a.mdev_id "
+            . "WHERE itm_id = :id ";
     $stmt = $conn->prepare($sql);
     $stmt->bindValue(":id", strtoupper($id), PDO::PARAM_STR);
     if($stmt->execute()) {

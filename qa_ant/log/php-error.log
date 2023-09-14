@@ -14,3 +14,18 @@ DETAIL:  Key (id)=(1) already exists.
 CONTEXT:  SQL statement "insert into t_logger (event, msg, crt_by, crt_dt) values ('UPDATE', var_msg, new.crt_by, CURRENT_TIMESTAMP)"
 PL/pgSQL function f_logger() line 14 at SQL statement
 [13-Sep-2023 23:32:06 Asia/Jakarta] SQLSTATE[HY093]: Invalid parameter number: mixed named and positional parameters
+[14-Sep-2023 21:20:20 Asia/Jakarta] SQLSTATE[08006] [7] could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (::1) and accepting
+	TCP/IP connections on port 5432?
+could not connect to server: Connection refused (0x0000274D/10061)
+	Is the server running on host "localhost" (127.0.0.1) and accepting
+	TCP/IP connections on port 5432?
+[14-Sep-2023 21:32:10 Asia/Jakarta] SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "m_ckgrp" does not exist
+LINE 1: ..._name, b.grp_no FROM qas_ant.m_ckitm a INNER JOIN m_ckgrp b ...
+                                                             ^
+[14-Sep-2023 21:42:41 Asia/Jakarta] SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "qas_ant.m_dev" does not exist
+LINE 1: SELECT * FROM qas_ant.m_dev ORDER BY sort1 ASC 
+                      ^
+[14-Sep-2023 22:18:59 Asia/Jakarta] SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  invalid input syntax for integer: ""
+LINE 1: DELETE FROM qas_ant.m_ckgrp WHERE grp_id = '' 
+                                                   ^

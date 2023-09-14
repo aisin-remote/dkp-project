@@ -5,7 +5,7 @@ class MeasureDevice {
   function getList() {
     $return = array();
     $conn = new PDO(DB_DSN,DB_USERNAME,DB_PASSWORD);
-    $sql = "SELECT * FROM qas_ant.m_dev ORDER BY sort1 ASC ";
+    $sql = "SELECT * FROM qas_ant.m_mdev ORDER BY sort1 ASC ";
     $stmt = $conn->prepare($sql);
     if($stmt->execute()) {
       while($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 

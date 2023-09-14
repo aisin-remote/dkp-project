@@ -49,10 +49,14 @@ and open the template in the editor.
                     <table class="table" id="data-table-x">
                       <thead class="bg-light text-uppercase">
                         <tr>
-                          <th class='text-nowrap'>ID</th>
-                          <th class='text-nowrap'>No</th>
-                          <th class='text-nowrap'>Process Name</th>
-                          <th class='text-nowrap text-center'>Action</th>
+                          <th class="text-nowrap">No.</th>
+                          <th class="text-nowrap">Process Name</th>
+                          <th class="text-nowrap">Check Item</th>
+                          <th class="text-nowrap">Device Check</th>
+                          <th class="text-center text-nowrap">Standard Min</th>
+                          <th class="text-center text-nowrap">Standard Max</th>
+                          <th class="text-center text-nowrap">UoM</th>
+                          <th class="text-center text-nowrap">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -60,10 +64,14 @@ and open the template in the editor.
                         if(!empty($data["list"])) {
                           foreach($data["list"] as $list) {
                             echo "<tr>"
-                            . "<td class='text-nowrap'>".$list["grp_id"]."</td>"
-                            . "<td class='text-nowrap'>".$list["grp_no"]."</td>"
-                            . "<td class='text-nowrap'><a href=\"javascript:openModalEdit('".$list["grp_id"]."','".$list["grp_no"]."','".$list["name1"]."')\">".$list["name1"]."</a></td>"
-                            . "<td class='text-nowrap text-center'><a href=\"javascript:deleteData('".$list["grp_id"]."','".$list["name1"]."')\" class='btn btn-danger btn-xs'><i class='material-icons'>delete</i></a></td>"
+                            . "<td class='text-nowrap'>".$list["itm_id"]."</td>"
+                            . "<td class='text-nowrap'>".$list["grp_no"].". ".$list["grp_name"]."</td>"
+                            . "<td class='text-nowrap'><a href=\"javascript:openModalEdit('".$list["itm_id"]."','".$list["grp_id"]."','".$list["mdev_id"]."','".$list["name1"]."','".$list["std_min"]."','".$list["std_max"]."','".$list["std_uom"]."')\">".$list["name1"]."</a></td>"
+                            . "<td class='text-nowrap'>".$list["dev_name"]."</td>"
+                            . "<td class='text-center text-nowrap'>".$list["std_min"]."</td>"
+                            . "<td class='text-center text-nowrap'>".$list["std_max"]."</td>"
+                            . "<td class='text-center text-nowrap'>".$list["std_uom"]."</td>"
+                            . "<td class='text-center text-nowrap'><a href=\"javascript:deleteData('".$list["itm_id"]."','".$list["name1"]."')\" class='btn btn-danger btn-xs'><i class='material-icons'>delete</i></a></td>"
                             . "</tr>";
                           }
                         }
@@ -85,7 +93,7 @@ and open the template in the editor.
     </div>
     <!-- Modal -->
     <div class="modal fade" id="modal_edit" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modal_upload_label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
           <form id="modal_form_01" method="POST" action="?action=<?php echo $action; ?>" enctype="multipart/form-data">
             <div class="modal-header">
@@ -97,16 +105,44 @@ and open the template in the editor.
             <div class="modal-body">
               <input type="hidden" name="save" value="" id="save">
               <div class="form-group">
-                <label for="grp_id">Process ID</label>
-                <input type="number" class="form-control" id="grp_id" name="grp_id">
+                <label for="itm_id">No</label>
+                <input type="number" class="form-control" id="itm_id" name="itm_id">
               </div>
               <div class="form-group">
-                <label for="grp_no">No</label>
-                <input type="text" class="form-control" id="grp_no" name="grp_no">
+                <label for="grp_id">Process Name</label>
+                <select class="form-control select2" id="grp_id" name="grp_id">
+                  <?php 
+                  foreach($group_list as $list) {
+                    echo '<option value="'.$list["grp_id"].'">'.$list["grp_no"].". ".$list["name1"].'</option>';
+                  }
+                  ?>
+                </select>
               </div>
               <div class="form-group">
-                <label for="name1">Description</label>
-                <input type="text" class="form-control" id="name1" name="name1">
+                <label for="name1">Check Item</label>
+                <input type="text" maxlength="255" class="form-control" id="name1" name="name1">
+              </div>
+              <div class="form-group">
+                <label for="mdev_id">Check Device</label>
+                <select class="form-control select2" id="mdev_id" name="mdev_id">
+                  <?php 
+                  foreach($dev_list as $list) {
+                    echo '<option value="'.$list["mdev_id"].'">'.$list["name1"].'</option>';
+                  }
+                  ?>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="std_min">Standard Min</label>
+                <input type="number" step="any" class="form-control" id="std_min" name="std_min">
+              </div>
+              <div class="form-group">
+                <label for="std_max">Standard Max</label>
+                <input type="number" step="any" class="form-control" id="std_max" name="std_max">
+              </div>
+              <div class="form-group">
+                <label for="std_uom">UoM</label>
+                <input type="text" maxlength="10" class="form-control" id="std_uom" name="std_uom">
               </div>
             </div>
             <div class="modal-footer">
@@ -126,6 +162,12 @@ and open the template in the editor.
       });
       
       $(document).ready(function () {
+        $(".select2").select2({
+          theme: 'bootstrap4',
+          dropdownParent : $('#modal_edit'),
+          width: '100%'
+        });
+        
         $("#data-table-x").DataTable({
           stateSave: true,
           order: [
@@ -144,10 +186,14 @@ and open the template in the editor.
               text: '<i class="material-icons">add</i> New',
               action: function() {
                 $("#save").val("I");
-                $("#grp_id").val("");
-                $("#grp_id").removeAttr("readonly");
-                $("#grp_no").val("");
+                $("#itm_id").val("");
+                $("#itm_id").removeAttr("readonly");
+                $("#grp_id").val("").trigger('change');
+                $("#mdev_id").val("").trigger('change');
                 $("#name1").val("");
+                $("#std_min").val("");
+                $("#std_max").val("");
+                $("#std_uom").val("");
                 $("#modal_edit").modal("show");
               }
             }
@@ -155,12 +201,16 @@ and open the template in the editor.
         });
       });
       
-      function openModalEdit(grp_id, grp_no, name1) {      
+      function openModalEdit(itm_id, grp_id, mdev_id, name1, std_min, std_max, std_uom) {      
         $("#save").val("U");
-        $("#grp_id").val(grp_id);
-        $("#grp_id").attr("readonly","readonly");
-        $("#grp_no").val(grp_no);
+        $("#itm_id").val(itm_id);
+        $("#itm_id").attr("readonly","readonly");
+        $("#grp_id").val(grp_id).trigger('change');
+        $("#mdev_id").val(mdev_id).trigger('change');
         $("#name1").val(name1);
+        $("#std_min").val(std_min);
+        $("#std_max").val(std_max);
+        $("#std_uom").val(std_uom);
         $("#modal_edit").modal("show");
       }
       
