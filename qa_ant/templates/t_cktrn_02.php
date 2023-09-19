@@ -25,39 +25,33 @@ and open the template in the editor.
                 <?php echo $template["sub_menu"]; ?>
               </li>
             </ol>
-            <?php
-            if (isset($_GET["error"])) {
-              echo '<div class="alert alert-danger" role="alert">
-                      Error : ' . $_GET["error"] . '
-                    </div>';
-            }
+            <?php 
+             if(isset($_GET["success"])) {
+               echo '<div class="alert alert-success" alert-dismissible fade show" role="alert">
+                       '.$_GET["success"].'
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                       </button>
+                     </div>';
+             }
+             ?>
+             <?php 
+             if(isset($_GET["error"])) {
+               echo '<div class="alert alert-danger" alert-dismissible fade show" role="alert">
+                       '.$_GET["error"].'
+                       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                       </button>
+                     </div>';
+             }
             ?>
             <form method="post" action="?action=<?= $action; ?>" id="myform">
               <input type="hidden" name="save_type" value="<?= $save_type; ?>">
               <input type="hidden" name="date1" value="<?= (!empty($data_hdr)) ? $data_hdr["date1"] : $filter_date1; ?>">
               <input type="hidden" name="shift" value="<?= (!empty($data_hdr)) ? $data_hdr["shift"] : $filter_shift; ?>">
               <input type="hidden" name="type1" value="<?= (!empty($data_hdr)) ? $data_hdr["type1"] : $filter_type1; ?>">
+              
               <div class="row">
-                <div class="col-12">
-                  <div class="card">
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-lg-6 col-sm-12">
-                          <!-- filter placement -->
-
-                        </div>
-                        <div class="col-lg-6 col-sm-12">
-                          <div class="d-flex justify-content-end">
-                            <!-- button placement -->
-                            <button type="submit" name="save" value="save" class="btn btn-primary"><span class="material-icons">save</span> Save</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>              
-              </div>
-              <div class="row mt-2">
                 <div class="col-12">
                   <div class="accordion" id="accordion1">
                     <?php
@@ -89,7 +83,7 @@ and open the template in the editor.
                         . "</tr>"; */
                       foreach ($itm_list as $itm) {
                         if ($itm["mdev_id"] == $dev["mdev_id"]) {
-                          $value_act = null;
+                          $value_act = 0;
                           $value_jud = null;
                           if(!empty($data_itm)) {
                             foreach ($data_itm as $ditm) {
@@ -123,8 +117,26 @@ and open the template in the editor.
                   </div>
                 </div>
               </div>
-              <div class="row">
+              <div class="row mt-1">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-lg-6 col-sm-12">
+                          <!-- filter placement -->
 
+                        </div>
+                        <div class="col-lg-6 col-sm-12">
+                          <div class="d-flex justify-content-end">
+                            <!-- button placement -->
+                            <input type="hidden" name="save" value="save">
+                            <button type="submit" name="bt-save" value="save" class="btn btn-primary"><span class="material-icons">save</span> Save</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>              
               </div>
             </form>
           </div>
@@ -136,7 +148,7 @@ and open the template in the editor.
     <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
     <script>
       $("#myform").submit(function () {
-        $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...');
+        $(".btn").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Please Wait...').attr("disabled","disabled");        
       });
 
       $(document).ready(function () {

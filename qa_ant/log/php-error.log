@@ -35,3 +35,9 @@ LINE 1: SELECT * FROM qas_ant.m_shift ORDER BY type1 ASC
 [15-Sep-2023 17:06:39 Asia/Jakarta] SQLSTATE[22007]: Invalid datetime format: 7 ERROR:  invalid input syntax for type date: ""
 LINE 1: SELECT * FROM qas_ant.t_trn_hdr WHERE date1 = '' AND shift =...
                                                       ^
+[19-Sep-2023 07:57:59 Asia/Jakarta] PHP Fatal error:  Cannot use [] for reading in C:\xampp_8_0\htdocs\1DEV\AISIN\main\qa_ant\controllers\c_cktrn.php on line 22
+[19-Sep-2023 10:52:54 Asia/Jakarta] Call to a member function execute() on null
+[19-Sep-2023 10:53:23 Asia/Jakarta] Call to a member function execute() on null
+[19-Sep-2023 10:53:55 Asia/Jakarta] Call to a member function execute() on null
+[19-Sep-2023 10:54:17 Asia/Jakarta] Call to a member function execute() on null
+[19-Sep-2023 10:54:32 Asia/Jakarta] Call to a member function execute() on null

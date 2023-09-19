@@ -128,7 +128,9 @@ and open the template in the editor.
         opacity: 0.2
       },
       toolbar: {
-        show: false
+        show: true,
+        offsetX: 0,
+        offsetY: 10
       }
     },
     colors: ['#00B0F0', '#FFC000'],
@@ -156,17 +158,21 @@ and open the template in the editor.
     },
     yaxis: {
       title: {
-        text: 'Pagi'
+        text: 'X'
       },
       min: 4,
       max: 5
     },
     legend: {
       position: 'top',
-      horizontalAlign: 'right',
+      horizontalAlign: 'center',
       floating: true,
-      offsetY: -25,
-      offsetX: -5
+      offsetX: 0,
+      offsetY: -25
+    },
+    title: {
+      text: 'Pagi',
+      align: 'left'
     }
     };
 
@@ -196,7 +202,9 @@ and open the template in the editor.
         opacity: 0.2
       },
       toolbar: {
-        show: false
+        show: true,
+        offsetX: 0,
+        offsetY: 10
       }
     },
     colors: ['#00B0F0', '#FFC000'],
@@ -224,17 +232,21 @@ and open the template in the editor.
     },
     yaxis: {
       title: {
-        text: 'Malam'
+        text: 'X'
       },
       min: 4,
       max: 5
     },
     legend: {
       position: 'top',
-      horizontalAlign: 'right',
+      horizontalAlign: 'center',
       floating: true,
-      offsetY: -25,
-      offsetX: -5
+      offsetX: 0,
+      offsetY: -25
+    },
+    title: {
+      text: 'Malam',
+      align: 'left'
     }
     };
 
@@ -271,24 +283,82 @@ and open the template in the editor.
         $("#std_min_max").html(data.std_min+" - "+data.std_max+" "+data.std_uom);
         std_min = parseFloat(data.std_min);
         std_max = parseFloat(data.std_max);
+        dev_min = parseFloat(data.dev_min);
+        dev_max = parseFloat(data.dev_max);
         
         chart1.updateOptions({
           yaxis: {
             title: {
-              text: 'Pagi'
+              text: data.std_uom
             },
-            min: std_min,
-            max: std_max
+            min: std_min - (std_min * dev_min / 100),
+            max: std_max + (std_max * dev_min / 100),
+          },
+          annotations: {
+            yaxis: [
+              {
+                y: std_min,
+                borderColor: '#FEB019',
+                label: {
+                  borderColor: '#FEB019',
+                  style: {
+                    color: '#fff',
+                    background: '#FEB019',
+                  },
+                  text: 'Min',
+                }
+              },
+              {
+                y: std_max,
+                borderColor: '#00E396',
+                label: {
+                  borderColor: '#00E396',
+                  style: {
+                    color: '#fff',
+                    background: '#00E396',
+                  },
+                  text: 'Max',
+                }
+              }
+            ]
           }
         });
         
         chart2.updateOptions({
           yaxis: {
             title: {
-              text: 'Malam'
+              text: data.std_uom
             },
-            min: std_min,
-            max: std_max
+            min: std_min - (std_min * dev_min / 100),
+            max: std_max + (std_max * dev_max / 100),
+          },
+          annotations: {
+            yaxis: [
+              {
+                y: std_min,
+                borderColor: '#FEB019',
+                label: {
+                  borderColor: '#FEB019',
+                  style: {
+                    color: '#fff',
+                    background: '#FEB019',
+                  },
+                  text: 'Min',
+                }
+              },
+              {
+                y: std_max,
+                borderColor: '#00E396',
+                label: {
+                  borderColor: '#00E396',
+                  style: {
+                    color: '#fff',
+                    background: '#00E396',
+                  },
+                  text: 'Max',
+                }
+              }
+            ]
           }
         });
       });

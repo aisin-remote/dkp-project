@@ -17,7 +17,37 @@ if ($action == "cheksheet_trans") {
     $filter_shift = $_REQUEST["shift"];
   }
   $filter_type1 = $_REQUEST["type1"];
-
+  
+  if(isset($_POST["save"])) {
+    $param = $_POST;
+    $param_itm = [];
+    $ic = 0;
+    foreach($param["actual"] as $key=>$value) {
+      $param_itm[$ic]["itm_id"] = $key;
+      $param_itm[$ic]["actual"] = $value;
+      $param_itm[$ic]["result1"] = $param["result1"][$key];
+      $ic++;
+    }
+    
+    if($param["save_type"] == "I") {
+      $param_hdr["date1"] = $param["date1"];
+      $param_hdr["shift"] = $param["shift"];
+      $param_hdr["type1"] = $param["type1"];
+      $param_hdr["part_no"] = "484120-11180<br>484120-11190";
+      $param_hdr["crt_by"] = $_SESSION[LOGIN_SESSION];
+      $save_hdr = $class->insertHeader($param_hdr);
+    }
+    
+    $save = $class->insertItem($param["date1"], $param["shift"], $param["type1"], $param_itm);
+    if($save["status"] == true) {
+      header("Location: ?action=".$action."&date1=".$param["date1"]."&shift=".$param["shift"]."&type1=".$param["type1"]."&success=Data%20Saved.");
+    } else {
+      $error = $save["message"];
+      header("Location: ?action=".$action."&date1=".$param["date1"]."&shift=".$param["shift"]."&type1=".$param["type1"]."&error=$error.");
+    }
+    die();
+  }
+  
   if (!empty($filter_type1)) {
     //cek data apakah ada, jika ada tampilkan data checksheet
     //jika belum ada tampilkan page create checksheet
