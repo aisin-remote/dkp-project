@@ -109,7 +109,7 @@ if ($action == "api_dashboard_adn") {
     $shift = "3";
   } else if ($current_time >= $shift4_s && $current_time <= $shift4_e) {
     $shift = "3";
-    $today = date(strtotime($today . "- 1 days"), "Y-m-d");
+    $today = date("Y-m-d", strtotime($today . "- 1 days"));
   }
 
   $query_sum = "select line_id, line_name, sum(cctime) as cctime, sum(pln_qty) as pln_qty, sum(prd_time) as prd_time, sum(prd_qty) as prd_qty, sum(ril_qty) as ril_qty, sum(rol_qty) as rol_qty, sum(per_jam) as per_jam from ( 
@@ -228,9 +228,9 @@ if ($action == "dashboard_line") {
   //$jam_end = "18";
   $query = "select a.prd_dt, a.line_id, a.shift, a.cctime, a.prd_seq, b.name1, b.backno from t_prd_daily_i a 
             left join wms.m_mara b ON b.matnr = a.dies_id 
-            where a.line_id = '$line_id' 
-            AND a.prd_dt = '$today' 
-            AND TO_CHAR(TO_TIMESTAMP(a.prd_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end'";
+            where a.line_id = '$line_id'
+            AND TO_CHAR(a.prd_dt,'YYYY-MM-DD') = '$today' 
+            AND TO_CHAR(TO_TIMESTAMP(a.real_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end'";
 
   $stmt = $conn->prepare($query);
   $shift = "0"; //initialize shift
@@ -470,7 +470,7 @@ if ($action == "api_dashboard_adn_single") {
   $query = "select a.prd_dt, a.line_id, a.shift, a.cctime, a.prd_seq, b.name1, b.backno from t_prd_daily_i a 
             left join wms.m_mara b ON b.matnr = a.dies_id 
             where a.line_id = '$line_id'
-            AND TO_CHAR(a.real_dt,'YYYY-MM-DD') = '$today' 
+            AND TO_CHAR(a.prd_dt,'YYYY-MM-DD') = '$today' 
             AND TO_CHAR(TO_TIMESTAMP(a.real_dt||' '||a.time_start,'YYYY-MM-DD HH24:MI'),'HH24') = '$jam_end'";
   $stmt = $conn->prepare($query);
   $shift = "0"; //initialize shift

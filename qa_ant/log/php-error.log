@@ -29,3 +29,9 @@ LINE 1: SELECT * FROM qas_ant.m_dev ORDER BY sort1 ASC
 [14-Sep-2023 22:18:59 Asia/Jakarta] SQLSTATE[22P02]: Invalid text representation: 7 ERROR:  invalid input syntax for integer: ""
 LINE 1: DELETE FROM qas_ant.m_ckgrp WHERE grp_id = '' 
                                                    ^
+[15-Sep-2023 16:30:48 Asia/Jakarta] SQLSTATE[42703]: Undefined column: 7 ERROR:  column "type1" does not exist
+LINE 1: SELECT * FROM qas_ant.m_shift ORDER BY type1 ASC 
+                                               ^
+[15-Sep-2023 17:06:39 Asia/Jakarta] SQLSTATE[22007]: Invalid datetime format: 7 ERROR:  invalid input syntax for type date: ""
+LINE 1: SELECT * FROM qas_ant.t_trn_hdr WHERE date1 = '' AND shift =...
+                                                      ^

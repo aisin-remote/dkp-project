@@ -13,6 +13,8 @@
     <script src="vendors/datatable/jszip.min.js" type="text/javascript"></script>
     
     <script src="vendors/flatpickr/flatpickr.min.js" type="text/javascript"></script>
+    <script src="vendors/flatpickr/plugins/monthSelect/index.js" type="text/javascript"></script>
+    
     <script src="vendors/select2/js/select2.min.js" type="text/javascript"></script>
     
     <script src="vendors/ezview/draggable.js" type="text/javascript"></script>

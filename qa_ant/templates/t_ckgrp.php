@@ -89,7 +89,7 @@ and open the template in the editor.
         <div class="modal-content">
           <form id="modal_form_01" method="POST" action="?action=<?php echo $action; ?>" enctype="multipart/form-data">
             <div class="modal-header">
-              <h5 class="modal-title" id="modal_upload_label"><span class="material-icons">edit</span> Edit Data</h5>
+              <h5 class="modal-title" id="modal_upload_label"></h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -148,6 +148,7 @@ and open the template in the editor.
                 $("#grp_id").removeAttr("readonly");
                 $("#grp_no").val("");
                 $("#name1").val("");
+                $("#modal_upload_label").html('<span class="material-icons">add</span> New Data');
                 $("#modal_edit").modal("show");
               }
             }
@@ -161,6 +162,7 @@ and open the template in the editor.
         $("#grp_id").attr("readonly","readonly");
         $("#grp_no").val(grp_no);
         $("#name1").val(name1);
+        $("#modal_upload_label").html('<span class="material-icons">edit</span> Edit Data');
         $("#modal_edit").modal("show");
       }
       

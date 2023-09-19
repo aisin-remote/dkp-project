@@ -48,6 +48,8 @@ and open the template in the editor.
                         <td class='align-middle text-center'>484120-11180<br>484120-11190</td>
                         <td class='align-middle text-center'>Alat Ukur</td>
                         <td class='align-middle text-center'><span id='mdev_name'><?=$item_list[0]["dev_name"]?></span></td>
+                        <td class='align-middle text-center'>Bulan</td>
+                        <td class='align-middle text-center'><input type="text" class="form-control month-picker" id="imonth" value="<?=date("Y-m")?>"></td>
                       </tr>
                       <tr>
                         <td class='align-middle text-center'>Tingkat Kontrol</td>
@@ -62,6 +64,8 @@ and open the template in the editor.
                             </select></td>
                         <td class='align-middle text-center'>Frekuensi Pengecekan</td>
                         <td class='align-middle text-center'>First & Last</td>
+                        <td class='align-middle text-center'>Judgement</td>
+                        <td class='align-middle text-center'></td>
                       </tr>
                     </table>                    
                   </div>
@@ -86,15 +90,30 @@ and open the template in the editor.
   <script src="vendors/ega/js/scripts.js?time=<?php echo date("Ymdhis"); ?>" type="text/javascript"></script>
   <script src="vendors/apexchart/apexcharts.min.js" type="text/javascript"></script>
   <script>
+    $(document).ready(function(){
+      $("#imonth").flatpickr({
+        altInput:true,
+        plugins: [
+          new monthSelectPlugin({
+            shorthand: true, //defaults to false
+            dateFormat: "Y-m", //defaults to "F Y"
+            altFormat: "M Y",
+          })
+        ]
+      });
+      updateOptions();
+      updateChart();
+    });
+    
     var options1 = {
       series: [
       {
         name: "First",
-        data: [4.8, 4.9, 4.9, 4.7, 4.8, 4.9, 4.8, 4.5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+        data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
       },
       {
         name: "Last",
-        data: [4.1, 4.2, 4.3, 4.1, 4.2, 4.3, 4.4, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+        data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
       }
     ],
       chart: {
@@ -130,7 +149,7 @@ and open the template in the editor.
       size: 1
     },
     xaxis: {
-      categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+      categories: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
       /*title: {
         text: 'Tanggal'
       }*/
@@ -158,11 +177,11 @@ and open the template in the editor.
       series: [
       {
         name: "First",
-        data: [4.8, 4.9, 4.9, 4.7, 4.8, 4.9, 4.8, 4.5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+        data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
       },
       {
         name: "Last",
-        data: [4.1, 4.2, 4.3, 4.1, 4.2, 4.3, 4.4, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+        data: [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
       }
     ],
       chart: {
@@ -198,7 +217,7 @@ and open the template in the editor.
       size: 1
     },
     xaxis: {
-      categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+      categories: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
       /*title: {
         text: 'Tanggal'
       }*/
@@ -233,18 +252,79 @@ and open the template in the editor.
       });
     });
     
-    $("#itm_id").on("change",function(){
-      itm_id = this.value;
+    $("#itm_id").on("change",function(){      
+      updateOptions();
+      updateChart();
+    });
+    
+    $("#imonth").on("change",function(){      
+      updateOptions();
+      updateChart();
+    });
+    
+    function updateOptions() {
+      var itm_id = $("#itm_id").val();
+      var std_min = 0;
+      var std_max = 0;
       $.getJSON("?action=api_check_item_det", {itm_id:itm_id}, function (data) { 
         $("#mdev_name").html(data.dev_name);
-        $("#std_min_max").html(data.std_min+" - "+data.std_max+" "+data.std_uom);        
+        $("#std_min_max").html(data.std_min+" - "+data.std_max+" "+data.std_uom);
+        std_min = parseFloat(data.std_min);
+        std_max = parseFloat(data.std_max);
+        
+        chart1.updateOptions({
+          yaxis: {
+            title: {
+              text: 'Pagi'
+            },
+            min: std_min,
+            max: std_max
+          }
+        });
+        
+        chart2.updateOptions({
+          yaxis: {
+            title: {
+              text: 'Malam'
+            },
+            min: std_min,
+            max: std_max
+          }
+        });
       });
-      
-      /*
-       * TO DO
-       * Update Chart Options
-       */
-    });
+    }
+    
+    function updateChart() {
+      var itm_id = $("#itm_id").val();
+      var imonth = $("#imonth").val();
+      $.getJSON("?action=api_get_trn_mon", {itm_id:itm_id,imonth:imonth}, function (data) { 
+        chart1.updateOptions({
+          series: [
+          {
+            name: "First",
+            data: data.chart_1_f
+          },
+          {
+            name: "Last",
+            data: data.chart_1_l
+          }
+          ]
+        });
+        
+        chart2.updateOptions({
+          series: [
+          {
+            name: "First",
+            data: data.chart_2_f
+          },
+          {
+            name: "Last",
+            data: data.chart_2_l
+          }
+          ]
+        });
+      });
+    }
   </script>
 </body>
 

@@ -32,13 +32,14 @@ and open the template in the editor.
   </head>
 
   <body class="h-100">
+    
     <div id="layoutSidenav">
       <div id="layoutSidenav_content">
         <main class="mt-1 h-100">
           <div class="px-1 bg-white h-100" id="fs">
             <div id="carouselExampleIndicators" class="carousel slide h-100" data-ride="carousel">
               <div class="carousel-inner h-100">
-                <div class="carousel-item active h-100" data-interval="1000">
+                <div class="carousel-item active h-100" data-interval="<?=$vtron_spd?>">
                   <div class="d-flex justify-content-center align-items-center my-auto h-100">
                     <h1 class='disp-1'>Dies Map</h1>
                   </div>
@@ -67,7 +68,7 @@ and open the template in the editor.
                   } else {
                     if($sudah_tampil == 0) {
                       //awal carousel
-                      echo '<div class="carousel-item" data-interval="2000">';
+                      echo '<div class="carousel-item" data-interval="'.$vtron_spd.'">';
                       echo '<div class="row">';
                       echo '<div class="col-6"><div class="container-fluid"><div class="row"><div class="col-12 bg-primary text-white text-truncate">'.$mte_zone[$i]["desc"].'</div><div class="col-12 bg-light data-zona px-0" id="zona_'.$mte_zone[$i]["zona_id"].'"><div class="border text-center">-</div></div></div></div></div>';
                     } else {
@@ -79,7 +80,7 @@ and open the template in the editor.
                   
                 }
                 ?>
-                <div class="h-100 carousel-item h-100" data-interval="1000">
+                <div class="h-100 carousel-item h-100" data-interval="<?=$vtron_spd?>">
                   <div class="d-flex justify-content-center align-items-center my-auto h-100">
                     <h1 class='disp-1'>Dies Status</h1>
                   </div>
@@ -96,7 +97,7 @@ and open the template in the editor.
                 for($i = 0; $i < $jumlah_carousel; $i++) {
                   $y = 0;
                 ?>
-                <div class="carousel-item" data-interval="2000">
+                <div class="carousel-item" data-interval="<?=$vtron_spd?>">
                   <div class="row mx-1">
                   <?php
                   while($x < $jumlah_data) {

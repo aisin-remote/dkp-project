@@ -10,6 +10,8 @@
     <link href="vendors/datatable/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css"/>
     
     <link href="vendors/flatpickr/flatpickr.min.css" rel="stylesheet" type="text/css"/>
+    <link href="vendors/flatpickr/plugins/monthSelect/style.css" rel="stylesheet" type="text/css"/>
+    
     <link href="vendors/select2/css/select2.min.css" rel="stylesheet" type="text/css"/>
 		
     <link href="vendors/font/custom_font.css" rel="stylesheet" type="text/css"/>

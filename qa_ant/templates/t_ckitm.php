@@ -97,7 +97,7 @@ and open the template in the editor.
         <div class="modal-content">
           <form id="modal_form_01" method="POST" action="?action=<?php echo $action; ?>" enctype="multipart/form-data">
             <div class="modal-header">
-              <h5 class="modal-title" id="modal_upload_label"><span class="material-icons">edit</span> Edit Data</h5>
+              <h5 class="modal-title" id="modal_upload_label"></h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -132,18 +132,28 @@ and open the template in the editor.
                   ?>
                 </select>
               </div>
-              <div class="form-group">
-                <label for="std_min">Standard Min</label>
-                <input type="number" step="any" class="form-control" id="std_min" name="std_min">
+              <div class="row">
+                <div class="col-4">
+                  <div class="form-group">
+                    <label for="std_min">Standard Min</label>
+                    <input type="number" step="any" class="form-control" id="std_min" name="std_min">
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                    <label for="std_max">Standard Max</label>
+                    <input type="number" step="any" class="form-control" id="std_max" name="std_max">
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                    <label for="std_uom">UoM</label>
+                    <input type="text" maxlength="10" class="form-control" id="std_uom" name="std_uom">
+                  </div>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="std_max">Standard Max</label>
-                <input type="number" step="any" class="form-control" id="std_max" name="std_max">
-              </div>
-              <div class="form-group">
-                <label for="std_uom">UoM</label>
-                <input type="text" maxlength="10" class="form-control" id="std_uom" name="std_uom">
-              </div>
+                  
+                  
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
@@ -194,6 +204,7 @@ and open the template in the editor.
                 $("#std_min").val("");
                 $("#std_max").val("");
                 $("#std_uom").val("");
+                $("#modal_upload_label").html('<span class="material-icons">add</span> New Data');
                 $("#modal_edit").modal("show");
               }
             }
@@ -211,6 +222,7 @@ and open the template in the editor.
         $("#std_min").val(std_min);
         $("#std_max").val(std_max);
         $("#std_uom").val(std_uom);
+        $("#modal_upload_label").html('<span class="material-icons">edit</span> Edit Data');
         $("#modal_edit").modal("show");
       }
       
