@@ -176,7 +176,7 @@ and open the template in the editor.
                                             </tr>
                                             <tr>
                                                 <td style="width: 100px;" class="bg-yellow text-center">Yellow</td>
-                                                <td>Dies stroke >= 1,600</td>
+                                                <td>Dies stroke >= 1,600 (pra preventive)</td>
                                             </tr>
                                             <tr>
                                                 <td style="width: 100px;" class="bg-danger text-center">Red</td>
