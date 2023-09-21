@@ -64,7 +64,7 @@ if ($action == "api_dashboard_pooling") {
     . "WHERE chr_ngp_syukka+''+chr_tim_syukka BETWEEN '" . $today . $time_start . "' AND '" . $next_day . $time_end . "' "
     . "AND CHR_COD_TOKISAKI IN ('7A00016','7A00034','7A00003','7A00031','7A00035') "
     . "AND CHR_COD_UKEIRE IN ('NR-K','NR','EXP','6I','1L','AA','5B51') "
-    . "ORDER BY dt_time asc ";
+    . "ORDER BY customer_name asc, dt_time asc";
   $stmt = $conn_sql_srv->prepare($sql);
   //$return["sql"] = $sql;
   $data_main = [];
@@ -75,6 +75,11 @@ if ($action == "api_dashboard_pooling") {
   $jam_3p = ((strtotime(date("Y-m-d H:i")) + (60 * $lead_time)) * $js_ms);
   $jam_3m = ((strtotime(date("Y-m-d H:i")) - (60 * $lead_time)) * $js_ms);
   $data_abnormal = [];
+  
+  $cust_name = "";
+  $js_time1_temp = "";
+  $js_time2_temp = "";
+  $x = 0;
   if ($stmt->execute() or die($sql)) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       //cek apakah loading list sudah pernah ada
@@ -170,12 +175,33 @@ if ($action == "api_dashboard_pooling") {
           $data_abnormal[$i]["status"] = "Delay Pulling";
         }
       }
-      $data = [];
-      $data[0]["x"] = $row["customer_name"];
-      $data[0]["y"] = [$js_time1, $js_time2];
-      $data[0]["fillColor"] = $color;
-      $data_main[$i]["name"] = $row["ldnum"]." / Cycle : ".$row["cycle"];
-      $data_main[$i]["data"] = $data;
+      if($i == 0) {
+        $cust_name = $row["customer_name"];
+        $js_time1_temp = $js_time1;
+        $js_time2_temp = $js_time2;
+        
+        $data = [];
+        $data[0]["x"] = $row["customer_name"];
+        $data[0]["y"] = [$js_time1, $js_time2];
+        $data[0]["fillColor"] = $color;
+        $data_main[$x]["name"] = $row["ldnum"]." / Cycle : ".$row["cycle"];
+        $data_main[$x]["data"] = $data;
+      } else {
+        if($cust_name == $row["customer_name"] && $js_time1_temp == $js_time1 && $js_time2_temp == $js_time2) {
+          $data_main[$x]["name"] .= ", ".$row["ldnum"]." / Cycle : ".$row["cycle"];
+        } else {
+          $cust_name = $row["customer_name"];
+          $js_time1_temp = $js_time1;
+          $js_time2_temp = $js_time2;
+          $x++;
+          $data = [];
+          $data[0]["x"] = $row["customer_name"];
+          $data[0]["y"] = [$js_time1, $js_time2];
+          $data[0]["fillColor"] = $color;
+          $data_main[$x]["name"] = $row["ldnum"]." / Cycle : ".$row["cycle"];
+          $data_main[$x]["data"] = $data;
+        }
+      }
       $i++;
     }
   }
@@ -224,7 +250,7 @@ if ($action == "api_dashboard_realtime") {
     . "WHERE chr_ngp_syukka+''+chr_tim_syukka BETWEEN '$date_start' AND '$date_end' "
     . "AND CHR_COD_TOKISAKI IN ('7A00016','7A00034','7A00003','7A00031','7A00035') "
     . "AND CHR_COD_UKEIRE IN ('NR-K','NR','EXP','6I','1L','AA','5B51') "
-    . "ORDER BY dt_time asc ";
+    . "ORDER BY customer_name asc, dt_time asc";
   $stmt = $conn_sql_srv->prepare($sql);
   $data_main = [];
   $i = 0;
@@ -234,6 +260,11 @@ if ($action == "api_dashboard_realtime") {
   $jam_3p = ((strtotime(date("Y-m-d H:i")) + (60 * $lead_time)) * $js_ms);
   $jam_3m = ((strtotime(date("Y-m-d H:i")) - (60 * $lead_time)) * $js_ms);
   $data_abnormal = [];
+  
+  $cust_name = "";
+  $js_time1_temp = "";
+  $js_time2_temp = "";
+  $x = 0;
   if ($stmt->execute() or die($sql)) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
       //cek apakah loading list sudah pernah ada
@@ -333,12 +364,34 @@ if ($action == "api_dashboard_realtime") {
       // $data_main[$i]["y"] = [$js_time1,$js_time2];
       // $data_main[$i]["fillColor"] = $color;
       // $i++;
-      $data = [];
-      $data[0]["x"] = $row["customer_name"];
-      $data[0]["y"] = [$js_time1, $js_time2];
-      $data[0]["fillColor"] = $color;
-      $data_main[$i]["name"] = $row["ldnum"]." / Cycle : ".$row["cycle"];
-      $data_main[$i]["data"] = $data;
+      
+      if($i == 0) {
+        $cust_name = $row["customer_name"];
+        $js_time1_temp = $js_time1;
+        $js_time2_temp = $js_time2;
+        
+        $data = [];
+        $data[0]["x"] = $row["customer_name"];
+        $data[0]["y"] = [$js_time1, $js_time2];
+        $data[0]["fillColor"] = $color;
+        $data_main[$x]["name"] = $row["ldnum"]." / Cycle : ".$row["cycle"];
+        $data_main[$x]["data"] = $data;
+      } else {
+        if($cust_name == $row["customer_name"] && $js_time1_temp == $js_time1 && $js_time2_temp == $js_time2) {
+          $data_main[$x]["name"] .= ", ".$row["ldnum"]." / Cycle : ".$row["cycle"];
+        } else {
+          $cust_name = $row["customer_name"];
+          $js_time1_temp = $js_time1;
+          $js_time2_temp = $js_time2;
+          $x++;
+          $data = [];
+          $data[0]["x"] = $row["customer_name"];
+          $data[0]["y"] = [$js_time1, $js_time2];
+          $data[0]["fillColor"] = $color;
+          $data_main[$x]["name"] = $row["ldnum"]." / Cycle : ".$row["cycle"];
+          $data_main[$x]["data"] = $data;
+        }
+      }
       $i++;
     }
   }
@@ -346,5 +399,6 @@ if ($action == "api_dashboard_realtime") {
   $return["data_abnormal"] = $data_abnormal;
 
   echo json_encode($return);
+  die();
 }
 ?>

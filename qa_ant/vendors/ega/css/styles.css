@@ -1,0 +1,25 @@
+body {
+  background: #f1f4fb;
+  font-size: 0.875rem !important;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: .0625rem solid rgba(17,24,39,.125);
+    border-radius: .5rem;
+}
+
+th {
+    font-weight: 500 !important;
+}
+
+.bg-gray-800 {
+    background-color: #1f2937!important;
+}
+

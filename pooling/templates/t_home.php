@@ -191,11 +191,11 @@ and open the template in the editor.
   <script>
     var options = {
       series: [],
-      tooltip: {
+      /*tooltip: {
         x: {
           format: "HH:mm"
         }
-      },
+      },*/
       chart: {
         height: 450,
         type: 'rangeBar'
@@ -203,20 +203,16 @@ and open the template in the editor.
       plotOptions: {
         bar: {
           horizontal: true,
-          barHeight: '80%',
+          barHeight: '70%',
           rangeBarGroupRows: true,
         }
       },
-      /*dataLabels: {
+      dataLabels: {
         enabled: true,
-        formatter: function(val, opts) {
-          var label = val.name;
-          return label;
-        },
-        style: {
-          colors: ['#000', '#000']
+        formatter: function(value, { seriesIndex, dataPointIndex, w }) {
+          return w.config.series[seriesIndex].name
         }
-      },*/
+      },
       xaxis: {
         type: 'datetime',
         labels: {
@@ -224,22 +220,25 @@ and open the template in the editor.
           rotate: -45
         }
       },
+      stroke: {
+        width: 1
+      },      
       fill: {
         type: 'solid',
-        opacity: 1
+        opacity: 0.6
       },
-      // grid: {
-      //   xaxis: {
-      //     lines: {
-      //       show: true
-      //     }
-      //   },
-      //   yaxis: {
-      //     lines: {
-      //       show: false
-      //     }
-      //   }
-      // },
+      grid: {
+        xaxis: {
+          lines: {
+            show: true
+          }
+        },
+        yaxis: {
+          lines: {
+            show: true
+          }
+        }
+      },
       stroke: {
         show: true,
         colors: ["#cfcfcf"],
@@ -247,7 +246,13 @@ and open the template in the editor.
       legend: {
         show: false
       },
-      
+      tooltip : {
+        enabled: true,
+        x: {
+          show: true,
+          format: 'HH:mm'
+        },
+      },
       /*annotations: {
         xaxis: [
           {
