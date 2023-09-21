@@ -13,7 +13,6 @@ if ($action == "dies_model") {
       $param["chg_by"] = $_SESSION[LOGIN_SESSION];
 
       $photo = $_FILES["img01"];
-      $param["img"] = $_POST["img01x"];
 
       if (!empty($photo["tmp_name"])) {
         $outputImage = "media/images/foto_dies_model.jpg";
@@ -56,6 +55,8 @@ if ($action == "dies_model") {
           $go_save = false;
           $message = "Gambar harus dalam format JPEG atau PNG";
         }
+      } else {
+        $param["img"] = $_POST["img01x"];
       }
 
       $save = array();

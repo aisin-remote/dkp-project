@@ -682,9 +682,9 @@ class Production
     return $return;
   }
 
-  public function getNGPosByGroup($group) {
+  public function getNGPosByGroup($group, $model) {
     $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
-    $sql = "SELECT * from mach.m_ng_pos WHERE group_id = '$group' order by ng_pos_no::integer";
+    $sql = "SELECT * from mach.m_ng_pos WHERE group_id = '$group' and model_id = '$model' order by ng_pos_no::integer";
     $stmt = $conn->prepare($sql);
     if ($stmt->execute() or die($stmt->errorInfo()[2])) {
       while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
